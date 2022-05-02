@@ -1,0 +1,45 @@
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+}
+
+span {
+    color: #0068ff;
+    font-size: normal;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 47px;
+}
+
+.container {
+    margin: auto;
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.signup-form {
+    width: 670px;
+    height: 960px;
+    border-radius: 20px;
+    border: 1px solid #AACDFF;
+    box-shadow: 7px 7px 39px rgba(0, 104, 255, 0.25);
+    padding: 100px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
