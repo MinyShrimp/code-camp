@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+    <head>
+        <title> CSS 실습 </title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            div {
+                display: inline-block;
+                width: 80px;
+                height: 80px;
+                border: 2px solid red;
+                padding: 15px;
+            }
+
+            .border-box {
+                box-sizing: border-box;
+            }
+
+            .content-box {
+                box-sizing: content-box;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="border-box">박스 1</div>
+        <div class="">박스 2</div>
+        <div class="content-box">박스 3</div>
+        <!-- <div>박스 4</div>
+        <div>박스 5</div> -->
+    </body>
+</html>
