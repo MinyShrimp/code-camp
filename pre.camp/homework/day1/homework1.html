@@ -12,6 +12,87 @@
         <div class="container">
             <div class="signup-form">
                 <span>회원 가입을 위해<br>정보를 입력해주세요</span>
+
+                <div class="base-info">
+                    <div class="input-group">
+                        <label for = "email">* 이메일</label>
+                        <input 
+                            type = "email"
+                            id = "email"
+                            name = "email"
+                        />
+                    </div>
+
+                    <div class="input-group">
+                        <label for = "name">* 이름</label>
+                        <input 
+                            type = "text"
+                            id = "name"
+                            name = "name"
+                        />
+                    </div>
+
+                    <div class="input-group">
+                        <label for = "pwd">* 비밀번호</label>
+                        <input 
+                            type = "password"
+                            id = "pwd"
+                            name = "pwd"
+                        />
+                    </div>
+
+                    <div class="input-group">
+                        <label for = "pwd-again">* 비밀번호 확인</label>
+                        <input 
+                            type = "password"
+                            id = "pwd-again"
+                            name = "pwd-again"
+                        />
+                    </div>
+                </div>
+
+                <div class="input-group gender">
+                    <div class="gender-group"> 
+                        <input
+                            class = "gender-input"
+                            type = "radio"
+                            id = "female"
+                            name = "gender"
+                            value = "female"
+                        />
+                        <label for="female" class="gender-text"> 여성 </label>
+                    </div>
+
+                    <div class="gender-group"> 
+                        <input
+                            class = "gender-input"
+                            type = "radio"
+                            id = "man"
+                            name = "gender"
+                            value = "man"
+                        />
+                        <label for="man" class="gender-text"> 남성 </label>
+                    </div>
+                </div>
+
+                <div class="input-group agree-group">
+                    <input 
+                        class = "agree-input"
+                        type = "checkbox"
+                        id = "agree"
+                        name = "agree"
+                    />
+                    <label class="agree-text" for="agree">이용약관 개인정보 수집 및 이용, 마케팅 활용 선택에 모두 동의합니다.</label>
+                </div>
+
+                <div class="line"> </div>
+
+                <div class="input-group" style="margin-bottom: 0;">
+                    <button>
+                        가입하기
+                    </button>
+                </div>
+
             </div> 
         </div>
     </body>

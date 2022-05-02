@@ -16,6 +16,45 @@ span {
     font-size: 32px;
     font-weight: 700;
     line-height: 47px;
+    margin-bottom: 60px;
+}
+
+label {
+    display: block;
+}
+
+.base-info > .input-group > label {
+    color: #797979;
+    margin-bottom: 5px;
+}
+
+.base-info > .input-group > input {
+    width: 100%;
+    height: 56px;
+    border: none;
+    border-bottom: 1px solid #cfcfcf;
+
+    font-size: 18px;
+    padding: 10px;
+}
+
+.base-info > .input-group > input:focus {
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #0068ff;
+}
+
+button {
+    width: 100%;
+    height: 75px;
+    background-color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid #0068ff;
+    
+    color: #0068ff;
+    font-weight: 400;
+    font-size: 18px;
 }
 
 .container {
@@ -35,7 +74,7 @@ span {
     border-radius: 20px;
     border: 1px solid #AACDFF;
     box-shadow: 7px 7px 39px rgba(0, 104, 255, 0.25);
-    padding: 100px;
+    padding: 72px;
 
     display: flex;
     flex-direction: column;
@@ -43,3 +82,60 @@ span {
     flex-wrap: wrap;
 }
 
+.input-group {
+    margin-bottom: 21px;
+}
+
+.line {
+    border-bottom: 1px solid #e6e6e6;
+    margin-bottom: 30px;
+}
+
+/* 성별 */
+.gender {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    height: 20px;
+}
+
+.gender-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.gender-input {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.gender-text {
+    font-size: 16px;
+    color: black !important;
+    padding-top: 2px;
+}
+
+/* 동의 */
+.agree-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.agree-input {
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+}
+
+.agree-text {
+    font-size: 14px;
+    color: black !important;
+    padding-top: 2px;
+}
