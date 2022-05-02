@@ -37,7 +37,7 @@
     * <b> HTML 문서구조 </b>
 
 <style>
-    td { border: 1px solid; }
+    th, td { border: 1px solid; }
     table { text-align: center; }
 </style>
 <table>
@@ -97,5 +97,12 @@
     ...
 }
 ```
+<b>display: flex</b>
+
+![](../pictures/flex-direction.png)
+| flex-direction | justify-content | align-items |
+| -------------- | --------------- | ----------- |
+| row            | 가로            | 세로        |
+| column         | 세로            | 가로        |
 
 ### JS

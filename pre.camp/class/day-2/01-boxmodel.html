@@ -9,27 +9,34 @@
             }
 
             div {
-                display: inline-block;
                 width: 80px;
                 height: 80px;
                 border: 2px solid red;
                 padding: 15px;
             }
 
-            .border-box {
-                box-sizing: border-box;
-            }
+            .pb {
+                width: 500px;
+                height: 320px;
+                border: 2px solid blue;
 
-            .content-box {
-                box-sizing: content-box;
+                display: flex;
+                /* flex-direction: row;
+                justify-content: center;
+                align-items: center; */
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-around;
             }
         </style>
     </head>
     <body>
-        <div class="border-box">박스 1</div>
-        <div class="">박스 2</div>
-        <div class="content-box">박스 3</div>
-        <!-- <div>박스 4</div>
-        <div>박스 5</div> -->
+        <div>박스 1</div>
+        <div class="pb">
+            <div>박스 2</div>
+            <div>박스 3</div>
+            <div>박스 4</div>
+        </div>
+        <div>박스 5</div>
     </body>
 </html>
