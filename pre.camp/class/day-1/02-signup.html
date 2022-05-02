@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+    <head>
+        <title>PreCamp 1일차 - 회원가입</title>
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <h1>회원가입</h1>
+
+        <div class="container">
+            <div class="input-group">
+                <input
+                    type="email"
+                    placeholder="이메일을 입력해주세요"
+                    id="email"
+                />
+            </div>
+
+            <br />
+
+            <div class="input-group">
+                <input
+                    type="text"
+                    placeholder="이름을 입력해주세요"
+                    id="name"
+                />
+            </div>
+
+            <br />
+
+            <div class="input-group">
+                <input
+                    type="password"
+                    placeholder="비밀번호를 입력해주세요"
+                    id="password"
+                />
+            </div>
+
+            <br />
+
+            <div class="input-group">
+                <input
+                    type="password"
+                    placeholder="비밀번호를 다시 입력해주세요"
+                    id="password-again"
+                />
+            </div>
+
+            <br />
+
+            <div class="input-group">
+                <select>
+                    <option selected disabled value="0">
+                        지역을 선택하세요.
+                    </option>
+                    <option value="1">서울</option>
+                    <option value="2">인천</option>
+                    <option value="3">경기</option>
+                </select>
+            </div>
+
+            <br />
+
+            <div class="input-group">
+                <input type="radio" id="female" value="female" name="gender" />
+                <label for="female"> 여성 </label>
+
+                <input type="radio" id="man" value="man" name="gender" />
+                <label for="man"> 남성 </label>
+            </div>
+
+            <br />
+
+            <div class="input-group">
+                <input type="checkbox" id="agree" value="ok" name="agree" />
+                <label for="agree">
+                    이용약관 개인정보 수집 및 이용, 마케팅 활용 선택에 모두
+                    동의합니다.
+                </label>
+            </div>
+
+            <hr />
+
+            <div class="input-group">
+                <button>제출</button>
+                <!-- <input type="button" value="제출"> -->
+            </div>
+        </div>
+    </body>
+</html>
