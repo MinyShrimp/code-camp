@@ -78,19 +78,23 @@
 > Cascading Style Sheets
 * <b>Cascading</b> : 위에서 아래로 흐르는, 상속 또는 종속하는
 * HTML의 색, 크기, 정렬 등을 변경하여 꾸며주는 언어
-* 사용방법
-    1. html 태그 속성에 입력 - Inline
+* <b>사용방법</b>
+    1. html 태그 속성에 입력 - <b>Inline</b>
         * `<div style=""></div>`
-    2. `<style>` 태그에 입력 - Tag
+    2. `<style>` 태그에 입력 - <b>Tag</b>
         * `<style> 선택자 { 속성: 값; } </style>`
-    3. CSS 파일을 불러오기   - Link
+    3. CSS 파일을 불러오기   - <b>Link</b>
         * `<link href="./file-name.css" rel="stylesheet"/>`
+* <b>선택자</b>
+    * <b>전체 </b> 선택자 : `* {}`
+    * <b>태그 </b> 선택자 : `div {}`
+    * <b>class</b> 선택자 : `.container {}`
+    * <b>id   </b> 선택자 : `#userInfo {}`
 ```
 선택자 {
     속성: 값;
     속성: 값;
-    속성: 값;
-    속성: 값;
+    ...
 }
 ```
 
