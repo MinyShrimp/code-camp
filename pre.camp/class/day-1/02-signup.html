@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+    <head>
+        <title>PreCamp 1일차 - 회원가입</title>
+        <meta charset="utf-8" />
+
+        <link href="./02-signup.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="signup-form">
+                <h1>회원가입</h1>
+
+                <!-- 정보입력 -->
+                <div class="input-group">
+                    <input
+                        class="input-text"
+                        type="email"
+                        placeholder="이메일을 입력해주세요"
+                        id="email"
+                    />
+                </div>
+
+                <div class="input-group">
+                    <input
+                        class="input-text"
+                        type="text"
+                        placeholder="이름을 입력해주세요"
+                        id="name"
+                    />
+                </div>
+
+                <div class="input-group">
+                    <input
+                        class="input-text"
+                        type="password"
+                        placeholder="비밀번호를 입력해주세요"
+                        id="password"
+                    />
+                </div>
+
+                <div class="input-group">
+                    <input
+                        class="input-text"
+                        type="password"
+                        placeholder="비밀번호를 다시 입력해주세요"
+                        id="password-again"
+                    />
+                </div>
+
+                <!-- 지역선택 -->
+                <div class="input-group">
+                    <select class="input-text">
+                        <option selected disabled value="0">
+                            지역을 선택하세요.
+                        </option>
+                        <option value="1">서울</option>
+                        <option value="2">인천</option>
+                        <option value="3">경기</option>
+                    </select>
+                </div>
+
+                <!-- 성별선택 -->
+                <div class="input-group gender-group">
+                    <div>
+                        <input
+                            type="radio"
+                            id="female"
+                            value="female"
+                            name="gender"
+                        />
+                        <label for="female"> 여성 </label>
+                    </div>
+                    <div>
+                        <input
+                            type="radio"
+                            id="man"
+                            value="man"
+                            name="gender"
+                        />
+                        <label for="man"> 남성 </label>
+                    </div>
+                </div>
+
+                <!-- 약관동의 -->
+                <div class="input-group">
+                    <input type="checkbox" id="agree" value="ok" name="agree" />
+                    <label for="agree">
+                        이용약관 개인정보 수집 및 이용,<br />마케팅 활용 선택에
+                        모두 동의합니다.
+                    </label>
+                </div>
+
+                <hr />
+
+                <div class="input-group" style="margin-bottom: 0">
+                    <button>제출</button>
+                    <!-- <input type="button" value="제출"> -->
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
