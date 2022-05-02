@@ -26,18 +26,15 @@
     * `<input type="password>` <br><input type="password">
     * `<input type="checkbox">` <br><input type="checkbox"><input type="checkbox"><input type="checkbox"><input type="checkbox">
 * 핵심
-    * 태그의 특징
-    * 종속 태그
-    * HTML 문서구조
-* <b> Tag의 특징 </b>
-    * Block
-        * `div, h1, hr, p, ...`
-    * Inline
-        * `span, input, img, a, ...`
-* <b> 종속 태그 </b>
-    * 혼자서는 아무것도 못하는 Tag들
-    * exp) `select, ol, ul, table, ...`
-* <b> HTML 문서구조 </b>
+    * <b> Tag의 특징 </b>
+        * Block
+            * `div, h1, hr, p, ...`
+        * Inline
+            * `span, input, img, a, ...`
+    * <b> 종속 태그 </b>
+        * 혼자서는 아무것도 못하는 Tag들
+        * `select, ol, ul, table, ...`
+    * <b> HTML 문서구조 </b>
 
 <style>
     td { border: 1px solid; }
@@ -78,5 +75,23 @@
 ```
 
 ### CSS
+> Cascading Style Sheets
+* <b>Cascading</b> : 위에서 아래로 흐르는, 상속 또는 종속하는
+* HTML의 색, 크기, 정렬 등을 변경하여 꾸며주는 언어
+* 사용방법
+    1. html 태그 속성에 입력 - Inline
+        * `<div style=""></div>`
+    2. `<style>` 태그에 입력 - Tag
+        * `<style> 선택자 { 속성: 값; } </style>`
+    3. CSS 파일을 불러오기   - Link
+        * `<link href="./file-name.css" rel="stylesheet"/>`
+```
+선택자 {
+    속성: 값;
+    속성: 값;
+    속성: 값;
+    속성: 값;
+}
+```
 
 ### JS
