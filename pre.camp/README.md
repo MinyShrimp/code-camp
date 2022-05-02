@@ -105,4 +105,14 @@
 | row            | 가로            | 세로        |
 | column         | 세로            | 가로        |
 
-### JS
+### HOMEWORK
+1. 회원가입 css
+    * HTML, CSS, 스크린샷 업로드
+2. HTML, css 연습문제
+3. 1일차 Self Check 완료 ( google team )
+4. 싸이월드 왼쪽 UI 완성
+    * HTML, CSS, 스크린샷 업로드
+5. 1, 4번 구글 클래스룸에 업로드
+    * https://classroom.google.com/w/NTA5NzYxMTkwMDY2/t/all
+    
+## Day 2
