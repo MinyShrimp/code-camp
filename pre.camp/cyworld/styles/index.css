@@ -9,6 +9,11 @@
     src: url('../font/malgun.ttf');
 }
 
+@font-face {
+    font-family: 'PFStardust';
+    src: url('../font/PFStardust.ttf');
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -105,6 +110,7 @@ li {
 
 .left__body__header {
     height: 133px;
+    margin-top: 20px;
     margin-bottom: 24px;
 }
 
@@ -120,22 +126,47 @@ li {
 }
 
 .left__body__profile {
-    height: 190px;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
-.left__body__profile__item {
+.profile__detail {
+    font-size: 9px;
+    margin-bottom: 10px;
+}
+
+.profile__item {
     margin-left: 9px;
     color: #999999;
 }
 
 .left__body__footer {
     font-weight: 400;
-    font-size: 11px;
-    line-height: 15px;
+    margin-bottom: 20px;
 }
 
-.left__body__footer > select {
+.wrapper__feel {
+    font-size: 11px;
+    line-height: 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.feel__title {
+    margin-bottom: 5px;
+    color: gray;
+}
+
+.feel__select {
     width: 100%;
+    padding: 5px 0px;
+    border-radius: 10px;
+    background-color: aquamarine;
 }
 
 .left__body__footer__title {
@@ -157,7 +188,7 @@ li {
 }
 
 .wrapper__right__header {
-    width: 100%;
+    width: 518px;
     height: 30px;
 
     font-family: 'Sci Fied Bitmap';
@@ -170,17 +201,28 @@ li {
     margin-bottom: 8px;
 }
 
-.wrapper__right__header__title {
+.right__header__title {
     font-size: 16px;
+    margin-left: 30px;
 }
 
-.wrapper__right__header__contents {
+.right__header__contents {
     font-family: 'PFStardust';
+    font-size: 13px;
+    height: 20px;
+    padding-bottom: 26px;
 }
 
 .wrapper__right__body {
     width: 100%;
-    height: 100%;
+    height: 496px;
+
+    border: 1px solid gray;
+    border-radius: 15px;
+    background-color: white;
+
+    margin-left: 5px;
+    padding: 20px 30px;
 }
 
 /* Contents */
