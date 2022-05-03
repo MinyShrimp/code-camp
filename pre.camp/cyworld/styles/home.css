@@ -1,0 +1,87 @@
+@font-face {
+    font-family: 'Sci Fied Bitmap';
+    src: url('../font/scifibit.ttf');
+}
+
+@font-face {
+    font-family: 'Malgun Gothic';
+    src: url('../font/malgun.ttf');
+}
+
+@font-face {
+    font-family: 'PFStardust';
+    src: url('../font/PFStardust.ttf');
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+    font-family: "Malgun Gothic";
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.right__body__updatenews {
+    height: 124px !important;
+}
+
+.updatenews__header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin-bottom: 8px;
+}
+
+.updatenews__line {
+    border-bottom: 1px solid #999;
+    margin-bottom: 8px;
+}
+
+.updatenews__contents {
+    color: #999;
+    font-size: 1px;
+}
+
+.right__body__myvideo {
+    height: 240px;
+    margin-bottom: 26px;
+}
+
+.myvideo__header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin-bottom: 8px;
+}
+
+.title {
+    margin-right: 8px;
+    font-size: 13px;
+    text-align: justify;
+    color: #55b2d4;
+}
+
+.subtitle {
+    font-size: 8px;
+    font-family: 'Sci Fied Bitmap';
+    padding-bottom: 3px;
+}
+
+.myvideo__contents {
+    width: 100%;
+    height: 100%;
+    background-color: #c4c4c4;
+}
