@@ -13,3 +13,10 @@
 | class         | 수업 실습 / 연습 |
 | cyworld       | 과제             |
 | cyworld-mento | 리뷰             |
+
+### 기술 스택
+FrontEnd : HTML, CSS, JS, React.JS
+통신 : Axios, REST API, GraphQL
+BackEnd : JS, Nest.JS
+통신 : TypeORM
+DB : MongoDB, MySQL
