@@ -61,12 +61,12 @@
 
 ### 논리연산자
 
-|      |     |          |                                                 |
-| ---- | --- | -------- | ----------------------------------------------- |
-| &&   | AND | A && B   | 양쪽이 모두 True이면 True를 반환                |
-| \|\| | OR  | A \|\| B | 한쪽만 True여도 True를 반환                     |
-| !    | NOT | !A       | True면 False, False면 True를 반환               |
-| ??   |     | A ?? B   | 왼쪽값이 True면 왼쪽값, False면 오른쪽값을 반환 |
+|      |     |          |                                                        |
+| ---- | --- | -------- | ------------------------------------------------------ |
+| &&   | AND | A && B   | 양쪽이 모두 True이면 True를 반환                       |
+| \|\| | OR  | A \|\| B | 한쪽만 True여도 True를 반환                            |
+| !    | NOT | !A       | True면 False, False면 True를 반환                      |
+| ??   |     | A ?? B   | 왼쪽 값이 undefined면 오른쪽 값, 아니면 왼쪽 값을 반환 |
 
 <b>AND(&&)</b>
 | Value1 | Value2 | Result |
@@ -274,3 +274,44 @@ persons.forEach(p => {
     console.log(`${p.name}님의 나이는 ${p.age}세 입니다.`);
 });
 ```
+
+## 수학 객체
+| `Math`              |                    |
+| ------------------- | ------------------ |
+| `Math.max(a, b, c)` | 최댓값             |
+| `Math.min(a, b, c)` | 최솟값             |
+| `Math.random()    ` | 0~1 사이의 랜덤 수 |
+| `Math.round(1.2)  ` | 반올림             |
+| `Math.ceil(1.2)   ` | 올림               |
+| `Math.floor(1.2)  ` | 버림               |
+
+```js
+// 0 ~ 1 사이의 랜덤한 수
+Math.random()
+
+// 0 ~ 999999 인 숫자
+const rand = Math.random() * 1000000 
+// 0 ~ 999999 인 정수
+Math.floor( rand )
+
+// 가장 대표적인 랜덤 함수
+// min ~ max - 1 의 랜덤한 정수 반환
+function rand(min, max) {
+    return Math.floor( Math.random() * ( max - min ) + min );
+}
+
+function getCode() {
+    return rand( 100000, 1000000 );
+}
+```
+
+## DOM 조작
+> Document Object Model
+
+```js
+// tag = HTML 파일에서."tagID"라는 id를 가진 태그를 선택한다
+const tag = document.getElementById("tagID");
+```
+| html             | js             |
+| ---------------- | -------------- |
+| 04-document.html | 04-document.js |
