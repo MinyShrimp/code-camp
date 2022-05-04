@@ -105,6 +105,7 @@ button {
 
 .card__subtitle {
     font-size: 10px;
+    margin-bottom: 12px;
 }
 
 .card__input-group {
@@ -175,4 +176,8 @@ button {
     background-color: white;
     border: 1px solid black;
     border-radius: 5px;
+}
+
+.lotto_item {
+    font-size: 11px;
 }
