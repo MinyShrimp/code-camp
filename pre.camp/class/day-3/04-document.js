@@ -8,6 +8,8 @@ function change() {
     const hello = document.getElementById('greeting');
     const text  = document.getElementById('text');
 
-    hello.innerText = text.value;
+    if( text.value !== "" ) {
+        hello.innerText = text.value;
+    }
     text.value = "";
 }
