@@ -1,7 +1,16 @@
+@font-face {
+    font-family: 'Sci Fied Bitmap';
+    src: url('../font/scifibit.ttf');
+}
 
 @font-face {
     font-family: 'Malgun Gothic';
-    src: url('../static/font/malgun.ttf');
+    src: url('../font/malgun.ttf');
+}
+
+@font-face {
+    font-family: 'PFStardust';
+    src: url('../font/PFStardust.ttf');
 }
 
 * {

@@ -15,8 +15,15 @@
 | cyworld-mento | 리뷰             |
 
 ### 기술 스택
-FrontEnd : HTML, CSS, JS, React.JS
-통신 : Axios, REST API, GraphQL
-BackEnd : JS, Nest.JS
-통신 : TypeORM
-DB : MongoDB, MySQL
+|          |                          |
+| -------- | ------------------------ |
+| FrontEnd | HTML, CSS, JS, React.JS  |
+| 통신     | Axios, REST API, GraphQL |
+| BackEnd  | JS, Nest.JS              |
+| 통신     | TypeORM                  |
+| DB       | MongoDB, MySQL           |
+
+### 웹앱 서비스 기본구조
+> FrontEnd -(Request)-> BackEnd -> DB -> BackEnd -(Response)-> FrontEnd
+
+![](../pictures/WebAppServiceFrame.png)
