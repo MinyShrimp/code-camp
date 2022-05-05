@@ -12,7 +12,11 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
     checkitems.forEach(item => {
         item.addEventListener('change', (e) => {
-            // TODO
+            let count = 0, max_count = checkitems.length;
+            checkitems.forEach(ci => {
+                if( ci.checked ) { count += 1; }
+            });
+            allCheckDom.checked = count === max_count;
         });
     });
 })
