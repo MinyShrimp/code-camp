@@ -31,4 +31,3 @@ const clickBtn = () => {
 document.addEventListener('DOMContentLoaded', () => {
     setInterval(clickBtn, 100);
 });
-

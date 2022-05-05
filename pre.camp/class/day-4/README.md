@@ -27,3 +27,61 @@ function greetingPersons( persons ) {
 }
 greetingPersons(persons);
 ```
+
+## 내장함수
+> 자주 사용되는 함수를 자바스크립트에 내장하여 편리하게 이용할 수 있도록 한 것
+
+| `setInterval(func, ms)` | `setTimeout(func, ms)` |
+| ----------------------- | ---------------------- |
+| 계속 반복               | 한 번만 반복           |
+| return => id            | return => id           |
+
+| `clearInterval(id)` |
+| ------------------- |
+| Interval Stop       |
+
+```js
+setTimeout(function () {
+    console.log("3초가 지났습니다");
+}, 3000);
+
+setTimeout(() => {
+    console.log("3초가 지났습니다");
+}, 3000);
+
+setInterval(function () {
+    console.log("1초가 지났습니다");
+}, 1000);
+
+setInterval(() => {
+    console.log("1초가 지났습니다");
+}, 1000);
+```
+```js
+let time = 10;
+const intervalID = setInterval(() => {
+    if(time <= 0) {
+        clearInterval(intervalID);
+        return ;
+    }
+    console.log(time--);
+}, 1000);
+```
+```js
+const getStringZero( value ) {
+    return String(value).padStart(2, "0");
+}
+
+let time = 180;
+const intervalID = setInterval(() => {
+    if(time <= 0) {
+        clearInterval(intervalID);
+        return ;
+    }
+    const min = getStringZero( Math.floor( time / 60 ) );
+    const sec = getStringZero( time % 60 );
+    console.log(`${min}:${sec}`);
+
+    time -= 1;
+}, 1000);
+```
