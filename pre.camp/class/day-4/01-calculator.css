@@ -8,6 +8,12 @@ body {
     padding: 5px;
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .forms {
     display: flex;
     flex-direction: column;
@@ -22,6 +28,7 @@ body {
 
 #a, #b {
     width: 100px;
+    text-align: right;
 }
 
 #hr {
