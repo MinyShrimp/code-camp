@@ -86,7 +86,7 @@
 ```
 <b>display: flex</b>
 
-![](../pictures/flex-direction.png)
+![](../../pictures/flex-direction.png)
 | flex-direction | justify-content | align-items |
 | -------------- | --------------- | ----------- |
 | row            | 가로            | 세로        |

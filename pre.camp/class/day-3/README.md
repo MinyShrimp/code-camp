@@ -4,7 +4,7 @@
 ## 웹앱 서비스 기본구조
 > FrontEnd -(Request)-> BackEnd -> DB -> BackEnd -(Response)-> FrontEnd
 
-![](../../../pictures/WebAppServiceFrame.png)
+![](../../pictures/WebAppServiceFrame.png)
 
 # JS
 ## 연산자
