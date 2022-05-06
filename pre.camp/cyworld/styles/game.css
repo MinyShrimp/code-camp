@@ -1,16 +1,11 @@
 @font-face {
-    font-family: 'Sci Fied Bitmap';
-    src: url('../font/scifibit.ttf');
-}
-
-@font-face {
-    font-family: 'Malgun Gothic';
-    src: url('../font/malgun.ttf');
-}
-
-@font-face {
     font-family: 'PFStardust';
     src: url('../font/PFStardust.ttf');
+}
+
+@font-face {
+    font-family: 'Sci Fied Bitmap';
+    src: url('../font/scifibit.ttf');
 }
 
 * {
@@ -126,8 +121,7 @@ button {
 
     font-size: 11px;
     padding-left: 8px;
-    padding-bottom: 2px;
-
+    
     margin-right: 8px;
 }
 
@@ -142,8 +136,6 @@ button {
     border: 1px solid black;
     border-radius: 5px;
     background-color: white;
-
-    padding-bottom: 4px;
 
     font-size: 11px;
 }
