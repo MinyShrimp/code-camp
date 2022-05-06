@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+    <head>
+        <title>08 - Phone</title>
+        <meta charset="utf-8"/>
+
+        <script src="./08-phone.js"></script>
+        <style>
+            input {
+                width: 50px;
+                text-align: center;
+            }
+
+            input[type='number']::-webkit-inner-spin-button,
+            input[type='number']::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                        appearance: none;
+            }
+
+            .input-group {
+                margin-bottom: 8px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="input-group">
+            <input
+                id="phone_1"
+                class="phone"
+                type="number"
+            /> - 
+            <input
+                id="phone_2"
+                class="phone"
+                type="number"
+            /> - 
+            <input
+                id="phone_3"
+                class="phone"
+                type="number"
+            />
+        </div>
+
+        <button id="submit" disabled>제출</button>
+    </body>
+</html>
