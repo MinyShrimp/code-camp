@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <script src="js/index.js"></script>
+        <meta charset="UTF-8" />
+        <title>Final Project</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="main-box">
+                <div class="title">코드캠프 회원가입</div>
+                <div class="form">
+                    <div class="input-group">
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="이메일을 입력해주세요"
+                        />
+                        <label for="email" id="email-label"
+                            >이메일이 올바르지 않습니다.</label
+                        >
+                    </div>
+
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="이름을 입력해주세요"
+                        />
+                        <label for="name" id="name-label"
+                            >이름이 올바르지 않습니다.</label
+                        >
+                    </div>
+
+                    <div class="input-group">
+                        <input
+                            type="password"
+                            id="pwd"
+                            name="pwd"
+                            placeholder="비밀번호를 입력해주세요"
+                        />
+                        <label for="pwd" id="pwd-label"
+                            >비밀번호가 올바르지 않습니다.</label
+                        >
+                    </div>
+
+                    <div class="input-group">
+                        <input
+                            type="password"
+                            id="pwd-again"
+                            name="pwd-again"
+                            placeholder="비밀번호를 다시 입력해주세요"
+                        />
+                        <label for="pwd-again" id="pwd-again-label"
+                            >비밀번호가 올바르지 않습니다.</label
+                        >
+                    </div>
+
+                    <div class="phone-number">
+                        <input
+                            type="text"
+                            id="phone1"
+                            name="phone1"
+                            maxlength="3"
+                        />
+                        <div class="slash">-</div>
+                        <input
+                            type="text"
+                            id="phone2"
+                            name="phone2"
+                            maxlength="4"
+                        />
+                        <div class="slash">-</div>
+                        <input
+                            type="text"
+                            id="phone3"
+                            name="phone3"
+                            maxlength="4"
+                        />
+                    </div>
+
+                    <div class="auth-number">
+                        <input
+                            type="text"
+                            class="auth-input"
+                            name="auth-input"
+                            id="auth-input"
+                        />
+                        <button
+                            class="auth-call"
+                            type="button"
+                            id="auth-btn"
+                            disabled
+                        >
+                            인증번호 전송
+                        </button>
+                    </div>
+
+                    <div class="auth-number">
+                        <div class="auth-timer" id="auth-timer">3:00</div>
+                        <button
+                            class="auth-ok"
+                            type="button"
+                            id="auth-ok"
+                            disabled
+                        >
+                            인증 확인
+                        </button>
+                    </div>
+
+                    <div class="input-group">
+                        <select id="country" class="country" name="country">
+                            <option disabled selected value="none">
+                                지역을 선택해주세요
+                            </option>
+                            <option value="seoul">서울</option>
+                            <option value="incheon">인천</option>
+                            <option value="gyeonggi">경기</option>
+                        </select>
+                        <label for="country" id="country-label"
+                            >지역을 선택해주세요.</label
+                        >
+                    </div>
+
+                    <div class="input-group" style="text-align: center">
+                        <div id="gender" class="gender">
+                            <div>
+                                <input
+                                    type="radio"
+                                    id="female"
+                                    name="gender"
+                                    value="female"
+                                />
+                                <label for="female">여성</label>
+                            </div>
+                            <div>
+                                <input
+                                    type="radio"
+                                    id="man"
+                                    name="gender"
+                                    value="man"
+                                />
+                                <label for="man">남성</label>
+                            </div>
+                        </div>
+                        <label id="gender-label">성별을 선택해주세요.</label>
+                    </div>
+
+                    <hr />
+                    <button type="button" class="submit" id="submit" disabled>
+                        가입하기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
