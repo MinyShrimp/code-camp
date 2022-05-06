@@ -1,11 +1,14 @@
 
+function rand(min, max) {
+    return Math.floor( Math.random() * ( max - min ) + min );
+}
+
 function getRandomToken() {
-    const min = 100000, max = 1000000;
-    return Math.floor( Math.random() * ( max - min ) + min ).toString();
+    return String( rand(0, 1000000) ).padStart(6, "0");
 }
 
 function onetotwo( num ) {
-    return num >= 10 ? num.toString() : "0" + num;
+    return num.toString().padStart(2, "0");
 }
 
 var token = "000000";
@@ -13,7 +16,7 @@ var timer = 180;
 
 var signup_value = {
     email: "", name: "", password: "",
-    phone: "", country: "", sex: ""
+    phone: "", country: "", gender: ""
 };
 
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -31,14 +34,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const pwd        = document.getElementById('pwd');
     const pwd_again  = document.getElementById('pwd-again');
     const country    = document.getElementById('country');
-    const sex        = document.getElementById('sex');
+    const gender     = document.getElementById('gender');
 
     const email_label     = document.getElementById('email-label');
     const name_label      = document.getElementById('name-label');
     const pwd_label       = document.getElementById('pwd-label');
     const pwd_again_label = document.getElementById('pwd-again-label');
     const country_label   = document.getElementById('country-label');
-    const sex_label       = document.getElementById('sex-label');
+    const gender_label    = document.getElementById('gender-label');
 
     var phone_number = ["", "", ""];
     var input_value = "";
@@ -74,9 +77,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
         country_label.style.display = e.target.value === 'none' ? "block" : "none";
     });
 
-    sex.addEventListener('change', (e) => {
-        signup_value.sex = e.target.value;
-        sex_label.style.display = "none";
+    gender.addEventListener('change', (e) => {
+        signup_value.gender = e.target.value;
+        gender_label.style.display = "none";
     });
 
     phone1.addEventListener('input', (e) => {
@@ -204,7 +207,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             return false;
         }
 
-        if( sex_label.style.display != "none" ) {
+        if( gender_label.style.display != "none" ) {
             alert("성별을 선택해주세요.");
             return false;
         }

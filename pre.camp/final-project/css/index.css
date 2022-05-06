@@ -1,6 +1,10 @@
-body {
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+body {
     width: 100vw;
     height: 100vh;
     background: #e5e5e5;
@@ -22,29 +26,35 @@ body {
     width: 540px;
     height: 960px;
     border: 1px solid black;
+
     display: flex;
     justify-content: center;
     align-content: center;
     flex-wrap: wrap;
     flex-direction: column;
+
     border-radius: 20px;
-    box-shadow: 0px 0px 20px #0068ff;
+    box-shadow: 7px 7px 39px rgba(0, 104, 255, 0.25);
     border: none;
     padding: 2em;
 }
 
 .title {
     color: #0068ff;
-    margin-bottom: 2em;
+    font-size: 32px;
+    margin-bottom: 30px;
 }
 
-.main-box > form {
+.form {
     width: 380px;
+    display: flex;
+    flex-direction: column;
 }
 
 input {
     border-radius: 7px;
     border: 1px solid gray;
+    font-size: 16px;
 }
 
 .input-group {
@@ -64,7 +74,6 @@ input {
 }
 
 .phone-number {
-    width: 395px;
     height: 40px;
     display: flex;
     justify-content: space-between;
@@ -85,16 +94,25 @@ input {
 }
 
 .auth-number {
-    width: 395px;
     display: flex;
     justify-content: flex-end;
     margin-bottom: 1em;
+}
+
+#auth-btn {
+    color: #0068ff;
+    border: 1px solid #d2d2d2;
+}
+
+#auth-btn:disabled {
+    color: gray;
 }
 
 .auth-number > button {
     width: 120px;
     height: 40px;
     border-radius: 7px;
+    font-size: 16px;
 }
 
 .auth-input {
@@ -102,6 +120,8 @@ input {
     margin-right: 1em;
     text-align: right;
     padding-right: 11px;
+    border: 1px solid #d2d2d2;
+    color: #0068ff;
 }
 
 .auth-call {
@@ -115,6 +135,7 @@ input {
     align-content: center;
     flex-wrap: wrap;
     font-size: 18px;
+    color: #0068ff;
 }
 
 .auth-ok {
@@ -124,30 +145,32 @@ input {
     cursor: pointer;
 }
 
+.auth-ok:disabled {
+    border: 1px solid #d2d2d2;
+}
+
 #auth-btn {
     cursor: pointer;
 }
 
 .country {
-    width: 395px;
+    width: 100%;
     height: 60px;
     border-radius: 7px;
     border: 1px solid gray;
     padding-left: 11px;
 }
 
-.sex {
+.gender {
     display: flex;
     justify-content: space-evenly;
 }
 
 hr {
-    width: 398px;
     margin-bottom: 1em;
 }
 
 .submit {
-    width: 398px;
     height: 75px;
     border-radius: 10px;
     border: 1px solid gray;
