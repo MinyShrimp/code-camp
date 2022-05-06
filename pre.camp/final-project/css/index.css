@@ -1,0 +1,165 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #e5e5e5;
+}
+
+.container {
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.main-box {
+    background: white;
+    margin: 0 auto;
+    width: 540px;
+    height: 960px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px #0068ff;
+    border: none;
+    padding: 2em;
+}
+
+.title {
+    color: #0068ff;
+    margin-bottom: 2em;
+}
+
+.main-box > form {
+    width: 380px;
+}
+
+input {
+    border-radius: 7px;
+    border: 1px solid gray;
+}
+
+.input-group {
+    margin-bottom: 1em;
+}
+
+.input-group > input {
+    width: 100%;
+    height: 60px;
+    padding-left: 11px;
+    margin-bottom: 1px;
+}
+
+.input-group > label {
+    color: red;
+    font-size: 13px;
+}
+
+.phone-number {
+    width: 395px;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+}
+
+.phone-number > input {
+    width: 100px;
+    height: 100%;
+    text-align: center;
+    color: #0068ff;
+}
+
+.slash {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.auth-number {
+    width: 395px;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1em;
+}
+
+.auth-number > button {
+    width: 120px;
+    height: 40px;
+    border-radius: 7px;
+}
+
+.auth-input {
+    width: 260px;
+    margin-right: 1em;
+    text-align: right;
+    padding-right: 11px;
+}
+
+.auth-call {
+    background: white;
+    border: 1px solid gray;
+}
+
+.auth-timer {
+    margin-right: 1em;
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    font-size: 18px;
+}
+
+.auth-ok {
+    background: #0068ff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#auth-btn {
+    cursor: pointer;
+}
+
+.country {
+    width: 395px;
+    height: 60px;
+    border-radius: 7px;
+    border: 1px solid gray;
+    padding-left: 11px;
+}
+
+.sex {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+hr {
+    width: 398px;
+    margin-bottom: 1em;
+}
+
+.submit {
+    width: 398px;
+    height: 75px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    background: white;
+    font-size: 20px;
+    color: #0068ff;
+    cursor: pointer;
+}
+
+button:disabled {
+    background: #e5e5e5;
+    border: 1px solid #888;
+    color: #888;
+    cursor: auto;
+}
