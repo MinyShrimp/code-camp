@@ -186,6 +186,8 @@ li {
 
     font-size: 9px;
     color: #55b2d4;
+
+    z-index: 2;
 }
 
 .wrapper__right__header {
@@ -242,6 +244,7 @@ li {
 }
 
 .menu__item {
+    z-index: 1;
     position: relative;
     left: 1px;
 
@@ -261,6 +264,8 @@ li {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+
+    cursor: pointer;
 }
 
 .menu__select {
