@@ -19,7 +19,7 @@ var signup_value = {
     phone: "", country: "", gender: ""
 };
 
-window.addEventListener('DOMContentLoaded', (event) => {
+window.addEventListener('DOMContentLoaded', () => {
     const auth_send  = document.getElementById('auth-btn');
     const auth_input = document.getElementById('auth-input');
     const auth_timer = document.getElementById('auth-timer');
