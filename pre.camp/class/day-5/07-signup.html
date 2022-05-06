@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+    <head>
+        <title>07 - Signup</title>
+        <meta charset="utf-8" />
+        <script src="./07-signup.js"></script>
+        <style>
+            .input-group {
+                margin-bottom: 8px;
+            }
+            .check-text {
+                color: red;
+                font-size: 8px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="input-group">
+            <input
+                id="email"
+                type="email"
+                oninput="emailCheck();"
+                placeholder="이메일을 입력해주세요"
+            />
+            <div class="check-text" id="email_check"> 이메일이 비어있습니다. </div>
+        </div>
+        <div class="input-group">
+            <input
+                id="pwd"
+                type="password"
+                oninput="pwdCheck();"
+                placeholder="비밀번호를 입력해주세요"
+            />
+            <div class="check-text" id="pwd_check"> 비밀번호가 비어있습니다. </div>
+        </div>
+        <div class="input-group">
+            <input
+                id="pwd_again"
+                type="password"
+                oninput="pwdAgainCheck();"
+                placeholder="비밀번호를 다시 입력해주세요"
+            />
+            <div class="check-text" id="pwd_again_check"> 비밀번호가 다릅니다. </div>
+        </div>
+
+        <button id="submit" disabled>제출</button>
+    </body>
+</html>
