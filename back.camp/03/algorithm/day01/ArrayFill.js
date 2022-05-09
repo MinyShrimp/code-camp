@@ -3,7 +3,7 @@
 
 function solution(phone) {
     let arr = [...phone], length = phone.length;
-    for (let i = phone.length - 1; i > phone.length - 5; i--) {
+    for (let i = length - 1; i > length - 5; i--) {
         arr[i] = "*";
     }
     return arr.join("");

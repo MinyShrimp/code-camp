@@ -10,25 +10,25 @@ const score = {
     easy: 234,
     normal: 759,
     hard: 677,
-    nightmare: 46
-  };
-  
-  const arr = Object.entries(score);
-  console.log(arr);
-  // [
-  //   [ 'easy', 234 ],
-  //   [ 'normal', 759 ],
-  //   [ 'hard', 677 ],
-  //   [ 'nightmare', 46 ]
-  // ]
-  
-  let result = [];
-  
-  // for문을 완성해주세요.
-  arr.forEach(v => {
+    nightmare: 46,
+};
+
+const arr = Object.entries(score);
+console.log(arr);
+// [
+//   [ 'easy', 234 ],
+//   [ 'normal', 759 ],
+//   [ 'hard', 677 ],
+//   [ 'nightmare', 46 ]
+// ]
+
+let result = [];
+
+// for문을 완성해주세요.
+arr.forEach((v) => {
     const key = v[0], value = v[1];
-    result.push( JSON.parse(`{ "${key}": ${value} }`) );
-  });
-  
-  console.log("결과", result);
-  // [ { easy: 234 }, { normal: 759 }, { hard: 677 }, { nightmare: 46 } ]
+    result.push(JSON.parse(`{ "${key}": ${value} }`));
+});
+
+console.log("결과", result);
+// [ { easy: 234 }, { normal: 759 }, { hard: 677 }, { nightmare: 46 } ]
