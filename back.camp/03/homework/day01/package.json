@@ -1,7 +1,7 @@
 {
     "name": "day01",
     "version": "1.0.0",
-    "main": "index.js",
+    "main": "resident-registration-number.js",
     "license": "MIT",
     "type": "module"
 }
