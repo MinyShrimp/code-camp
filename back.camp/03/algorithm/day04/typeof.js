@@ -18,7 +18,5 @@ function solution(arr) {
 }
 
 const arr = [4, 6, "aa", 2, "b", 3];
-
 const result = solution(arr);
-
 console.log(result); // [15, "aab"]
