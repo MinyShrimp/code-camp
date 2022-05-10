@@ -2,11 +2,9 @@
 // 뒤의 4자리를 "*"로 바꿔서 리턴해주세요.
 
 function solution(phone) {
-    let arr = [...phone], length = phone.length;
-    for (let i = length - 1; i > length - 5; i--) {
-        arr[i] = "*";
-    }
-    return arr.join("");
+    let arr = [...phone];
+    let result = arr.fill('*', 7, arr.length);
+    return result.join("");
 }
 
 console.log("결과", solution("01012345678")); // "0101234****"
