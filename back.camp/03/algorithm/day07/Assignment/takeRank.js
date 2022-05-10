@@ -34,7 +34,7 @@ function takeRank(arr) {
         result[v].forEach(r => {
             r.rank = rank_index;
         });
-        rank_index += 1;
+        rank_index += result[v].length;
     });
 
     // 4. index를 기준으로 rank 넣기
