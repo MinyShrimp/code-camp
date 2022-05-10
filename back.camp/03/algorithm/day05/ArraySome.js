@@ -7,7 +7,6 @@ function solution(element, index, array) {
     } else {
         console.log(index);
     }
-    
     return element === null;
 }
 
