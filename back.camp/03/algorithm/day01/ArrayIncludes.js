@@ -20,6 +20,8 @@ function solution(front, back) {
     }
 
     return result;
+
+    // return back.filter(x => front.includes(x));
 }
 
 const front = ["아라", "세준", "재환"];

@@ -3,5 +3,7 @@ let arr = [1, 2, 3, 4, 5, 6, 7, 8];
 
 function fill(arr) {
     // fill 메서드를 사용해 주세요.
+    return arr.fill(10, 1, 5);
 }
+
 console.log(fill(arr)); // [1, 10, 10, 10, 10, 6, 7, 8]
