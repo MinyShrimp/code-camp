@@ -95,9 +95,6 @@ FRONT <-(Response)- BACK
 ### GraphQL
 > API를 위한 쿼리 언어, 이미 존재하는 데이터로 쿼리를 수행하기 위한 런타임
 
-* http://example.codebootcamp.co.kr/graphql
-* http://backendclass.codebootcamp.co.kr/graphql
-
 | Front  |                         <->                          | Back     |
 | ------ | :--------------------------------------------------: | -------- |
 | apollo |    ==  1번 게시글의 작성자, 제목만 가져다줘 ~ =>     | board(1) |
@@ -170,4 +167,7 @@ query {
 
 ## 데이터 전송 실습
 ### Postman
+
 ### Playground
+* http://example.codebootcamp.co.kr/graphql
+* http://backendclass.codebootcamp.co.kr/graphql
