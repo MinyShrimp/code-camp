@@ -420,13 +420,54 @@ query {
 ```
 <!- QUERY ---------------------------------------!>
 query {
-    fetchBoards() {
+    fetchBoards {
         number, writer, title, contents, like, createdAt
     }
 }
 <!-----------------------------------------------!>
 <!- RESULT --------------------------------------!>
-아무 반응이 없다.
+(1페이지가 나옴)
+{
+    "data": {
+        "fetchBoards": [
+        {
+            "number": 253,
+            "writer": "이샘미",
+            "title": "루팡",
+            "contents": "재밌는거",
+            "like": 0,
+            "createdAt": "2022-05-11T11:43:01.133Z"
+        },
+        {
+            "number": 252,
+            "writer": "이샘미",
+            "title": "루팡",
+            "contents": "재밌는거",
+            "like": 0,
+            "createdAt": "2022-05-11T11:35:12.234Z"
+        },
+        {
+            ...
+        },
+        {
+            "number": 245,
+            "writer": "이승훈",
+            "title": "코드",
+            "contents": "캠프",
+            "like": 0,
+            "createdAt": "2022-05-11T10:53:57.936Z"
+        },
+        {
+            "number": 244,
+            "writer": "민준",
+            "title": "장르",
+            "contents": "ㅇㅇ",
+            "like": 0,
+            "createdAt": "2022-05-11T10:53:17.901Z"
+        }
+        ]
+    }
+}
 <!-----------------------------------------------!>
 ```
 
