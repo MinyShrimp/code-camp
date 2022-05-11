@@ -5,9 +5,6 @@ const DAYS = ["일", "월", "화", "수", "목", "금", "토"];
 let day = new Date().getDay();
 
 switch (day) {
-    case 0:
-        dayName = "일요일";
-        break;
     case 1:
         dayName = "월요일";
         break;
@@ -24,7 +21,8 @@ switch (day) {
         dayName = "금요일";
         break;
     case 6:
-        dayName = "토요일";
+    case 0:
+        dayName = "주말입니다";
         break;
 }
 console.log(dayName);
