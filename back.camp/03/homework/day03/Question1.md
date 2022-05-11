@@ -1,8 +1,10 @@
-
 # graphql-API 문제 1
 > http://example.codebootcamp.co.kr/graphql 에서 제공하는 API를 사용하세요.
 
+## CHECK LIST
+[X]  GRAPHQL 연습하기 Lv.1의 모든 문제를 직접 플레이그라운드에서 실행했다.
 
+## QUESTIONS
 1) 철수의 나이는 몇살인가요?(나이만 조회해 주세요.)
 ```
 <!- QUERY ---------------------------------------!>
