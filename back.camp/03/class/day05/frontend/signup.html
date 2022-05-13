@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+    <head>
+        <title> Day 5 - Singup </title>
+        <meta charset="utf-8" >
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            const goServer = () => {
+                const phoneNumber = document.getElementById('phone').value;
+                const statusDom = document.getElementById('status');
+                const tokenDom  = document.getElementById('token');
+
+                axios.post('http://localhost:3000/tokens/phone', {
+                    phone: phoneNumber
+                }).then((res) => {
+                    statusDom.innerText = res.status;
+                    tokenDom.innerText  = res.data.msg;
+                }).catch((err) => {
+                    statusDom.innerText = err.response.status;
+                    tokenDom.innerText  = err.response.data;
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <div>
+            휴대폰 번호: <input type="text" id="phone" onkeypress="javascript:if(window.event.keyCode === 13) { goServer(); }" />
+            <button id="auth_submit" type="button" onclick="goServer();"> 인증하기 </button>
+        </div>
+
+        <div>인증 상태: <spen id="status"></spen></div>
+        <div> 토큰: <span id="token"> </span> </div>
+
+        <button> 회원가입하기 </button>
+    </body>
+</html>
