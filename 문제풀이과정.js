@@ -1,6 +1,6 @@
-// 객체를 순회하여 | OK | 순회는 반복문이랑 똑같은 말 | for 문을 쓰면되는데,
-// key가 title이거나 name일 경우 | OK | 경우는 if문이랑 똑같은 말
-// value를 대문자로 바꿔주세요 | OK
+// 객체를 순회하여 | 순회 === for
+// key가 title이거나 name일 경우 | 경우 === if
+// value를 대문자로 바꿔주세요   | 대문자 === toUpperCase()
 
 const obj = {
     title: "The Title",
