@@ -1,6 +1,7 @@
 import express        from "express";
 import swaggerUi      from "swagger-ui-express";
 import swaggerJsdoc   from "swagger-jsdoc";
+import cors           from "cors";
 
 import swaggerOptions from "./swagger/config.js";
 
@@ -63,6 +64,9 @@ const app = express();
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 /* middleware */
+app.use(cors({
+    origin: [ "http://localhost:5500", "http://127.0.0.1:5500" ]
+}));
 app.use( express.json() );
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
