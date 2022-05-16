@@ -1,4 +1,6 @@
-import { CoolSMSConfig } from "../00-config/config.js";
+// import { CoolSMSConfig } from "../00-config/config.js";
+import coolsms from "coolsms-node-sdk";
+import dotenv from "dotenv";
 
 function getRandomInterger(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
@@ -27,12 +29,19 @@ export function isValidPhoneNumber(phoneNumber) {
     return phoneNumberLen >= 10 && phoneNumberLen <= 11;
 }
 
-export function sendSMS(phoneNumber, token) {
-    const value = {
-        key: "api key",
-        user_id: "host id",
-        sender: "host phone number",
-        receiver: phoneNumber,
-        msg: token,
-    };
+export async function sendSMS(phoneNumber, token) {
+    const msgService = new coolsms.default(process.env.COOL_SMS_KEY, process.env.COOL_SMS_SECRET);
+
+    try {
+        const res = await msgService.sendOne({
+            to: phoneNumber,
+            from: process.env.COOL_SMS_HOST_PHONE,
+            text: `[코드캠프] 인증번호 : ${token}`
+        });
+        console.log(res);
+        return res.statusCode === '2000';
+    } catch(e) {
+        console.log(e);
+        return false;
+    }
 }
