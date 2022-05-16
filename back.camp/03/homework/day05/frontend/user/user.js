@@ -2,13 +2,21 @@
 const getUser = async () => {
     /////////////////////////////////////////
 
-    const res = await goServerGet( '/users' );
+    axios
+        .get( "http://localhost:3000/users" )
+        .then((res) => {
+            for(let i = 0; i < res.data.length; i++) {
+                createUserDiv( res.data[i] );
+            }
+        });
+
+    // const res = await goServerGet( '/users' );
 
     // 받은 데이터로 createUserDiv함수를 이용해
     // 목록 화면을 완성해주세요.
-    res.data.forEach(value => {
-        createUserDiv( value );
-    });
+    // res.data.forEach(value => {
+    //     createUserDiv( value );
+    // });
     
     /////////////////////////////////////////
 };

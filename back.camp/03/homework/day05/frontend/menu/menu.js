@@ -5,17 +5,26 @@ const getCoffee = async () => {
     /////////////////////////////////////////
 
     // 1. 백엔드 서버로 /starbucks API 요청해 커피 데이터를 받는다.
-    const res = await goServerGet( '/starbucks' );
+    axios
+        .get( "http://localhost:3000/starbucks" )
+        .then((res) => {
+            for(let i = 0; i < res.data.length; i++) {
+                createMenuCard( res.data[i] );
+            }
+        });
 
-    // 2. 받은 데이터로 createMenuCard 함수를 이용해 메뉴 카드를 모두 만들어주세요.
-    res.data.forEach(value => {
-        createMenuCard( value );
-    });
+    // const res = await goServerGet( '/starbucks' );
+
+    // // 2. 받은 데이터로 createMenuCard 함수를 이용해 메뉴 카드를 모두 만들어주세요.
+    // res.data.forEach(value => {
+    //     createMenuCard( value );
+    // });
     
     /////////////////////////////////////////
 };
 
-const createMenuCard = (data) => {
+// 
+const createMenuCard = ( data ) => {
     const menuCardWrapper = document.createElement("div");
     menuCardWrapper.className = "Menu_Card_Wrapper";
 
