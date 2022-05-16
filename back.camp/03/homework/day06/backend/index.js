@@ -1,9 +1,14 @@
 import express        from "express";
+import cors           from "cors";
+import path           from "path";
+import dotenv         from "dotenv";
 import swaggerUi      from "swagger-ui-express";
 import swaggerJsdoc   from "swagger-jsdoc";
-import cors           from "cors";
 
 import swaggerOptions from "./swagger/config.js";
+import { token, getRandomToken, isValidToken } from "./src/token.js";
+import { isValidPhoneNumber, sendSMS } from "./src/phone.js";
+import { checkValidationEmail, getWelcomTemplate, sendTemplateToEmail } from './src/email.js';
 
 /* Data */
 const Users = [
@@ -63,6 +68,12 @@ const port = 3000;
 const app = express();
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
+// .env setting
+const __dirname = path.resolve();
+dotenv.config({
+    path: path.join(__dirname, '.env')
+});
+
 /* middleware */
 app.use(cors({
     origin: [ "http://localhost:5500", "http://127.0.0.1:5500" ]
@@ -81,6 +92,67 @@ app.get('/starbucks', ( req, res ) => {
     res.send( Coffees );
 });
 
+// POST http://localhost:3000/tokens/phone
+app.post('/tokens/phone', async ( req, res ) => {
+    const body = req.body;
+    const myPhone = body.phone;
+
+    const isValid = isValidPhoneNumber( myPhone );
+    if( isValid ) {
+        getRandomToken( 6 );
+
+        const isOK = await sendSMS(myPhone, token);
+        if( isOK ) {
+            res.send("발송 성공");
+        } else {
+            res.status(400).send("발송 실패");
+        }
+    } else {
+        res.status(400).send("발송 실패");
+    }
+});
+
+// POST http://localhost:3000/tokens/phone
+app.post('/tokens/phone/submit', async ( req, res ) => {
+    const body = req.body;
+    const submitToken = body.token;
+
+    const isValid = isValidToken( submitToken );
+    if( isValid ) {
+        const isOK = true;
+        if( isOK ) {
+            res.send("인증 확인");
+        } else {
+            res.status(400).send("인증 실패");
+        }
+    } else {
+        res.status(400).send("인증 실패");
+    }
+});
+
+// POST http://localhost:3000/users
+app.post('/users', async ( req, res ) => {
+    const user = req.body;
+
+    // 1. 이메일이 정상인지 확인 ( 1 - 존재여부, 2-"@" 포함여부 )
+    const isValid = checkValidationEmail(user.email);
+    if(isValid) {
+        // 2. 가입환영 템플릿 만들기
+        const myTemplate = getWelcomTemplate(user);
+
+        // 3. 이메일에 가입환영 템플릿 전송하기
+        const result = await sendTemplateToEmail(user.email, myTemplate);
+        if(result) {
+            res.send("가입 완료");    
+        } else {
+            res.status(400).send("가입 실패");
+        }
+    } else {
+        res.status(400).send("가입 실패");
+    }
+})
+
+/* start */
 app.listen(port, '0.0.0.0', () => {
     console.log(`Example app listening on port ${port}`);
 });

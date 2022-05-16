@@ -12,6 +12,8 @@
 
         <script src="../server/config.js"></script>
         <script src="../server/server.js"></script>
+
+        <script src="./timer.js"></script>
         <!-------------->
 
         <script src="./index.js"></script>
@@ -37,7 +39,7 @@
                     <span class="SignupInputName">주민등록번호</span>
                     <div style="display: flex; align-items: center">
                         <input
-                            id="SignupPersonal"
+                            id="SignupPersonalPrefix"
                             style="width: 40%; text-align: center"
                             class="SignupInput"
                             type="text"
@@ -53,6 +55,7 @@
                             >-
                         </span>
                         <input
+                            id="SignupPersonalSuffix"
                             style="width: 40%; text-align: center"
                             class="SignupInput"
                             type="password"
@@ -92,6 +95,7 @@
                             />
                         </div>
                         <span
+                            id="goSubmitBtn"
                             class="NumberVailidationBtn"
                             onclick="getValidationNumber()"
                             >인증 번호 전송</span
@@ -109,6 +113,7 @@
                         />
                         <span id="LimitTime">1:00</span>
                         <div
+                            id="okSubmitBtn"
                             class="NumberVailidationBtn"
                             onclick="submitToken()"
                         >
