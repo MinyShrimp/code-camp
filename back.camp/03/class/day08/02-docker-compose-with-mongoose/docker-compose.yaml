@@ -6,6 +6,8 @@ services:
         image: mongo:5
         ports:
             - 27017:27017
+        environment:
+            - TZ=Asia/Seoul
 
     # Express
     my-express:
@@ -25,3 +27,14 @@ services:
         #   - host:container
         volumes:
             - .:/app
+
+        # 의존성 설정
+        depends_on:
+            - my-db
+
+        # 환경 변수 설정
+        environment:
+            - TZ=Asia/Seoul
+
+        # 재시작 설정
+        restart: always
