@@ -1,0 +1,40 @@
+version: "3.7"
+
+services:
+    # Database
+    my-db: 
+        image: mongo:5
+        ports:
+            - 27017:27017
+        environment:
+            - TZ=Asia/Seoul
+
+    # Express
+    my-express:
+        # Dockerfile 설정
+        build:
+            # Dockerfile의 위치
+            context: . 
+            # Dockerfile의 이름
+            dockerfile: Dockerfile
+        
+        # Container Port 연결
+        #   - host:container
+        ports:
+            - 3000:3000
+        
+        # Volume Mount
+        #   - host:container
+        volumes:
+            - .:/app
+
+        # 의존성 설정
+        depends_on:
+            - my-db
+
+        # 환경 변수 설정
+        environment:
+            - TZ=Asia/Seoul
+
+        # 재시작 설정
+        restart: always
