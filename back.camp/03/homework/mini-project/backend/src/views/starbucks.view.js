@@ -1,5 +1,5 @@
 
-import { getAllMenu } from "../models/starbucks.model.js";
+import { getAllMenu } from "../controllers/starbucks.controller.js";
 
 /**
  * 스타벅스 커피 목록 조회 API

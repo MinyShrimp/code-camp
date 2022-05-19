@@ -1,8 +1,8 @@
 
 import express from "express";
-import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cors from "cors";
 
 import { getAllMenus } from "./src/views/starbucks.view.js";
 import { signupAPI, getAllUserAPI } from "./src/views/user.view.js";

@@ -1,6 +1,6 @@
 
-import { isValidPhoneNumber, getRandomToken } from "../utils/phone.js";
-import { getTokenByPhone, createToken, updateToken, authOk } from "../models/token.model.js";
+import { isValidPhoneNumber, getRandomToken } from "../utils/phone.utils.js";
+import { getTokenByPhone, createToken, updateToken, authOk } from "../controllers/token.controller.js";
 
 /**
  * 토큰 인증 요청 API

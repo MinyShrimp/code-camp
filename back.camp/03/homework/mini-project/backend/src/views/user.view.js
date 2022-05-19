@@ -1,8 +1,8 @@
 
-import { getWelcomTemplate, sendTemplateToEmail } from "../utils/email.js";
+import { getWelcomTemplate, sendTemplateToEmail } from "../utils/email.utils.js";
 
-import { createUser, getAllUser } from "../models/user.model.js";
-import { isValidSignupRequestData, getOpenGraph, getPersonal } from "../controllers/user.controller.js";
+import { createUser, getAllUser } from "../controllers/user.controller.js";
+import { isValidSignupRequestData, getOpenGraph, getPersonal } from "../utils/signup.utils.js";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // 회원가입 View
