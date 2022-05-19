@@ -1,39 +1,37 @@
 // 커피 목록 조회 API를 요청해주세요.
 const getCoffee = async () => {
-    // 받은 데이터로 createMenuCard 함수를 이용해
-    // 메뉴 카드를 만들어주세요.
-    createMenuCard();
+    console.log("index.js 파일의 openMenu 함수 안에서 getCoffee가 실행 됨");
+
+    /////////////////////////////////////////
+
+    // 1. 백엔드 서버로 /starbucks API 요청해 커피 데이터를 받는다.
+    const res = await goServerGet( '/starbucks' );
+
+    // // 2. 받은 데이터로 createMenuCard 함수를 이용해 메뉴 카드를 모두 만들어주세요.
+    res.data.forEach(value => {
+        createMenuCard( value );
+    });
+    
+    /////////////////////////////////////////
 };
 
-const createMenuCard = (data) => {
+// 
+const createMenuCard = ( data ) => {
     const menuCardWrapper = document.createElement("div");
     menuCardWrapper.className = "Menu_Card_Wrapper";
 
     const menuCardImgBox = document.createElement("div");
     menuCardImgBox.className = "Menu_Card_ImgBox";
+    menuCardImgBox.style.backgroundImage = `url('${data?.img ?? ""}')`;
+    menuCardImgBox.style.backgroundSize = "cover";
+    console.log(data.img)
 
-    // 메뉴 이미지가 있으면 추가
-    if (data?.img) {
-        const imgEle = document.createElement("img");
-        imgEle.src = data.img;
-        imgEle.className = "Menu_Card_ImgBox";
-        menuCardImgBox.appendChild(imgEle);
-    }
-
-    // 메뉴 이름
     const menuCardName = document.createElement("div");
     menuCardName.className = "Menu_Card_Name";
-    menuCardName.textContent = data?.name || "메뉴이름";
+    menuCardName.textContent = data?.name ?? "메뉴이름"; // bug fix : data?.name || "메뉴이름" => data?.name ?? "메뉴이름"
 
-    // 메뉴 _id
-    const menuCardInfo = document.createElement("div");
-    menuCardInfo.className = "Menu_Card_Info";
-    menuCardInfo.textContent = data?._id || "id";
-
-    // 합체
     const menuWrapper = document.querySelector("#Menu_Background");
     menuCardWrapper.appendChild(menuCardImgBox);
     menuCardWrapper.appendChild(menuCardName);
-    menuCardWrapper.appendChild(menuCardInfo);
     menuWrapper.appendChild(menuCardWrapper);
 };

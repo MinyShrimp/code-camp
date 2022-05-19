@@ -1,4 +1,5 @@
 const openMenu = () => {
+    console.log("메뉴 열기 버튼 클릭");
     // 모달창 열기
     let wrapper = document.getElementById("Wrapper");
     let menu = document.getElementById("Menu_Background");
@@ -17,6 +18,7 @@ const openMenu = () => {
     // 커피 목록 조회 API 요청
     getCoffee();
 };
+
 const closeMenu = () => {
     let wrapper = document.getElementById("Wrapper");
     let menu = document.getElementById("Menu_Background");
