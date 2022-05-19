@@ -12,12 +12,14 @@
 
         <script src="../server/config.js"></script>
         <script src="../server/server.js"></script>
-
         <script src="./timer.js"></script>
         <!-------------->
 
         <script src="./index.js"></script>
         <script src="./signup.js"></script>
+        
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     </head>
     <body>
         <!-- 전체 컨테이너 -->
@@ -39,7 +41,7 @@
                     <span class="SignupInputName">주민등록번호</span>
                     <div style="display: flex; align-items: center">
                         <input
-                            id="SignupPersonalPrefix"
+                            id="SignupPersonal1"
                             style="width: 40%; text-align: center"
                             class="SignupInput"
                             type="text"
@@ -55,7 +57,7 @@
                             >-
                         </span>
                         <input
-                            id="SignupPersonalSuffix"
+                            id="SignupPersonal2"
                             style="width: 40%; text-align: center"
                             class="SignupInput"
                             type="password"

@@ -30,6 +30,7 @@ const getValidationNumber = async () => {
             // 인증 번호 입력란 화면에 표시
             document.querySelector("#ValidationInputWrapper").style.display = "flex";
             console.log("인증 번호 전송");
+            console.log(res);
 
             time = START_TIME;
             timer = window.setInterval(ticktock, 1000);
@@ -65,13 +66,22 @@ const submitToken = async () => {
     try {
         // Backend로 데이터 보내기
         const submitTokenValue = document.getElementById("TokenInput").value;
+        
+        let phone = "";
+        for( let i = 1; i <= 3; i++ ) {
+            const value = document.getElementById(`PhoneNumber0${i}`).value;
+            if( value === "" ) { return false; }
+            phone += value;
+        }
 
-        const res = await goServerPost("/tokens/phone/submit", {
+        const res = await goServerPatch("/tokens/phone", {
+            "phone": phone,
             "token": submitTokenValue
         });
+        console.log(res);
 
         // 성공이면
-        if( res.status === 200 ) {
+        if( res.data ) {
             console.log("인증 번호 확인!");
 
             // 타이머 종료
@@ -100,10 +110,10 @@ const submitSignup = async () => {
     if( name === "" ) { return false; }
 
     // 주민번호
-    const personalPrefix = document.getElementById("SignupPersonalPrefix").value;
+    const personalPrefix = document.getElementById("SignupPersonal1").value;
     if( personalPrefix === "" ) { return false; }
 
-    const personalSuffix = document.getElementById("SignupPersonalSuffix").value;
+    const personalSuffix = document.getElementById("SignupPersonal2").value;
     if( personalSuffix === "" ) { return false; }
 
     // 좋아하는 사이트
@@ -123,15 +133,13 @@ const submitSignup = async () => {
     for( let i = 1; i <= 3; i++ ) {
         const value = document.getElementById(`PhoneNumber0${i}`).value;
         if( value === "" ) { return false; }
-        
-        phone += value + (i === 3 ? "" : "-");
-        console.log(value, phone)
+        phone += value;
     }
 
     try {
         console.log("회원 가입 이메일 전송");
 
-        const res = await goServerPost("/users", {
+        const res = await goServerPost("/user", {
             name: name,
             personal: `${personalPrefix}-${personalSuffix}`,
             phone: phone,
