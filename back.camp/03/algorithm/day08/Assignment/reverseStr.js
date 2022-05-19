@@ -9,11 +9,17 @@ const upToLowAndLowToUp = ( char ) => {
     }
 }
 
+// const reverseStr = (list) => list.reverse().map(str => String.fromCharCode(...[...str].map(c => upToLowAndLowToUp(c)))).join(' ');
 const reverseStr = (list) => {
     // 아래에 코드를 작성해주세요.
     let answer = list.reverse();
     for(let i = 0; i < answer.length; i++) {
-        answer[i] = String.fromCharCode(...[...answer[i]].map(v => upToLowAndLowToUp(v)))
+        // const str         = answer[i];
+        // const stringArr   = [...str];
+        // const asciiArr    = stringArr.map(v => upToLowAndLowToUp(v));
+        // const convert_str = String.fromCharCode( ...asciiArr );
+        // answer[i]         = convert_str;
+        answer[i] = String.fromCharCode(...[...answer[i]].map(v => upToLowAndLowToUp(v)));
     }
     return answer.join(' ');
 };

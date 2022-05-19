@@ -4,8 +4,8 @@ services:
     # Database
     my-db: 
         image: mongo:5
-        expose:
-            - 27017
+        ports:
+            - 27017:27017
         environment:
             - TZ=Asia/Seoul
 
@@ -26,21 +26,13 @@ services:
         # Volume Mount
         #   - host:container
         volumes:
-            - ./models:/app/models
-            - ./src:/app/src
-            - ./index.js:/app/index.js
-
-            - ./package.json:/app/package.json
-            - ./yarn.lock:/app/yarn.lock
-            - ./.env:/app/.env
+            - .:/app
 
         # 의존성 설정
         depends_on:
             - my-db
 
         # 환경 변수 설정
-        # environment:
-        #     - TZ=Asia/Seoul
         env_file: .env
 
         # 재시작 설정

@@ -4,14 +4,14 @@ function vote(str) {
     let answer = new Map();
 
     [...str].forEach(v => {
-        if( [...answer.keys()].includes(v) ) {
+        if( answer.keys().includes(v) ) {
             answer.set( v, answer.get(v) + 1 );
         } else {
             answer.set( v, 1 );
         }
     });
     
-    const max = Math.max( ...answer.values() );
+    const max = Math.max( answer.values() );
     return [...answer.entries()].filter(v => v[1] === max)[0][0];
 }
 
