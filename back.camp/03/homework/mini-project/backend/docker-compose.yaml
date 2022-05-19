@@ -24,8 +24,8 @@ services:
         # Volume Mount
         #   - host:container
         volumes:
-            - ./models:/app/models
             - ./src:/app/src
+
             - ./index.js:/app/index.js
 
             - ./package.json:/app/package.json
