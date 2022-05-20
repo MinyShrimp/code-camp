@@ -25,6 +25,7 @@ services:
         #   - host:container
         volumes:
             - ./src:/app/src
+            - ./swagger:/app/swagger
 
             - ./index.js:/app/index.js
 
