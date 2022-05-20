@@ -1,0 +1,20 @@
+# Token Schema
+type: object
+required:
+  - _id
+  - token
+  - phone
+  - isAuth
+properties:
+  _id:
+    type: string
+    description: 인증 고유 ID
+  token:
+    type: string
+    description: 인증 토큰
+  phone:
+    type: string
+    description: 인증 핸드폰
+  isAuth:
+    type: boolean
+    description: 인증 여부

@@ -1,0 +1,26 @@
+# TOKEN POST API
+summary: 새로운 토큰 생성
+tags: [Tokens/Phone]
+requestBody:
+  description: 전화번호
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - phone
+        properties:
+          phone:
+            type: string
+            description: 핸드폰 번호
+      example:
+        phone: "'01012345678'"
+responses:
+  '200':
+    description: 메세지
+    content:
+      text:
+        schema:
+          type: string
+        example: "핸드폰으로 인증 문자가 전송되었습니다!"

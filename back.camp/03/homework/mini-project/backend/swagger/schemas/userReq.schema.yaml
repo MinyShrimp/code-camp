@@ -1,0 +1,31 @@
+# User Schema
+type: object
+required:
+  - name
+  - email
+  - personal
+  - prefer
+  - pwd
+  - phone
+  - og
+properties:
+  name:
+    type: string
+    description: 유저 이름
+  email:
+    type: string
+    description: 유저 이메일
+  personal:
+    type: string
+    description: 주민번호, 뒷자리는 *로 표기됨
+  prefer:
+    type: string
+    description: 좋아하는 사이트
+  pwd:
+    type: string
+    description: 유저 비밀번호
+  phone:
+    type: string
+    description: 유저 핸드폰 번호
+  og:
+    $ref: './opengraph.schema.yaml'

@@ -1,0 +1,57 @@
+# Base Config
+openapi: '3.0.0'
+info: 
+  version: 1.0.0
+  title: Mini Project API Docs
+  description: 코드캠프 백엔드코스 2주차 미니 프로젝트 API 문서
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:3000
+
+# API
+paths:
+  /user:
+    post:
+      $ref: "./paths/user.path.yaml"
+  /users:
+    get:
+      $ref: "./paths/users.path.yaml"
+
+  /tokens/phone:
+    post:
+      $ref: "./paths/tokenPost.path.yaml"
+    patch:
+      $ref: "./paths/tokenPatch.path.yaml"
+  
+  /starbucks:
+    get:
+      $ref: "./paths/starbucks.path.yaml"
+
+# Component
+components:
+  # Schema
+  schemas:
+    # Open Graph Schema
+    OpenGraph:
+      $ref: "./schemas/opengraph.schema.yaml"
+    # User Schema
+    User:
+      $ref: "./schemas/user.schema.yaml"
+    # POST /user Request Schema
+    OneUserRequest:
+      $ref: "./schemas/userReq.schema.yaml"
+    # GET /users Response Schema
+    AllUserResponse:
+      $ref: "./schemas/allUserRes.schema.yaml"
+
+    # Token Schema
+    Token:
+      $ref: "./schemas/starbucks.schema.yaml"
+
+    # Starbucks Schema
+    Starbucks:
+      $ref: "./schemas/starbucks.schema.yaml"
+    # GET /starbucks Response Schema
+    AllStarbucks:
+      $ref: "./schemas/AllStarbucks.schema.yaml"

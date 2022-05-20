@@ -4,6 +4,13 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 
+import path from "path";
+import { URL } from "url";
+
+import fs from "fs";
+import swaggerUi from "swagger-ui-express";
+import YAML from 'js-yaml';
+
 import { getAllMenus } from "./src/views/starbucks.view.js";
 import { signupAPI, getAllUserAPI } from "./src/views/user.view.js";
 import { tokenAuthRequestView, tokenAuthOKView } from "./src/views/token.view.js";
@@ -12,18 +19,29 @@ import { tokenAuthRequestView, tokenAuthOKView } from "./src/views/token.view.js
 /* express settings */
 ////////////////////////////////////////////////////////////////////////////////////////////////
 const app = express();
+
+// Set CORS : Cross Origin Resource Sharing
 const corsOptions = {
-    origin: 'http://localhost:5500'
+    origin: ['http://localhost:5500', 'http://127.0.0.1:5500']
 };
+
+// Set Local .env file 
 dotenv.config();
 
+// Connect Mongo DB
 mongoose.connect("mongodb://my-db:27017/MiniProject");
+
+// Set Swagger Config
+const __dirname  = new URL('.', import.meta.url).pathname;
+const swagger_file = path.join( __dirname, "swagger", "build", 'swagger.yaml' );
+const swaggerSpec = YAML.load( fs.readFileSync( swagger_file, 'utf-8' ) );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /* middleware */
 ////////////////////////////////////////////////////////////////////////////////////////////////
 app.use( cors(corsOptions) );
 app.use( express.json() );
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup( swaggerSpec ));
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /* end-point */
