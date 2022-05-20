@@ -21,7 +21,7 @@ responses:
   '422':
     description: 핸드폰 번호 인증 안됨
     content:
-      text:
+      application/json:
         schema:
           type: string
         example: "에러!! 핸드폰 번호가 인증되지 않았습니다"

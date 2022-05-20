@@ -33,7 +33,7 @@ mongoose.connect("mongodb://my-db:27017/MiniProject");
 
 // Set Swagger Config
 const __dirname  = new URL('.', import.meta.url).pathname;
-const swagger_file = path.join( __dirname, "swagger", "build", 'swagger.yaml' );
+const swagger_file = path.join( __dirname, "swagger", "build", 'swagger.json' );
 const swaggerSpec = YAML.load( fs.readFileSync( swagger_file, 'utf-8' ) );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

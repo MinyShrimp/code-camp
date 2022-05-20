@@ -7,7 +7,7 @@
     "scripts": {
         "predev": "yarn api-docs",
         "dev": "nodemon ./src/index.js",
-        "api-docs": "swagger-cli bundle './swagger/openapi.yaml' --outfile ./swagger/build/swagger.yaml --type yaml"
+        "api-docs": "swagger-cli bundle './swagger/openapi.yaml' --outfile ./swagger/build/swagger.json --type json"
     },
     "dependencies": {
         "axios": "^0.27.2",

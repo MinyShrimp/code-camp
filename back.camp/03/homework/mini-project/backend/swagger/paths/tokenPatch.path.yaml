@@ -19,13 +19,13 @@ requestBody:
             type: string
             description: 6자리 토큰
       example:
-        phone: "'01012345678'"
+        phone: "01012345678"
         token: "111111"
 responses:
   '200':
     description: 메세지
     content:
-      text:
+      application/json:
         schema:
           type: boolean
         example: true

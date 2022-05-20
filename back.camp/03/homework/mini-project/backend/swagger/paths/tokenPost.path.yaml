@@ -14,13 +14,13 @@ requestBody:
           phone:
             type: string
             description: 핸드폰 번호
-      example:
-        phone: "'01012345678'"
+        example:
+          phone: "01012345678"
 responses:
   '200':
     description: 메세지
     content:
-      text:
+      application/json:
         schema:
           type: string
         example: "핸드폰으로 인증 문자가 전송되었습니다!"
