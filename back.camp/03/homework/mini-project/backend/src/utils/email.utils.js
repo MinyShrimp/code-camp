@@ -30,9 +30,7 @@ const DateFormatting = ( date ) => {
  * @param {string} prefer
  * @returns HTML Template
  */
-export const getWelcomTemplate = ( name, phone, prefer ) => {
-    const createdAt = new Date();
-
+export const getWelcomTemplate = ( name, phone, prefer, createAt ) => {
     return `
         <html>
             <head>
@@ -76,7 +74,7 @@ export const getWelcomTemplate = ( name, phone, prefer ) => {
                     <div class="mb-10 fs-30"><b>이름</b> : ${name}</div>
                     <div class="mb-10 fs-30"><b>전화번호</b> : ${phone}</div>
                     <div class="mb-10 fs-30"><b>좋아하는 사이트</b> : ${prefer}</div>
-                    <div class="fs-30"><b>가입일</b> : ${DateFormatting(createdAt)}</div>
+                    <div class="fs-30"><b>가입일</b> : ${DateFormatting(createAt)}</div>
                 </div> 
             </body>
         </html>

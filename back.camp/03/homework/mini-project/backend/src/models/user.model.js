@@ -10,6 +10,8 @@ export const UserSchema = new mongoose.Schema({
     prefer:   String,
     pwd:      String,
     phone:    String,
+    createAt: Date,
+    deleteAt: Date,
     og:       Object
 });
 

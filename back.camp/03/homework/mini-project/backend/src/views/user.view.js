@@ -1,7 +1,7 @@
 
-import { getWelcomTemplate, sendTemplateToEmail } from "../utils/email.utils.js";
-
 import { createUser, getAllUser } from "../controllers/user.controller.js";
+
+import { getWelcomTemplate, sendTemplateToEmail } from "../utils/email.utils.js";
 import { getOpenGraph, getPersonal } from "../utils/signup.utils.js";
 import { isValidSignupRequestData } from "../utils/isValid.utils.js";
 
@@ -53,6 +53,10 @@ export const signupAPI = async (req, res) => {
         res.status(422).send(isValid[1]);
         return false;
     }
+    
+    // 현재 시각 저장
+    body["createAt"] = new Date;
+    body["deleteAt"] = null;
 
     // true 라면 아래의 로직을 수행합니다. 
     //  - 내가 좋아하는 사이트로 입력 받은 사이트를 cheerio를 활용하여 scraping 한 후, 관련 오픈그래프(OG) 메타 태그 정보를 다른 입력 받은 정보들과 함께 `User` DB에 저장해주세요.
@@ -66,7 +70,7 @@ export const signupAPI = async (req, res) => {
     const user = await createUser( body );
 
     // - 회원 가입 환영 이메일을 실제로 전송해주세요.
-    const template = getWelcomTemplate( body.name, body.phone, body.prefer );
+    const template = getWelcomTemplate( body.name, body.phone, body.prefer, body.createAt );
     await sendTemplateToEmail( body.email, template );
     
     //  - 생성된 user의 _id를 클라이언트에 반환합니다.
