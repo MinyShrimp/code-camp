@@ -95,5 +95,4 @@ export const tokenAuthOKView = async ( req, res ) => {
     // 토큰이 일치하면, isAuth를 true로 변경하여 DB에 저장합니다.
     await authOk( myPhone );
     res.send(true);
-    return true;
 }

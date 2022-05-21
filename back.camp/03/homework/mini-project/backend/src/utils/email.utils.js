@@ -43,17 +43,13 @@ export const getWelcomTemplate = ( name, phone, prefer, createAt ) => {
                     body {
                         width: 100vw;
                         height: 100vh;
-                        background: #0B0B3B;
-
+                        
                         display: flex;
                         flex-direction: column;
-                        justify-content: center;
                         align-items: center;
                     }
                     .container {
-                        background: #e5e5e5;
                         padding: 1em;
-
                         width: 800px;
                     }
                     .mb-10 {

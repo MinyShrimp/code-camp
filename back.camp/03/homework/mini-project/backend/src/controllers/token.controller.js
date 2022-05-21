@@ -4,7 +4,7 @@ import Token from "../models/token.model.js";
  * 새로운 Token 생성
  * @param {string} token
  * @param {string} phone
- * @returns 생성된 Token Schema
+ * @returns 생성된 Token Data
  */
 export const createToken = async (token, phone) => {
     const newToken = new Token({
@@ -22,7 +22,7 @@ export const createToken = async (token, phone) => {
  * DB 안에서 Token을 찾아서 업데이트
  * @param {string} token
  * @param {string} phone
- * @returns 업데이트된 Token Schema
+ * @returns 업데이트된 Token Data
  */
 export const updateToken = async (token, phone) => {
     const result = await Token.updateOne(
@@ -40,7 +40,7 @@ export const updateToken = async (token, phone) => {
 /**
  * DB 안에서 Token 업데이트 - 인증 확인
  * @param {string} phone
- * @returns 인증 확인된 Token Schema
+ * @returns 인증 확인된 Token Data
  */
 export const authOk = async (phone) => {
     const result = await Token.updateOne(
@@ -57,7 +57,7 @@ export const authOk = async (phone) => {
 /**
  * 핸드폰 번호를 기준으로 DB에서 데이터 찾기
  * @param {string} phone
- * @returns 찾은 단일 Token Schema
+ * @returns 찾은 단일 Token Data
  */
 export const getTokenByPhone = async (phone) => {
     const result = await Token.findOne({ phone: phone });
@@ -66,7 +66,7 @@ export const getTokenByPhone = async (phone) => {
 
 /**
  * 모든 Token List 가져오기
- * @returns 모든 Token Schema
+ * @returns 모든 Token Data
  */
 export const getTokenAll = async () => {
     const result = await Token.find();

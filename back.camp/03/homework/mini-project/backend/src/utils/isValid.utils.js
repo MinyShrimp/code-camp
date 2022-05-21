@@ -3,6 +3,8 @@
  * Data 검사를 위한 함수를 모아둔 곳
  */
 
+import { getTokenByPhone } from "../controllers/token.controller.js";
+
 /**
  * Null, Undefined Check
  * undefined 또는 null이 아니면 true를 반환
@@ -40,6 +42,33 @@ const isValidAfter = ( value ) => {
     if( !isEqualType(value, "") ) { return false; }
 
     return true;
+}
+
+/**
+ * 주민번호 검사
+ * @param {string} personal
+ * @returns Boolean
+ * 
+ * - undefined, null 검사
+ * - String type 검사
+ * - 정규식 검사
+ *   - ( 숫자 6 자리로 이루어짐 ) 으로 시작해야함
+ *   - -
+ *   - ( 숫자 7 자리로 이루어짐 ) 으로 끝나야함
+ */
+ export const isValidPersonal = ( personal ) => {
+    // undefined, null 검사
+    // String type 검사
+    if( !isValidAfter( personal ) ) { return false; }
+
+    // 양 옆의 공백 제거
+    personal = personal.trim();
+
+    // ( 숫자 6 자리로 이루어짐 ) 으로 시작해야함
+    // -
+    // ( 숫자 7 자리로 이루어짐 ) 으로 끝나야함
+    const personalRole = /^(\d{6})-(\d{7})$/i;
+    return personalRole.test(personal);
 }
 
 /**
@@ -135,35 +164,8 @@ export const isValidURL = ( url ) => {
     // group 4 : :5000
     // group 5 : /blog
     // group 6 : ?id=1
-    const urlRole = /^(http|https):\/\/(\w+:{0,1}\w*@)?(\w+)(:\d{4,5})?\/?(\/\w+)*(\?\S+)?$/i;
+    const urlRole = /^(http|https):\/\/(\w+:{0,1}\w*@)?([\w.]+)(:\d{4,5})?\/?(\/\w+)*(\?\S+)?$/i;
     return urlRole.test(url);
-}
-
-/**
- * 주민번호 검사
- * @param {string} personal
- * @returns Boolean
- * 
- * - undefined, null 검사
- * - String type 검사
- * - 정규식 검사
- *   - ( 숫자 6 자리로 이루어짐 ) 으로 시작해야함
- *   - -
- *   - ( 숫자 7 자리로 이루어짐 ) 으로 끝나야함
- */
-export const isValidPersonal = ( personal ) => {
-    // undefined, null 검사
-    // String type 검사
-    if( !isValidAfter( personal ) ) { return false; }
-
-    // 양 옆의 공백 제거
-    personal = personal.trim();
-
-    // ( 숫자 6 자리로 이루어짐 ) 으로 시작해야함
-    // -
-    // ( 숫자 7 자리로 이루어짐 ) 으로 끝나야함
-    const personalRole = /^(\d{6})-(\d{7})$/i;
-    return personalRole.test(personal);
 }
 
 /**
@@ -198,7 +200,7 @@ export const isValidSignupRequestData = async ( body ) => {
     }
 
     // 좋아하는 사이트 검사
-    if( !isValidURL( body.url ) ) {
+    if( !isValidURL( body.prefer ) ) {
         return [false, '좋아하는 사이트가 정확하지 않습니다.'];
     }
 

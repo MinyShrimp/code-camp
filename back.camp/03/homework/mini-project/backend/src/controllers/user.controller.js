@@ -14,8 +14,8 @@ export const createUser = async ( user ) => {
         prefer:   user.prefer,
         pwd:      user.pwd,
         phone:    user.phone,
-        createAt: user.createAt,
-        deleteAt: user.deleteAt,
+        createAt: new Date(),
+        deleteAt: null,
         og:       { ...user.og }
     });
     await newUser.save();
@@ -25,7 +25,7 @@ export const createUser = async ( user ) => {
 
 /**
  * 모든 유저 찾기
- * @returns 모든 User Schema
+ * @returns 모든 User Data
  */
 export const getAllUser = async ( ) => {
     const result = await User.find();
