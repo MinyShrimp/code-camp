@@ -1,11 +1,20 @@
 import coolsms from "coolsms-node-sdk";
 
-// min ~ (max - 1) 까지의 무작위 정수 반환
-function getRandomInterger(min, max) {
+/**
+ * min ~ (max - 1) 까지의 무작위 정수 반환
+ * @param {number} min 
+ * @param {number} max 
+ * @returns number
+ */
+function getRandomInteger(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
-// 1 ~ 10 자리의 랜덤한 토큰 생성
+/**
+ * 1 ~ 10 자리의 랜덤한 토큰 생성
+ * @param {number} digit 
+ * @returns string
+ */
 export function getRandomToken(digit) {
     if (digit === undefined) {
         console.error("Undefined Digit");
@@ -21,17 +30,16 @@ export function getRandomToken(digit) {
         return undefined;
     }
 
-    return String(getRandomInterger(0, Math.pow(10, digit))).padStart(digit, "0");
+    return String(getRandomInteger(0, 10 ** digit)).padStart(digit, "0");
 }
 
-// 핸드폰 번호 확인
-// 길이가 10 ~ 11 이면 허용
-export function isValidPhoneNumber(phoneNumber) {
-    const phoneNumberLen = String(phoneNumber).length;
-    return phoneNumberLen >= 10 && phoneNumberLen <= 11;
-}
-
-// 문자메세지를 보냄
+/**
+ * CoolSMS 를 이용해 문자 메세지 보냄
+ * 
+ * @param {string} phoneNumber 
+ * @param {string} token 
+ * @returns Boolean
+ */
 export async function sendSMS(phoneNumber, token) {
     const msgService = new coolsms.default(process.env.SMS_KEY, process.env.SMS_SECRET);
 

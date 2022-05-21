@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 
+/**
+ * User Schema
+ */
 export const UserSchema = new mongoose.Schema({
     name:     String,
     email:    String,
@@ -10,6 +13,9 @@ export const UserSchema = new mongoose.Schema({
     og:       Object
 });
 
+/**
+ * User Schema DB와 연결
+ */
 const User = mongoose.model(
     "User", UserSchema
 );

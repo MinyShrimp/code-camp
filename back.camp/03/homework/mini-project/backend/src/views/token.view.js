@@ -1,5 +1,6 @@
 
-import { isValidPhoneNumber, getRandomToken } from "../utils/phone.utils.js";
+import { isValidPhoneNumber } from "../utils/isValid.utils.js";
+import { getRandomToken, sendSMS } from "../utils/phone.utils.js";
 import { getTokenByPhone, createToken, updateToken, authOk } from "../controllers/token.controller.js";
 
 /**

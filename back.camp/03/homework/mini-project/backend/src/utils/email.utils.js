@@ -1,27 +1,22 @@
 import nodemailer from "nodemailer";
 
-// 1. 이메일이 정상인지 확인 ( 1 - 존재여부, 2-"@" 포함여부 )
-export const checkValidationEmail = (email) => {
-    // 1-1. 존재 여부
-    if( email === undefined ) {
-        return false;
-    }
-
-    // 1-2. "@" 포함 여부
-    if( !email.includes('@') ) {
-        return false;
-    }
-
-    return true;
-}
-
 // 2. 가입환영 템플릿 만들기
+
+/**
+ * 2자리 숫자 10 => "10"
+ * 1자리 숫자 1  => "01"
+ * @param {number} num 
+ * @returns String
+ */
 const paddingNumber = ( num ) => {
     return String( num ).padStart(2, '0');
 }
 
-// 시간 포메팅 함수
-// YYYY-MM-DD
+/**
+ * 시간 Formatting
+ * @param {Date} date 
+ * @returns "YYYY-MM-DD"
+ */
 const DateFormatting = ( date ) => {
     const _year  = date.getFullYear();
     const _month = paddingNumber(date.getMonth() + 1);
@@ -30,8 +25,14 @@ const DateFormatting = ( date ) => {
     return `${_year}-${_month}-${_date}`;
 }
 
-// 가입 환영 템플릿 제작
-export const getWelcomTemplate = ( { name, phone, prefer } ) => {
+/**
+ * 가입 환영 템플릿 제작
+ * @param {string} name
+ * @param {string} phone
+ * @param {string} prefer
+ * @returns HTML Template
+ */
+export const getWelcomTemplate = ( name, phone, prefer ) => {
     const createdAt = new Date();
 
     return `
@@ -48,7 +49,12 @@ export const getWelcomTemplate = ( { name, phone, prefer } ) => {
     `;
 }
 
-// 3. 이메일에 가입환영 템플릿 전송하기
+/**
+ * 이메일에 가입환영 템플릿 전송하기
+ * @param {string} email 
+ * @param {string} template 
+ * @returns 전송 성공 여부
+ */
 export const sendTemplateToEmail = async (email, template) => {
     try {
         const transporter = nodemailer.createTransport({
