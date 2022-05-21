@@ -39,10 +39,10 @@ components:
     User:
       $ref: "./schemas/user.schema.yaml"
     # POST /user Request Schema
-    OneUserRequest:
+    UserRequest:
       $ref: "./schemas/userReq.schema.yaml"
     # GET /users Response Schema
-    AllUserResponse:
+    UsersResponse:
       $ref: "./schemas/allUserRes.schema.yaml"
 
     # Token Schema

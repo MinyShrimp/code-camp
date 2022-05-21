@@ -67,7 +67,6 @@ export const signupAPI = async (req, res) => {
 
     // 비밀번호 암호화
     [ body["pwd"], body["salt"] ] = await getHashPassword( body.pwd );
-    console.log(body);
 
     //  - DB에 저장한 후, 
     const user_id = await createUser( body );

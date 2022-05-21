@@ -23,7 +23,7 @@ requestBody:
         token: "111111"
 responses:
   '200':
-    description: 메세지
+    description: 인증 성공 여부
     content:
       application/json:
         schema:

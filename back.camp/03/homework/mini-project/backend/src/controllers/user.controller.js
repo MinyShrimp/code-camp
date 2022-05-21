@@ -32,3 +32,13 @@ export const getAllUser = async ( ) => {
     const result = await User.find();
     return result;
 }
+
+/**
+ * 핸드폰 번호를 이용해 유저 찾기
+ * @param {string} phone 
+ * @returns 핸드폰 번호로 찾은 User Data
+ */
+ export const getUserByPhone = async ( phone ) => {
+    const result = await User.findOne({ phone: phone });
+    return result;
+}

@@ -1,5 +1,5 @@
 
-import { isValidPhoneNumber } from "../utils/isValid.utils.js";
+import { isValidPhoneNumber, isValidPatchTokenRequestData } from "../utils/isValid.utils.js";
 import { getRandomToken, sendSMS } from "../utils/phone.utils.js";
 import { getTokenByPhone, createToken, updateToken, authOk } from "../controllers/token.controller.js";
 
@@ -18,33 +18,32 @@ import { getTokenByPhone, createToken, updateToken, authOk } from "../controller
 export const tokenAuthRequestView = async ( req, res ) => {
     // Postman에서 해당 API를 요청할 때, 핸드폰 번호를 전달해줍니다. 
     const body    = req.body;
-    const myPhone = body.phone;
+    const phone = body.phone;
 
     // 핸드폰 번호 유효한지 확인
-    const isValid = isValidPhoneNumber( myPhone );
-    if( !isValid ) {
+    if( !isValidPhoneNumber( phone ) ) {
         res.status(400).send("발송 실패");
         return false;
     }
     
     // 인증 토큰 생성
-    const myToken = getRandomToken( 6 );
+    const token = getRandomToken( 6 );
 
     // 찾아서
-    const result = await getTokenByPhone( myPhone );
+    const result = await getTokenByPhone( phone );
     if( result === null ) {
         // 없으면 생성
-        await createToken( myToken, myPhone );
+        await createToken( token, phone );
     } else {
         // 있으면 새로운 인증토큰으로 업데이트
-        await updateToken( myToken, myPhone );
+        await updateToken( token, phone );
     }
 
     // 핸드폰에 보냄
-    // const isOK = await sendSMS(myPhone, myToken);
+    // const isOK = await sendSMS(phone, token);
     const isOK = true;
     if( isOK ) {
-        res.send(`핸드폰으로 인증 문자가 전송되었습니다! - ${myToken}`);
+        res.send(`핸드폰으로 인증 문자가 전송되었습니다! - ${token}`);
         return true;
     } else {
         res.status(400).send("발송 실패");
@@ -69,6 +68,12 @@ export const tokenAuthOKView = async ( req, res ) => {
     const body    = req.body;
     const token   = body.token;
     const myPhone = body.phone;
+
+    // Request Data 검사
+    if( !isValidPatchTokenRequestData( body ) ) {
+        res.send(false);
+        return false;
+    }
 
     // API 요청시 입력 받은 핸드폰 번호를 Tokens 문서에서 찾아봅니다. 
     const info = await getTokenByPhone( myPhone );

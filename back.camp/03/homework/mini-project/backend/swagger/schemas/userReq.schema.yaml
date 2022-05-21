@@ -1,4 +1,5 @@
-# User Schema
+
+# POST /user Request Schema
 type: object
 required:
   - name
