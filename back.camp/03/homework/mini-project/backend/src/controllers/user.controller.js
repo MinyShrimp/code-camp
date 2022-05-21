@@ -7,7 +7,17 @@ import User from "../models/user.model.js";
  * @returns 생성된 User ID
  */
 export const createUser = async ( user ) => {
-    const newUser = new User( user );
+    const newUser = new User({
+        name:     user.name,
+        email:    user.email,
+        personal: user.personal,
+        prefer:   user.prefer,
+        pwd:      user.pwd,
+        phone:    user.phone,
+        createAt: user.createAt,
+        deleteAt: user.deleteAt,
+        og:       { ...user.og }
+    });
     await newUser.save();
 
     return newUser._id;

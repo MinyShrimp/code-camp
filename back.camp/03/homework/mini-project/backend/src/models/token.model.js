@@ -4,9 +4,11 @@ import mongoose from "mongoose";
  * Token Schema
  */
 export const TokenSchema = new mongoose.Schema({
-    token: String,
-    phone: String,
-    isAuth: Boolean
+    token:    String,
+    phone:    String,
+    isAuth:   Boolean,
+    createAt: Date,
+    authAt:   Date,
 });
 
 /**
