@@ -209,7 +209,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AllStarbucks"
+                  "$ref": "#/components/schemas/StarbucksResponse"
                 },
                 "example": [
                   {
@@ -405,7 +405,7 @@
           }
         }
       },
-      "AllStarbucks": {
+      "StarbucksResponse": {
         "type": "array",
         "items": {
           "$ref": "#/components/schemas/Starbucks"
