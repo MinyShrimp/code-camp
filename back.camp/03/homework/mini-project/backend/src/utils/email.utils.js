@@ -1,7 +1,5 @@
 import nodemailer from "nodemailer";
 
-// 2. 가입환영 템플릿 만들기
-
 /**
  * 2자리 숫자 10 => "10"
  * 1자리 숫자 1  => "01"
@@ -37,13 +35,49 @@ export const getWelcomTemplate = ( name, phone, prefer ) => {
 
     return `
         <html>
+            <head>
+                <style>
+                    * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                    }
+                    body {
+                        width: 100vw;
+                        height: 100vh;
+                        background: #0B0B3B;
+
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    .container {
+                        background: #e5e5e5;
+                        padding: 1em;
+
+                        width: 800px;
+                    }
+                    .mb-10 {
+                        margin-bottom: 10px;
+                    }
+                    .fs-50 {
+                        font-size: 50px;
+                    }
+                    .fs-30 {
+                        font-size: 30px;
+                    }
+                </style>
+            </head>
             <body>
-                <h1> ${name}님 가입을 환영합니다!!! </h1>
-                <hr />
-                <div>이름 : ${name}</div>
-                <div>전화번호 : ${phone}</div>
-                <div>좋아하는 사이트 : ${prefer}</div>
-                <div>가입일 : ${DateFormatting(createdAt)}</div>
+                <div class="container">
+                    <h1 class="mb-10 fs-50"> ${name}님 가입을 환영합니다!!! </h1>
+                    <hr class="mb-10" />
+                    <div class="mb-10 fs-30"><b>이름</b> : ${name}</div>
+                    <div class="mb-10 fs-30"><b>전화번호</b> : ${phone}</div>
+                    <div class="mb-10 fs-30"><b>좋아하는 사이트</b> : ${prefer}</div>
+                    <div class="fs-30"><b>가입일</b> : ${DateFormatting(createdAt)}</div>
+                </div> 
             </body>
         </html>
     `;
