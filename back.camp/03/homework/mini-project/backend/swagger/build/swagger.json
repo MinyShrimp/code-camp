@@ -31,16 +31,10 @@
               "example": {
                 "name": "아라111",
                 "email": "ala@gmail.com",
-                "personal": "220101-*******",
+                "personal": "220101-1111111",
                 "prefer": "https://www.naver.com",
                 "pwd": "qwer1234!",
-                "phone": "01012345678",
-                "og": {
-                  "title": "네이버",
-                  "url": "https://www.naver.com",
-                  "image": "https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_212852414260.png",
-                  "description": "네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요"
-                }
+                "phone": "01012345678"
               }
             }
           }
@@ -92,8 +86,11 @@
                     "email": "ala@gmail.com",
                     "personal": "220101-*******",
                     "prefer": "https://www.naver.com",
-                    "pwd": "qwer1234!",
+                    "pwd": "$2b$10$Y8YNup6T2ypKbWLGqcPYuO9njtqvptBMy7WsEHYb8fiWWgpY05QQO",
+                    "salt": "$2b$10$Y8YNup6T2ypKbWLGqcPYuO",
                     "phone": "01012345678",
+                    "createAt": "2022-05-21T05:48:05.752Z",
+                    "deleteAt": null,
                     "og": {
                       "title": "네이버",
                       "url": "https://www.naver.com",
@@ -252,12 +249,6 @@
     "schemas": {
       "OpenGraph": {
         "type": "object",
-        "required": [
-          "title",
-          "url",
-          "image",
-          "description"
-        ],
         "properties": {
           "title": {
             "type": "string",
@@ -279,16 +270,6 @@
       },
       "User": {
         "type": "object",
-        "required": [
-          "_id",
-          "name",
-          "email",
-          "personal",
-          "prefer",
-          "pwd",
-          "phone",
-          "og"
-        ],
         "properties": {
           "_id": {
             "type": "string",
@@ -314,9 +295,21 @@
             "type": "string",
             "description": "유저 비밀번호"
           },
+          "salt": {
+            "type": "string",
+            "description": "비밀번호 Salt"
+          },
           "phone": {
             "type": "string",
             "description": "유저 핸드폰 번호"
+          },
+          "createAt": {
+            "type": "string",
+            "description": "생성된 시각"
+          },
+          "deleteAt": {
+            "type": "string",
+            "description": "삭제된 시각"
           },
           "og": {
             "$ref": "#/components/schemas/OpenGraph"
@@ -331,8 +324,7 @@
           "personal",
           "prefer",
           "pwd",
-          "phone",
-          "og"
+          "phone"
         ],
         "properties": {
           "name": {
@@ -358,9 +350,6 @@
           "phone": {
             "type": "string",
             "description": "유저 핸드폰 번호"
-          },
-          "og": {
-            "$ref": "#/components/schemas/OpenGraph"
           }
         }
       },
@@ -372,11 +361,35 @@
       },
       "Token": {
         "type": "object",
-        "required": [
-          "_id",
-          "name",
-          "img"
-        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "인증 고유 ID"
+          },
+          "token": {
+            "type": "string",
+            "description": "인증 토큰"
+          },
+          "phone": {
+            "type": "string",
+            "description": "인증 핸드폰"
+          },
+          "isAuth": {
+            "type": "boolean",
+            "description": "인증 여부"
+          },
+          "createAt": {
+            "type": "string",
+            "description": "생성된 시각"
+          },
+          "authAt": {
+            "type": "string",
+            "description": "인증 완료 시각"
+          }
+        }
+      },
+      "Starbucks": {
+        "type": "object",
         "properties": {
           "_id": {
             "type": "string",
@@ -392,13 +405,10 @@
           }
         }
       },
-      "Starbucks": {
-        "$ref": "#/components/schemas/Token"
-      },
       "AllStarbucks": {
         "type": "array",
         "items": {
-          "$ref": "#/components/schemas/Token"
+          "$ref": "#/components/schemas/Starbucks"
         }
       }
     }

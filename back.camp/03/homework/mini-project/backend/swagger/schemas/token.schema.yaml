@@ -1,10 +1,5 @@
 # Token Schema
 type: object
-required:
-  - _id
-  - token
-  - phone
-  - isAuth
 properties:
   _id:
     type: string
@@ -18,3 +13,9 @@ properties:
   isAuth:
     type: boolean
     description: 인증 여부
+  createAt:
+    type: string
+    description: 생성된 시각
+  authAt:
+    type: string
+    description: 인증 완료 시각

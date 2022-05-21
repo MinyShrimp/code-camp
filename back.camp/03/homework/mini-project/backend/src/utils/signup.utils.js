@@ -1,5 +1,6 @@
 import axios from "axios";
 import cheerio from "cheerio";
+import bcrypt from "bcrypt";
 
 /**
  * 내가 좋아하는 사이트를 cheerio를 활용하여 scraping 한 후,
@@ -35,4 +36,15 @@ export const getOpenGraph = async ( prefer ) => {
  */
 export const getPersonal = ( personal ) => {
     return `${personal.split('-')[0]}-*******`;
+}
+
+/**
+ * 비밀번호 암호화
+ * @param {string} password
+ * @return Promise<[password, salt]>
+ */
+export const getHashPassword = async ( password ) => {
+    const salt = await bcrypt.genSalt(10);
+    const pwd  = await bcrypt.hash( password, salt );
+    return [pwd, salt];
 }

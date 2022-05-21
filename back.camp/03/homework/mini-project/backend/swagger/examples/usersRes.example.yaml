@@ -3,8 +3,11 @@
   email: "ala@gmail.com"
   personal: "220101-*******"
   prefer: "https://www.naver.com"
-  pwd: "qwer1234!"
+  pwd: "$2b$10$Y8YNup6T2ypKbWLGqcPYuO9njtqvptBMy7WsEHYb8fiWWgpY05QQO"
+  salt: "$2b$10$Y8YNup6T2ypKbWLGqcPYuO"
   phone: "01012345678"
+  createAt: "2022-05-21T05:48:05.752Z"
+  deleteAt: null
   og:
     title: "네이버"
     url: "https://www.naver.com"

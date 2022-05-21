@@ -2,7 +2,7 @@
 import { createUser, getAllUser } from "../controllers/user.controller.js";
 
 import { getWelcomTemplate, sendTemplateToEmail } from "../utils/email.utils.js";
-import { getOpenGraph, getPersonal } from "../utils/signup.utils.js";
+import { getOpenGraph, getPersonal, getHashPassword } from "../utils/signup.utils.js";
 import { isValidSignupRequestData } from "../utils/isValid.utils.js";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +53,10 @@ export const signupAPI = async (req, res) => {
         res.status(422).send(isValid[1]);
         return false;
     }
-    
+
+    // 현재 시각 받아서 저장하기
+    body["createAt"] = new Date();
+
     // true 라면 아래의 로직을 수행합니다. 
     //  - 내가 좋아하는 사이트로 입력 받은 사이트를 cheerio를 활용하여 scraping 한 후, 관련 오픈그래프(OG) 메타 태그 정보를 다른 입력 받은 정보들과 함께 `User` DB에 저장해주세요.
     //  - 메타 태그 정보는 og 객체에 (title, description, image)가 들어있도록 만들어주세요.
@@ -61,6 +64,10 @@ export const signupAPI = async (req, res) => {
     
     //  - personal(주민번호)는 뒷자리를 `*`로 바꾼후 저장해주세요. (220101-*******)
     body.personal = getPersonal( body.personal );
+
+    // 비밀번호 암호화
+    [ body["pwd"], body["salt"] ] = await getHashPassword( body.pwd );
+    console.log(body);
 
     //  - DB에 저장한 후, 
     const user_id = await createUser( body );

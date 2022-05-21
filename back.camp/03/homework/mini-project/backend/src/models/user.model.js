@@ -9,6 +9,7 @@ export const UserSchema = new mongoose.Schema({
     personal: String,
     prefer:   String,
     pwd:      String,
+    salt:     String,
     phone:    String,
     createAt: Date,
     deleteAt: Date,

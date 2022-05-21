@@ -7,7 +7,6 @@ required:
   - prefer
   - pwd
   - phone
-  - og
 properties:
   name:
     type: string
@@ -27,5 +26,3 @@ properties:
   phone:
     type: string
     description: 유저 핸드폰 번호
-  og:
-    $ref: './opengraph.schema.yaml'

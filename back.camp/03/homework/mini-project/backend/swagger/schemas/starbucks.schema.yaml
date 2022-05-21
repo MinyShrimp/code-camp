@@ -1,9 +1,5 @@
 # Starbucks Schema
 type: object
-required:
-  - _id
-  - name
-  - img
 properties:
   _id:
     type: string

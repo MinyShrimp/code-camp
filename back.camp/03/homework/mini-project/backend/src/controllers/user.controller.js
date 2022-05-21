@@ -13,8 +13,9 @@ export const createUser = async ( user ) => {
         personal: user.personal,
         prefer:   user.prefer,
         pwd:      user.pwd,
+        salt:     user.salt,
         phone:    user.phone,
-        createAt: new Date(),
+        createAt: user.createAt,
         deleteAt: null,
         og:       { ...user.og }
     });

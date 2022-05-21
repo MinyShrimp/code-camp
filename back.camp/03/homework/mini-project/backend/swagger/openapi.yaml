@@ -47,7 +47,7 @@ components:
 
     # Token Schema
     Token:
-      $ref: "./schemas/starbucks.schema.yaml"
+      $ref: "./schemas/token.schema.yaml"
 
     # Starbucks Schema
     Starbucks:

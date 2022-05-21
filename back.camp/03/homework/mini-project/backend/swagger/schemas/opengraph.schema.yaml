@@ -1,10 +1,5 @@
 # Open Graph Schema
 type: object
-required:
-  - title
-  - url
-  - image
-  - description
 properties:
   title:
     type: string
