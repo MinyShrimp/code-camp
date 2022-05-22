@@ -40,10 +40,11 @@ export const tokenAuthRequestView = async ( req, res ) => {
     }
 
     // 핸드폰에 보냄
-    // const isOK = await sendSMS(phone, token);
-    const isOK = true;
+    const isOK = await sendSMS(phone, token);
+    // const isOK = true;
     if( isOK ) {
-        res.send(`핸드폰으로 인증 문자가 전송되었습니다! - ${token}`);
+        // res.send(`핸드폰으로 인증 문자가 전송되었습니다! - ${token}`);
+        res.send(`핸드폰으로 인증 문자가 전송되었습니다!`);
         return true;
     } else {
         res.status(400).send("발송 실패");
