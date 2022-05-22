@@ -1,0 +1,12 @@
+# Users API
+summary: 모든 유저 목록
+tags: [User]
+responses:
+  '200':
+    description: 모든 유저 목록
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/allUserRes.schema.yaml"
+        example:
+          $ref: "../examples/usersRes.example.yaml"
