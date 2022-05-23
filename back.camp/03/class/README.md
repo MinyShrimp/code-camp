@@ -14,6 +14,8 @@
 ## Apollo Server / Graphql API
 > 고급 API 만들기
 
+<br> 
+
 # Week 2
 ## 인증번호 전송 / 가입 메일 전솔
 * CoolSMS
@@ -31,3 +33,18 @@
 * Pippeteer
 
 ## 종합 미니프로젝트 완성 및 발표
+
+<br> 
+
+# Week 3
+## OOP - Object Oriented Programming
+
+## MVC 패턴 - Model-View-Controller
+
+## DI - Dependency-Injection
+
+## Typescript
+
+## MYSQL, TypeORM
+
+## ERD
