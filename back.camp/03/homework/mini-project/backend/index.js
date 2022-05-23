@@ -29,7 +29,7 @@ const corsOptions = {
 dotenv.config();
 
 // Connect Mongo DB
-mongoose.connect("mongodb://my-db:27017/MiniProject");
+mongoose.connect(process.env.DB_URL);
 
 // Set Swagger Config
 const __dirname  = new URL('.', import.meta.url).pathname;
