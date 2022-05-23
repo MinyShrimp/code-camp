@@ -1,0 +1,12 @@
+# Starbucks API
+summary: 스타벅스 커피 목록 조회
+tags: [Starbucks]
+responses:
+  '200':
+    description: 모든 커피 목록
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/AllStarbucks.schema.yaml"
+        example:
+          $ref: "../examples/starbucksRes.example.yaml"

@@ -1,0 +1,5 @@
+
+# GET /starbucks Response Schema
+type: array
+items:
+  $ref: "./starbucks.schema.yaml"

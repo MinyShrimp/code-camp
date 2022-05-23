@@ -1,0 +1,16 @@
+
+# Open Graph Schema
+type: object
+properties:
+  title:
+    type: string
+    description: 사이트 이름
+  url:
+    type: string
+    description: 사이트 주소
+  image:
+    type: string
+    description: 사이트 대표 이미지 주소
+  description:
+    type: string
+    description: 사이트 설명

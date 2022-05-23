@@ -1,0 +1,31 @@
+# TOKEN PATCH API
+summary: 토큰 인증
+tags: [Tokens/Phone]
+requestBody:
+  description: 전화번호와 토큰
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - phone
+          - token
+        properties:
+          phone:
+            type: string
+            description: 핸드폰 번호
+          token:
+            type: string
+            description: 6자리 토큰
+      example:
+        phone: "01012345678"
+        token: "111111"
+responses:
+  '200':
+    description: 인증 성공 여부
+    content:
+      application/json:
+        schema:
+          type: boolean
+        example: true
