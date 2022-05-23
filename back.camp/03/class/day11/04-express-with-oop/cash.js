@@ -1,4 +1,3 @@
-
 /**
  * 가진 돈을 관리하는 Service Class
  */
@@ -11,5 +10,5 @@ export class CashService {
      */
     hasMoney = () => {
         return true;
-    }
+    };
 }
