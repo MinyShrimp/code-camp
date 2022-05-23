@@ -67,7 +67,7 @@ class TokenService {
      * DB에 저장된 모든 Token 정보 삭제
      * @returns 삭제 결과 Log
      */
-     removeAll = async () => {
+    removeAll = async () => {
         const result = await Token.deleteMany();
         return result;
     };
