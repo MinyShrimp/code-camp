@@ -66,9 +66,9 @@ export const tokenAuthRequestView = async ( req, res ) => {
 export const tokenAuthOKView = async ( req, res ) => {
     // 핸드폰 번호와 마지막으로 생성된 인증 토큰을 전달해 줍니다.
     // ? => 생성된 인증 토큰이 아니라 사용자가 입력한 인증 토큰이 아닌가요?
-    const body    = req.body;
-    const token   = body.token;
-    const myPhone = body.phone;
+    const body  = req.body;
+    const token = body.token;
+    const phone = body.phone;
 
     // Request Data 검사
     if( !isValidPatchTokenRequestData( body ) ) {
@@ -77,7 +77,7 @@ export const tokenAuthOKView = async ( req, res ) => {
     }
 
     // API 요청시 입력 받은 핸드폰 번호를 Tokens 문서에서 찾아봅니다. 
-    const info = await getTokenByPhone( myPhone );
+    const info = await getTokenByPhone( phone );
     if( info === null ) {
         // 핸드폰 번호가 저장되어 있지 않다면 클라이언트에 false를 응답하고 함수가 종료됩니다.
         res.send(false);
@@ -99,6 +99,6 @@ export const tokenAuthOKView = async ( req, res ) => {
     }
 
     // 토큰이 일치하면, isAuth를 true로 변경하여 DB에 저장합니다.
-    await authOk( myPhone );
+    await authOk( phone );
     res.send(true);
 }
