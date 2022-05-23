@@ -1,0 +1,416 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "Mini Project API Docs",
+    "description": "코드캠프 백엔드코스 2주차 미니 프로젝트 API 문서",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/user": {
+      "post": {
+        "summary": "새로운 유저 생성",
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "description": "회원가입에 필요한 유저 정보",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRequest"
+              },
+              "example": {
+                "name": "아라111",
+                "email": "ala@gmail.com",
+                "personal": "220101-1111111",
+                "prefer": "https://www.naver.com",
+                "pwd": "qwer1234!",
+                "phone": "01012345678"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "생성된 유저 ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "6286d43f43c5aed98530fd6f"
+              }
+            }
+          },
+          "422": {
+            "description": "핸드폰 번호 인증 안됨",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "에러!! 핸드폰 번호가 인증되지 않았습니다"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "모든 유저 목록",
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "모든 유저 목록",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsersResponse"
+                },
+                "example": [
+                  {
+                    "_id": "6286d16dc3916027f534e0ef",
+                    "name": "아라111",
+                    "email": "ala@gmail.com",
+                    "personal": "220101-*******",
+                    "prefer": "https://www.naver.com",
+                    "pwd": "$2b$10$Y8YNup6T2ypKbWLGqcPYuO9njtqvptBMy7WsEHYb8fiWWgpY05QQO",
+                    "salt": "$2b$10$Y8YNup6T2ypKbWLGqcPYuO",
+                    "phone": "01012345678",
+                    "createAt": "2022-05-21T05:48:05.752Z",
+                    "deleteAt": null,
+                    "og": {
+                      "title": "네이버",
+                      "url": "https://www.naver.com",
+                      "image": "https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_212852414260.png",
+                      "description": "네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tokens/phone": {
+      "post": {
+        "summary": "새로운 토큰 생성",
+        "tags": [
+          "Tokens/Phone"
+        ],
+        "requestBody": {
+          "description": "전화번호",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "phone"
+                ],
+                "properties": {
+                  "phone": {
+                    "type": "string",
+                    "description": "핸드폰 번호"
+                  }
+                },
+                "example": {
+                  "phone": "01012345678"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "메세지",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "핸드폰으로 인증 문자가 전송되었습니다!"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "토큰 인증",
+        "tags": [
+          "Tokens/Phone"
+        ],
+        "requestBody": {
+          "description": "전화번호와 토큰",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "phone",
+                  "token"
+                ],
+                "properties": {
+                  "phone": {
+                    "type": "string",
+                    "description": "핸드폰 번호"
+                  },
+                  "token": {
+                    "type": "string",
+                    "description": "6자리 토큰"
+                  }
+                }
+              },
+              "example": {
+                "phone": "01012345678",
+                "token": "111111"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "인증 성공 여부",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "example": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "/starbucks": {
+      "get": {
+        "summary": "스타벅스 커피 목록 조회",
+        "tags": [
+          "Starbucks"
+        ],
+        "responses": {
+          "200": {
+            "description": "모든 커피 목록",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StarbucksResponse"
+                },
+                "example": [
+                  {
+                    "_id": "6286d1a2d9abda062f32fc22",
+                    "name": "롤린 민트 초코 콜드 브루",
+                    "img": "https://image.istarbucks.co.kr/upload/store/skuimg/2022/04/[9200000003988]_20220406113215251.jpg"
+                  },
+                  {
+                    "_id": "6286d1a2d9abda062f32fc23",
+                    "name": "나이트로 바닐라 크림",
+                    "img": "https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[9200000002487]_20210426091745467.jpg"
+                  },
+                  {
+                    "_id": "6286d1a2d9abda062f32fc24",
+                    "name": "나이트로 콜드 브루",
+                    "img": "https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[9200000000479]_20210426091843897.jpg"
+                  },
+                  {
+                    "_id": "6286d1a2d9abda062f32fc25",
+                    "name": "돌체 콜드 브루",
+                    "img": "https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[9200000002081]_20210415133656839.jpg"
+                  },
+                  {
+                    "_id": "6286d1a2d9abda062f32fc26",
+                    "name": "바닐라 크림 콜드 브루",
+                    "img": "https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[9200000000487]_20210430112319040.jpg"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "OpenGraph": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "사이트 이름"
+          },
+          "url": {
+            "type": "string",
+            "description": "사이트 주소"
+          },
+          "image": {
+            "type": "string",
+            "description": "사이트 대표 이미지 주소"
+          },
+          "description": {
+            "type": "string",
+            "description": "사이트 설명"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "유저 고유 ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "유저 이름"
+          },
+          "email": {
+            "type": "string",
+            "description": "유저 이메일"
+          },
+          "personal": {
+            "type": "string",
+            "description": "주민번호, 뒷자리는 *로 표기됨"
+          },
+          "prefer": {
+            "type": "string",
+            "description": "좋아하는 사이트"
+          },
+          "pwd": {
+            "type": "string",
+            "description": "유저 비밀번호"
+          },
+          "salt": {
+            "type": "string",
+            "description": "비밀번호 Salt"
+          },
+          "phone": {
+            "type": "string",
+            "description": "유저 핸드폰 번호"
+          },
+          "createAt": {
+            "type": "string",
+            "description": "생성된 시각"
+          },
+          "deleteAt": {
+            "type": "string",
+            "description": "삭제된 시각"
+          },
+          "og": {
+            "$ref": "#/components/schemas/OpenGraph"
+          }
+        }
+      },
+      "UserRequest": {
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "personal",
+          "prefer",
+          "pwd",
+          "phone"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "유저 이름"
+          },
+          "email": {
+            "type": "string",
+            "description": "유저 이메일"
+          },
+          "personal": {
+            "type": "string",
+            "description": "주민번호, 뒷자리는 *로 표기됨"
+          },
+          "prefer": {
+            "type": "string",
+            "description": "좋아하는 사이트"
+          },
+          "pwd": {
+            "type": "string",
+            "description": "유저 비밀번호"
+          },
+          "phone": {
+            "type": "string",
+            "description": "유저 핸드폰 번호"
+          }
+        }
+      },
+      "UsersResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/User"
+        }
+      },
+      "Token": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "인증 고유 ID"
+          },
+          "token": {
+            "type": "string",
+            "description": "인증 토큰"
+          },
+          "phone": {
+            "type": "string",
+            "description": "인증 핸드폰"
+          },
+          "isAuth": {
+            "type": "boolean",
+            "description": "인증 여부"
+          },
+          "createAt": {
+            "type": "string",
+            "description": "생성된 시각"
+          },
+          "authAt": {
+            "type": "string",
+            "description": "인증 완료 시각"
+          }
+        }
+      },
+      "Starbucks": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "커피 고유 ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "커피 이름"
+          },
+          "img": {
+            "type": "string",
+            "description": "커피 이미지 경로"
+          }
+        }
+      },
+      "StarbucksResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Starbucks"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+
+# Token Schema
+type: object
+properties:
+  _id:
+    type: string
+    description: 인증 고유 ID
+  token:
+    type: string
+    description: 인증 토큰
+  phone:
+    type: string
+    description: 인증 핸드폰
+  isAuth:
+    type: boolean
+    description: 인증 여부
+  createAt:
+    type: string
+    description: 생성된 시각
+  authAt:
+    type: string
+    description: 인증 완료 시각

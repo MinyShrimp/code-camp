@@ -1,0 +1,27 @@
+# User API
+summary: 새로운 유저 생성
+tags: [User]
+requestBody:
+  description: 회원가입에 필요한 유저 정보
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: "../schemas/userReq.schema.yaml"
+      example:
+        $ref: "../examples/userReq.example.yaml"
+responses:
+  '200':
+    description: 생성된 유저 ID
+    content:
+      application/json:
+        schema:
+          type: string
+        example: "6286d43f43c5aed98530fd6f"
+  '422':
+    description: 핸드폰 번호 인증 안됨
+    content:
+      application/json:
+        schema:
+          type: string
+        example: "에러!! 핸드폰 번호가 인증되지 않았습니다"

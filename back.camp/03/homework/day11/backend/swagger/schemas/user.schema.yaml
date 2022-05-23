@@ -1,0 +1,36 @@
+
+# User Schema
+type: object
+properties:
+  _id:
+    type: string
+    description: 유저 고유 ID
+  name:
+    type: string
+    description: 유저 이름
+  email:
+    type: string
+    description: 유저 이메일
+  personal:
+    type: string
+    description: 주민번호, 뒷자리는 *로 표기됨
+  prefer:
+    type: string
+    description: 좋아하는 사이트
+  pwd:
+    type: string
+    description: 유저 비밀번호
+  salt:
+    type: string
+    description: 비밀번호 Salt
+  phone:
+    type: string
+    description: 유저 핸드폰 번호
+  createAt:
+    type: string
+    description: 생성된 시각
+  deleteAt:
+    type: string
+    description: 삭제된 시각
+  og:
+    $ref: './opengraph.schema.yaml'

@@ -1,0 +1,5 @@
+
+# GET /users Response Schema
+type: array
+items:
+  $ref: "./user.schema.yaml"
