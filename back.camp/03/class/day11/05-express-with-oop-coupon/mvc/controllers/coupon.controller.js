@@ -1,4 +1,4 @@
-import { CashService } from "../../cash.js";
+import { CashService } from "./services/cash.service.js";
 
 class CouponController {
     constructor() {}
