@@ -1,11 +1,24 @@
-
-import Starbucks from "../models/starbucks.model.js";
+import StarbucksService from "./services/starbucks.service.js";
 
 /**
- * DB에 저장된 모든 Starbucks 데이터 가져오기
- * @returns 모든 Starbucks Data
+ * Starbucks Controller
  */
-export const getAllMenu = async () => {
-    const datas = await Starbucks.find();
-    return datas;
+class StarbucksContoller {
+    starbucksService = new StarbucksService();
+
+    constructor() {}
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // TO API
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * 스타벅스 커피 목록 조회 API
+     * GET /starbucks
+     */
+    getAllMenusAPI = async (req, res) => {
+        const menus = await this.starbucksService.getAllMenu();
+        res.send(menus);
+    }
 }
+
+export default StarbucksContoller;

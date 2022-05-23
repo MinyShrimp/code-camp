@@ -11,9 +11,9 @@ import fs from "fs";
 import swaggerUi from "swagger-ui-express";
 import YAML from 'js-yaml';
 
-import { getAllMenus } from "./src/views/starbucks.view.js";
-import { signupAPI, getAllUserAPI } from "./src/views/user.view.js";
-import { tokenAuthRequestView, tokenAuthOKView } from "./src/views/token.view.js";
+import UserController from "./src/controllers/user.controller.js";
+import TokenController from "./src/controllers/token.controller.js";
+import StarbucksController from "./src/controllers/starbucks.controller.js";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /* express settings */
@@ -35,6 +35,11 @@ mongoose.connect(process.env.DB_URL);
 const __dirname  = new URL('.', import.meta.url).pathname;
 const swagger_file = path.join( __dirname, "swagger", "build", 'swagger.json' );
 const swaggerSpec = YAML.load( fs.readFileSync( swagger_file, 'utf-8' ) );
+
+// Controllers
+const userController = new UserController();
+const tokenController = new TokenController();
+const starbukcsContoller = new StarbucksController();
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /* middleware */
@@ -67,7 +72,7 @@ app.get('/', ( req, res ) => {
  *  - [X] API 요청 시 DB에 저장된 User 데이터의 목록을 응답으로 보내주세요.
  *  - [X] 보내주는 데이터에는  name, email, personal(주민번호), prefer(내가 좋아하는 사이트), phone(핸드폰번호), og 객체(오픈그래프 정보 title, description, image)가 포함되어야합니다.
  */
-app.get('/users', getAllUserAPI);
+app.get('/users', userController.getAllUserAPI);
 
 /**
  * 회원 가입 API
@@ -92,7 +97,7 @@ app.get('/users', getAllUserAPI);
  *      - [X] DB에 저장한 후, 회원 가입 환영 이메일을 실제로 전송해주세요.
  *      - [X] 생성된 user의 _id를 클라이언트에 반환합니다.
  */
-app.post('/user', signupAPI);
+app.post('/user', userController.signupAPI);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // 토큰 API
@@ -110,7 +115,7 @@ app.post('/user', signupAPI);
  *  - [X] 해당 핸드폰 번호가 이미 `Tokens` 문서에 저장되어 있다면 최신 토큰으로 덮어씁니다.
  *  - [X] 클라이언트에 응답으로 “핸드폰으로 인증 문자가 전송되었습니다!”를 보내줍니다.
  */
-app.post('/tokens/phone', tokenAuthRequestView);
+app.post('/tokens/phone', tokenController.tokenAuthRequestAPI);
 
 /**
  * 토큰 인증 완료 API
@@ -123,7 +128,7 @@ app.post('/tokens/phone', tokenAuthRequestView);
  *  - [X] 토큰이 일치하고, isAuth가 false라면 true로 변경하여 DB에 저장합니다.
  *  - [X] 잘 저장되었다면 클라이언트에 true를 응답해줍니다.
  */
-app.patch('/tokens/phone', tokenAuthOKView);
+app.patch('/tokens/phone', tokenController.tokenAuthOKAPI);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // 스타벅스 API
@@ -137,7 +142,7 @@ app.patch('/tokens/phone', tokenAuthOKView);
  *  - [X] DB에 저장된 커피의 목록을 반환해주세요.
  *  - [X] 반환하는 커피 데이터에는 img, name, _id가 포함되어야합니다.
  */
-app.get('/starbucks', getAllMenus);
+app.get('/starbucks', starbukcsContoller.getAllMenusAPI);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
