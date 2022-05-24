@@ -1,0 +1,14 @@
+{
+    "name": "01-express-with-di-ioc",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "type": "module",
+    "scripts": {
+        "dev": "nodemon index.js"
+    },
+    "dependencies": {
+        "express": "^4.18.1",
+        "nodemon": "^2.0.16"
+    }
+}
