@@ -5,7 +5,6 @@ import { GraphQLModule } from "@nestjs/graphql";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 
 import BoardsModule from "./apis/boards/boards.module";
-// import ProductsModule from "./apis/products/products.module";
 ///////////////////////////////////////////////////////////////////////////
 
 @Module({
@@ -15,7 +14,6 @@ import BoardsModule from "./apis/boards/boards.module";
 
         /* Modules */
         BoardsModule,
-        // ProductsModule,
 
         /* GrapthQL */
         GraphQLModule.forRoot<ApolloDriverConfig>({

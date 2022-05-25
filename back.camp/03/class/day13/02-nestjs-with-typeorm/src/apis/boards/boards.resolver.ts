@@ -11,7 +11,7 @@ export default class BoardsResolver {
      * getHello가 화살표 함수가 아니어야합니다.
      */
     @Query((returns) => String)
-    getHello(): String {
+    getHello(): string {
         return this.boardsService.getHello();
     }
 }
