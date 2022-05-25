@@ -4,8 +4,7 @@ import { GraphQLModule } from "@nestjs/graphql";
 ///////////////////////////////////////////////////////////////////////////
 // 추가된 부분 //
 import { TypeOrmModule } from "@nestjs/typeorm";
-
-import "dotenv/config";
+import { ConfigModule } from "@nestjs/config";
 ///////////////////////////////////////////////////////////////////////////
 
 import BoardsModule from "./apis/boards/boards.module";
@@ -13,6 +12,16 @@ import BoardEntity from "./apis/boards/entities/board.entity";
 
 @Module({
     imports: [
+        ///////////////////////////////////////////////////////////////////////////
+        // 추가된 부분 //
+
+        /* Enviroment Config */
+        /* 최상단에 위치 */
+        ConfigModule.forRoot({
+            envFilePath: ".env",
+        }),
+        ///////////////////////////////////////////////////////////////////////////
+
         /* Modules */
         BoardsModule,
 
