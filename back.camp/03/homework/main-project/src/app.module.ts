@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 ///////////////////////////////////////////////////////////////////////////
 // GraphQL //
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { GraphQLModule } from '@nestjs/graphql';
+// import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+// import { GraphQLModule } from '@nestjs/graphql';
 
 // TypeORM //
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -38,7 +38,7 @@ import { ConfigModule } from '@nestjs/config';
             username: process.env.MYSQL_USER,
             password: process.env.MYSQL_PASSWORD,
             database: process.env.MYSQL_DATABASE,
-            entities: [__dirname + '/apis/**/*.entity.ts'],
+            entities: [__dirname + '/apis/**/*.entity.*'],
             synchronize: true,
             logging: true,
         }),
