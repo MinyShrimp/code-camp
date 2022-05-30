@@ -31,7 +31,7 @@ export default class ProductEntity {
     @Column()
     selling_count: number;
 
-    @Column({ type: 'timestamp' })
+    @Column()
     updateAt: Date;
 
     @JoinColumn()

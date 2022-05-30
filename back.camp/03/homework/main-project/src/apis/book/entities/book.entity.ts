@@ -23,7 +23,7 @@ export default class BookEntity {
     @Column()
     subtitle: string;
 
-    @Column()
+    @Column({ type: 'text' })
     description: string;
 
     @Column()

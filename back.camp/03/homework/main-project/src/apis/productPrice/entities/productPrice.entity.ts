@@ -1,8 +1,13 @@
 /**
- * 상품 Entity
+ * 상품 가격 Entity
  */
 
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    Entity,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from 'typeorm';
 
 @Entity({ name: 'product_price' })
 export default class ProductPriceEntity {
@@ -12,6 +17,6 @@ export default class ProductPriceEntity {
     @Column()
     price: number;
 
-    @Column({ type: 'timestamp' })
+    @UpdateDateColumn()
     updateAt: Date;
 }
