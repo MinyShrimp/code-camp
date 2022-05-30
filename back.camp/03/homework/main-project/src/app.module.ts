@@ -25,15 +25,15 @@ import { ConfigModule } from '@nestjs/config';
 
         ///////////////////////////////////////////////////////////////////////////
         // GrapthQL //
-        GraphQLModule.forRoot<ApolloDriverConfig>({
-            driver: ApolloDriver,
-            autoSchemaFile: 'src/commons/graphql/schema.gql',
-        }),
+        // GraphQLModule.forRoot<ApolloDriverConfig>({
+        //     driver: ApolloDriver,
+        //     autoSchemaFile: 'src/commons/graphql/schema.gql',
+        // }),
 
         // TypeORM //
         TypeOrmModule.forRoot({
             type: 'mysql',
-            host: 'localhost',
+            host: 'db',
             port: 3306,
             username: process.env.MYSQL_USER,
             password: process.env.MYSQL_PASSWORD,
