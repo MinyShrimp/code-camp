@@ -7,12 +7,12 @@ import CreateBoardInput from "./dto/createBoard.input";
 export default class BoardsResolver {
     constructor(private readonly boardsService: BoardsService) {}
 
-    @Query((returns) => [BoardEntity])
+    @Query(() => [BoardEntity])
     fetchBoards() {
         return this.boardsService.findAll();
     }
 
-    @Mutation((returns) => String)
+    @Mutation(() => String)
     createBoard(
         @Args("createBoardInput") createBoardInput: CreateBoardInput
     ): String {

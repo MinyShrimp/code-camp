@@ -1,38 +1,40 @@
 import { Module } from "@nestjs/common";
+///////////////////////////////////////////////////////////////////////////
+// GraphQL //
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { GraphQLModule } from "@nestjs/graphql";
-///////////////////////////////////////////////////////////////////////////
-// 추가된 부분 //
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { ConfigModule } from "@nestjs/config";
-///////////////////////////////////////////////////////////////////////////
 
+// TypeORM //
+import { TypeOrmModule } from "@nestjs/typeorm";
+
+// Config //
+import { ConfigModule } from "@nestjs/config";
+
+// Module //
 import BoardsModule from "./apis/boards/boards.module";
-import BoardEntity from "./apis/boards/entities/board.entity";
+
+///////////////////////////////////////////////////////////////////////////
 
 @Module({
     imports: [
         ///////////////////////////////////////////////////////////////////////////
-        // 추가된 부분 //
-
-        /* Enviroment Config */
-        /* 최상단에 위치 */
+        // Enviroment Config //
+        // 최상단에 위치
         ConfigModule.forRoot({
             envFilePath: ".env",
         }),
         ///////////////////////////////////////////////////////////////////////////
-
-        /* Modules */
+        // Modules //
         BoardsModule,
 
-        /* GrapthQL */
+        ///////////////////////////////////////////////////////////////////////////
+        // GrapthQL //
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
             autoSchemaFile: "src/commons/graphql/schema.gql",
         }),
 
-        ///////////////////////////////////////////////////////////////////////////
-        // 추가된 부분 //
+        // TypeORM //
         TypeOrmModule.forRoot({
             type: "mysql",
             host: "localhost",
@@ -40,7 +42,7 @@ import BoardEntity from "./apis/boards/entities/board.entity";
             username: process.env.MYSQL_USER,
             password: process.env.MYSQL_PASSWORD,
             database: process.env.MYSQL_DATABASE,
-            entities: [BoardEntity],
+            entities: [__dirname + "/apis/**/*.entity.ts"],
             synchronize: true,
             logging: true,
         }),
