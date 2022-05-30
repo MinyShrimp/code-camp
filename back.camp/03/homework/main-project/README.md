@@ -57,3 +57,11 @@ import { ConfigModule } from "@nestjs/config";
     providers: [],
 })
 ```
+
+## 날짜 경과도
+
+### Day 16
+
+-   [x] 설계한 ERD 테이블이 모두 각각의 entity 파일로 만들어졌다.
+-   [x] 테이블 간의 관계(1 : 1, 1 : N, N : M)가 typeorm으로 정의되어 있다.
+-   [x] erdcloud로 작성한 ERD와 DBeaver의 엔티티 관계도가 일치한다.

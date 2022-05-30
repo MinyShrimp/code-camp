@@ -39,10 +39,6 @@ services:
 
             - /app/node_modules
 
-        # 의존성 설정
-        depends_on:
-            - db
-
         # 환경 변수 설정
         env_file: .env
 
