@@ -1,19 +1,15 @@
 /**
- * 저자 Entity
+ * 상품 카테고리 Entity
+ * depth 1
  */
 
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({ name: 'author' })
-export default class AuthorEntity {
+@Entity({ name: 'product_category_1' })
+export default class ProductCategory1Entity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    // 이름
     @Column()
     name: string;
-
-    // 설명
-    @Column()
-    description: string;
 }

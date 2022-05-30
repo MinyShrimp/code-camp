@@ -9,9 +9,9 @@ import {
     Column,
     CreateDateColumn,
     UpdateDateColumn,
-    PrimaryGeneratedColumn,
     ManyToOne,
     JoinColumn,
+    PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity({ name: 'payment' })

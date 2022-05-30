@@ -10,12 +10,15 @@ export default class BookImageEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
+    // img url
     @Column()
     url: string;
 
+    // 메인 이미지 여부
     @Column()
     isMain: boolean;
 
+    // 책
     @ManyToOne(() => BookEntity)
     book: BookEntity;
 }

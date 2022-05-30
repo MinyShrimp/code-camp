@@ -9,9 +9,11 @@ export default class PublisherEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
+    // 이름
     @Column()
     name: string;
 
+    // 설명
     @Column()
     description: string;
 }

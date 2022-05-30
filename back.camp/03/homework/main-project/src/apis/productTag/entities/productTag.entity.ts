@@ -10,9 +10,11 @@ export default class ProductTagEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
+    // 이름
     @Column()
     name: string;
 
+    // 상품
     @ManyToMany(() => ProductEntity, (product) => product.productTags)
     products: Array<ProductEntity>;
 }

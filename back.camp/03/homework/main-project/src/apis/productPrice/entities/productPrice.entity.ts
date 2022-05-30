@@ -14,9 +14,11 @@ export default class ProductPriceEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
+    // 가격
     @Column()
     price: number;
 
+    // 업데이트 시간
     @UpdateDateColumn()
     updateAt: Date;
 }
