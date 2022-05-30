@@ -5,10 +5,10 @@
 const obj = {
     title: "The Title",
     name: "Jane",
-    contents: "Noting to say"
+    contents: "Noting to say",
 };
 
-for( let key in obj ) {
+for (let key in obj) {
     // 1. let key in obj 에서 key가 무엇을 뜻하는지 console.log를 통해 본다.
     // console.log( key );
 
@@ -24,14 +24,14 @@ for( let key in obj ) {
     // 4-1. "" 이 안에 무엇을 넣어야 비교가 될까?
     // 4-2. 아까 1번 과정에서 key를 출력해보니 "title", "name", "contents"가 나왔다.
     // 4-3. 그러면 key === "title" 이런식으로 비교를 할 수 있네?
-    if( key === "title" || key === "name" ) {
+    if (key === "title" || key === "name") {
         // 5. value를 대문자로 바꿔야함.
         // 5-1. 어? 어떻게 바꾸지?
         // 5-2. 지금 내가 보는 코드에 value가 어딨지? OK
 
         // 6. Object 에서 value를 가져오는 방법이 뭐가 있었지?
         //  i) obj.title     ii) obj["title"]
-        
+
         // 7. 어? 첫번째 방법으로 가져오려고 했더니, undefined가 뜨네?
         // 7-1. 이유는 obj.key 라고 쓴거는 "key" 이라는 이름의 value를 가져오겠단 뜻.
         // 7-2. 근데 현재 obj에 "key"이라는 이름을 가진 key값이 없죠?
