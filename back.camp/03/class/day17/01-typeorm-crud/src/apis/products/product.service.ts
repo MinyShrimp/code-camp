@@ -34,10 +34,19 @@ export default class ProductService {
     ): Promise<ProductEntity> {
         // Repository.save() 에 id 값을 넣어주면, 수정이 된다
         // id 값을 넣어주지 않으면, 추가가 된다.
-        return await this.productRepository.save({
+        // return await this.productRepository.save({
+        //     id: productID,
+        //     ...updateProductInput,
+        // });
+
+        const product = await this.findOne(productID);
+        const newProduct = {
+            ...product,
             id: productID,
             ...updateProductInput,
-        });
+        };
+
+        return await this.productRepository.save(newProduct);
     }
 
     async create(
