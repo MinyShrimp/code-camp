@@ -6,6 +6,7 @@ export default class CreateProductInput {
     @Field(() => String)
     url: string;
 
+    @Min(0)
     @Field(() => Int)
     stock_count: number;
 }

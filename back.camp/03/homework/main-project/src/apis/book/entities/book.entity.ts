@@ -38,7 +38,7 @@ export default class BookEntity {
 
     // 쪽수
     @Field(() => Int)
-    @Column()
+    @Column({ unsigned: true })
     page: number;
 
     // 10자리 ISBN

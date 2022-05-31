@@ -12,6 +12,7 @@ export default class CreateBookInput {
     @Field(() => String)
     description: string;
 
+    @Min(0)
     @Field(() => Int)
     page: number;
 
