@@ -86,9 +86,9 @@ bootstrap();
 
 ### Day 17
 
--   [ ] docker로 서버를 띄웠을 때, 오류 없이 실행이 된다.
--   [ ] product 테이블에 데이터를 추가하는 API를 플레이그라운드로 요청할 수 있다.
--   [ ] product 테이블에 데이터를 업데이트하는 API를 플레이그라운드로 요청할 수 있다.
--   [ ] product 테이블에 데이터를 모두 조회하는 API를 플레이그라운드로 요청할 수 있다.
--   [ ] product 테이블에 데이터를 개별 조회하는 API를 플레이그라운드로 요청할 수 있다.
--   [ ] `UnprocessableEntityException` 을 사용해 에러처리를 했다.
+-   [x] docker로 서버를 띄웠을 때, 오류 없이 실행이 된다.
+-   [x] product 테이블에 데이터를 추가하는 API를 플레이그라운드로 요청할 수 있다.
+-   [x] product 테이블에 데이터를 업데이트하는 API를 플레이그라운드로 요청할 수 있다.
+-   [x] product 테이블에 데이터를 모두 조회하는 API를 플레이그라운드로 요청할 수 있다.
+-   [x] product 테이블에 데이터를 개별 조회하는 API를 플레이그라운드로 요청할 수 있다.
+-   [x] `UnprocessableEntityException` 을 사용해 에러처리를 했다.

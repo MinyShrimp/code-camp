@@ -71,6 +71,23 @@ type UserEntity {
   deleteAt: DateTime!
 }
 
+type ProductCategory0Entity {
+  id: ID!
+  name: String!
+}
+
+type ProductCategory1Entity {
+  id: ID!
+  name: String!
+  parent: ProductCategory0Entity!
+}
+
+type ProductCategory2Entity {
+  id: ID!
+  name: String!
+  parent: ProductCategory1Entity!
+}
+
 type Query {
   fetchBooks: [BookEntity!]!
   fetchBook(bookID: String!): BookEntity!
