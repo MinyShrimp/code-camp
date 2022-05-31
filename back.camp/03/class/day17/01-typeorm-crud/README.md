@@ -1,10 +1,10 @@
 ## Install
 
 ```bash
-npx nest new 01-nestjs-with-graphql
+npx nest new 01-typeorm-crud
 yarn add @nestjs/typeorm typeorm@0.2 mysql2
 yarn add @nestjs/graphql @nestjs/apollo graphql apollo-server-express
-yarn add class-validator
+yarn add class-validator class-transformer
 ```
 
 ## Setting
@@ -29,6 +29,20 @@ import { TypeOrmModule } from "@nestjs/typeorm";
     ],
 })
 export class AppModule {}
+```
+
+```typescript
+/* main.ts */
+import { ValidationPipe } from "@nestjs/common";
+import { NestFactory } from "@nestjs/core";
+import { AppModule } from "./app.module";
+
+async function bootstrap() {
+    const app = await NestFactory.create(AppModule);
+    app.useGlobalPipes(new ValidationPipe());
+    await app.listen(3000);
+}
+bootstrap();
 ```
 
 ## 참고 URL

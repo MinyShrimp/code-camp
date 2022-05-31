@@ -56,12 +56,14 @@ type ProductEntity {
 
 type Query {
   fetchBoards: [BoardEntity!]!
-  fetchProductAll: [ProductEntity!]!
+  fetchProducts: [ProductEntity!]!
+  fetchProduct(productID: String!): ProductEntity!
   fetchProductCategoryAll: [ProductCategoryEntity!]!
 }
 
 type Mutation {
   createBoard(createBoardInput: CreateBoardInput!): String!
+  updateProduct(productID: String!, updateProductInput: UpdateProductInput!): ProductEntity!
   createProduct(createProductInput: CreateProductInput!): ProductEntity!
   deleteProductAll: String!
   createProductCategory(name: String!): ProductCategoryEntity!
@@ -72,6 +74,12 @@ input CreateBoardInput {
   writer: String!
   title: String!
   contents: String!
+}
+
+input UpdateProductInput {
+  name: String
+  description: String
+  price: Int
 }
 
 input CreateProductInput {

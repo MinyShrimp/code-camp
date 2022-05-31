@@ -14,6 +14,6 @@ export default class ProductCategoryEntity {
 
     // 이름
     @Field(() => String)
-    @Column()
+    @Column({ unique: true })
     name: string;
 }
