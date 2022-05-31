@@ -1,14 +1,17 @@
 import { Module } from '@nestjs/common';
 ///////////////////////////////////////////////////////////////////////////
 // GraphQL //
-// import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-// import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { GraphQLModule } from '@nestjs/graphql';
 
 // TypeORM //
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 // Config //
 import { ConfigModule } from '@nestjs/config';
+
+// Modules //
+import ProductCategoryModule from './apis/productCategory/productCategory.module';
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -22,13 +25,14 @@ import { ConfigModule } from '@nestjs/config';
         }),
         ///////////////////////////////////////////////////////////////////////////
         // Modules //
+        ProductCategoryModule,
 
         ///////////////////////////////////////////////////////////////////////////
         // GrapthQL //
-        // GraphQLModule.forRoot<ApolloDriverConfig>({
-        //     driver: ApolloDriver,
-        //     autoSchemaFile: 'src/commons/graphql/schema.gql',
-        // }),
+        GraphQLModule.forRoot<ApolloDriverConfig>({
+            driver: ApolloDriver,
+            autoSchemaFile: 'src/commons/graphql/schema.gql',
+        }),
 
         // TypeORM //
         TypeOrmModule.forRoot({
@@ -42,6 +46,7 @@ import { ConfigModule } from '@nestjs/config';
             synchronize: true,
             logging: true,
         }),
+
         ///////////////////////////////////////////////////////////////////////////
     ],
     controllers: [],

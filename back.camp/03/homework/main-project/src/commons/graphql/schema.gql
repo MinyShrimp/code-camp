@@ -1,0 +1,23 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type ProductCategoryEntity {
+  id: String!
+  name: String!
+  children: [ProductCategoryEntity!]!
+  parent: ProductCategoryEntity!
+}
+
+type Query {
+  findAllCategory: [ProductCategoryEntity!]!
+}
+
+type Mutation {
+  createCategory(createCategoryInput: CreateCategoryInput!): ProductCategoryEntity!
+}
+
+input CreateCategoryInput {
+  name: String!
+  depth: Int!
+}

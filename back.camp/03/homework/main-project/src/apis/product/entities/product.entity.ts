@@ -17,6 +17,7 @@ import {
 import BookEntity from 'src/apis/book/entities/book.entity';
 import ProductTagEntity from 'src/apis/productTag/entities/productTag.entity';
 import ProductPriceEntity from 'src/apis/productPrice/entities/productPrice.entity';
+import ProductCategoryEntity from 'src/apis/productCategory/entities/productCategory.entity';
 import ProductCategory0Entity from 'src/apis/productCategory/entities/productCategory0.entity';
 import ProductCategory1Entity from 'src/apis/productCategory/entities/productCategory1.entity';
 import ProductCategory2Entity from 'src/apis/productCategory/entities/productCategory2.entity';
@@ -58,23 +59,29 @@ export default class ProductEntity {
     @ManyToMany(() => ProductTagEntity, (productTags) => productTags.products)
     productTags: Array<ProductTagEntity>;
 
-    // 상품 카테고리 0
+    // 상품 카테고리
     @JoinColumn()
-    @ManyToOne(() => ProductCategory0Entity)
-    productCategory0: ProductCategory0Entity;
+    @ManyToOne(() => ProductCategoryEntity)
+    productCategory: ProductCategoryEntity;
 
-    // 상품 카테고리 1
-    @JoinColumn()
-    @ManyToOne(() => ProductCategory1Entity)
-    productCategory1: ProductCategory1Entity;
+    // // 상품 카테고리 0
+    // @JoinColumn()
+    // @ManyToOne(() => ProductCategory0Entity)
+    // productCategory0: ProductCategory0Entity;
 
-    // 상품 카테고리 2
-    @JoinColumn()
-    @ManyToOne(() => ProductCategory2Entity)
-    productCategory2: ProductCategory2Entity;
+    // // 상품 카테고리 1
+    // @JoinColumn()
+    // @ManyToOne(() => ProductCategory1Entity)
+    // productCategory1: ProductCategory1Entity;
 
-    // 상품 카테고리 3
-    @JoinColumn()
-    @ManyToOne(() => ProductCategory3Entity)
-    productCategory3: ProductCategory3Entity;
+    // // 상품 카테고리 2
+
+    // @JoinColumn()
+    // @ManyToOne(() => ProductCategory2Entity)
+    // productCategory2: ProductCategory2Entity;
+
+    // // 상품 카테고리 3
+    // @JoinColumn()
+    // @ManyToOne(() => ProductCategory3Entity)
+    // productCategory3: ProductCategory3Entity;
 }
