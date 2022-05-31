@@ -1,15 +1,19 @@
 ## install
 
 ```
-yarn add @nestjs/graphql @nestjs/apollo graphql apollo-server-express
-yarn add @nestjs/typeorm typeorm@0.2 mysql2
 yarn add @nestjs/config
+yarn add @nestjs/typeorm typeorm@0.2 mysql2
+yarn add @nestjs/graphql @nestjs/apollo graphql apollo-server-express
+yarn add class-validator class-transformer
 ```
 
 ## 설정
 
 ```typescript
 ///////////////////////////////////////////////////////////////////////////
+// NestJS //
+import { Module } from "@nestjs/common";
+
 // GraphQL //
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { GraphQLModule } from "@nestjs/graphql";
@@ -29,8 +33,6 @@ import { ConfigModule } from "@nestjs/config";
         ConfigModule.forRoot({
             envFilePath: ".env",
         }),
-        ///////////////////////////////////////////////////////////////////////////
-        // Modules //
 
         ///////////////////////////////////////////////////////////////////////////
         // GrapthQL //
@@ -39,6 +41,7 @@ import { ConfigModule } from "@nestjs/config";
             autoSchemaFile: "src/commons/graphql/schema.gql",
         }),
 
+        ///////////////////////////////////////////////////////////////////////////
         // TypeORM //
         TypeOrmModule.forRoot({
             type: "mysql",
@@ -52,10 +55,25 @@ import { ConfigModule } from "@nestjs/config";
             logging: true,
         }),
         ///////////////////////////////////////////////////////////////////////////
+        // Modules //
     ],
     controllers: [],
     providers: [],
 })
+```
+
+```typescript
+/* main.ts */
+import { ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+    const app = await NestFactory.create(AppModule);
+    app.useGlobalPipes(new ValidationPipe());
+    await app.listen(3000);
+}
+bootstrap();
 ```
 
 ## 날짜 경과도
@@ -65,3 +83,12 @@ import { ConfigModule } from "@nestjs/config";
 -   [x] 설계한 ERD 테이블이 모두 각각의 entity 파일로 만들어졌다.
 -   [x] 테이블 간의 관계(1 : 1, 1 : N, N : M)가 typeorm으로 정의되어 있다.
 -   [x] erdcloud로 작성한 ERD와 DBeaver의 엔티티 관계도가 일치한다.
+
+### Day 17
+
+-   [ ] docker로 서버를 띄웠을 때, 오류 없이 실행이 된다.
+-   [ ] product 테이블에 데이터를 추가하는 API를 플레이그라운드로 요청할 수 있다.
+-   [ ] product 테이블에 데이터를 업데이트하는 API를 플레이그라운드로 요청할 수 있다.
+-   [ ] product 테이블에 데이터를 모두 조회하는 API를 플레이그라운드로 요청할 수 있다.
+-   [ ] product 테이블에 데이터를 개별 조회하는 API를 플레이그라운드로 요청할 수 있다.
+-   [ ] `UnprocessableEntityException` 을 사용해 에러처리를 했다.

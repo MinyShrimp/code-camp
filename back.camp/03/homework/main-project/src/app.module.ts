@@ -1,5 +1,7 @@
-import { Module } from '@nestjs/common';
 ///////////////////////////////////////////////////////////////////////////
+// NestJS //
+import { Module } from '@nestjs/common';
+
 // GraphQL //
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -9,9 +11,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 // Config //
 import { ConfigModule } from '@nestjs/config';
+import ProductModule from './apis/product/product.module';
 
 // Modules //
-import ProductCategoryModule from './apis/productCategory/productCategory.module';
+// import ProductCategoryModule from './apis/productCategory/productCategory.module';
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -23,9 +26,6 @@ import ProductCategoryModule from './apis/productCategory/productCategory.module
         ConfigModule.forRoot({
             envFilePath: '.env',
         }),
-        ///////////////////////////////////////////////////////////////////////////
-        // Modules //
-        ProductCategoryModule,
 
         ///////////////////////////////////////////////////////////////////////////
         // GrapthQL //
@@ -34,6 +34,7 @@ import ProductCategoryModule from './apis/productCategory/productCategory.module
             autoSchemaFile: 'src/commons/graphql/schema.gql',
         }),
 
+        ///////////////////////////////////////////////////////////////////////////
         // TypeORM //
         TypeOrmModule.forRoot({
             type: 'mysql',
@@ -48,6 +49,9 @@ import ProductCategoryModule from './apis/productCategory/productCategory.module
         }),
 
         ///////////////////////////////////////////////////////////////////////////
+        // Modules //
+        // ProductCategoryModule,
+        ProductModule,
     ],
     controllers: [],
     providers: [],

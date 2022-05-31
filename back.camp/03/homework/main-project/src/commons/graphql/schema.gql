@@ -2,22 +2,75 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type ProductCategoryEntity {
-  id: String!
+type AuthorEntity {
+  id: ID!
   name: String!
-  children: [ProductCategoryEntity!]!
-  parent: ProductCategoryEntity!
+  description: String!
+}
+
+type PublisherEntity {
+  id: ID!
+  name: String!
+  description: String!
+}
+
+type BookEntity {
+  id: ID!
+  title: String!
+  subtitle: String!
+  description: String!
+  page: Int!
+  isbn_10: String!
+  isbn_13: String!
+  publish_at: DateTime!
+  publisher: PublisherEntity!
+  author: AuthorEntity!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type ProductTagEntity {
+  id: ID!
+  name: String!
+  products: [ProductEntity!]!
+}
+
+type ProductPriceEntity {
+  id: ID!
+  price: Int!
+  updateAt: DateTime!
+}
+
+type ProductCategorySearchEntity {
+  id: ID!
+  name: String!
+}
+
+type ProductEntity {
+  id: ID!
+  url: String!
+  stock_count: Int!
+  selling_count: Int!
+  updateAt: DateTime!
+  book: BookEntity!
+  price: ProductPriceEntity!
+  productTags: [ProductTagEntity!]!
+  productCategory: ProductCategorySearchEntity!
+}
+
+type UserEntity {
+  id: ID!
+  name: String!
+  email: String!
+  pwd: String!
+  createAt: DateTime!
+  updateAt: DateTime!
+  deleteAt: DateTime!
 }
 
 type Query {
-  findAllCategory: [ProductCategoryEntity!]!
-}
-
-type Mutation {
-  createCategory(createCategoryInput: CreateCategoryInput!): ProductCategoryEntity!
-}
-
-input CreateCategoryInput {
-  name: String!
-  depth: Int!
+  fetchProducts: [ProductEntity!]!
 }
