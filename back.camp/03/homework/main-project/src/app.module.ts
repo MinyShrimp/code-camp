@@ -11,10 +11,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 // Config //
 import { ConfigModule } from '@nestjs/config';
-import ProductModule from './apis/product/product.module';
 
 // Modules //
 // import ProductCategoryModule from './apis/productCategory/productCategory.module';
+import BookModule from './apis/book/book.module';
+import ProductModule from './apis/product/product.module';
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -51,6 +52,7 @@ import ProductModule from './apis/product/product.module';
         ///////////////////////////////////////////////////////////////////////////
         // Modules //
         // ProductCategoryModule,
+        BookModule,
         ProductModule,
     ],
     controllers: [],

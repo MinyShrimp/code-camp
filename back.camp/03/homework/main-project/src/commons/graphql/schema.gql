@@ -72,5 +72,47 @@ type UserEntity {
 }
 
 type Query {
+  fetchBooks: [BookEntity!]!
+  fetchBook(bookID: String!): BookEntity!
   fetchProducts: [ProductEntity!]!
+  fetchProduct(productID: String!): ProductEntity!
+}
+
+type Mutation {
+  createBook(createBookInput: CreateBookInput!): BookEntity!
+  updateBook(bookID: String!, updateBookInput: UpdateBookInput!): BookEntity!
+  deleteBookAll: String!
+  createProduct(createProductInput: CreateProductInput!): ProductEntity!
+  updateProduct(productID: String!, updateProductInput: UpdateProductInput!): ProductEntity!
+  deleteProductAll: String!
+}
+
+input CreateBookInput {
+  title: String!
+  subtitle: String!
+  description: String!
+  page: Int!
+  isbn_10: String!
+  isbn_13: String!
+  publish_at: DateTime!
+}
+
+input UpdateBookInput {
+  title: String
+  subtitle: String
+  description: String
+  page: Int
+  isbn_10: String
+  isbn_13: String
+  publish_at: DateTime
+}
+
+input CreateProductInput {
+  url: String!
+  stock_count: Int!
+}
+
+input UpdateProductInput {
+  url: String
+  stock_count: Int
 }

@@ -1,7 +1,5 @@
 /**
  * 상품 카테고리 Entity
- *
- * Closure Pattern ( Tree )
  */
 
 import { Field, ID, ObjectType } from '@nestjs/graphql';

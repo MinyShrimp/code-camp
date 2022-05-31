@@ -1,6 +1,4 @@
-/**
- * 상품 Entity
- */
+/* Product Entity */
 
 import {
     Column,
@@ -18,7 +16,7 @@ import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import BookEntity from 'src/apis/book/entities/book.entity';
 import ProductTagEntity from 'src/apis/productTag/entities/productTag.entity';
 import ProductPriceEntity from 'src/apis/productPrice/entities/productPrice.entity';
-import ProductCategoryEntity from 'src/apis/productCategory/entities/productCategory.entity';
+import ProductCategorySearchEntity from 'src/apis/productCategory/entities/productCategorySearch.entity';
 
 @ObjectType()
 @Entity({ name: 'product' })
@@ -34,12 +32,12 @@ export default class ProductEntity {
 
     // 재고 갯수
     @Field(() => Int)
-    @Column()
+    @Column({ unsigned: true })
     stock_count: number;
 
     // 판매 갯수
     @Field(() => Int)
-    @Column()
+    @Column({ default: 0, unsigned: true })
     selling_count: number;
 
     // 업데이트 시간
@@ -66,29 +64,8 @@ export default class ProductEntity {
     productTags: Array<ProductTagEntity>;
 
     // 상품 카테고리
-    @Field(() => ProductCategoryEntity)
+    @Field(() => ProductCategorySearchEntity)
     @JoinColumn()
-    @ManyToOne(() => ProductCategoryEntity)
-    productCategory: ProductCategoryEntity;
-
-    // // 상품 카테고리 0
-    // @JoinColumn()
-    // @ManyToOne(() => ProductCategory0Entity)
-    // productCategory0: ProductCategory0Entity;
-
-    // // 상품 카테고리 1
-    // @JoinColumn()
-    // @ManyToOne(() => ProductCategory1Entity)
-    // productCategory1: ProductCategory1Entity;
-
-    // // 상품 카테고리 2
-
-    // @JoinColumn()
-    // @ManyToOne(() => ProductCategory2Entity)
-    // productCategory2: ProductCategory2Entity;
-
-    // // 상품 카테고리 3
-    // @JoinColumn()
-    // @ManyToOne(() => ProductCategory3Entity)
-    // productCategory3: ProductCategory3Entity;
+    @ManyToOne(() => ProductCategorySearchEntity)
+    productCategory: ProductCategorySearchEntity;
 }
