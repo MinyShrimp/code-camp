@@ -9,12 +9,20 @@ type BoardEntity {
   contents: String!
 }
 
+type ProductCategoryEntity {
+  id: ID!
+  name: String!
+}
+
 type Query {
   fetchBoards: [BoardEntity!]!
+  fetchProductAllCategory: [ProductCategoryEntity!]!
 }
 
 type Mutation {
   createBoard(createBoardInput: CreateBoardInput!): String!
+  createProductCategory(name: String!): ProductCategoryEntity!
+  deleteCategoryAll: String!
 }
 
 input CreateBoardInput {

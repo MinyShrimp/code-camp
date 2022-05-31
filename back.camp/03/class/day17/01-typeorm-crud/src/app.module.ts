@@ -12,6 +12,7 @@ import { ConfigModule } from "@nestjs/config";
 
 // Module //
 import BoardsModule from "./apis/boards/boards.module";
+import ProductCategoryModule from "./apis/productsCategory/productCategory.module";
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -26,6 +27,7 @@ import BoardsModule from "./apis/boards/boards.module";
         ///////////////////////////////////////////////////////////////////////////
         // Modules //
         BoardsModule,
+        ProductCategoryModule,
 
         ///////////////////////////////////////////////////////////////////////////
         // GrapthQL //
@@ -42,7 +44,7 @@ import BoardsModule from "./apis/boards/boards.module";
             username: process.env.MYSQL_USER,
             password: process.env.MYSQL_PASSWORD,
             database: process.env.MYSQL_DATABASE,
-            entities: [__dirname + "/apis/**/*.entity.ts"],
+            entities: [__dirname + "/apis/**/*.entity.*"],
             synchronize: true,
             logging: true,
         }),
