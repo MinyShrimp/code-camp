@@ -12,6 +12,7 @@ import { ConfigModule } from "@nestjs/config";
 
 // Module //
 import BoardsModule from "./apis/boards/boards.module";
+import ProductModule from "./apis/products/product.module";
 import ProductCategoryModule from "./apis/productsCategory/productCategory.module";
 
 ///////////////////////////////////////////////////////////////////////////
@@ -24,10 +25,6 @@ import ProductCategoryModule from "./apis/productsCategory/productCategory.modul
         ConfigModule.forRoot({
             envFilePath: ".env",
         }),
-        ///////////////////////////////////////////////////////////////////////////
-        // Modules //
-        BoardsModule,
-        ProductCategoryModule,
 
         ///////////////////////////////////////////////////////////////////////////
         // GrapthQL //
@@ -36,6 +33,7 @@ import ProductCategoryModule from "./apis/productsCategory/productCategory.modul
             autoSchemaFile: "src/commons/graphql/schema.gql",
         }),
 
+        ///////////////////////////////////////////////////////////////////////////
         // TypeORM //
         TypeOrmModule.forRoot({
             type: "mysql",
@@ -48,7 +46,12 @@ import ProductCategoryModule from "./apis/productsCategory/productCategory.modul
             synchronize: true,
             logging: true,
         }),
+
         ///////////////////////////////////////////////////////////////////////////
+        // Modules //
+        BoardsModule,
+        ProductModule,
+        ProductCategoryModule,
     ],
     controllers: [],
     providers: [],

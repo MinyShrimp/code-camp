@@ -9,7 +9,7 @@ export default class ProductCategoryResolver {
     ) {}
 
     @Query(() => [ProductCategoryEntity])
-    fetchProductAllCategory() {
+    fetchProductCategoryAll() {
         return this.productCategoryService.findAll();
     }
 
@@ -21,7 +21,7 @@ export default class ProductCategoryResolver {
     }
 
     @Mutation(() => String)
-    deleteCategoryAll() {
+    deleteProductCategoryAll() {
         this.productCategoryService.deleteAll();
         return "ok";
     }

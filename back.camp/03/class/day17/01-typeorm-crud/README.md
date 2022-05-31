@@ -3,6 +3,8 @@
 ```bash
 npx nest new 01-nestjs-with-graphql
 yarn add @nestjs/typeorm typeorm@0.2 mysql2
+yarn add @nestjs/graphql @nestjs/apollo graphql apollo-server-express
+yarn add class-validator
 ```
 
 ## Setting
