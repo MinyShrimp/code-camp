@@ -16,6 +16,7 @@ import { ConfigModule } from '@nestjs/config';
 // import ProductCategoryModule from './apis/productCategory/productCategory.module';
 import BookModule from './apis/book/book.module';
 import ProductModule from './apis/product/product.module';
+import ProductCategoryModule from './apis/productCategory/productCategory.module';
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -45,15 +46,16 @@ import ProductModule from './apis/product/product.module';
             password: process.env.MYSQL_PASSWORD,
             database: process.env.MYSQL_DATABASE,
             entities: [__dirname + '/apis/**/*.entity.*'],
+            charset: 'utf8mb4',
             synchronize: true,
             logging: true,
         }),
 
         ///////////////////////////////////////////////////////////////////////////
         // Modules //
-        // ProductCategoryModule,
         BookModule,
         ProductModule,
+        ProductCategoryModule,
     ],
     controllers: [],
     providers: [],

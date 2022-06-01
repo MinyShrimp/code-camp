@@ -36,5 +36,4 @@ lerna-debug.log*
 
 # Projects
 .env
-db
 file

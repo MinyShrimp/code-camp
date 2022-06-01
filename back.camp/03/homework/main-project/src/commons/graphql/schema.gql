@@ -71,23 +71,6 @@ type UserEntity {
   deleteAt: DateTime!
 }
 
-type ProductCategory0Entity {
-  id: ID!
-  name: String!
-}
-
-type ProductCategory1Entity {
-  id: ID!
-  name: String!
-  parent: ProductCategory0Entity!
-}
-
-type ProductCategory2Entity {
-  id: ID!
-  name: String!
-  parent: ProductCategory1Entity!
-}
-
 type Query {
   fetchBooks: [BookEntity!]!
   fetchBook(bookID: String!): BookEntity!
@@ -102,6 +85,8 @@ type Mutation {
   createProduct(createProductInput: CreateProductInput!): ProductEntity!
   updateProduct(productID: String!, updateProductInput: UpdateProductInput!): ProductEntity!
   deleteProductAll: String!
+  createCategory(createProductCategoryInput: CreateProductCategoryInput!): ProductCategorySearchEntity!
+  deleteCategoryAll: String!
 }
 
 input CreateBookInput {
@@ -132,4 +117,9 @@ input CreateProductInput {
 input UpdateProductInput {
   url: String
   stock_count: Int
+}
+
+input CreateProductCategoryInput {
+  name: String!
+  parentID: ID
 }
