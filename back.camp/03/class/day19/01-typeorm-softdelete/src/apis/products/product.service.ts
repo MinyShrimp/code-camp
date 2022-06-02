@@ -35,14 +35,16 @@ export default class ProductService {
 
     // GET 모든 상품
     async findAll(): Promise<ProductEntity[]> {
-        return await this.productRepository.find({});
+        return await this.productRepository.find({
+            relations: ["productCategory", "productSaleslocation"],
+        });
     }
 
     // GET 단일 상품
     async findOne(productID: string): Promise<ProductEntity> {
         return await this.productRepository.findOne({
             where: { id: productID },
-            relations: ["productCategoryEntity"],
+            relations: ["productCategory", "productSaleslocation"],
         });
     }
 
