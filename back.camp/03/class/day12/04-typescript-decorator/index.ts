@@ -1,6 +1,18 @@
-function FirstDeco( constructor: typeof AppController ) {
-    console.log("this is decorator");
+function FirstDeco() {
+    return (constructor: typeof AppController) => {
+        console.log(constructor);
+    };
 }
 
-@FirstDeco
-class AppController {}
+function SecondDeco() {
+    return (constructor, property) => {
+        console.log(constructor);
+        console.log(property);
+    };
+}
+
+@FirstDeco()
+class AppController {
+    @SecondDeco()
+    private idx = 10;
+}

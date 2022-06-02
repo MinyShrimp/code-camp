@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>콜백과 친구들</title>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            /**
+             * 1. 임의의 숫자 가져오기
+             * 2. 게시글 조회
+             * 3. 해당 작성자의 다른 게시글들 보기
+             */
+
+            const apis = [
+                "http://numbersapi.com/random?min=1&max=200",
+                "http://koreanjson.com/posts/",
+                "http://koreanjson.com/posts?userId=",
+            ];
+
+            function myCallback() {
+                // 1. 임의의 숫자 가져오기
+                const req_1 = new XMLHttpRequest();
+                req_1.open("get", apis[0]);
+                req_1.send();
+                req_1.addEventListener("load", (e) => {
+                    const number = e.target.response.split(" ")[0];
+                    $("#callback-1")[0].innerText = number;
+
+                    // 2. 게시글 조회
+                    const req_2 = new XMLHttpRequest();
+                    req_2.open("get", apis[1] + number);
+                    req_2.send();
+                    req_2.addEventListener("load", (e) => {
+                        const res = JSON.parse(e.target.response);
+                        $("#callback-2")[0].innerText = `${res.UserId} | ${res.title}`;
+
+                        // 3. 해당 작성자의 다른 게시글들 보기
+                        const req_3 = new XMLHttpRequest();
+                        req_3.open("get", apis[2] + res.UserId);
+                        req_3.send();
+                        req_3.addEventListener("load", (e) => {
+                            const res = JSON.parse(e.target.response);
+                            res.forEach((v) => {
+                                $("#callback-3")[0].append(`${v.id} | ${v.title} | `);
+                            });
+                        });
+                    });
+                });
+            }
+
+            function myPromise() {
+                // axios.get(apis[0]).then((res) => {
+                //     const num = res.data.split(" ")[0];
+                //     $("#promise-1")[0].innerText = num;
+
+                //     axios.get(apis[1] + num).then((res) => {
+                //         const userId = res.data.UserId;
+                //         $("#promise-2")[0].innerText = `${userId} | ${res.data.title}`;
+
+                //         axios.get(apis[2] + userId).then((res) => {
+                //             res.data.forEach((v) => {
+                //                 $("#promise-3")[0].append(`${v.id} | ${v.title} | `);
+                //             });
+                //         });
+                //     });
+                // });
+
+                axios
+                    // 1. 임의의 숫자 가져오기
+                    .get(apis[0])
+                    .then((res) => {
+                        const num = res.data.split(" ")[0];
+                        $("#promise-1")[0].innerText = num;
+                        return axios.get(apis[1] + num);
+                    })
+                    // 2. 게시글 조회
+                    .then((res) => {
+                        const userId = res.data.UserId;
+                        $("#promise-2")[0].innerText = `${userId} | ${res.data.title}`;
+                        return axios.get(apis[2] + userId);
+                    })
+                    // 3. 해당 작성자의 다른 게시글들 보기
+                    .then((res) => {
+                        res.data.forEach((v) => {
+                            $("#promise-3")[0].append(`${v.id} | ${v.title} | `);
+                        });
+                    });
+            }
+
+            async function myAsyncAwait() {
+                // 1. 임의의 숫자 가져오기
+                const res1 = await axios.get(apis[0]);
+                const num = res1.data.split(" ")[0];
+                $("#async-1")[0].innerText = num;
+
+                // 2. 게시글 조회
+                const res2 = await axios.get(apis[1] + num);
+                const userId = res2.data.UserId;
+                $("#async-2")[0].innerText = `${userId} | ${res2.data.title}`;
+
+                // 3. 해당 작성자의 다른 게시글들 보기
+                const res3 = await axios.get(apis[2] + userId);
+                res3.data.forEach((v) => {
+                    $("#async-3")[0].append(`${v.id} | ${v.title} | `);
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <div>
+            <button onclick="myCallback();">Callback 연습하기</button>
+            <div>
+                <p>Random Number</p>
+                <p id="callback-1"></p>
+            </div>
+            <div>
+                <p>게시글 조회</p>
+                <p id="callback-2"></p>
+            </div>
+            <div>
+                <p>다른 게시글 조회</p>
+                <div id="callback-3"></div>
+            </div>
+        </div>
+
+        <hr />
+
+        <div>
+            <button onclick="myPromise();">Promise 연습하기</button>
+            <div>
+                <p>Random Number</p>
+                <p id="promise-1"></p>
+            </div>
+            <div>
+                <p>게시글 조회</p>
+                <p id="promise-2"></p>
+            </div>
+            <div>
+                <p>다른 게시글 조회</p>
+                <div id="promise-3"></div>
+            </div>
+        </div>
+
+        <hr />
+
+        <div>
+            <button onclick="myAsyncAwait();">AsyncAwait 연습하기</button>
+            <div>
+                <p>Random Number</p>
+                <p id="async-1"></p>
+            </div>
+            <div>
+                <p>게시글 조회</p>
+                <p id="async-2"></p>
+            </div>
+            <div>
+                <p>다른 게시글 조회</p>
+                <div id="async-3"></div>
+            </div>
+        </div>
+    </body>
+</html>
