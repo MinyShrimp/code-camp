@@ -10,6 +10,8 @@ import {
     ManyToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
+    DeleteDateColumn,
+    CreateDateColumn,
 } from 'typeorm';
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 
@@ -40,32 +42,46 @@ export default class ProductEntity {
     @Column({ default: 0, unsigned: true })
     selling_count: number;
 
+    // 생성 시간
+    @Field(() => Date)
+    @CreateDateColumn()
+    createAt: Date;
+
     // 업데이트 시간
     @Field(() => Date)
     @UpdateDateColumn()
     updateAt: Date;
 
-    // 책
-    @Field(() => BookEntity)
-    @JoinColumn()
-    @ManyToOne(() => BookEntity)
-    book: BookEntity;
+    // 삭제 시간
+    @Field(() => Date, { nullable: true })
+    @DeleteDateColumn()
+    deleteAt: Date;
 
     // 가격
+    // 1:1
     @Field(() => ProductPriceEntity)
-    @JoinColumn()
+    @JoinColumn({ name: 'price_id' })
     @OneToOne(() => ProductPriceEntity)
     price: ProductPriceEntity;
 
+    // 책
+    // M:1
+    @Field(() => BookEntity)
+    @JoinColumn({ name: 'book_id' })
+    @ManyToOne(() => BookEntity)
+    book: BookEntity;
+
+    // 상품 카테고리
+    // M:1
+    @Field(() => ProductCategorySearchEntity)
+    @JoinColumn({ name: 'product_category_id' })
+    @ManyToOne(() => ProductCategorySearchEntity)
+    productCategory: ProductCategorySearchEntity;
+
     // 상품 태그
+    // M:N
     @Field(() => [ProductTagEntity])
     @JoinTable()
     @ManyToMany(() => ProductTagEntity, (productTags) => productTags.products)
     productTags: Array<ProductTagEntity>;
-
-    // 상품 카테고리
-    @Field(() => ProductCategorySearchEntity)
-    @JoinColumn()
-    @ManyToOne(() => ProductCategorySearchEntity)
-    productCategory: ProductCategorySearchEntity;
 }

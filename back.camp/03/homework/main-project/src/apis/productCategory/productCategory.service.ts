@@ -135,8 +135,8 @@ export default class ProductCategoryService {
 
     // Category Tree 단일 삭제
     async deleteTree(categoryID: string): Promise<void> {
-        const parent = await this.__findByTree(categoryID);
-        await this.productCategoryRepository.delete(parent);
+        // const parent = await this.__findByTree(categoryID);
+        await this.productCategoryRepository.delete({ id: categoryID });
     }
 
     // Category Tree 전체 삭제

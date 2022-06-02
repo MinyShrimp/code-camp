@@ -58,11 +58,18 @@ type ProductEntity {
   url: String!
   stock_count: Int!
   selling_count: Int!
+  createAt: DateTime!
   updateAt: DateTime!
-  book: BookEntity!
+  deleteAt: DateTime
   price: ProductPriceEntity!
-  productTags: [ProductTagEntity!]!
+  book: BookEntity!
   productCategory: ProductCategorySearchEntity!
+  productTags: [ProductTagEntity!]!
+}
+
+type ResultMessage {
+  id: String
+  msg: String!
 }
 
 type ProductCategoryEntity {
@@ -90,7 +97,9 @@ type Query {
   fetchBooks: [BookEntity!]!
   fetchBook(bookID: String!): BookEntity!
   fetchProducts: [ProductEntity!]!
+  fetchProductsWithDeleted: [ProductEntity!]!
   fetchProduct(productID: String!): ProductEntity!
+  fetchProductWithDeleted(productID: String!): ProductEntity!
   fetchCategorysByTree: [FetchProductCategoryOutput!]!
   fetchCategorys: [ProductCategorySearchEntity!]!
   fetchCategoryByTree(categoryID: String!): FetchProductCategoryOutput!
@@ -102,7 +111,11 @@ type Mutation {
   deleteBookAll: String!
   createProduct(createProductInput: CreateProductInput!): ProductEntity!
   updateProduct(productID: String!, updateProductInput: UpdateProductInput!): ProductEntity!
-  deleteProductAll: String!
+  restoreProduct(productID: String!): ResultMessage!
+  deleteProductAll: ResultMessage!
+  softDeleteProductAll: ResultMessage!
+  deleteProduct(productID: String!): ResultMessage!
+  softDeleteProduct(productID: String!): ResultMessage!
   createCategory(createProductCategoryInput: CreateProductCategoryInput!): ProductCategoryEntity!
   createCategorySearch: [ProductCategorySearchEntity!]!
   deleteCategory(categoryID: String!): String!
