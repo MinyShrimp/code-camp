@@ -58,7 +58,7 @@ export default class ProductEntity {
     // "상품 카테고리" M:1 연결
     @Field(() => ProductCategoryEntity)
     @JoinColumn()
-    @ManyToOne(() => ProductCategoryEntity)
+    @ManyToOne(() => ProductCategoryEntity, { eager: true })
     productCategory: ProductCategoryEntity;
 
     // "상품 거래 위치" 1:1 연결

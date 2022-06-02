@@ -22,6 +22,7 @@ export default class ProductService {
         private readonly productSalesLocationRepository: Repository<ProductSalesLocationEntity>
     ) {}
 
+    // 판매완료 체크
     async checkSoldout(productID: string): Promise<void> {
         const product = await this.productRepository.findOne({
             where: { id: productID },
@@ -48,7 +49,7 @@ export default class ProductService {
     async create(
         createProductInput: CreateProductInput //
     ): Promise<ProductEntity> {
-        const { productSaleslocation, ...product } = createProductInput;
+        const { productSaleslocation, productCategoryId, ...product } = createProductInput;
 
         const location = await this.productSalesLocationRepository.save({
             ...productSaleslocation,
@@ -57,7 +58,7 @@ export default class ProductService {
         return await this.productRepository.save({
             ...product,
             productSaleslocation: location,
-            // productSaleslocation: { id: location.id },
+            productCategory: { id: productCategoryId },
         });
     }
 
