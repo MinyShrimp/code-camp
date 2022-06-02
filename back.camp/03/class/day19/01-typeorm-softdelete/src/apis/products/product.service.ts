@@ -42,6 +42,7 @@ export default class ProductService {
     async findOne(productID: string): Promise<ProductEntity> {
         return await this.productRepository.findOne({
             where: { id: productID },
+            relations: ["productCategoryEntity"],
         });
     }
 
