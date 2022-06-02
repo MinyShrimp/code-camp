@@ -47,6 +47,10 @@ type ProductPriceEntity {
 type ProductCategorySearchEntity {
   id: ID!
   name: String!
+  c1: String!
+  c2: String
+  c3: String
+  c4: String
 }
 
 type ProductEntity {
@@ -59,6 +63,17 @@ type ProductEntity {
   price: ProductPriceEntity!
   productTags: [ProductTagEntity!]!
   productCategory: ProductCategorySearchEntity!
+}
+
+type ProductCategoryEntity {
+  id: ID!
+  name: String!
+}
+
+type FetchProductCategoryOutput {
+  id: ID!
+  name: String!
+  children: [FetchProductCategoryOutput!]!
 }
 
 type UserEntity {
@@ -76,6 +91,9 @@ type Query {
   fetchBook(bookID: String!): BookEntity!
   fetchProducts: [ProductEntity!]!
   fetchProduct(productID: String!): ProductEntity!
+  fetchCategorysByTree: [FetchProductCategoryOutput!]!
+  fetchCategorys: [ProductCategorySearchEntity!]!
+  fetchCategoryByTree(categoryID: String!): FetchProductCategoryOutput!
 }
 
 type Mutation {
@@ -85,7 +103,9 @@ type Mutation {
   createProduct(createProductInput: CreateProductInput!): ProductEntity!
   updateProduct(productID: String!, updateProductInput: UpdateProductInput!): ProductEntity!
   deleteProductAll: String!
-  createCategory(createProductCategoryInput: CreateProductCategoryInput!): ProductCategorySearchEntity!
+  createCategory(createProductCategoryInput: CreateProductCategoryInput!): ProductCategoryEntity!
+  createCategorySearch: [ProductCategorySearchEntity!]!
+  deleteCategory(categoryID: String!): String!
   deleteCategoryAll: String!
 }
 

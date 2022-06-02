@@ -16,4 +16,24 @@ export default class ProductCategorySearchEntity {
     @Field(() => String)
     @Column()
     name: string;
+
+    // 카테고리 1
+    @Field(() => String, { nullable: false })
+    @Column({ nullable: false })
+    c1: string;
+
+    // 카테고리 2
+    @Field(() => String, { nullable: true })
+    @Column({ nullable: true })
+    c2?: string;
+
+    // 카테고리 3
+    @Field(() => String, { nullable: true })
+    @Column({ nullable: true })
+    c3?: string;
+
+    // 카테고리 4
+    @Field(() => String, { nullable: true })
+    @Column({ nullable: true })
+    c4?: string;
 }
