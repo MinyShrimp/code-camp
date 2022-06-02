@@ -45,7 +45,7 @@ export default class ProductResolver {
      * @param productID
      * @returns 단일 상품
      */
-    @Query(() => ProductEntity)
+    @Query(() => ProductEntity, { nullable: true })
     fetchProduct(
         @Args('productID') productID: string, //
     ): Promise<ProductEntity> {
@@ -57,7 +57,7 @@ export default class ProductResolver {
      * @param productID
      * @returns 삭제된 데이터를 포함한 단일 상품
      */
-    @Query(() => ProductEntity)
+    @Query(() => ProductEntity, { nullable: true })
     fetchProductWithDeleted(
         @Args('productID') productID: string, //
     ): Promise<ProductEntity> {
@@ -100,7 +100,7 @@ export default class ProductResolver {
     /**
      * PATCH 상품 되살리기
      * @param productID
-     * @returns 결과 Msg
+     * @returns ResultMessage
      */
     @Mutation(() => ResultMessage)
     async restoreProduct(
@@ -114,7 +114,7 @@ export default class ProductResolver {
 
     /**
      * 모든 상품 삭제 ( 삭제 O )
-     * @returns 결과 MSG
+     * @returns ResultMessage
      */
     @Mutation(() => ResultMessage)
     async deleteProductAll(): Promise<ResultMessage> {
@@ -123,7 +123,7 @@ export default class ProductResolver {
 
     /**
      * 모든 상품 삭제 ( 삭제 X )
-     * @returns 결과 MSG
+     * @returns ResultMessage
      */
     @Mutation(() => ResultMessage)
     async softDeleteProductAll(): Promise<ResultMessage> {
@@ -133,7 +133,7 @@ export default class ProductResolver {
     /**
      * 단일 상품 삭제 ( 삭제 O )
      * @param productID
-     * @returns 결과 MSG
+     * @returns ResultMessage
      */
     @Mutation(() => ResultMessage)
     async deleteProduct(
@@ -145,7 +145,7 @@ export default class ProductResolver {
     /**
      * 단일 상품 삭제 ( 삭제 X )
      * @param productID
-     * @returns 결과 MSG
+     * @returns ResultMessage
      */
     @Mutation(() => ResultMessage)
     async softDeleteProduct(

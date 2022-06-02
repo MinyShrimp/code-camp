@@ -7,6 +7,8 @@ import { Repository } from 'typeorm';
 import ResultMessage from 'src/commons/dto/ResultMessage.dto';
 
 import ProductEntity from './entities/product.entity';
+import ProductPriceEntity from '../productPrice/entities/productPrice.entity';
+
 import CreateProductInput from './dto/createProduct.input';
 import UpdateProductInput from './dto/updateProduct.input';
 
@@ -15,6 +17,8 @@ export default class ProductService {
     constructor(
         @InjectRepository(ProductEntity)
         private readonly productRepository: Repository<ProductEntity>,
+        @InjectRepository(ProductPriceEntity)
+        private readonly productPriceRepository: Repository<ProductPriceEntity>,
     ) {}
 
     ///////////////////////////////////////////////////////////////////
@@ -95,8 +99,15 @@ export default class ProductService {
     async create(
         createProductInput: CreateProductInput,
     ): Promise<ProductEntity> {
+        const { price, ...product } = createProductInput;
+
+        const priceEntity = await this.productPriceRepository.save({
+            price,
+        });
+
         return await this.productRepository.save({
-            ...createProductInput,
+            ...product,
+            price: priceEntity,
         });
     }
 
@@ -115,11 +126,13 @@ export default class ProductService {
     ): Promise<ProductEntity> {
         // Repository.save() 에 id 값을 넣어주면, 수정이 된다
         // id 값을 넣어주지 않으면, 추가가 된다.
-        const product = await this.findOne(productID);
+        const searchProduct = await this.findOne(productID);
+        const { price, ...product } = updateProductInput;
+
         const newProduct = {
-            ...product,
+            ...searchProduct,
             id: productID,
-            ...updateProductInput,
+            ...product,
         };
 
         return await this.productRepository.save(newProduct);
@@ -137,6 +150,7 @@ export default class ProductService {
 
         return new ResultMessage({
             id: productID,
+            isSuccess: result.affected ? true : false,
             contents: result.affected
                 ? 'Completed Product Restore'
                 : 'Failed Product Restore',
@@ -147,13 +161,14 @@ export default class ProductService {
     // 삭제 //
 
     /**
-     * 모든 상품 삭제 ( 실제 삭제 )
-     * @returns 삭제 성공 여부에 따른 Msg
+     * 모든 상품 삭제 ( 삭제 O )
+     * @returns ResultMessage
      */
     async deleteAll(): Promise<ResultMessage> {
         const result = await this.productRepository.delete({});
 
         return new ResultMessage({
+            isSuccess: result.affected ? true : false,
             contents: result.affected
                 ? `Completed All Product Delete`
                 : `Failed All Product Delete`,
@@ -162,12 +177,13 @@ export default class ProductService {
 
     /**
      * 모든 상품 삭제 ( 삭제 X )
-     * @returns 삭제 성공 여부에 따른 Msg
+     * @returns ResultMessage
      */
     async softDeleteAll(): Promise<ResultMessage> {
         const result = await this.productRepository.softDelete({});
 
         return new ResultMessage({
+            isSuccess: result.affected ? true : false,
             contents: result.affected
                 ? `Completed All Product Delete`
                 : `Failed All Product Delete`,
@@ -177,7 +193,7 @@ export default class ProductService {
     /**
      * 단일 상품 삭제 ( 삭제 O )
      * @param productID
-     * @returns 삭제 성공 여부에 따른 Msg
+     * @returns ResultMessage
      */
     async delete(productID: string): Promise<ResultMessage> {
         const result = await this.productRepository.delete({
@@ -186,6 +202,7 @@ export default class ProductService {
 
         return new ResultMessage({
             id: productID,
+            isSuccess: result.affected ? true : false,
             contents: result.affected
                 ? `Completed Product Delete`
                 : `Failed Product Delete`,
@@ -195,7 +212,7 @@ export default class ProductService {
     /**
      * 단일 상품 삭제 ( 삭제 X )
      * @param productID
-     * @returns 삭제 성공 여부에 따른 Msg
+     * @returns ResultMessage
      */
     async softDelete(productID: string): Promise<ResultMessage> {
         const result = await this.productRepository.softDelete({
@@ -204,6 +221,7 @@ export default class ProductService {
 
         return new ResultMessage({
             id: productID,
+            isSuccess: result.affected ? true : false,
             contents: result.affected
                 ? `Completed Product Delete`
                 : `Failed Product Delete`,

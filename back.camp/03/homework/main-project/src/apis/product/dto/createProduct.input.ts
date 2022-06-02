@@ -9,4 +9,8 @@ export default class CreateProductInput {
     @Min(0)
     @Field(() => Int)
     stock_count: number;
+
+    @Min(0)
+    @Field(() => Int)
+    price: number;
 }

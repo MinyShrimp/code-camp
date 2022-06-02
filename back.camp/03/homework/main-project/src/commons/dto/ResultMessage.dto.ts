@@ -6,6 +6,7 @@ export default class ResultMessage {
     constructor(msg: Message) {
         this.id = msg.id ?? null;
         this.msg = msg.contents;
+        this.isSuccess = msg.isSuccess;
     }
 
     @Field(() => String, { nullable: true })
@@ -13,4 +14,7 @@ export default class ResultMessage {
 
     @Field(() => String)
     msg: string;
+
+    @Field(() => Boolean)
+    isSuccess: boolean;
 }
