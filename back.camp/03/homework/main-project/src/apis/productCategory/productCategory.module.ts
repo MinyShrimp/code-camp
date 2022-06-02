@@ -14,6 +14,7 @@ import ProductCategoryService from './productCategory.service';
         ]),
     ],
     exports: [
+        // To. Product Category Search
         ProductCategoryService, //
     ],
     providers: [
