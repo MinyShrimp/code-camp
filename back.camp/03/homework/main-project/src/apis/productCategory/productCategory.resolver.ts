@@ -1,9 +1,9 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import ResultMessage from 'src/commons/dto/ResultMessage.dto';
 
 import CreateProductCategoryInput from './dto/createProductCategory.input';
 import FetchProductCategoryOutput from './dto/fetchProductCategory.output';
 import ProductCategoryEntity from './entities/productCategory.entity';
-import ProductCategorySearchEntity from './entities/productCategorySearch.entity';
 import ProductCategoryService from './productCategory.service';
 
 @Resolver()
@@ -12,16 +12,16 @@ export default class ProductCategoryResolver {
         private readonly productCategoryService: ProductCategoryService,
     ) {}
 
+    ///////////////////////////////////////////////////////////////////
+    // Utils //
+
+    ///////////////////////////////////////////////////////////////////
+    // 조회 //
+
     // GET Category Tree 전체 조회
     @Query(() => [FetchProductCategoryOutput])
     fetchCategorysByTree(): Promise<FetchProductCategoryOutput[]> {
         return this.productCategoryService.findAllByTree();
-    }
-
-    // GET Search Category 전체 조회
-    @Query(() => [ProductCategorySearchEntity])
-    fetchCategorys(): Promise<ProductCategorySearchEntity[]> {
-        return this.productCategoryService.findAllBySearch();
     }
 
     // GET Category Tree 단일 조회
@@ -31,6 +31,9 @@ export default class ProductCategoryResolver {
     ): Promise<FetchProductCategoryOutput> {
         return this.productCategoryService.findByTree(categoryID);
     }
+
+    ///////////////////////////////////////////////////////////////////
+    // 생성 //
 
     // POST Category 생성
     @Mutation(() => ProductCategoryEntity)
@@ -43,25 +46,23 @@ export default class ProductCategoryResolver {
         );
     }
 
-    // POST Category 생성
-    @Mutation(() => [ProductCategorySearchEntity])
-    async createCategorySearch(): Promise<ProductCategorySearchEntity[]> {
-        return await this.productCategoryService.createSarchCategory();
-    }
+    ///////////////////////////////////////////////////////////////////
+    // 수정 //
+
+    ///////////////////////////////////////////////////////////////////
+    // 삭제 //
 
     // DELETE Category 단일 삭제
-    @Mutation(() => String)
+    @Mutation(() => ResultMessage)
     async deleteCategory(
         @Args('categoryID') categoryID: string,
-    ): Promise<string> {
-        await this.productCategoryService.deleteTree(categoryID);
-        return 'Category Delete';
+    ): Promise<ResultMessage> {
+        return await this.productCategoryService.deleteTree(categoryID);
     }
 
     // DELETE Category 전체 삭제
-    @Mutation(() => String)
-    async deleteCategoryAll(): Promise<string> {
-        await this.productCategoryService.deleteAll();
-        return 'Category All Delete';
+    @Mutation(() => ResultMessage)
+    async deleteCategoryAll(): Promise<ResultMessage> {
+        return await this.productCategoryService.deleteAll();
     }
 }

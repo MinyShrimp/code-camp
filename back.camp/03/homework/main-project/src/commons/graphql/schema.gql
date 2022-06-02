@@ -102,8 +102,8 @@ type Query {
   fetchProduct(productID: String!): ProductEntity
   fetchProductWithDeleted(productID: String!): ProductEntity
   fetchCategorysByTree: [FetchProductCategoryOutput!]!
-  fetchCategorys: [ProductCategorySearchEntity!]!
   fetchCategoryByTree(categoryID: String!): FetchProductCategoryOutput!
+  fetchCategorys: [ProductCategorySearchEntity!]!
 }
 
 type Mutation {
@@ -118,9 +118,9 @@ type Mutation {
   deleteProduct(productID: String!): ResultMessage!
   softDeleteProduct(productID: String!): ResultMessage!
   createCategory(createProductCategoryInput: CreateProductCategoryInput!): ProductCategoryEntity!
+  deleteCategory(categoryID: String!): ResultMessage!
+  deleteCategoryAll: ResultMessage!
   createCategorySearch: [ProductCategorySearchEntity!]!
-  deleteCategory(categoryID: String!): String!
-  deleteCategoryAll: String!
 }
 
 input CreateBookInput {

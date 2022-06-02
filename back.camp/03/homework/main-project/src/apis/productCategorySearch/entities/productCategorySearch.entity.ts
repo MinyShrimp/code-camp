@@ -18,7 +18,7 @@ export default class ProductCategorySearchEntity {
     name: string;
 
     // 카테고리 1
-    @Field(() => String, { nullable: false })
+    @Field(() => String)
     @Column({ nullable: false })
     c1: string;
 

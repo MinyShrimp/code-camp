@@ -18,6 +18,7 @@ import BookModule from './apis/book/book.module';
 import ProductModule from './apis/product/product.module';
 import ProductCategoryModule from './apis/productCategory/productCategory.module';
 import ProductPriceModule from './apis/productPrice/productPrice.module';
+import ProductCategorySearchModule from './apis/productCategorySearch/productCategorySearch.module';
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -57,6 +58,7 @@ import ProductPriceModule from './apis/productPrice/productPrice.module';
         BookModule,
         ProductModule,
         ProductCategoryModule,
+        ProductCategorySearchModule,
     ],
     controllers: [],
     providers: [],

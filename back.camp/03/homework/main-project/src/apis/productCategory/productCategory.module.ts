@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import ProductCategoryEntity from './entities/productCategory.entity';
-import ProductCategorySearchEntity from './entities/productCategorySearch.entity';
 
 import ProductCategoryResolver from './productCategory.resolver';
 import ProductCategoryService from './productCategory.service';
@@ -11,9 +10,11 @@ import ProductCategoryService from './productCategory.service';
     imports: [
         // TypeORM Entity를 여기에 Import 해줘야 함
         TypeOrmModule.forFeature([
-            ProductCategoryEntity,
-            ProductCategorySearchEntity,
+            ProductCategoryEntity, //
         ]),
+    ],
+    exports: [
+        ProductCategoryService, //
     ],
     providers: [
         ProductCategoryResolver, //

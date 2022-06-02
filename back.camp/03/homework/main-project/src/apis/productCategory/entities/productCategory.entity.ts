@@ -25,9 +25,9 @@ export default class ProductCategoryEntity {
     @Column()
     name: string;
 
-    @TreeChildren({ cascade: ['remove'] })
+    @TreeChildren({ cascade: true })
     children: ProductCategoryEntity[];
 
-    @TreeParent()
+    @TreeParent({ onDelete: 'CASCADE' })
     parent: ProductCategoryEntity;
 }

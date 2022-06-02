@@ -18,7 +18,7 @@ import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import BookEntity from 'src/apis/book/entities/book.entity';
 import ProductTagEntity from 'src/apis/productTag/entities/productTag.entity';
 import ProductPriceEntity from 'src/apis/productPrice/entities/productPrice.entity';
-import ProductCategorySearchEntity from 'src/apis/productCategory/entities/productCategorySearch.entity';
+import ProductCategorySearchEntity from 'src/apis/productCategorySearch/entities/productCategorySearch.entity';
 
 @ObjectType()
 @Entity({ name: 'product' })
