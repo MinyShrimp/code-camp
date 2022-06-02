@@ -61,7 +61,7 @@ export default class ProductEntity {
     // 1:1
     @Field(() => ProductPriceEntity)
     @JoinColumn({ name: 'price_id' })
-    @OneToOne(() => ProductPriceEntity)
+    @OneToOne(() => ProductPriceEntity, { cascade: true, onDelete: 'CASCADE' })
     price: ProductPriceEntity;
 
     // 책

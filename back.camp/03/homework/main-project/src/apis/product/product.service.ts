@@ -7,18 +7,19 @@ import { Repository } from 'typeorm';
 import ResultMessage from 'src/commons/dto/ResultMessage.dto';
 
 import ProductEntity from './entities/product.entity';
-import ProductPriceEntity from '../productPrice/entities/productPrice.entity';
 
 import CreateProductInput from './dto/createProduct.input';
 import UpdateProductInput from './dto/updateProduct.input';
+
+import ProductPriceService from '../productPrice/productPrice.service';
 
 @Injectable()
 export default class ProductService {
     constructor(
         @InjectRepository(ProductEntity)
         private readonly productRepository: Repository<ProductEntity>,
-        @InjectRepository(ProductPriceEntity)
-        private readonly productPriceRepository: Repository<ProductPriceEntity>,
+
+        private readonly productPriceService: ProductPriceService,
     ) {}
 
     ///////////////////////////////////////////////////////////////////
@@ -29,9 +30,7 @@ export default class ProductService {
      * @param productID
      */
     async checkSoldout(productID: string): Promise<void> {
-        const product = await this.productRepository.findOne({
-            where: { id: productID },
-        });
+        const product = await this.findOne(productID);
         if (product.stock_count <= 0) {
             throw new UnprocessableEntityException(
                 '이미 판매 완료된 상품입니다.',
@@ -101,9 +100,7 @@ export default class ProductService {
     ): Promise<ProductEntity> {
         const { price, ...product } = createProductInput;
 
-        const priceEntity = await this.productPriceRepository.save({
-            price,
-        });
+        const priceEntity = await this.productPriceService.create(price);
 
         return await this.productRepository.save({
             ...product,
@@ -129,13 +126,17 @@ export default class ProductService {
         const searchProduct = await this.findOne(productID);
         const { price, ...product } = updateProductInput;
 
-        const newProduct = {
+        const priceEntity = await this.productPriceService.update(
+            searchProduct.price.id,
+            price,
+        );
+
+        return await this.productRepository.save({
             ...searchProduct,
             id: productID,
             ...product,
-        };
-
-        return await this.productRepository.save(newProduct);
+            price: priceEntity,
+        });
     }
 
     /**

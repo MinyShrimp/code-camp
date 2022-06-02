@@ -32,13 +32,13 @@ services:
         #   - host:container
         volumes:
             - ./src:/app/src
-
             - ./test:/app/test
-
             - ./dist:/app/dist
 
             - ./package.json:/app/package.json
             - ./yarn.lock:/app/yarn.lock
+            - ./tsconfig.build.json:/app/tsconfig.build.json
+            - ./tsconfig.json:/app/tsconfig.json
             - ./.env:/app/.env
 
             - /app/node_modules

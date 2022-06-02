@@ -7,6 +7,7 @@ import ResultMessage from 'src/commons/dto/ResultMessage.dto';
 import ProductEntity from './entities/product.entity';
 import CreateProductInput from './dto/createProduct.input';
 import UpdateProductInput from './dto/updateProduct.input';
+
 import ProductService from './product.service';
 
 @Resolver()
@@ -148,6 +149,7 @@ export default class ProductResolver {
      * @returns ResultMessage
      */
     @Mutation(() => ResultMessage)
+    // @Mutation(() => ResultMessage, { description: '단일 상품 Soft Delete' })
     async softDeleteProduct(
         @Args('productID') productID: string, //
     ): Promise<ResultMessage> {
