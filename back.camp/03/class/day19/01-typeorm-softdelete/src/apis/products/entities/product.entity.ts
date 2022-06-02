@@ -6,6 +6,7 @@
 
 import {
     Column,
+    DeleteDateColumn,
     Entity,
     JoinColumn,
     JoinTable,
@@ -48,6 +49,11 @@ export default class ProductEntity {
     @Field(() => Boolean)
     @Column({ default: false })
     isSoldout: boolean;
+
+    // 삭제 시간
+    // @Field(() => Date, { nullable: true })
+    @DeleteDateColumn()
+    deleteAt: Date;
 
     // "상품 카테고리" M:1 연결
     @Field(() => ProductCategoryEntity)

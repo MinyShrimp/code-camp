@@ -18,6 +18,16 @@ export default class ProductService {
         private readonly productRepository: Repository<ProductEntity>
     ) {}
 
+    async checkSoldout(productID: string): Promise<void> {
+        const product = await this.productRepository.findOne({
+            where: { id: productID },
+        });
+
+        if (product.isSoldout) {
+            throw new UnprocessableEntityException("이미 판매 완료된 상품입니다.");
+        }
+    }
+
     async findAll(): Promise<ProductEntity[]> {
         return await this.productRepository.find({});
     }
@@ -50,7 +60,7 @@ export default class ProductService {
     }
 
     async create(
-        createProductInput: CreateProductInput
+        createProductInput: CreateProductInput //
     ): Promise<ProductEntity> {
         return await this.productRepository.save({
             ...createProductInput,
@@ -61,18 +71,35 @@ export default class ProductService {
         await this.productRepository.delete({});
     }
 
-    async checkSoldout(productID: string): Promise<void> {
-        const product = await this.productRepository.findOne({
-            where: { id: productID },
-        });
-        if (product.isSoldout) {
-            // throw new HttpException(
-            //     "이미 판매 완료된 상품입니다.",
-            //     HttpStatus.UNPROCESSABLE_ENTITY // 422
-            // );
-            throw new UnprocessableEntityException(
-                "이미 판매 완료된 상품입니다."
-            );
-        }
+    async delete(productID: string): Promise<Boolean> {
+        /**
+         * 1. 실제 삭제
+         */
+        // const result = await this.productRepository.delete({ id: productID });
+
+        /**
+         * 2. Soft Delete (직접 구현) - isDeleted
+         * .save()는 객체를 Return 받음
+         * .update()는 수정 결과를 Return 받음
+         */
+        // const result = await this.productRepository.update({ id: productID }, { isDeleted: true });
+
+        /**
+         * 3. Soft Delete (직접 구현) - deletedAt
+         */
+        // const result = await this.productRepository.update({ id: productID }, { deletedAt: new Date() });
+
+        /**
+         * 4. Soft Delete (TypeORM) - softRemove
+         * ID로만 삭제 가능
+         */
+        // const result = await this.productRepository.softRemove({ id: productID });
+
+        /**
+         * 5. Soft Delete (TypeORM) - softDelete
+         * 다른 조건으로도 삭제 가능
+         */
+        const result = await this.productRepository.softDelete({ id: productID });
+        return result.affected ? true : false;
     }
 }

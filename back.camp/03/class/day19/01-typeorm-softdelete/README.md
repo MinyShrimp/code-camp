@@ -1,7 +1,7 @@
 ## Install
 
 ```bash
-npx nest new 01-typeorm-crud
+npx nest new 01-typeorm-softdelete
 yarn add @nestjs/typeorm typeorm@0.2 mysql2
 yarn add @nestjs/graphql @nestjs/apollo graphql apollo-server-express
 yarn add class-validator class-transformer

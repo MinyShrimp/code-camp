@@ -66,6 +66,7 @@ type Mutation {
   updateProduct(productID: String!, updateProductInput: UpdateProductInput!): ProductEntity!
   createProduct(createProductInput: CreateProductInput!): ProductEntity!
   deleteProductAll: String!
+  deleteProduct(productID: String!): Boolean!
   createProductCategory(name: String!): ProductCategoryEntity!
   deleteProductCategoryAll: String!
 }

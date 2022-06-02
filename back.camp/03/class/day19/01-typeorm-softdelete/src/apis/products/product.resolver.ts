@@ -49,4 +49,12 @@ export default class ProductResolver {
         this.productService.deleteAll();
         return "ok";
     }
+
+    // DELETE 단일 상품 삭제
+    @Mutation(() => Boolean)
+    deleteProduct(
+        @Args("productID") productID: string //
+    ) {
+        return this.productService.delete(productID);
+    }
 }
