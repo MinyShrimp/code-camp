@@ -7,15 +7,19 @@ import {
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
+import ProductEntity from "./entities/product.entity";
+import ProductSalesLocationEntity from "../productsSaleslocation/entities/productSaleslocation.entity";
+
 import CreateProductInput from "./dto/createProduct.input";
 import UpdateProductInput from "./dto/updateProduct.input";
-import ProductEntity from "./entities/product.entity";
 
 @Injectable()
 export default class ProductService {
     constructor(
         @InjectRepository(ProductEntity)
-        private readonly productRepository: Repository<ProductEntity>
+        private readonly productRepository: Repository<ProductEntity>,
+        @InjectRepository(ProductSalesLocationEntity)
+        private readonly productSalesLocationRepository: Repository<ProductSalesLocationEntity>
     ) {}
 
     async checkSoldout(productID: string): Promise<void> {
@@ -28,16 +32,36 @@ export default class ProductService {
         }
     }
 
+    // GET 모든 상품
     async findAll(): Promise<ProductEntity[]> {
         return await this.productRepository.find({});
     }
 
+    // GET 단일 상품
     async findOne(productID: string): Promise<ProductEntity> {
         return await this.productRepository.findOne({
             where: { id: productID },
         });
     }
 
+    // POST 상품 생성
+    async create(
+        createProductInput: CreateProductInput //
+    ): Promise<ProductEntity> {
+        const { productSaleslocation, ...product } = createProductInput;
+
+        const location = await this.productSalesLocationRepository.save({
+            ...productSaleslocation,
+        });
+
+        return await this.productRepository.save({
+            ...product,
+            productSaleslocation: location,
+            // productSaleslocation: { id: location.id },
+        });
+    }
+
+    // PATCH 상품 수정
     async update(
         productID: string,
         updateProductInput: UpdateProductInput
@@ -59,19 +83,13 @@ export default class ProductService {
         return await this.productRepository.save(newProduct);
     }
 
-    async create(
-        createProductInput: CreateProductInput //
-    ): Promise<ProductEntity> {
-        return await this.productRepository.save({
-            ...createProductInput,
-        });
-    }
-
+    // DELETE 상품 전체 삭제
     async deleteAll(): Promise<boolean> {
         const result = await this.productRepository.delete({});
         return result.affected ? true : false;
     }
 
+    // DELETE 단일 상품 삭제
     async delete(productID: string): Promise<boolean> {
         /**
          * 1. 실제 삭제

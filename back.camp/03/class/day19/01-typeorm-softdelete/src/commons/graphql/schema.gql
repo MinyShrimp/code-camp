@@ -63,8 +63,8 @@ type Query {
 
 type Mutation {
   createBoard(createBoardInput: CreateBoardInput!): String!
-  updateProduct(productID: String!, updateProductInput: UpdateProductInput!): ProductEntity!
   createProduct(createProductInput: CreateProductInput!): ProductEntity!
+  updateProduct(productID: String!, updateProductInput: UpdateProductInput!): ProductEntity!
   deleteProductAll: String!
   deleteProduct(productID: String!): String!
   createProductCategory(name: String!): ProductCategoryEntity!
@@ -77,14 +77,24 @@ input CreateBoardInput {
   contents: String!
 }
 
-input UpdateProductInput {
-  name: String
-  description: String
-  price: Int
-}
-
 input CreateProductInput {
   name: String!
   description: String!
   price: Int!
+  productSaleslocation: CreateProductSalesLocationInput!
+}
+
+input CreateProductSalesLocationInput {
+  address: String!
+  addressDetail: String!
+  lat: Float!
+  lng: Float!
+  meetingTime: DateTime!
+}
+
+input UpdateProductInput {
+  name: String
+  description: String
+  price: Int
+  productSaleslocation: CreateProductSalesLocationInput
 }
