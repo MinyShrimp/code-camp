@@ -95,8 +95,8 @@ bootstrap();
 
 ### Day 19
 
--   [ ] 상품 테이블에 데이터를 추가할 때 서로 관계가 있는 테이블에도 데이터가 추가된다.
--   [ ] 상품 테이블의 데이터를 조회할 때 서로 관계가 있는 테이블의 데이터도 조회된다.
--   [ ] `deleteProduct` API를 플레이그라운드로 요청할 수 있다.
--   [ ] `fetchProductsWithDeleted` API를 플레이그라운드로 요청할 수 있다.
--   [ ] `restoreProduct` API를 플레이그라운드로 요청할 수 있다.
+-   [x] 상품 테이블에 데이터를 추가할 때 서로 관계가 있는 테이블에도 데이터가 추가된다.
+-   [x] 상품 테이블의 데이터를 조회할 때 서로 관계가 있는 테이블의 데이터도 조회된다.
+-   [x] `deleteProduct` API를 플레이그라운드로 요청할 수 있다.
+-   [x] `fetchProductsWithDeleted` API를 플레이그라운드로 요청할 수 있다.
+-   [x] `restoreProduct` API를 플레이그라운드로 요청할 수 있다.
