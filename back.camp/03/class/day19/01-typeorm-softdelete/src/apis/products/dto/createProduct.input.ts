@@ -20,4 +20,8 @@ export default class CreateProductInput {
     // 주소
     @Field(() => CreateProductSalesLocationInput)
     productSaleslocation: CreateProductSalesLocationInput;
+
+    // 카테고리
+    @Field(() => String)
+    productCategoryId: string;
 }
