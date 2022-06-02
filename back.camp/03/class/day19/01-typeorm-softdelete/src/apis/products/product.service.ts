@@ -67,11 +67,12 @@ export default class ProductService {
         });
     }
 
-    async deleteAll(): Promise<void> {
-        await this.productRepository.delete({});
+    async deleteAll(): Promise<boolean> {
+        const result = await this.productRepository.delete({});
+        return result.affected ? true : false;
     }
 
-    async delete(productID: string): Promise<Boolean> {
+    async delete(productID: string): Promise<boolean> {
         /**
          * 1. 실제 삭제
          */

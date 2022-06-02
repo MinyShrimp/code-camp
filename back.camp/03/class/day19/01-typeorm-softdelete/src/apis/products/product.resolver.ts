@@ -45,16 +45,17 @@ export default class ProductResolver {
 
     // DELETE 상품 전체 삭제
     @Mutation(() => String)
-    deleteProductAll() {
-        this.productService.deleteAll();
-        return "ok";
+    async deleteProductAll(): Promise<String> {
+        const result = await this.productService.deleteAll();
+        return result ? "ok" : "fail";
     }
 
     // DELETE 단일 상품 삭제
-    @Mutation(() => Boolean)
-    deleteProduct(
+    @Mutation(() => String)
+    async deleteProduct(
         @Args("productID") productID: string //
-    ) {
-        return this.productService.delete(productID);
+    ): Promise<String> {
+        const result = this.productService.delete(productID);
+        return result ? "ok" : "fail";
     }
 }
