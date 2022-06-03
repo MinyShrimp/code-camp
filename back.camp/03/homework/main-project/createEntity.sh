@@ -2,8 +2,8 @@
 
 FILENAME=$1
 
-BASEDIR=./file/src/apis/base/entities
-APIDIR=./src/apis
+BASEDIR=./copy/base/entities
+APIDIR=./src/apis/$FILENAME/entities
 
-cp -R $BASEDIR $APIDIR/$FILENAME/entities
-mv $APIDIR/$FILENAME/entities/base.entity.ts $APIDIR/$FILENAME/entities/$FILENAME.entity.ts
+cp -R $BASEDIR $APIDIR
+mv $APIDIR/base.entity.ts $APIDIR/$FILENAME.entity.ts
