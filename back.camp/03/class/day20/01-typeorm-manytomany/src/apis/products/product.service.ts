@@ -86,8 +86,6 @@ export default class ProductService {
             }
         });
 
-        console.log(tags);
-
         // const tagNames = productTags.map((tag) => tag.replace("#", ""));
         // const tags: Array<ProductTagEntity> = (
         //     await Promise.all(
