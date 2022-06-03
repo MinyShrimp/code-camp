@@ -19,6 +19,7 @@ import ProductTagModule from './apis/productTag/productTag.module';
 import ProductPriceModule from './apis/productPrice/productPrice.module';
 import ProductCategoryModule from './apis/productCategory/productCategory.module';
 import ProductCategorySearchModule from './apis/productCategorySearch/productCategorySearch.module';
+import UserModule from './apis/user/user.module';
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -55,7 +56,10 @@ import ProductCategorySearchModule from './apis/productCategorySearch/productCat
 
         ///////////////////////////////////////////////////////////////////////////
         // Modules //
+        UserModule,
+
         BookModule,
+
         ProductModule,
         ProductTagModule,
         ProductPriceModule,

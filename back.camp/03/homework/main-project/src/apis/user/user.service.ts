@@ -1,12 +1,14 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import ResultMessage from 'src/commons/dto/ResultMessage.dto';
 
 import SignupInput from './dto/Signup.input';
-import UserEntity from './entities/user.entity';
 import LoginInput from './dto/Login.input';
+import UpdateUserInput from './dto/updateUser.input';
+
+import UserEntity from './entities/user.entity';
 
 @Injectable()
 export default class UserService {
@@ -22,14 +24,33 @@ export default class UserService {
      * 가입된 회원 여부 검사
      * @param userID
      * @returns
+     * 존재하지 않으면 ConflictException
      */
-    private async __checkValidUserByID(
+    private async __checkValidUser(
         userID: string, //
     ): Promise<UserEntity> {
-        const user = await this.__findOneByID(userID);
+        const user = await this.findOne(userID);
         if (user === undefined) {
-            throw new UnprocessableEntityException(
+            throw new ConflictException(
                 '존재하지 않는 유저입니다.', //
+            );
+        }
+        return user;
+    }
+
+    /**
+     * 이메일 중복 검사
+     * @param email
+     * @returns
+     * 존재하면 ConflictException
+     */
+    private async __checkOverlapEmail(
+        email: string, //
+    ): Promise<UserEntity> {
+        const user = await this.__findOneByEmail(email);
+        if (user !== undefined) {
+            throw new ConflictException(
+                '이미 존재하는 이메일입니다.', //
             );
         }
         return user;
@@ -44,7 +65,7 @@ export default class UserService {
         user: UserEntity, //
     ): Promise<UserEntity> {
         if (user.isLogin) {
-            throw new UnprocessableEntityException(
+            throw new ConflictException(
                 '이미 로그인된 유저입니다.', //
             );
         }
@@ -60,28 +81,11 @@ export default class UserService {
         user: UserEntity, //
     ): Promise<UserEntity> {
         if (!user.isLogin) {
-            throw new UnprocessableEntityException(
+            throw new ConflictException(
                 '이미 로그아웃된 유저입니다.', //
             );
         }
         return user;
-    }
-
-    /**
-     * 이메일 중복 검사
-     * @param email
-     * @returns
-     */
-    private async __checkOverlapEmail(
-        email: string, //
-    ): Promise<boolean> {
-        const user = await this.__findOneByEmail(email);
-        if (user !== undefined) {
-            throw new UnprocessableEntityException(
-                '이미 존재하는 이메일입니다.', //
-            );
-        }
-        return true;
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -105,12 +109,20 @@ export default class UserService {
      * @param userID
      * @returns 조회된 회원 정보
      */
-    private async __findOneByID(
+    async findOne(
         userID: string, //
     ): Promise<UserEntity> {
         return await this.userRepository.findOne({
             where: { id: userID },
         });
+    }
+
+    /**
+     * 전체 조회
+     * @returns 조회된 회원 정보 목록
+     */
+    async findAll(): Promise<UserEntity[]> {
+        return await this.userRepository.find({});
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -138,6 +150,28 @@ export default class UserService {
 
     ///////////////////////////////////////////////////////////////////
     // 수정 //
+
+    /**
+     * 회원 정보 수정
+     * @param userID
+     * @param updateInput
+     * @returns 수정된 회원 정보
+     */
+    async update(
+        userID: string, //
+        updateInput: UpdateUserInput,
+    ): Promise<UserEntity> {
+        const input = updateInput;
+
+        // 존재 여부 확인
+        const user = await this.__checkValidUser(userID);
+
+        return await this.userRepository.save({
+            ...user,
+            id: userID,
+            ...input,
+        });
+    }
 
     /**
      * 로그인
@@ -201,9 +235,31 @@ export default class UserService {
 
         // 메세지 반환
         return new ResultMessage({
-            id: userID,
+            id: user.id,
             isSuccess: true,
             contents: 'Completed Logout',
+        });
+    }
+
+    /**
+     * 회원 탈퇴 취소
+     * @param userID
+     * @returns
+     */
+    async restore(
+        userID: string, //
+    ): Promise<ResultMessage> {
+        const result = await this.userRepository.restore({
+            id: userID,
+        });
+        const isSuccess = result.affected ? true : false;
+
+        return new ResultMessage({
+            id: userID,
+            isSuccess,
+            contents: isSuccess
+                ? 'Completed User Restore'
+                : 'Failed User Restore',
         });
     }
 

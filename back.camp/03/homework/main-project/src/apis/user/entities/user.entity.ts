@@ -30,7 +30,6 @@ export default class UserEntity {
     email: string;
 
     // 비밀번호
-    @Field(() => String)
     @Column()
     pwd: string;
 

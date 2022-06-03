@@ -79,10 +79,11 @@ type UserEntity {
   id: ID!
   name: String!
   email: String!
-  pwd: String!
 }
 
 type Query {
+  fetchUsers: [UserEntity!]!
+  fetchUser(userID: String!): UserEntity
   fetchBooks: [BookEntity!]!
   fetchBook(bookID: String!): BookEntity!
   fetchProducts: [ProductEntity!]!
@@ -96,6 +97,12 @@ type Query {
 }
 
 type Mutation {
+  createUser(signupInput: SignupInput!): UserEntity!
+  updateUser(userID: String!, updateUserInput: UpdateUserInput!): UserEntity!
+  Login(loginInput: LoginInput!): ResultMessage!
+  Logout(userID: String!): ResultMessage!
+  restoreUser(userID: String!): ResultMessage!
+  deleteUser(userID: String!): ResultMessage!
   createBook(createBookInput: CreateBookInput!): BookEntity!
   updateBook(bookID: String!, updateBookInput: UpdateBookInput!): BookEntity!
   deleteBookAll: String!
@@ -110,6 +117,24 @@ type Mutation {
   createCategory(createProductCategoryInput: CreateProductCategoryInput!): ProductCategoryEntity!
   deleteCategory(categoryID: String!): ResultMessage!
   deleteCategoryAll: ResultMessage!
+}
+
+input SignupInput {
+  name: String!
+  email: String!
+  pwd: String!
+}
+
+input UpdateUserInput {
+  name: String
+  email: String
+  pwd: String
+}
+
+input LoginInput {
+  name: String!
+  email: String!
+  pwd: String!
 }
 
 input CreateBookInput {
