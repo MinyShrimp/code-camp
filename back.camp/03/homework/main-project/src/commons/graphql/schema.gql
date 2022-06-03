@@ -32,16 +32,22 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type ProductTagEntity {
-  id: ID!
-  name: String!
-  products: [ProductEntity!]!
-}
-
 type ProductPriceEntity {
   id: ID!
   price: Int!
   updateAt: DateTime!
+}
+
+type ProductCategoryEntity {
+  id: ID!
+  name: String!
+  children: [ProductCategoryEntity!]
+}
+
+type ResultMessage {
+  id: String
+  msg: String!
+  isSuccess: Boolean!
 }
 
 type ProductCategorySearchEntity {
@@ -51,6 +57,12 @@ type ProductCategorySearchEntity {
   c2: String
   c3: String
   c4: String
+}
+
+type ProductTagEntity {
+  id: ID!
+  name: String!
+  products: [ProductEntity!]!
 }
 
 type ProductEntity {
@@ -63,25 +75,8 @@ type ProductEntity {
   deleteAt: DateTime
   price: ProductPriceEntity!
   book: BookEntity!
-  productCategory: ProductCategorySearchEntity!
+  productCategory: ProductCategorySearchEntity
   productTags: [ProductTagEntity!]!
-}
-
-type ResultMessage {
-  id: String
-  msg: String!
-  isSuccess: Boolean!
-}
-
-type ProductCategoryEntity {
-  id: ID!
-  name: String!
-}
-
-type FetchProductCategoryOutput {
-  id: ID!
-  name: String!
-  children: [FetchProductCategoryOutput!]!
 }
 
 type UserEntity {
@@ -101,9 +96,10 @@ type Query {
   fetchProductsWithDeleted: [ProductEntity!]!
   fetchProduct(productID: String!): ProductEntity
   fetchProductWithDeleted(productID: String!): ProductEntity
-  fetchCategorysByTree: [FetchProductCategoryOutput!]!
-  fetchCategoryByTree(categoryID: String!): FetchProductCategoryOutput!
   fetchCategorys: [ProductCategorySearchEntity!]!
+  fetchCategory(categoryID: String!): ProductCategorySearchEntity
+  fetchCategorysByTree: [ProductCategoryEntity!]!
+  fetchCategoryByTree(categoryID: String!): ProductCategoryEntity!
 }
 
 type Mutation {
@@ -117,10 +113,10 @@ type Mutation {
   softDeleteProductAll: ResultMessage!
   deleteProduct(productID: String!): ResultMessage!
   softDeleteProduct(productID: String!): ResultMessage!
+  createCategorySearch: ResultMessage!
   createCategory(createProductCategoryInput: CreateProductCategoryInput!): ProductCategoryEntity!
   deleteCategory(categoryID: String!): ResultMessage!
   deleteCategoryAll: ResultMessage!
-  createCategorySearch: [ProductCategorySearchEntity!]!
 }
 
 input CreateBookInput {
@@ -147,12 +143,14 @@ input CreateProductInput {
   url: String!
   stock_count: Int!
   price: Int!
+  category_id: String!
 }
 
 input UpdateProductInput {
   url: String
   stock_count: Int
   price: Int
+  category_id: String
 }
 
 input CreateProductCategoryInput {

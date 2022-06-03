@@ -1,13 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import ResultMessage from 'src/commons/dto/ResultMessage.dto';
 import { getManager, Repository } from 'typeorm';
-
-import ProductCategorySearchService from '../productCategorySearch/productCategorySearch.service';
+import ResultMessage from 'src/commons/dto/ResultMessage.dto';
 
 import CreateProductCategoryInput from './dto/createProductCategory.input';
-import FetchProductCategoryOutput from './dto/fetchProductCategory.output';
-
 import ProductCategoryEntity from './entities/productCategory.entity';
 
 @Injectable()
@@ -24,7 +20,7 @@ export default class ProductCategoryService {
     // 조회 //
 
     // Category Tree 전체 조회
-    async findAllByTree(): Promise<FetchProductCategoryOutput[]> {
+    async findAllByTree(): Promise<ProductCategoryEntity[]> {
         const manager = getManager();
         return await manager
             .getTreeRepository(ProductCategoryEntity)
@@ -34,7 +30,7 @@ export default class ProductCategoryService {
     // Category Tree 단일 조회
     async findByTree(
         categoryID: string, //
-    ): Promise<FetchProductCategoryOutput> {
+    ): Promise<ProductCategoryEntity> {
         const parent = await this.productCategoryRepository.findOne({
             id: categoryID,
         });

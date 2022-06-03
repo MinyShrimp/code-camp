@@ -12,10 +12,6 @@ import ProductService from './product.service';
 
 @Resolver()
 export default class ProductResolver {
-    /**
-     * 생성자
-     * @param productService
-     */
     constructor(
         private readonly productService: ProductService, //
     ) {}
@@ -94,7 +90,6 @@ export default class ProductResolver {
         @Args('productID') productID: string,
         @Args('updateProductInput') updateProductInput: UpdateProductInput,
     ): Promise<ProductEntity> {
-        await this.productService.checkSoldout(productID);
         return this.productService.update(productID, updateProductInput);
     }
 

@@ -25,6 +25,7 @@ export default class ProductCategoryEntity {
     @Column()
     name: string;
 
+    @Field(() => [ProductCategoryEntity], { nullable: true })
     @TreeChildren({ cascade: true })
     children: ProductCategoryEntity[];
 

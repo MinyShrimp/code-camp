@@ -15,6 +15,9 @@ import ProductCategorySearchService from './productCategorySearch.service';
         ]),
         ProductCategoryModule,
     ],
+    exports: [
+        ProductCategorySearchService, //
+    ],
     providers: [
         ProductCategorySearchResolver, //
         ProductCategorySearchService,

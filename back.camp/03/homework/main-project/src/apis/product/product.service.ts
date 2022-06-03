@@ -6,20 +6,21 @@ import { Repository } from 'typeorm';
 
 import ResultMessage from 'src/commons/dto/ResultMessage.dto';
 
-import ProductEntity from './entities/product.entity';
+import ProductPriceService from '../productPrice/productPrice.service';
 
+import ProductCategorySearchService from '../productCategorySearch/productCategorySearch.service';
+
+import ProductEntity from './entities/product.entity';
 import CreateProductInput from './dto/createProduct.input';
 import UpdateProductInput from './dto/updateProduct.input';
-
-import ProductPriceService from '../productPrice/productPrice.service';
 
 @Injectable()
 export default class ProductService {
     constructor(
         @InjectRepository(ProductEntity)
         private readonly productRepository: Repository<ProductEntity>,
-
         private readonly productPriceService: ProductPriceService,
+        private readonly productCategoryService: ProductCategorySearchService,
     ) {}
 
     ///////////////////////////////////////////////////////////////////
@@ -98,13 +99,17 @@ export default class ProductService {
     async create(
         createProductInput: CreateProductInput,
     ): Promise<ProductEntity> {
-        const { price, ...product } = createProductInput;
+        const { price, category_id, ...product } = createProductInput;
 
+        const category = await this.productCategoryService.findOneByID(
+            category_id,
+        );
         const priceEntity = await this.productPriceService.create(price);
 
         return await this.productRepository.save({
             ...product,
             price: priceEntity,
+            productCategory: category,
         });
     }
 
@@ -121,21 +126,34 @@ export default class ProductService {
         productID: string,
         updateProductInput: UpdateProductInput,
     ): Promise<ProductEntity> {
-        // Repository.save() 에 id 값을 넣어주면, 수정이 된다
-        // id 값을 넣어주지 않으면, 추가가 된다.
-        const searchProduct = await this.findOne(productID);
-        const { price, ...product } = updateProductInput;
+        // stock_count <= 0 검사
+        await this.checkSoldout(productID);
 
+        // 상품 검색
+        const product = await this.findOne(productID);
+        // input data 뽑기
+        const { price, category_id, ...input } = updateProductInput;
+
+        // 새로운 카테고리 찾기
+        // 입력받지 않았다면, 기존의 카테고리 복사
+        const category =
+            category_id !== undefined
+                ? await this.productCategoryService.findOneByID(category_id)
+                : product.productCategory;
+
+        // 가격 업데이트
         const priceEntity = await this.productPriceService.update(
-            searchProduct.price.id,
+            product.price.id,
             price,
         );
 
+        // 저장 후 변경된 데이터 반환
         return await this.productRepository.save({
-            ...searchProduct,
-            id: productID,
             ...product,
+            id: productID,
+            ...input,
             price: priceEntity,
+            productCategory: category,
         });
     }
 

@@ -61,21 +61,30 @@ export default class ProductEntity {
     // 1:1
     @Field(() => ProductPriceEntity)
     @JoinColumn({ name: 'price_id' })
-    @OneToOne(() => ProductPriceEntity, { cascade: true, onDelete: 'CASCADE' })
+    @OneToOne(() => ProductPriceEntity, {
+        cascade: true, //
+        onDelete: 'CASCADE',
+    })
     price: ProductPriceEntity;
 
     // 책
     // M:1
     @Field(() => BookEntity)
     @JoinColumn({ name: 'book_id' })
-    @ManyToOne(() => BookEntity)
+    @ManyToOne(() => BookEntity, {
+        cascade: false, //
+        onDelete: 'NO ACTION',
+    })
     book: BookEntity;
 
     // 상품 카테고리
     // M:1
-    @Field(() => ProductCategorySearchEntity)
+    @Field(() => ProductCategorySearchEntity, { nullable: true })
     @JoinColumn({ name: 'product_category_id' })
-    @ManyToOne(() => ProductCategorySearchEntity)
+    @ManyToOne(() => ProductCategorySearchEntity, {
+        cascade: false,
+        onDelete: 'NO ACTION',
+    })
     productCategory: ProductCategorySearchEntity;
 
     // 상품 태그

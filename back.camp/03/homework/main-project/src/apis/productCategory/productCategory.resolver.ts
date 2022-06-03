@@ -2,7 +2,6 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import ResultMessage from 'src/commons/dto/ResultMessage.dto';
 
 import CreateProductCategoryInput from './dto/createProductCategory.input';
-import FetchProductCategoryOutput from './dto/fetchProductCategory.output';
 import ProductCategoryEntity from './entities/productCategory.entity';
 import ProductCategoryService from './productCategory.service';
 
@@ -19,16 +18,16 @@ export default class ProductCategoryResolver {
     // 조회 //
 
     // GET Category Tree 전체 조회
-    @Query(() => [FetchProductCategoryOutput])
-    fetchCategorysByTree(): Promise<FetchProductCategoryOutput[]> {
+    @Query(() => [ProductCategoryEntity])
+    fetchCategorysByTree(): Promise<ProductCategoryEntity[]> {
         return this.productCategoryService.findAllByTree();
     }
 
     // GET Category Tree 단일 조회
-    @Query(() => FetchProductCategoryOutput)
+    @Query(() => ProductCategoryEntity)
     fetchCategoryByTree(
         @Args('categoryID') categoryID: string, //
-    ): Promise<FetchProductCategoryOutput> {
+    ): Promise<ProductCategoryEntity> {
         return this.productCategoryService.findByTree(categoryID);
     }
 

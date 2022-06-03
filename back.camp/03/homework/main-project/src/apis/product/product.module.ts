@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import ProductPriceModule from '../productPrice/productPrice.module';
+import ProductCategorySearchModule from '../productCategorySearch/productCategorySearch.module';
+
 import ProductEntity from './entities/product.entity';
 
 import ProductResolver from './product.resolver';
 import ProductService from './product.service';
-
-import ProductPriceModule from '../productPrice/productPrice.module';
 
 @Module({
     imports: [
@@ -16,6 +17,7 @@ import ProductPriceModule from '../productPrice/productPrice.module';
         ]),
         // ProductPriceService를 사용해주기 위해 import
         ProductPriceModule,
+        ProductCategorySearchModule,
     ],
     providers: [
         ProductResolver, //

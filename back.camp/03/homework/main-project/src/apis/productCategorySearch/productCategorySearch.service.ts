@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import ResultMessage from 'src/commons/dto/ResultMessage.dto';
 import { Repository } from 'typeorm';
 
 import ProductCategoryService from '../productCategory/productCategory.service';
 
-import CreateProductCategorySearchDto from './dto/createProductCategorySearch.dto';
+import ProductCategorySearchDto from './dto/productCategorySearch.dto';
 import ProductCategorySearchEntity from './entities/productCategorySearch.entity';
 
 @Injectable()
@@ -18,12 +19,81 @@ export default class ProductCategorySearchService {
     ///////////////////////////////////////////////////////////////////
     // Utils //
 
+    /**
+     * 카테고리 존재 검사
+     * @param category
+     * @returns 존재 여부
+     *
+     *  - 없으면 UnprocessableEntityException
+     */
+    private __checkValidCategory(
+        category: ProductCategorySearchEntity,
+    ): boolean {
+        if (category === undefined) {
+            throw new UnprocessableEntityException('Unvalid Category ID');
+        }
+
+        return true;
+    }
+
     ///////////////////////////////////////////////////////////////////
     // 조회 //
 
-    // Search Category 전체 조회
-    async findAllBySearch(): Promise<ProductCategorySearchEntity[]> {
+    // ID 기반 조회
+    private async __findOneByID(
+        categoryID: string,
+    ): Promise<ProductCategorySearchEntity> {
+        return await this.productCategorySearchRepository.findOne({
+            where: { id: categoryID },
+        });
+    }
+
+    // 이름 기반 조회
+    private async __findOneByName(
+        name: string,
+    ): Promise<ProductCategorySearchEntity> {
+        return await this.productCategorySearchRepository.findOne({
+            where: { name: name },
+        });
+    }
+
+    /**
+     * Search Category 전체 조회
+     */
+    async findAll(): Promise<ProductCategorySearchEntity[]> {
         return await this.productCategorySearchRepository.find({});
+    }
+
+    /**
+     * Search Category ID 기반 단일 조회
+     * @param categoryID
+     * @returns ProductCategorySearchEntity
+     *
+     * 카테고리 존재 검사
+     *  - 없으면 UnprocessableEntityException
+     */
+    async findOneByID(
+        categoryID: string, //
+    ): Promise<ProductCategorySearchEntity> {
+        const category = await this.__findOneByID(categoryID);
+        this.__checkValidCategory(category);
+        return category;
+    }
+
+    /**
+     * 이름 기반 단일 조회
+     * @param name
+     * @returns ProductCategorySearchEntity
+     *
+     * 카테고리 존재 검사
+     *  - 없으면 UnprocessableEntityException
+     */
+    async findOneByName(
+        name: string, //
+    ): Promise<ProductCategorySearchEntity> {
+        const category = await this.__findOneByName(name);
+        this.__checkValidCategory(category);
+        return category;
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -31,16 +101,18 @@ export default class ProductCategorySearchService {
 
     // Search Category 생성
     private async __createSearchCategory(
-        obj: CreateProductCategorySearchDto,
-    ): Promise<string> {
-        const newSearch = await this.productCategorySearchRepository.save({
+        obj: ProductCategorySearchDto,
+    ): Promise<ProductCategorySearchEntity> {
+        return await this.productCategorySearchRepository.save({
             ...obj,
         });
-        return newSearch.id;
     }
 
-    // Search Category 생성
-    async createSarchCategory(): Promise<ProductCategorySearchEntity[]> {
+    /**
+     * Search Category 생성
+     * @returns ResultMessage
+     */
+    async createSarchCategory(): Promise<ResultMessage> {
         await this.__deleteAllSearchCategory();
 
         const tree = await this.productCategoryService.findAllByTree();
@@ -82,7 +154,10 @@ export default class ProductCategorySearchService {
             });
         });
 
-        return await this.findAllBySearch();
+        return new ResultMessage({
+            contents: 'Create OK',
+            isSuccess: true,
+        });
     }
 
     ///////////////////////////////////////////////////////////////////

@@ -13,4 +13,7 @@ export default class CreateProductInput {
     @Min(0)
     @Field(() => Int)
     price: number;
+
+    @Field(() => String)
+    category_id: string;
 }
