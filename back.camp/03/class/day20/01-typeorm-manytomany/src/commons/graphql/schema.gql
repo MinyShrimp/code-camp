@@ -83,6 +83,7 @@ input CreateProductInput {
   price: Int!
   productSaleslocation: CreateProductSalesLocationInput!
   productCategoryId: String!
+  productTags: [String!]!
 }
 
 input CreateProductSalesLocationInput {
@@ -99,4 +100,5 @@ input UpdateProductInput {
   price: Int
   productSaleslocation: CreateProductSalesLocationInput
   productCategoryId: String
+  productTags: [String!]
 }

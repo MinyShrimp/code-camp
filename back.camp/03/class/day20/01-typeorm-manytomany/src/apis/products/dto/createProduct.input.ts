@@ -24,4 +24,8 @@ export default class CreateProductInput {
     // 카테고리
     @Field(() => String)
     productCategoryId: string;
+
+    // Tag
+    @Field(() => [String])
+    productTags: string[];
 }

@@ -1,9 +1,4 @@
-import {
-    HttpException,
-    HttpStatus,
-    Injectable,
-    UnprocessableEntityException,
-} from "@nestjs/common";
+import { Injectable, UnprocessableEntityException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
@@ -12,12 +7,15 @@ import ProductSalesLocationEntity from "../productsSaleslocation/entities/produc
 
 import CreateProductInput from "./dto/createProduct.input";
 import UpdateProductInput from "./dto/updateProduct.input";
+import ProductTagEntity from "../productsTags/entities/productTag.entity";
 
 @Injectable()
 export default class ProductService {
     constructor(
         @InjectRepository(ProductEntity)
         private readonly productRepository: Repository<ProductEntity>,
+        @InjectRepository(ProductTagEntity)
+        private readonly productTagRepository: Repository<ProductTagEntity>,
         @InjectRepository(ProductSalesLocationEntity)
         private readonly productSalesLocationRepository: Repository<ProductSalesLocationEntity>
     ) {}
@@ -35,13 +33,18 @@ export default class ProductService {
 
     // GET 모든 상품
     async findAll(): Promise<ProductEntity[]> {
-        return await this.productRepository.find({});
+        return await this.productRepository.find({
+            relations: ["productSaleslocation", "productCategory", "productTags"],
+        });
     }
 
     // GET 단일 상품
     async findOne(productID: string): Promise<ProductEntity> {
         return await this.productRepository.findOne({
-            where: { id: productID },
+            where: {
+                id: productID,
+                relations: ["productSaleslocation", "productCategory", "productTags"],
+            },
         });
     }
 
@@ -49,16 +52,63 @@ export default class ProductService {
     async create(
         createProductInput: CreateProductInput //
     ): Promise<ProductEntity> {
-        const { productSaleslocation, productCategoryId, ...product } = createProductInput;
+        const {
+            productTags, //
+            productCategoryId,
+            productSaleslocation,
+            ...input
+        } = createProductInput;
 
+        // 지역
         const location = await this.productSalesLocationRepository.save({
             ...productSaleslocation,
         });
 
+        // 태그 : ["#전자제품", "#영등포", "#컴퓨터"]
+
+        const tags: Array<ProductTagEntity> = [];
+        productTags.forEach(async (tag) => {
+            const tagName = tag.replace("#", "");
+
+            // 이미 등록된 태그인지 확인해보기
+            const prevTag = await this.productTagRepository.findOne({ name: tagName });
+
+            if (prevTag) {
+                // 기존에 태그가 존재한다면
+                tags.push(prevTag);
+            } else {
+                // 기존에 태그가 없다면
+                tags.push(
+                    await this.productTagRepository.save({
+                        name: tagName,
+                    })
+                );
+            }
+        });
+
+        console.log(tags);
+
+        // const tagNames = productTags.map((tag) => tag.replace("#", ""));
+        // const tags: Array<ProductTagEntity> = (
+        //     await Promise.all(
+        //         tagNames.map((tag) => {
+        //             return this.productRepository.findOne({ name: tag });
+        //         })
+        //     )
+        // ).reduce((result, tag, index) => {
+        //     if (tag) {
+        //         result.push(tag);
+        //     } else {
+        //         result.push(this.productRepository.save({ name: tagNames[index] }));
+        //     }
+        //     return result;
+        // }, []);
+
         return await this.productRepository.save({
-            ...product,
+            ...input,
             productSaleslocation: location,
             productCategory: { id: productCategoryId },
+            productTags: tags,
         });
     }
 
@@ -74,11 +124,18 @@ export default class ProductService {
         //     ...updateProductInput,
         // });
 
+        const {
+            productTags, //
+            productCategoryId,
+            productSaleslocation,
+            ...input
+        } = updateProductInput;
+
         const product = await this.findOne(productID);
         const newProduct = {
             ...product,
             id: productID,
-            ...updateProductInput,
+            ...input,
         };
 
         return await this.productRepository.save(newProduct);
