@@ -34,18 +34,27 @@ export default class UserEntity {
     @Column()
     pwd: string;
 
+    // 로그인 시간
+    @Column({ nullable: true })
+    loginAt: Date;
+
+    // 로그아웃 시간
+    @Column({ nullable: true })
+    logoutAt: Date;
+
+    // 로그인 여부
+    @Column({ default: false })
+    isLogin: boolean;
+
     // 생성 시간
-    @Field(() => Date)
     @CreateDateColumn()
     createAt: Date;
 
     // 업데이트 시간
-    @Field(() => Date)
     @UpdateDateColumn()
     updateAt: Date;
 
     // 삭제 시간
-    @Field(() => Date)
     @DeleteDateColumn()
     deleteAt: Date;
 }

@@ -84,9 +84,6 @@ type UserEntity {
   name: String!
   email: String!
   pwd: String!
-  createAt: DateTime!
-  updateAt: DateTime!
-  deleteAt: DateTime!
 }
 
 type Query {
