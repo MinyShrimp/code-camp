@@ -100,3 +100,14 @@ bootstrap();
 -   [x] `deleteProduct` API를 플레이그라운드로 요청할 수 있다.
 -   [x] `fetchProductsWithDeleted` API를 플레이그라운드로 요청할 수 있다.
 -   [x] `restoreProduct` API를 플레이그라운드로 요청할 수 있다.
+
+### Day 20
+
+-   [x] N:M 관계를 가진 테이블에서 데이터를 등록하는 API를 요청할 수 있다.
+-   [x] N:M 관계를 가진 테이블에서 데이터를 조회하는 API를 요청할 수 있다.
+-   [ ] user 테이블에 데이터를 추가하는 API를 요청할 수 있다.
+    -   [ ] 이미 존재하는 회원이라면 `ConflictException` 에러가 반환된다.
+-   [ ] user 테이블에 데이터를 삭제하는 API를 요청할 수 있다.
+-   [ ] user 테이블에 데이터를 조회하는 API를 요청할 수 있다.
+    -   [ ] 조회할 때 비밀번호는 포함되지 않는다.
+-   [ ] user 테이블에 데이터를 수정하는 API를 요청할 수 있다.

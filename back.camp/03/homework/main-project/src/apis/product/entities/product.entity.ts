@@ -43,17 +43,14 @@ export default class ProductEntity {
     selling_count: number;
 
     // 생성 시간
-    @Field(() => Date)
     @CreateDateColumn()
     createAt: Date;
 
     // 업데이트 시간
-    @Field(() => Date)
     @UpdateDateColumn()
     updateAt: Date;
 
     // 삭제 시간
-    @Field(() => Date, { nullable: true })
     @DeleteDateColumn()
     deleteAt: Date;
 
@@ -62,7 +59,7 @@ export default class ProductEntity {
     @Field(() => ProductPriceEntity)
     @JoinColumn({ name: 'price_id' })
     @OneToOne(() => ProductPriceEntity, {
-        cascade: true, //
+        cascade: true,
         onDelete: 'CASCADE',
     })
     price: ProductPriceEntity;
@@ -72,8 +69,8 @@ export default class ProductEntity {
     @Field(() => BookEntity)
     @JoinColumn({ name: 'book_id' })
     @ManyToOne(() => BookEntity, {
-        cascade: false, //
-        onDelete: 'NO ACTION',
+        cascade: true,
+        onDelete: 'CASCADE',
     })
     book: BookEntity;
 
@@ -82,8 +79,8 @@ export default class ProductEntity {
     @Field(() => ProductCategorySearchEntity, { nullable: true })
     @JoinColumn({ name: 'product_category_id' })
     @ManyToOne(() => ProductCategorySearchEntity, {
-        cascade: false,
-        onDelete: 'NO ACTION',
+        cascade: true,
+        onDelete: 'CASCADE',
     })
     productCategory: ProductCategorySearchEntity;
 
@@ -91,6 +88,9 @@ export default class ProductEntity {
     // M:N
     @Field(() => [ProductTagEntity])
     @JoinTable()
-    @ManyToMany(() => ProductTagEntity, (productTags) => productTags.products)
+    @ManyToMany(() => ProductTagEntity, (productTags) => productTags.products, {
+        cascade: true,
+        onDelete: 'CASCADE',
+    })
     productTags: Array<ProductTagEntity>;
 }

@@ -16,4 +16,7 @@ export default class CreateProductInput {
 
     @Field(() => String)
     category_id: string;
+
+    @Field(() => [String])
+    product_tags: string[];
 }

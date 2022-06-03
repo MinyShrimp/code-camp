@@ -35,19 +35,6 @@ scalar DateTime
 type ProductPriceEntity {
   id: ID!
   price: Int!
-  updateAt: DateTime!
-}
-
-type ProductCategoryEntity {
-  id: ID!
-  name: String!
-  children: [ProductCategoryEntity!]
-}
-
-type ResultMessage {
-  id: String
-  msg: String!
-  isSuccess: Boolean!
 }
 
 type ProductCategorySearchEntity {
@@ -59,24 +46,33 @@ type ProductCategorySearchEntity {
   c4: String
 }
 
+type ProductEntity {
+  id: ID!
+  url: String!
+  stock_count: Int!
+  selling_count: Int!
+  price: ProductPriceEntity!
+  book: BookEntity!
+  productCategory: ProductCategorySearchEntity
+  productTags: [ProductTagEntity!]!
+}
+
 type ProductTagEntity {
   id: ID!
   name: String!
   products: [ProductEntity!]!
 }
 
-type ProductEntity {
+type ResultMessage {
+  id: String
+  msg: String!
+  isSuccess: Boolean!
+}
+
+type ProductCategoryEntity {
   id: ID!
-  url: String!
-  stock_count: Int!
-  selling_count: Int!
-  createAt: DateTime!
-  updateAt: DateTime!
-  deleteAt: DateTime
-  price: ProductPriceEntity!
-  book: BookEntity!
-  productCategory: ProductCategorySearchEntity
-  productTags: [ProductTagEntity!]!
+  name: String!
+  children: [ProductCategoryEntity!]
 }
 
 type UserEntity {
@@ -141,6 +137,7 @@ input CreateProductInput {
   stock_count: Int!
   price: Int!
   category_id: String!
+  product_tags: [String!]!
 }
 
 input UpdateProductInput {
@@ -148,6 +145,7 @@ input UpdateProductInput {
   stock_count: Int
   price: Int
   category_id: String
+  product_tags: [String!]
 }
 
 input CreateProductCategoryInput {

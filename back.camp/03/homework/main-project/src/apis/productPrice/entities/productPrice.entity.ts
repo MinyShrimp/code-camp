@@ -3,9 +3,12 @@
  */
 
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
+import ProductEntity from 'src/apis/product/entities/product.entity';
 import {
     Column,
+    DeleteDateColumn,
     Entity,
+    OneToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
@@ -23,7 +26,10 @@ export default class ProductPriceEntity {
     price: number;
 
     // 업데이트 시간
-    @Field(() => Date)
     @UpdateDateColumn()
     updateAt: Date;
+
+    // 삭제 시간
+    @DeleteDateColumn()
+    deleteAt: Date;
 }

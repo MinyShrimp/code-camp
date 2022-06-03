@@ -8,9 +8,15 @@ import {
     ExceptionFilter,
     HttpException,
 } from '@nestjs/common';
+import { HttpAdapterHost } from '@nestjs/core';
+import { Request, Response } from 'express';
 
 @Catch(HttpException)
 class HttpExceptionFilter implements ExceptionFilter<HttpException> {
+    constructor(
+        private readonly httpAdapterHost: HttpAdapterHost, //
+    ) {}
+
     catch(exception: HttpException, host: ArgumentsHost) {
         const msg = exception.message;
         const status = exception.getStatus();
@@ -22,6 +28,24 @@ class HttpExceptionFilter implements ExceptionFilter<HttpException> {
 
         /* 422 */
         console.log(status);
+
+        // const ctx = host.switchToHttp();
+        // const response = ctx.getResponse();
+
+        // const { httpAdapter } = this.httpAdapterHost;
+        // httpAdapter.reply(
+        //     response,
+        //     {
+        //         statusCode: status,
+        //         timestamp: new Date().toISOString(),
+        //     },
+        //     status,
+        // );
+
+        // response.json({
+        //     statusCode: status,
+        //     timestamp: new Date().toISOString(),
+        // });
 
         /**
          * {

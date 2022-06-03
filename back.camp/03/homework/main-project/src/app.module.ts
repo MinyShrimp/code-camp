@@ -13,11 +13,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 
 // Modules //
-// import ProductCategoryModule from './apis/productCategory/productCategory.module';
 import BookModule from './apis/book/book.module';
 import ProductModule from './apis/product/product.module';
-import ProductCategoryModule from './apis/productCategory/productCategory.module';
+import ProductTagModule from './apis/productTag/productTag.module';
 import ProductPriceModule from './apis/productPrice/productPrice.module';
+import ProductCategoryModule from './apis/productCategory/productCategory.module';
 import ProductCategorySearchModule from './apis/productCategorySearch/productCategorySearch.module';
 
 ///////////////////////////////////////////////////////////////////////////
@@ -57,6 +57,8 @@ import ProductCategorySearchModule from './apis/productCategorySearch/productCat
         // Modules //
         BookModule,
         ProductModule,
+        ProductTagModule,
+        ProductPriceModule,
         ProductCategoryModule,
         ProductCategorySearchModule,
     ],
