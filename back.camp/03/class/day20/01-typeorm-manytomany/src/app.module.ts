@@ -14,6 +14,7 @@ import { ConfigModule } from "@nestjs/config";
 import BoardsModule from "./apis/boards/boards.module";
 import ProductModule from "./apis/products/product.module";
 import ProductCategoryModule from "./apis/productsCategory/productCategory.module";
+import UserModule from "./apis/users/users.module";
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -52,6 +53,8 @@ import ProductCategoryModule from "./apis/productsCategory/productCategory.modul
         BoardsModule,
         ProductModule,
         ProductCategoryModule,
+
+        UserModule,
     ],
     controllers: [],
     providers: [],

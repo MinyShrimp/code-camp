@@ -88,11 +88,11 @@ export default class ProductService {
         // 이게 왜 됨?
         const tagNames = productTags.map((tag) => tag.replace("#", ""));
         const tags: Array<ProductTagEntity> = tagNames.reduce((result, tag) => {
-            this.productTagRepository.findOne({ name: tag }).then((res) => {
+            this.productTagRepository.findOne({ name: tag }).then(async (res) => {
                 if (res) {
                     result.push(res);
                 } else {
-                    result.push(this.productTagRepository.save({ name: tag }));
+                    result.push(await this.productTagRepository.save({ name: tag }));
                 }
             });
             return result;

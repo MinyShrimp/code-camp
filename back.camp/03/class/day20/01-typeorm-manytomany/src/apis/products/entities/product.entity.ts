@@ -1,7 +1,5 @@
 /**
  * 상품 Entity
- *
- * | id | PK |
  */
 
 import {

@@ -2,7 +2,7 @@
  * 유저 Entity
  */
 
-import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Field, ID, Int, ObjectType } from "@nestjs/graphql";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @ObjectType()
@@ -22,13 +22,16 @@ export default class UserEntity {
     @Column()
     email: string;
 
-    // 비밀번호
-    @Field(() => String)
+    // 나이
+    @Field(() => Int)
     @Column()
-    password: string;
+    age: number;
+
+    // 비밀번호
+    @Column()
+    pwd: string;
 
     // salt
-    @Field(() => String)
-    @Column()
-    salt: string;
+    // @Column()
+    // salt: string;
 }

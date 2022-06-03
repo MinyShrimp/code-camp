@@ -13,8 +13,7 @@ type UserEntity {
   id: ID!
   name: String!
   email: String!
-  password: String!
-  salt: String!
+  age: Int!
 }
 
 type ProductTagEntity {
@@ -59,6 +58,7 @@ type Query {
   fetchProducts: [ProductEntity!]!
   fetchProduct(productID: String!): ProductEntity!
   fetchProductCategoryAll: [ProductCategoryEntity!]!
+  fetchUsers: [UserEntity!]!
 }
 
 type Mutation {
@@ -69,6 +69,7 @@ type Mutation {
   deleteProduct(productID: String!): String!
   createProductCategory(name: String!): ProductCategoryEntity!
   deleteProductCategoryAll: String!
+  signUp(signupInput: SignupInput!): UserEntity!
 }
 
 input CreateBoardInput {
@@ -101,4 +102,11 @@ input UpdateProductInput {
   productSaleslocation: CreateProductSalesLocationInput
   productCategoryId: String
   productTags: [String!]
+}
+
+input SignupInput {
+  email: String!
+  pwd: String!
+  name: String!
+  age: Int!
 }
