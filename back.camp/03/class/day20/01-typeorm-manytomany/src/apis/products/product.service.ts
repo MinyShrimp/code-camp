@@ -65,42 +65,38 @@ export default class ProductService {
         });
 
         // 태그 : ["#전자제품", "#영등포", "#컴퓨터"]
+        // const tags: Array<ProductTagEntity> = [];
+        // productTags.forEach(async (tag) => {
+        //     const tagName = tag.replace("#", "");
 
-        const tags: Array<ProductTagEntity> = [];
-        productTags.forEach(async (tag) => {
-            const tagName = tag.replace("#", "");
+        //     // 이미 등록된 태그인지 확인해보기
+        //     const prevTag = await this.productTagRepository.findOne({ name: tagName });
 
-            // 이미 등록된 태그인지 확인해보기
-            const prevTag = await this.productTagRepository.findOne({ name: tagName });
-
-            if (prevTag) {
-                // 기존에 태그가 존재한다면
-                tags.push(prevTag);
-            } else {
-                // 기존에 태그가 없다면
-                tags.push(
-                    await this.productTagRepository.save({
-                        name: tagName,
-                    })
-                );
-            }
-        });
-
-        // const tagNames = productTags.map((tag) => tag.replace("#", ""));
-        // const tags: Array<ProductTagEntity> = (
-        //     await Promise.all(
-        //         tagNames.map((tag) => {
-        //             return this.productRepository.findOne({ name: tag });
-        //         })
-        //     )
-        // ).reduce((result, tag, index) => {
-        //     if (tag) {
-        //         result.push(tag);
+        //     if (prevTag) {
+        //         // 기존에 태그가 존재한다면
+        //         tags.push(prevTag);
         //     } else {
-        //         result.push(this.productRepository.save({ name: tagNames[index] }));
+        //         // 기존에 태그가 없다면
+        //         tags.push(
+        //             await this.productTagRepository.save({
+        //                 name: tagName,
+        //             })
+        //         );
         //     }
-        //     return result;
-        // }, []);
+        // });
+
+        // 이게 왜 됨?
+        const tagNames = productTags.map((tag) => tag.replace("#", ""));
+        const tags: Array<ProductTagEntity> = tagNames.reduce((result, tag) => {
+            this.productTagRepository.findOne({ name: tag }).then((res) => {
+                if (res) {
+                    result.push(res);
+                } else {
+                    result.push(this.productTagRepository.save({ name: tag }));
+                }
+            });
+            return result;
+        }, []);
 
         return await this.productRepository.save({
             ...input,
