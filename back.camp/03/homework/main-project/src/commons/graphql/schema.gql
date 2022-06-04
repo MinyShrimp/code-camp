@@ -87,6 +87,7 @@ type Query {
   fetchBooks: [BookEntity!]!
   fetchBook(bookID: String!): BookEntity!
   fetchAuthor(authorID: String!): AuthorEntity!
+  fetchPublisher(publisherID: String!): PublisherEntity!
   fetchProducts: [ProductEntity!]!
   fetchProductsWithDeleted: [ProductEntity!]!
   fetchProduct(productID: String!): ProductEntity
@@ -112,6 +113,11 @@ type Mutation {
   updateAuthor(authorID: String!, updateAuthorInput: UpdateAuthorInput!): AuthorEntity!
   restoreAuthor(authorID: String!): ResultMessage!
   deleteAuthor(authorID: String!): ResultMessage!
+  createPubliser(createPublisherInput: CreatePublisherInput!): PublisherEntity!
+  updatePublisher(publisherID: String!, updatePublisherInput: UpdatePublisherInput!): PublisherEntity!
+  restorePublisher(publisherID: String!): ResultMessage!
+  deletePublisher(publisherID: String!): ResultMessage!
+  softDeletePublisher(publisherID: String!): ResultMessage!
   createProduct(createProductInput: CreateProductInput!): ProductEntity!
   updateProduct(productID: String!, updateProductInput: UpdateProductInput!): ProductEntity!
   restoreProduct(productID: String!): ResultMessage!
@@ -169,6 +175,16 @@ input CreateAuthorInput {
 }
 
 input UpdateAuthorInput {
+  name: String
+  description: String
+}
+
+input CreatePublisherInput {
+  name: String!
+  description: String!
+}
+
+input UpdatePublisherInput {
   name: String
   description: String
 }

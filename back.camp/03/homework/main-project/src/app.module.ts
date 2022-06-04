@@ -17,6 +17,7 @@ import UserModule from './apis/user/user.module';
 
 import BookModule from './apis/book/book.module';
 import AuthorModule from './apis/author/author.module';
+import PublisherModule from './apis/publisher/publisher.module';
 
 import ProductModule from './apis/product/product.module';
 import ProductTagModule from './apis/productTag/productTag.module';
@@ -63,6 +64,7 @@ import ProductCategorySearchModule from './apis/productCategorySearch/productCat
 
         BookModule,
         AuthorModule,
+        PublisherModule,
 
         ProductModule,
         ProductTagModule,
