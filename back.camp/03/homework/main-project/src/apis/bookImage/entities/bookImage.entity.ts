@@ -3,7 +3,15 @@
  */
 
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    CreateDateColumn,
+    DeleteDateColumn,
+    Entity,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from 'typeorm';
 
 import BookEntity from 'src/apis/book/entities/book.entity';
 
@@ -28,4 +36,16 @@ export default class BookImageEntity {
     @Field(() => BookEntity)
     @ManyToOne(() => BookEntity)
     book: BookEntity;
+
+    // 생성 시간
+    @CreateDateColumn()
+    createAt: Date;
+
+    // 수정 시간
+    @UpdateDateColumn()
+    updateAt: Date;
+
+    // 삭제 시간
+    @DeleteDateColumn()
+    deleteAt: Date;
 }
