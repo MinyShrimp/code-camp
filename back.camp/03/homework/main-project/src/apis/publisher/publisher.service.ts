@@ -21,6 +21,11 @@ export default class PublisherService {
     ///////////////////////////////////////////////////////////////////
     // 조회 //
 
+    /**
+     * 출판사 단일 정보 조회
+     * @param publisherID
+     * @returns 조회된 출판사 정보
+     */
     async findOne(
         publisherID: string, //
     ): Promise<PublisherEntity> {
@@ -32,6 +37,11 @@ export default class PublisherService {
     ///////////////////////////////////////////////////////////////////
     // 생성 //
 
+    /**
+     * 출판사 정보 생성
+     * @param createPublisherInput
+     * @returns 생성된 출판사 정보
+     */
     async create(
         createPublisherInput: CreatePublisherInput,
     ): Promise<PublisherEntity> {
@@ -45,6 +55,12 @@ export default class PublisherService {
     ///////////////////////////////////////////////////////////////////
     // 수정 //
 
+    /**
+     * 출판사 정보 수정
+     * @param publisherID
+     * @param updatePublisherInput
+     * @returns 수정된 출판사 정보
+     */
     async update(
         publisherID: string,
         updatePublisherInput: UpdatePublisherInput,
@@ -59,6 +75,11 @@ export default class PublisherService {
         });
     }
 
+    /**
+     * 출판사 삭제 취소
+     * @param publisherID
+     * @returns ResultMessage
+     */
     async restore(
         publisherID: string, //
     ): Promise<ResultMessage> {
@@ -79,6 +100,11 @@ export default class PublisherService {
     ///////////////////////////////////////////////////////////////////
     // 삭제 //
 
+    /**
+     * 단일 출판사 삭제 ( 삭제 O )
+     * @param publisherID
+     * @returns ResultMessage
+     */
     async delete(
         publisherID: string, //
     ): Promise<ResultMessage> {
@@ -96,6 +122,11 @@ export default class PublisherService {
         });
     }
 
+    /**
+     * 단일 출판사 삭제 ( 삭제 X )
+     * @param publisherID
+     * @returns ResultMessage
+     */
     async softDelete(
         publisherID: string, //
     ): Promise<ResultMessage> {
