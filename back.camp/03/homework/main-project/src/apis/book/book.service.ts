@@ -79,6 +79,28 @@ export default class BookService {
         return await this.bookRepository.save(newBook);
     }
 
+    /**
+     * 책 정보 삭제 취소
+     * @param bookID
+     * @returns ResultMessage
+     */
+    async restore(
+        bookID: string, //
+    ): Promise<ResultMessage> {
+        const result = await this.bookRepository.restore({
+            id: bookID,
+        });
+        const isSuccess = result ? true : false;
+
+        return new ResultMessage({
+            id: bookID,
+            isSuccess,
+            contents: isSuccess
+                ? 'Completed Book Restore'
+                : 'Failed Book Restore',
+        });
+    }
+
     ///////////////////////////////////////////////////////////////////
     // 삭제 //
 
@@ -94,6 +116,22 @@ export default class BookService {
             contents: isSuccess
                 ? 'Completed All Book Delete'
                 : 'Failed All Book Delete',
+        });
+    }
+
+    /**
+     * 모든 책 정보 삭제 ( 삭제 X )
+     * @returns ResultMessage
+     */
+    async softDeleteAll(): Promise<ResultMessage> {
+        const result = await this.bookRepository.softDelete({});
+        const isSuccess = result ? true : false;
+
+        return new ResultMessage({
+            isSuccess,
+            contents: isSuccess
+                ? 'Completed All Book Soft Delete'
+                : 'Failed All Book Soft Delete',
         });
     }
 
@@ -116,22 +154,6 @@ export default class BookService {
             contents: isSuccess
                 ? 'Completed Book Delete'
                 : 'Failed Book Delete',
-        });
-    }
-
-    /**
-     * 모든 책 정보 삭제 ( 삭제 X )
-     * @returns ResultMessage
-     */
-    async softDeleteAll(): Promise<ResultMessage> {
-        const result = await this.bookRepository.softDelete({});
-        const isSuccess = result ? true : false;
-
-        return new ResultMessage({
-            isSuccess,
-            contents: isSuccess
-                ? 'Completed All Book Soft Delete'
-                : 'Failed All Book Soft Delete',
         });
     }
 

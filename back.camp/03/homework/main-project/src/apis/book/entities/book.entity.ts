@@ -8,6 +8,9 @@ import {
     Column,
     JoinColumn,
     ManyToOne,
+    CreateDateColumn,
+    UpdateDateColumn,
+    DeleteDateColumn,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -55,6 +58,18 @@ export default class BookEntity {
     @Field(() => Date)
     @Column()
     publish_at: Date;
+
+    // 생성 시간
+    @CreateDateColumn()
+    createAt: Date;
+
+    // 수정 시간
+    @UpdateDateColumn()
+    updateAt: Date;
+
+    // 삭제 시간
+    @DeleteDateColumn()
+    deleteAt: Date;
 
     // 출판사
     @Field(() => PublisherEntity)

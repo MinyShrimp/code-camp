@@ -53,20 +53,36 @@ export default class BookResolver {
         return this.bookService.update(bookID, updateBookInput);
     }
 
+    // POST 책 삭제 취소
+    @Mutation(() => ResultMessage)
+    restoreBook(
+        @Args('bookID') bookID: string, //
+    ): Promise<ResultMessage> {
+        return this.bookService.restore(bookID);
+    }
+
     ///////////////////////////////////////////////////////////////////
     // 삭제 //
 
-    // DELETE 모든 책 삭제
+    // DELETE 모든 책 삭제 ( 삭제 O )
     @Mutation(() => ResultMessage)
     async deleteBookAll(): Promise<ResultMessage> {
         return await this.bookService.deleteAll();
     }
 
-    // DELETE 단일 책 삭제
+    // DELETE 단일 책 삭제 ( 삭제 O )
     @Mutation(() => ResultMessage)
     async deleteBook(
         @Args('bookID') bookID: string, //
     ): Promise<ResultMessage> {
         return await this.bookService.delete(bookID);
+    }
+
+    // DELETE 단일 책 삭제 ( 삭제 X )
+    @Mutation(() => ResultMessage)
+    async softDeleteBook(
+        @Args('bookID') bookID: string, //
+    ): Promise<ResultMessage> {
+        return await this.bookService.softDelete(bookID);
     }
 }
