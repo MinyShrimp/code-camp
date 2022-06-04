@@ -2,6 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type UserEntity {
+  id: ID!
+  name: String!
+  email: String!
+}
+
+type ResultMessage {
+  id: String
+  msg: String!
+  isSuccess: Boolean!
+}
+
 type AuthorEntity {
   id: ID!
   name: String!
@@ -63,22 +75,10 @@ type ProductTagEntity {
   products: [ProductEntity!]!
 }
 
-type ResultMessage {
-  id: String
-  msg: String!
-  isSuccess: Boolean!
-}
-
 type ProductCategoryEntity {
   id: ID!
   name: String!
   children: [ProductCategoryEntity!]
-}
-
-type UserEntity {
-  id: ID!
-  name: String!
-  email: String!
 }
 
 type Query {
@@ -86,6 +86,7 @@ type Query {
   fetchUser(userID: String!): UserEntity
   fetchBooks: [BookEntity!]!
   fetchBook(bookID: String!): BookEntity!
+  fetchAuthor(authorID: String!): AuthorEntity!
   fetchProducts: [ProductEntity!]!
   fetchProductsWithDeleted: [ProductEntity!]!
   fetchProduct(productID: String!): ProductEntity
@@ -105,7 +106,12 @@ type Mutation {
   deleteUser(userID: String!): ResultMessage!
   createBook(createBookInput: CreateBookInput!): BookEntity!
   updateBook(bookID: String!, updateBookInput: UpdateBookInput!): BookEntity!
-  deleteBookAll: String!
+  deleteBookAll: ResultMessage!
+  deleteBook(bookID: String!): ResultMessage!
+  createAuthor(createAuthorInput: CreateAuthorInput!): AuthorEntity!
+  updateAuthor(authorID: String!, updateAuthorInput: UpdateAuthorInput!): AuthorEntity!
+  restoreAuthor(authorID: String!): ResultMessage!
+  deleteAuthor(authorID: String!): ResultMessage!
   createProduct(createProductInput: CreateProductInput!): ProductEntity!
   updateProduct(productID: String!, updateProductInput: UpdateProductInput!): ProductEntity!
   restoreProduct(productID: String!): ResultMessage!
@@ -155,6 +161,16 @@ input UpdateBookInput {
   isbn_10: String
   isbn_13: String
   publish_at: DateTime
+}
+
+input CreateAuthorInput {
+  name: String!
+  description: String!
+}
+
+input UpdateAuthorInput {
+  name: String
+  description: String
 }
 
 input CreateProductInput {

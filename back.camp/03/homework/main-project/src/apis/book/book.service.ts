@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import ResultMessage from 'src/commons/dto/ResultMessage.dto';
+
 import BookEntity from './entities/book.entity';
 import CreateBookInput from './dto/createBook.input';
 import UpdateBookInput from './dto/updateBook.input';
@@ -12,6 +14,12 @@ export default class BookService {
         @InjectRepository(BookEntity)
         private readonly bookRepository: Repository<BookEntity>,
     ) {}
+
+    ///////////////////////////////////////////////////////////////////
+    // Utils //
+
+    ///////////////////////////////////////////////////////////////////
+    // 조회 //
 
     /**
      * 전체 책 조회
@@ -26,11 +34,16 @@ export default class BookService {
      * @param bookID
      * @returns 단일 책
      */
-    async findOne(bookID: string): Promise<BookEntity> {
+    async findOne(
+        bookID: string, //
+    ): Promise<BookEntity> {
         return await this.bookRepository.findOne({
-            id: bookID,
+            where: { id: bookID },
         });
     }
+
+    ///////////////////////////////////////////////////////////////////
+    // 생성 //
 
     /**
      * 책 생성
@@ -43,9 +56,12 @@ export default class BookService {
         });
     }
 
+    ///////////////////////////////////////////////////////////////////
+    // 수정 //
+
     /**
      * 책 정보 수정
-     * @param productID
+     * @param bookID
      * @param updateBookInput
      * @returns 수정된 책 정보
      */
@@ -63,10 +79,81 @@ export default class BookService {
         return await this.bookRepository.save(newBook);
     }
 
+    ///////////////////////////////////////////////////////////////////
+    // 삭제 //
+
     /**
-     * 모든 상품 삭제
+     * 모든 책 정보 삭제 ( 삭제 O )
      */
-    async deleteAll(): Promise<void> {
-        await this.bookRepository.delete({});
+    async deleteAll(): Promise<ResultMessage> {
+        const result = await this.bookRepository.delete({});
+        const isSuccess = result ? true : false;
+
+        return new ResultMessage({
+            isSuccess,
+            contents: isSuccess
+                ? 'Completed All Book Delete'
+                : 'Failed All Book Delete',
+        });
+    }
+
+    /**
+     * 단일 책 정보 삭제 ( 삭제 O )
+     * @param bookID
+     * @returns ResultMessage
+     */
+    async delete(
+        bookID: string, //
+    ): Promise<ResultMessage> {
+        const result = await this.bookRepository.delete({
+            id: bookID,
+        });
+        const isSuccess = result ? true : false;
+
+        return new ResultMessage({
+            id: bookID,
+            isSuccess,
+            contents: isSuccess
+                ? 'Completed Book Delete'
+                : 'Failed Book Delete',
+        });
+    }
+
+    /**
+     * 모든 책 정보 삭제 ( 삭제 X )
+     * @returns ResultMessage
+     */
+    async softDeleteAll(): Promise<ResultMessage> {
+        const result = await this.bookRepository.softDelete({});
+        const isSuccess = result ? true : false;
+
+        return new ResultMessage({
+            isSuccess,
+            contents: isSuccess
+                ? 'Completed All Book Soft Delete'
+                : 'Failed All Book Soft Delete',
+        });
+    }
+
+    /**
+     * 단일 책 정보 삭제 ( 삭제 X )
+     * @param bookID
+     * @returns ResultMessage
+     */
+    async softDelete(
+        bookID: string, //
+    ): Promise<ResultMessage> {
+        const result = await this.bookRepository.softDelete({
+            id: bookID,
+        });
+        const isSuccess = result ? true : false;
+
+        return new ResultMessage({
+            id: bookID,
+            isSuccess,
+            contents: isSuccess
+                ? 'Completed Book Soft Delete'
+                : 'Failed Book Soft Delete',
+        });
     }
 }
