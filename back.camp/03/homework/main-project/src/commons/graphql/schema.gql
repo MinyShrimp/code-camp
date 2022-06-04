@@ -80,6 +80,15 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+"""상품 태그 Entity"""
+type ProductTagEntity {
+  id: ID!
+
+  """이름"""
+  name: String!
+  products: [ProductEntity!]!
+}
+
 """상품 가격 Entity"""
 type ProductPriceEntity {
   id: ID!
@@ -126,13 +135,23 @@ type ProductEntity {
   productTags: [ProductTagEntity!]!
 }
 
-"""상품 태그 Entity"""
-type ProductTagEntity {
+"""결제 Entity"""
+type PaymentEntity {
   id: ID!
 
-  """이름"""
-  name: String!
-  products: [ProductEntity!]!
+  """가격"""
+  money: Int!
+
+  """결제 성공 여부"""
+  state: Boolean!
+
+  """결제 방법"""
+  type: String!
+
+  """결제 시간"""
+  paymentAt: DateTime!
+  user: UserEntity!
+  product: ProductEntity!
 }
 
 """상품 분류 Entity"""
@@ -164,6 +183,12 @@ type Query {
 
   """회원 단일 조회"""
   fetchUser(userID: String!): UserEntity
+
+  """결제 정보 전체 조회"""
+  fetchPayments: [PaymentEntity!]!
+
+  """결제 정보 조회"""
+  fetchPayment(paymentID: String!): PaymentEntity!
 
   """모든 책 조회"""
   fetchBooks: [BookEntity!]!
@@ -226,6 +251,21 @@ type Mutation {
 
   """단일 유저 삭제 ( Soft )"""
   softDeleteUser(userID: String!): ResultMessage!
+
+  """결제 정보 생성"""
+  createPayment(createPaymentInput: CreatePaymentInput!): PaymentEntity!
+
+  """결제 정보 수정"""
+  updatePayment(paymentID: String!, updatePaymentInput: UpdatePaymentInput!): PaymentEntity!
+
+  """결제 정보 삭제 취소"""
+  restorePayment(paymentID: String!): ResultMessage!
+
+  """결제 정보 삭제 ( Real )"""
+  deletePayment(paymentID: String!): ResultMessage!
+
+  """결제 정보 삭제 ( Soft )"""
+  softDeletePayment(paymentID: String!): ResultMessage!
 
   """책 정보 생성"""
   createBook(createBookInput: CreateBookInput!): BookEntity!
@@ -346,6 +386,46 @@ input LoginInput {
   """이메일"""
   email: String!
   pwd: String!
+}
+
+input CreatePaymentInput {
+  """가격"""
+  money: Int!
+
+  """결제 성공 여부"""
+  state: Boolean!
+
+  """결제 방법"""
+  type: String!
+
+  """결제 시간"""
+  paymentAt: DateTime!
+
+  """회원 ID"""
+  userID: String!
+
+  """상품 ID"""
+  productID: String!
+}
+
+input UpdatePaymentInput {
+  """가격"""
+  money: Int
+
+  """결제 성공 여부"""
+  state: Boolean
+
+  """결제 방법"""
+  type: String
+
+  """결제 시간"""
+  paymentAt: DateTime
+
+  """회원 ID"""
+  userID: String
+
+  """상품 ID"""
+  productID: String
 }
 
 input CreateBookInput {
