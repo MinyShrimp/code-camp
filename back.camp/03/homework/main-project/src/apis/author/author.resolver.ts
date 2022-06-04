@@ -17,6 +17,7 @@ export default class AuthorResolver {
     ///////////////////////////////////////////////////////////////////
     // 조회 //
 
+    // GET 단일 저자 정보
     @Query(() => AuthorEntity)
     fetchAuthor(
         @Args('authorID') authorID: string, //
@@ -27,6 +28,7 @@ export default class AuthorResolver {
     ///////////////////////////////////////////////////////////////////
     // 생성 //
 
+    // POST 저자 생성
     @Mutation(() => AuthorEntity)
     createAuthor(
         @Args('createAuthorInput') createAuthorInput: CreateAuthorInput,
@@ -37,6 +39,7 @@ export default class AuthorResolver {
     ///////////////////////////////////////////////////////////////////
     // 수정 //
 
+    // FATCH 저자 정보 수정
     @Mutation(() => AuthorEntity)
     updateAuthor(
         @Args('authorID') authorID: string,
@@ -45,6 +48,7 @@ export default class AuthorResolver {
         return this.authorService.update(authorID, updateAuthorInput);
     }
 
+    // POST 저자 삭제 취소
     @Mutation(() => ResultMessage)
     restoreAuthor(
         @Args('authorID') authorID: string, //
@@ -55,8 +59,17 @@ export default class AuthorResolver {
     ///////////////////////////////////////////////////////////////////
     // 삭제 //
 
+    // DELETE 저자 삭제 ( 삭제 O )
     @Mutation(() => ResultMessage)
     deleteAuthor(
+        @Args('authorID') authorID: string, //
+    ): Promise<ResultMessage> {
+        return this.authorService.delete(authorID);
+    }
+
+    // DELETE 저자 삭제 ( 삭제 X )
+    @Mutation(() => ResultMessage)
+    softDeleteAuthor(
         @Args('authorID') authorID: string, //
     ): Promise<ResultMessage> {
         return this.authorService.softDelete(authorID);

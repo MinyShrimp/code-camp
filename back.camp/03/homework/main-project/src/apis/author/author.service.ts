@@ -112,7 +112,7 @@ export default class AuthorService {
      * @param authorID
      * @returns ResultMessage
      */
-    private async __delete(
+    async delete(
         authorID: string, //
     ): Promise<ResultMessage> {
         const result = await this.authorRepository.delete({
