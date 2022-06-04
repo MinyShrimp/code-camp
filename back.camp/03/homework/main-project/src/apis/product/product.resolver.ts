@@ -1,5 +1,3 @@
-/* Product Resolver */
-
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import ResultMessage from 'src/commons/dto/ResultMessage.dto';
@@ -10,6 +8,9 @@ import UpdateProductInput from './dto/updateProduct.input';
 
 import ProductService from './product.service';
 
+/**
+ * 상품 API
+ */
 @Resolver()
 export default class ProductResolver {
     constructor(
@@ -20,29 +21,38 @@ export default class ProductResolver {
     // 조회 //
 
     /**
-     * GET 모든 상품 조회
-     * @returns 모든 상품 목록
+     * GET /api/products
+     * @response 모든 상품 목록
      */
-    @Query(() => [ProductEntity])
+    @Query(
+        () => [ProductEntity], //
+        { description: '모든 상품 조회' },
+    )
     fetchProducts(): Promise<ProductEntity[]> {
         return this.productService.findAll();
     }
 
     /**
-     * GET 삭제된 데이터를 포함한 모든 상품 조회
-     * @returns 삭제된 데이터를 포함한 모든 상품 목록
+     * GET /admin/products
+     * @response 삭제된 데이터를 포함한 모든 상품 목록
      */
-    @Query(() => [ProductEntity])
+    @Query(
+        () => [ProductEntity], //
+        { description: '삭제된 데이터를 포함한 모든 상품 조회' },
+    )
     fetchProductsWithDeleted(): Promise<ProductEntity[]> {
         return this.productService.findAllWithDeleted();
     }
 
     /**
-     * GET 단일 상품 조회
+     * GET /api/product/:id
      * @param productID
-     * @returns 단일 상품
+     * @response 단일 상품
      */
-    @Query(() => ProductEntity, { nullable: true })
+    @Query(
+        () => ProductEntity, //
+        { description: '단일 상품 조회', nullable: true },
+    )
     fetchProduct(
         @Args('productID') productID: string, //
     ): Promise<ProductEntity> {
@@ -50,11 +60,17 @@ export default class ProductResolver {
     }
 
     /**
-     * GET 삭제된 데이터를 포함한 단일 상품 조회
+     * GET /admin/product/:id
      * @param productID
-     * @returns 삭제된 데이터를 포함한 단일 상품
+     * @response 삭제된 데이터를 포함한 단일 상품
      */
-    @Query(() => ProductEntity, { nullable: true })
+    @Query(
+        () => ProductEntity, //
+        {
+            description: '삭제된 데이터를 포함한 단일 상품 조회',
+            nullable: true,
+        },
+    )
     fetchProductWithDeleted(
         @Args('productID') productID: string, //
     ): Promise<ProductEntity> {
@@ -65,11 +81,14 @@ export default class ProductResolver {
     // 생성 //
 
     /**
-     * POST 상품 생성
+     * POST /api/product
      * @param createProductInput
-     * @returns 생성된 상품 정보
+     * @response 생성된 상품 정보
      */
-    @Mutation(() => ProductEntity)
+    @Mutation(
+        () => ProductEntity, //
+        { description: '상품 정보 생성' },
+    )
     createProduct(
         @Args('createProductInput') createProductInput: CreateProductInput,
     ): Promise<ProductEntity> {
@@ -80,12 +99,15 @@ export default class ProductResolver {
     // 수정 //
 
     /**
-     * PATCH 상품 수정
+     * PATCH /api/product/:id
      * @param productID
      * @param updateProductInput
-     * @returns 수정된 상품 정보
+     * @response 수정된 상품 정보
      */
-    @Mutation(() => ProductEntity)
+    @Mutation(
+        () => ProductEntity, //
+        { description: '상품 정보 수정' },
+    )
     async updateProduct(
         @Args('productID') productID: string,
         @Args('updateProductInput') updateProductInput: UpdateProductInput,
@@ -94,11 +116,14 @@ export default class ProductResolver {
     }
 
     /**
-     * PATCH 상품 되살리기
+     * PUT /api/product/:id
      * @param productID
-     * @returns ResultMessage
+     * @response ResultMessage
      */
-    @Mutation(() => ResultMessage)
+    @Mutation(
+        () => ResultMessage, //
+        { description: '상품 정보 삭제 취소' },
+    )
     async restoreProduct(
         @Args('productID') productID: string,
     ): Promise<ResultMessage> {
@@ -109,29 +134,38 @@ export default class ProductResolver {
     // 삭제 //
 
     /**
-     * 모든 상품 삭제 ( 삭제 O )
-     * @returns ResultMessage
+     * DELETE /admin/products
+     * @response ResultMessage
      */
-    @Mutation(() => ResultMessage)
+    @Mutation(
+        () => ResultMessage, //
+        { description: '모든 상품 삭제 ( Real )' },
+    )
     async deleteProductAll(): Promise<ResultMessage> {
         return await this.productService.deleteAll();
     }
 
     /**
-     * 모든 상품 삭제 ( 삭제 X )
-     * @returns ResultMessage
+     * DELETE /admin/products/soft
+     * @response ResultMessage
      */
-    @Mutation(() => ResultMessage)
+    @Mutation(
+        () => ResultMessage, //
+        { description: '모든 상품 삭제 ( Soft )' },
+    )
     async softDeleteProductAll(): Promise<ResultMessage> {
         return await this.productService.softDeleteAll();
     }
 
     /**
-     * 단일 상품 삭제 ( 삭제 O )
+     * DELETE /admin/product/:id
      * @param productID
-     * @returns ResultMessage
+     * @response ResultMessage
      */
-    @Mutation(() => ResultMessage)
+    @Mutation(
+        () => ResultMessage, //
+        { description: '단일 상품 삭제 ( Real )' },
+    )
     async deleteProduct(
         @Args('productID') productID: string, //
     ): Promise<ResultMessage> {
@@ -139,12 +173,14 @@ export default class ProductResolver {
     }
 
     /**
-     * 단일 상품 삭제 ( 삭제 X )
+     * DELETE /api/product/:id
      * @param productID
-     * @returns ResultMessage
+     * @response ResultMessage
      */
-    @Mutation(() => ResultMessage)
-    // @Mutation(() => ResultMessage, { description: '단일 상품 Soft Delete' })
+    @Mutation(
+        () => ResultMessage, //
+        { description: '단일 상품 삭제 ( Soft )' },
+    )
     async softDeleteProduct(
         @Args('productID') productID: string, //
     ): Promise<ResultMessage> {

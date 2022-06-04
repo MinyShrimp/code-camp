@@ -7,6 +7,7 @@ import CreatePublisherInput from './dto/createPublisher.input';
 import UpdatePublisherInput from './dto/updatePublisher.input';
 import PublisherService from './publisher.service';
 
+/* 출판사 API */
 @Resolver()
 export default class PublisherResolver {
     constructor(
@@ -20,10 +21,11 @@ export default class PublisherResolver {
      * GET /api/publisher/:id
      * @param publisherID
      * @returns 조회된 출판사 단일 정보
-     *
-     * 출판사 정보 조회
      */
-    @Query(() => PublisherEntity)
+    @Query(
+        () => PublisherEntity, //
+        { description: '출판사 정보 조회' },
+    )
     fetchPublisher(
         @Args('publisherID') publisherID: string, //
     ): Promise<PublisherEntity> {
@@ -37,10 +39,11 @@ export default class PublisherResolver {
      * POST /api/publisher
      * @param createPublisherInput
      * @returns 생성된 출판사 정보
-     *
-     * 출판사 정보 생성
      */
-    @Mutation(() => PublisherEntity)
+    @Mutation(
+        () => PublisherEntity, //
+        { description: '출판사 정보 생성' },
+    )
     createPubliser(
         @Args('createPublisherInput')
         createPublisherInput: CreatePublisherInput,
@@ -56,10 +59,11 @@ export default class PublisherResolver {
      * @param publisherID
      * @param updatePublisherInput
      * @returns 수정된 출판사 정보
-     *
-     * 출판사 정보 수정
      */
-    @Mutation(() => PublisherEntity)
+    @Mutation(
+        () => PublisherEntity, //
+        { description: '출판사 정보 수정' },
+    )
     updatePublisher(
         @Args('publisherID')
         publisherID: string,
@@ -73,10 +77,11 @@ export default class PublisherResolver {
      * PUT /api/publisher/:id
      * @param publisherID
      * @returns ResultMessage
-     *
-     * 출판사 정보 삭제 취소
      */
-    @Mutation(() => ResultMessage)
+    @Mutation(
+        () => ResultMessage, //
+        { description: '출판사 정보 삭제 취소' },
+    )
     restorePublisher(
         @Args('publisherID') publisherID: string, //
     ): Promise<ResultMessage> {
@@ -87,13 +92,14 @@ export default class PublisherResolver {
     // 삭제 //
 
     /**
-     * DELETE /api/publisher/:id/:admin
+     * DELETE /admin/publisher/:id
      * @param publisherID
      * @returns ResultMessage
-     *
-     * 출판사 정보 삭제 ( 삭제 O )
      */
-    @Mutation(() => ResultMessage)
+    @Mutation(
+        () => ResultMessage, //
+        { description: '출판사 정보 삭제 ( Real )' },
+    )
     deletePublisher(
         @Args('publisherID') publisherID: string, //
     ): Promise<ResultMessage> {
@@ -104,10 +110,11 @@ export default class PublisherResolver {
      * DELETE /api/publisher/:id
      * @param publisherID
      * @returns ResultMessage
-     *
-     * 출판사 정보 삭제 ( 삭제 X )
      */
-    @Mutation(() => ResultMessage)
+    @Mutation(
+        () => ResultMessage, //
+        { description: '출판사 정보 삭제 ( Soft )' },
+    )
     softDeletePublisher(
         @Args('publisherID') publisherID: string, //
     ): Promise<ResultMessage> {

@@ -5,9 +5,6 @@ import PublisherEntity from './entities/publisher.entity';
 import PublisherResolver from './publisher.resolver';
 import PublisherService from './publisher.service';
 
-/**
- * 출판사 API
- */
 @Module({
     imports: [
         TypeOrmModule.forFeature([

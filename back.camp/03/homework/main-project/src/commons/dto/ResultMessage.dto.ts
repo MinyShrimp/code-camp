@@ -1,7 +1,9 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import Message from 'src/commons/interfaces/Message.interface';
 
-@ObjectType()
+@ObjectType({
+    description: '결과 메세지',
+})
 export default class ResultMessage {
     /**
      * Message {
@@ -16,12 +18,21 @@ export default class ResultMessage {
         this.isSuccess = msg.isSuccess;
     }
 
-    @Field(() => String, { nullable: true })
+    @Field(
+        () => String, //
+        { nullable: true, description: '대상 ID' },
+    )
     id?: string;
 
-    @Field(() => String)
+    @Field(
+        () => String, //
+        { description: 'Message' },
+    )
     msg: string;
 
-    @Field(() => Boolean)
+    @Field(
+        () => Boolean, //
+        { description: '성공 여부' },
+    )
     isSuccess: boolean;
 }

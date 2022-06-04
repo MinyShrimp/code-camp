@@ -24,6 +24,7 @@ import ProductTagModule from './apis/productTag/productTag.module';
 import ProductPriceModule from './apis/productPrice/productPrice.module';
 import ProductCategoryModule from './apis/productCategory/productCategory.module';
 import ProductCategorySearchModule from './apis/productCategorySearch/productCategorySearch.module';
+import BookImageModule from './apis/bookImage/bookImage.module';
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -65,6 +66,7 @@ import ProductCategorySearchModule from './apis/productCategorySearch/productCat
         BookModule,
         AuthorModule,
         PublisherModule,
+        BookImageModule,
 
         ProductModule,
         ProductTagModule,

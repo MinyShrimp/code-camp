@@ -106,6 +106,7 @@ export default class BookService {
 
     /**
      * 모든 책 정보 삭제 ( 삭제 O )
+     * @returns ResultMessage
      */
     async deleteAll(): Promise<ResultMessage> {
         const result = await this.bookRepository.delete({});

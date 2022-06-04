@@ -4,6 +4,7 @@ import ResultMessage from 'src/commons/dto/ResultMessage.dto';
 import ProductCategorySearchEntity from './entities/productCategorySearch.entity';
 import ProductCategorySearchService from './productCategorySearch.service';
 
+/* 검색용 분류 API */
 @Resolver()
 export default class ProductCategorySearchResolver {
     constructor(
@@ -16,14 +17,27 @@ export default class ProductCategorySearchResolver {
     ///////////////////////////////////////////////////////////////////
     // 조회 //
 
-    // GET Search Category 전체 조회
-    @Query(() => [ProductCategorySearchEntity])
+    /**
+     * GET /api/product/categorys
+     * @response 조회된 전체 분류 목록
+     */
+    @Query(
+        () => [ProductCategorySearchEntity], //
+        { description: 'Search Category 전체 조회' },
+    )
     fetchCategorys(): Promise<ProductCategorySearchEntity[]> {
         return this.categorySearchService.findAll();
     }
 
-    // GET Search Category 단일 조회
-    @Query(() => ProductCategorySearchEntity, { nullable: true })
+    /**
+     * GET /api/product/category/:id
+     * @param categoryID
+     * @response 조회된 분류 정보
+     */
+    @Query(
+        () => ProductCategorySearchEntity, //
+        { description: 'Search Category 단일 조회', nullable: true },
+    )
     fetchCategory(
         @Args('categoryID') categoryID: string, //
     ): Promise<ProductCategorySearchEntity> {
@@ -33,8 +47,14 @@ export default class ProductCategorySearchResolver {
     ///////////////////////////////////////////////////////////////////
     // 생성 //
 
-    // POST Category 생성
-    @Mutation(() => ResultMessage)
+    /**
+     * POST /api/product/categorys
+     * @response ResultMessage
+     */
+    @Mutation(
+        () => ResultMessage, //
+        { description: 'Search Category 전체 생성' },
+    )
     async createCategorySearch(): Promise<ResultMessage> {
         return await this.categorySearchService.createSarchCategory();
     }

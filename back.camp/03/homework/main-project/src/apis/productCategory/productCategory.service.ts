@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { getManager, Repository } from 'typeorm';
+
 import ResultMessage from 'src/commons/dto/ResultMessage.dto';
 
 import CreateProductCategoryInput from './dto/createProductCategory.input';
@@ -19,7 +20,10 @@ export default class ProductCategoryService {
     ///////////////////////////////////////////////////////////////////
     // 조회 //
 
-    // Category Tree 전체 조회
+    /**
+     * Category Tree 전체 조회
+     * @returns 조회된 전체 분류
+     */
     async findAllByTree(): Promise<ProductCategoryEntity[]> {
         const manager = getManager();
         return await manager
@@ -27,7 +31,11 @@ export default class ProductCategoryService {
             .findTrees();
     }
 
-    // Category Tree 단일 조회
+    /**
+     * Category Tree 단일 조회
+     * @param categoryID
+     * @returns 조회된 단일 분류
+     */
     async findByTree(
         categoryID: string, //
     ): Promise<ProductCategoryEntity> {
@@ -43,7 +51,11 @@ export default class ProductCategoryService {
     ///////////////////////////////////////////////////////////////////
     // 생성 //
 
-    // Category Tree 생성
+    /**
+     * Category Tree 생성
+     * @param input
+     * @returns 생성된 분류 정보
+     */
     async createTree(
         input: CreateProductCategoryInput, //
     ): Promise<ProductCategoryEntity> {
@@ -73,7 +85,11 @@ export default class ProductCategoryService {
     ///////////////////////////////////////////////////////////////////
     // 삭제 //
 
-    // Category Tree 단일 삭제
+    /**
+     * Category Tree 단일 삭제
+     * @param categoryID
+     * @returns ResultMessage
+     */
     async deleteTree(categoryID: string): Promise<ResultMessage> {
         const result = await this.productCategoryRepository.delete({
             id: categoryID,
@@ -89,7 +105,10 @@ export default class ProductCategoryService {
         });
     }
 
-    // Category Tree 전체 삭제
+    /**
+     * Category Tree 전체 삭제
+     * @returns ResultMessage
+     */
     async deleteAll(): Promise<ResultMessage> {
         await this.productCategoryRepository.update({}, { parent: null });
         const result = await this.productCategoryRepository.delete({});

@@ -1,32 +1,34 @@
-/**
- * 저자 Entity
- */
-
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import {
+    Entity,
     Column,
     CreateDateColumn,
-    DeleteDateColumn,
-    Entity,
-    PrimaryGeneratedColumn,
     UpdateDateColumn,
+    DeleteDateColumn,
+    PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@ObjectType()
 @Entity({ name: 'author' })
+@ObjectType({ description: '저자 Entity' })
 export default class AuthorEntity {
-    @Field(() => ID)
     @PrimaryGeneratedColumn('uuid')
+    @Field(() => ID)
     id: string;
 
     // 이름
-    @Field(() => String)
     @Column()
+    @Field(
+        () => String, //
+        { description: '저자 이름' },
+    )
     name: string;
 
     // 설명
-    @Field(() => String)
     @Column()
+    @Field(
+        () => String, //
+        { description: '저자 설명' },
+    )
     description: string;
 
     // 생성 시간

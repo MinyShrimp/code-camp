@@ -1,8 +1,5 @@
-/**
- * 책 이미지 Entity
- */
-
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { IsBoolean, IsUrl } from 'class-validator';
 import {
     Column,
     CreateDateColumn,
@@ -15,26 +12,34 @@ import {
 
 import BookEntity from 'src/apis/book/entities/book.entity';
 
-@ObjectType()
 @Entity({ name: 'book_img' })
+@ObjectType({ description: '책 이미지 Entity' })
 export default class BookImageEntity {
-    @Field(() => ID)
     @PrimaryGeneratedColumn('uuid')
+    @Field(() => ID)
     id: string;
 
     // img url
-    @Field(() => String)
     @Column()
+    @IsUrl()
+    @Field(
+        () => String, //
+        { description: '책 이미지 URL' },
+    )
     url: string;
 
     // 메인 이미지 여부
-    @Field(() => Boolean)
     @Column()
+    @IsBoolean()
+    @Field(
+        () => Boolean, //
+        { description: '메인 이미지 여부' },
+    )
     isMain: boolean;
 
     // 책
-    @Field(() => BookEntity)
     @ManyToOne(() => BookEntity)
+    @Field(() => BookEntity)
     book: BookEntity;
 
     // 생성 시간

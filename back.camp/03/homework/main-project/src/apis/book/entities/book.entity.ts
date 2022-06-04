@@ -1,8 +1,5 @@
-/**
- * 책 Entity
- */
-
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
+import { IsDate } from 'class-validator';
 import {
     Entity,
     Column,
@@ -17,46 +14,68 @@ import {
 import AuthorEntity from 'src/apis/author/entities/author.entity';
 import PublisherEntity from 'src/apis/publisher/entities/publisher.entity';
 
-@ObjectType()
 @Entity({ name: 'book' })
+@ObjectType({ description: '책 Entity' })
 export default class BookEntity {
-    @Field(() => ID)
     @PrimaryGeneratedColumn('uuid')
+    @Field(() => ID)
     id: string;
 
     // 제목
-    @Field(() => String)
     @Column()
+    @Field(
+        () => String, //
+        { description: '제목' },
+    )
     title: string;
 
     // 소제목
-    @Field(() => String)
     @Column()
+    @Field(
+        () => String, //
+        { description: '소제목' },
+    )
     subtitle: string;
 
     // 설명
-    @Field(() => String)
     @Column({ type: 'text' })
+    @Field(
+        () => String, //
+        { description: '설명' },
+    )
     description: string;
 
     // 쪽수
-    @Field(() => Int)
     @Column({ unsigned: true })
+    @Field(
+        () => Int, //
+        { description: '페이지 수' },
+    )
     page: number;
 
     // 10자리 ISBN
-    @Field(() => String)
     @Column()
+    @Field(
+        () => String, //
+        { description: '10자리 ISBN' },
+    )
     isbn_10: string;
 
     // 13자리 ISBN
-    @Field(() => String)
     @Column()
+    @Field(
+        () => String, //
+        { description: '13자리 ISBN' },
+    )
     isbn_13: string;
 
     // 출간일
-    @Field(() => Date)
     @Column()
+    @IsDate()
+    @Field(
+        () => Date, //
+        { description: '출간일' },
+    )
     publish_at: Date;
 
     // 생성 시간
@@ -72,14 +91,14 @@ export default class BookEntity {
     deleteAt: Date;
 
     // 출판사
-    @Field(() => PublisherEntity)
     @JoinColumn()
     @ManyToOne(() => PublisherEntity)
+    @Field(() => PublisherEntity)
     publisher: PublisherEntity;
 
     // 저자
-    @Field(() => AuthorEntity)
     @JoinColumn()
     @ManyToOne(() => AuthorEntity)
+    @Field(() => AuthorEntity)
     author: AuthorEntity;
 }

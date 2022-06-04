@@ -9,6 +9,7 @@ import UpdateUserInput from './dto/updateUser.input';
 import UserEntity from './entities/user.entity';
 import UserService from './user.service';
 
+/* 유저 API */
 @Resolver()
 export default class UserResolver {
     constructor(
@@ -18,14 +19,21 @@ export default class UserResolver {
     ///////////////////////////////////////////////////////////////////
     // 조회 //
 
-    // GET 전체 조회
-    @Query(() => [UserEntity])
+    /**
+     * GET /admin/users
+     * @response 회원 전체 목록
+     */
+    @Query(() => [UserEntity], { description: '회원 전체 조회' })
     fetchUsers(): Promise<UserEntity[]> {
         return this.userService.findAll();
     }
 
-    // GET 단일 조회
-    @Query(() => UserEntity, { nullable: true })
+    /**
+     * GET /api/user/:id
+     * @param userID
+     * @response 회원 단일 조회
+     */
+    @Query(() => UserEntity, { description: '회원 단일 조회', nullable: true })
     fetchUser(
         @Args('userID') userID: string, //
     ): Promise<UserEntity> {
@@ -35,8 +43,12 @@ export default class UserResolver {
     ///////////////////////////////////////////////////////////////////
     // 생성 //
 
-    // POST 회원가입
-    @Mutation(() => UserEntity)
+    /**
+     * POST /api/signup
+     * @param signupInput
+     * @response
+     */
+    @Mutation(() => UserEntity, { description: '회원가입' })
     createUser(
         @Args('signupInput') signupInput: SignupInput, //
     ): Promise<UserEntity> {
@@ -46,8 +58,13 @@ export default class UserResolver {
     ///////////////////////////////////////////////////////////////////
     // 수정 //
 
-    // PATCH 회원 정보 수정
-    @Mutation(() => UserEntity)
+    /**
+     * PATCH /api/user/:id
+     * @param userID
+     * @param updateInput
+     * @response
+     */
+    @Mutation(() => UserEntity, { description: '회원 정보 수정' })
     updateUser(
         @Args('userID') userID: string,
         @Args('updateUserInput') updateInput: UpdateUserInput,
@@ -55,24 +72,36 @@ export default class UserResolver {
         return this.userService.update(userID, updateInput);
     }
 
-    // POST 로그인
-    @Mutation(() => ResultMessage)
+    /**
+     * POST /api/login
+     * @param loginInput
+     * @response
+     */
+    @Mutation(() => ResultMessage, { description: '로그인' })
     Login(
         @Args('loginInput') loginInput: LoginInput, //
     ) {
         return this.userService.Login(loginInput);
     }
 
-    // POST 로그아웃
-    @Mutation(() => ResultMessage)
+    /**
+     * POST /api/logout
+     * @param userID
+     * @response
+     */
+    @Mutation(() => ResultMessage, { description: '로그아웃' })
     Logout(
         @Args('userID') userID: string, //
     ) {
         return this.userService.Logout(userID);
     }
 
-    // PATCH 회원 탈퇴 취소
-    @Mutation(() => ResultMessage)
+    /**
+     * PUT /api/user/:id
+     * @param userID
+     * @response
+     */
+    @Mutation(() => ResultMessage, { description: '회원 탈퇴 취소' })
     restoreUser(
         @Args('userID') userID: string, //
     ): Promise<ResultMessage> {
@@ -82,16 +111,24 @@ export default class UserResolver {
     ///////////////////////////////////////////////////////////////////
     // 삭제 //
 
-    // DELETE 단일 유저 삭제 ( 삭제 O )
-    @Mutation(() => ResultMessage)
+    /**
+     * DELETE /admin/user/:id
+     * @param userID
+     * @response
+     */
+    @Mutation(() => ResultMessage, { description: '단일 유저 삭제 ( Real )' })
     deleteUser(
         @Args('userID') userID: string, //
     ): Promise<ResultMessage> {
         return this.userService.delete(userID);
     }
 
-    // DELETE 단일 유저 삭제 ( 삭제 X )
-    @Mutation(() => ResultMessage)
+    /**
+     * DELETE /api/user/:id
+     * @param userID
+     * @response
+     */
+    @Mutation(() => ResultMessage, { description: '단일 유저 삭제 ( Soft )' })
     softDeleteUser(
         @Args('userID') userID: string, //
     ): Promise<ResultMessage> {

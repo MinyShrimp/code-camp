@@ -83,7 +83,7 @@ export default class ProductPriceService {
     // 삭제 //
 
     /**
-     * 전체 삭제 ( 삭제 O )
+     * 전체 삭제 ( Real )
      * @returns ResultMessage
      */
     async deleteAll(): Promise<ResultMessage> {
@@ -98,7 +98,7 @@ export default class ProductPriceService {
     }
 
     /**
-     * 전체 삭제 ( 삭제 X )
+     * 전체 삭제 ( Soft )
      * @returns ResultMessage
      */
     async softDeleteAll(): Promise<ResultMessage> {
@@ -113,7 +113,7 @@ export default class ProductPriceService {
     }
 
     /**
-     * 단일 삭제 ( 삭제 O )
+     * 단일 삭제 ( Real )
      * @param priceID
      * @returns ResultMessage
      */
@@ -134,7 +134,7 @@ export default class ProductPriceService {
     }
 
     /**
-     * 단일 삭제 ( 삭제 X )
+     * 단일 삭제 ( Soft )
      * @param priceID
      * @returns ResultMessage
      */

@@ -8,6 +8,7 @@ import UpdateAuthorInput from './dto/updateAuthor.input';
 
 import AuthorService from './author.service';
 
+/* 저자 API */
 @Resolver()
 export default class AuthorResolver {
     constructor(
@@ -17,8 +18,15 @@ export default class AuthorResolver {
     ///////////////////////////////////////////////////////////////////
     // 조회 //
 
-    // GET 단일 저자 정보
-    @Query(() => AuthorEntity)
+    /**
+     * GET /api/author/:id
+     * @param authorID
+     * @response 조회된 저자 정보
+     */
+    @Query(
+        () => AuthorEntity, //
+        { description: '저자 정보 단일 조회' },
+    )
     fetchAuthor(
         @Args('authorID') authorID: string, //
     ): Promise<AuthorEntity> {
@@ -28,8 +36,15 @@ export default class AuthorResolver {
     ///////////////////////////////////////////////////////////////////
     // 생성 //
 
-    // POST 저자 생성
-    @Mutation(() => AuthorEntity)
+    /**
+     * POST /api/author
+     * @param createAuthorInput
+     * @response 생성된 저자 정보
+     */
+    @Mutation(
+        () => AuthorEntity, //
+        { description: '저자 정보 생성' },
+    )
     createAuthor(
         @Args('createAuthorInput') createAuthorInput: CreateAuthorInput,
     ): Promise<AuthorEntity> {
@@ -39,8 +54,16 @@ export default class AuthorResolver {
     ///////////////////////////////////////////////////////////////////
     // 수정 //
 
-    // FATCH 저자 정보 수정
-    @Mutation(() => AuthorEntity)
+    /**
+     * PATCH /api/author/:id
+     * @param authorID
+     * @param updateAuthorInput
+     * @response 수정된 저자 정보
+     */
+    @Mutation(
+        () => AuthorEntity, //
+        { description: '저자 정보 수정' },
+    )
     updateAuthor(
         @Args('authorID') authorID: string,
         @Args('updateAuthorInput') updateAuthorInput: UpdateAuthorInput,
@@ -48,8 +71,15 @@ export default class AuthorResolver {
         return this.authorService.update(authorID, updateAuthorInput);
     }
 
-    // POST 저자 삭제 취소
-    @Mutation(() => ResultMessage)
+    /**
+     * PUT /api/author/:id
+     * @param authorID
+     * @response ResultMessage
+     */
+    @Mutation(
+        () => ResultMessage, //
+        { description: '저자 정보 삭제 취소' },
+    )
     restoreAuthor(
         @Args('authorID') authorID: string, //
     ): Promise<ResultMessage> {
@@ -59,16 +89,30 @@ export default class AuthorResolver {
     ///////////////////////////////////////////////////////////////////
     // 삭제 //
 
-    // DELETE 저자 삭제 ( 삭제 O )
-    @Mutation(() => ResultMessage)
+    /**
+     * DELETE /admin/author/:id
+     * @param authorID
+     * @response ResultMessage
+     */
+    @Mutation(
+        () => ResultMessage, //
+        { description: '저자 정보 삭제 ( Real )' },
+    )
     deleteAuthor(
         @Args('authorID') authorID: string, //
     ): Promise<ResultMessage> {
         return this.authorService.delete(authorID);
     }
 
-    // DELETE 저자 삭제 ( 삭제 X )
-    @Mutation(() => ResultMessage)
+    /**
+     * DELETE /api/author/:id
+     * @param authorID
+     * @response ResultMessage
+     */
+    @Mutation(
+        () => ResultMessage, //
+        { description: '저자 정보 삭제 ( Soft )' },
+    )
     softDeleteAuthor(
         @Args('authorID') authorID: string, //
     ): Promise<ResultMessage> {

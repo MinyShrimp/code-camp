@@ -12,16 +12,16 @@ import {
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import ProductEntity from 'src/apis/product/entities/product.entity';
 
-@ObjectType()
 @Entity({ name: 'product_tag' })
+@ObjectType({ description: '상품 태그 Entity' })
 export default class ProductTagEntity {
-    @Field(() => ID)
     @PrimaryGeneratedColumn('uuid')
+    @Field(() => ID)
     id: string;
 
     // 이름
-    @Field(() => String)
     @Column()
+    @Field(() => String, { description: '이름' })
     name: string;
 
     // 생성 시간

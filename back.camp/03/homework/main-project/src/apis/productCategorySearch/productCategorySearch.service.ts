@@ -39,7 +39,11 @@ export default class ProductCategorySearchService {
     ///////////////////////////////////////////////////////////////////
     // 조회 //
 
-    // ID 기반 조회
+    /**
+     * ID 기반 조회
+     * @param categoryID
+     * @returns 조회된 분류 Entity
+     */
     private async __findOneByID(
         categoryID: string,
     ): Promise<ProductCategorySearchEntity> {
@@ -48,7 +52,11 @@ export default class ProductCategorySearchService {
         });
     }
 
-    // 이름 기반 조회
+    /**
+     * 이름 기반 조회
+     * @param name
+     * @returns 조회된 분류 Entity
+     */
     private async __findOneByName(
         name: string,
     ): Promise<ProductCategorySearchEntity> {
@@ -59,6 +67,7 @@ export default class ProductCategorySearchService {
 
     /**
      * Search Category 전체 조회
+     * @returns 조회된 분류 Entities
      */
     async findAll(): Promise<ProductCategorySearchEntity[]> {
         return await this.productCategorySearchRepository.find({});
@@ -67,7 +76,7 @@ export default class ProductCategorySearchService {
     /**
      * Search Category ID 기반 단일 조회
      * @param categoryID
-     * @returns ProductCategorySearchEntity
+     * @returns 조회된 분류 Entity
      *
      * 카테고리 존재 검사
      *  - 없으면 UnprocessableEntityException
@@ -83,7 +92,7 @@ export default class ProductCategorySearchService {
     /**
      * 이름 기반 단일 조회
      * @param name
-     * @returns ProductCategorySearchEntity
+     * @returns 조회된 분류 Entity
      *
      * 카테고리 존재 검사
      *  - 없으면 UnprocessableEntityException
@@ -99,12 +108,16 @@ export default class ProductCategorySearchService {
     ///////////////////////////////////////////////////////////////////
     // 생성 //
 
-    // Search Category 생성
+    /**
+     * Search Category 생성
+     * @param productCategorySearchDTO
+     * @returns 생성된 분류 Entity
+     */
     private async __createSearchCategory(
-        obj: ProductCategorySearchDto,
+        productCategorySearchDTO: ProductCategorySearchDto,
     ): Promise<ProductCategorySearchEntity> {
         return await this.productCategorySearchRepository.save({
-            ...obj,
+            ...productCategorySearchDTO,
         });
     }
 
@@ -166,7 +179,9 @@ export default class ProductCategorySearchService {
     ///////////////////////////////////////////////////////////////////
     // 삭제 //
 
-    // Search Category 전체 삭제
+    /**
+     * Search Category 전체 삭제
+     */
     private async __deleteAllSearchCategory(): Promise<void> {
         await this.productCategorySearchRepository.delete({});
     }

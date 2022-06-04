@@ -3,26 +3,26 @@
  */
 
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
-import ProductEntity from 'src/apis/product/entities/product.entity';
+import { Min } from 'class-validator';
 import {
     Column,
     DeleteDateColumn,
     Entity,
-    OneToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
 
-@ObjectType()
 @Entity({ name: 'product_price' })
+@ObjectType({ description: '상품 가격 Entity' })
 export default class ProductPriceEntity {
-    @Field(() => ID)
     @PrimaryGeneratedColumn('uuid')
+    @Field(() => ID)
     id: string;
 
     // 가격
-    @Field(() => Int)
     @Column()
+    @Min(0)
+    @Field(() => Int, { description: '상품 가격' })
     price: number;
 
     // 업데이트 시간

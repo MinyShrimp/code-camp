@@ -1,13 +1,9 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { IsBoolean, IsUrl } from 'class-validator';
+import { InputType, PickType } from '@nestjs/graphql';
+import BookImageEntity from '../entities/bookImage.entity';
 
 @InputType()
-export default class CreateBookImageInput {
-    @IsUrl()
-    @Field(() => String)
-    url: string;
-
-    @IsBoolean()
-    @Field(() => Boolean)
-    isMain: boolean;
-}
+export default class CreateBookImageInput extends PickType(
+    BookImageEntity,
+    ['url', 'isMain'],
+    InputType,
+) {}

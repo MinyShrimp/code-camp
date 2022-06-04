@@ -7,6 +7,7 @@ import CreateBookImageInput from './dto/createBookImage.input';
 import UpdateBookImageInput from './dto/updateBookImage.input';
 import BookImageService from './bookImage.service';
 
+/* 책 이미지 API */
 @Resolver()
 export default class BookImageResolver {
     constructor(
@@ -19,11 +20,12 @@ export default class BookImageResolver {
     /**
      * GET /api/book/image/:id
      * @param bookImageID
-     * @returns 책 이미지 정보
-     *
-     * 책 이미지 조회
+     * @response 책 이미지 정보
      */
-    @Query(() => BookImageEntity)
+    @Query(
+        () => BookImageEntity, //
+        { description: '책 이미지 정보 조회' },
+    )
     fetchBookImage(
         @Args('bookImageID') bookImageID: string,
     ): Promise<BookImageEntity> {
@@ -36,11 +38,12 @@ export default class BookImageResolver {
     /**
      * POST /api/book/image
      * @param createBookImageInput
-     * @returns 생성된 책 이미지 정보
-     *
-     * 책 이미지 생성
+     * @response 생성된 책 이미지 정보
      */
-    @Mutation(() => BookImageEntity)
+    @Mutation(
+        () => BookImageEntity, //
+        { description: '책 이미지 생성' },
+    )
     createBookImage(
         @Args('createBookImageInput')
         createBookImageInput: CreateBookImageInput,
@@ -55,11 +58,12 @@ export default class BookImageResolver {
      * PATCH /api/book/image/:id
      * @param bookImageID
      * @param updateBookImageInput
-     * @returns 수정된 책 이미지 정보
-     *
-     * 책 이미지 정보 수정
+     * @response 수정된 책 이미지 정보
      */
-    @Mutation(() => BookImageEntity)
+    @Mutation(
+        () => BookImageEntity, //
+        { description: '책 이미지 정보 수정' },
+    )
     updateBookImage(
         @Args('bookImageID')
         bookImageID: string,
@@ -72,11 +76,12 @@ export default class BookImageResolver {
     /**
      * PUT /api/book/image/:id
      * @param bookImageID
-     * @returns ResultMessage
-     *
-     * 책 이미지 삭제 취소
+     * @response ResultMessage
      */
-    @Mutation(() => ResultMessage)
+    @Mutation(
+        () => ResultMessage, //
+        { description: '책 이미지 삭제 취소' },
+    )
     restoreBookImage(
         @Args('bookImageID') bookImageID: string,
     ): Promise<ResultMessage> {
@@ -87,13 +92,14 @@ export default class BookImageResolver {
     // 삭제 //
 
     /**
-     * DELETE /api/book/image/:id/:admin
+     * DELETE /admin/book/image/:id/
      * @param bookImageID
-     * @returns ResultMessage
-     *
-     * 책 이미지 삭제 ( 삭제 O )
+     * @response ResultMessage
      */
-    @Mutation(() => ResultMessage)
+    @Mutation(
+        () => ResultMessage, //
+        { description: '책 이미지 삭제 ( Real )' },
+    )
     deleteBookImage(
         @Args('bookImageID') bookImageID: string,
     ): Promise<ResultMessage> {
@@ -103,11 +109,12 @@ export default class BookImageResolver {
     /**
      * DELETE /api/book/image/:id
      * @param bookImageID
-     * @returns ResultMessage
-     *
-     * 책 이미지 삭제 ( 삭제 X )
+     * @response ResultMessage
      */
-    @Mutation(() => ResultMessage)
+    @Mutation(
+        () => ResultMessage, //
+        { description: '책 이미지 삭제 ( Soft )' },
+    )
     softDeleteBookImage(
         @Args('bookImageID') bookImageID: string,
     ): Promise<ResultMessage> {

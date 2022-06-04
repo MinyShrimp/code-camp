@@ -7,6 +7,7 @@ import CreateBookInput from './dto/createBook.input';
 import UpdateBookInput from './dto/updateBook.input';
 import BookService from './book.service';
 
+/* 책 API */
 @Resolver()
 export default class BookResolver {
     constructor(
@@ -16,14 +17,27 @@ export default class BookResolver {
     ///////////////////////////////////////////////////////////////////
     // 조회 //
 
-    // GET 모든 책 조회
-    @Query(() => [BookEntity])
+    /**
+     * GET /api/books
+     * @response 조회된 책 목록
+     */
+    @Query(
+        () => [BookEntity], //
+        { description: '모든 책 조회' },
+    )
     fetchBooks(): Promise<BookEntity[]> {
         return this.bookService.findAll();
     }
 
-    // GET 단일 책 조회
-    @Query(() => BookEntity)
+    /**
+     * GET /api/book/:id
+     * @param bookID
+     * @response 조회된 책 단일 정보
+     */
+    @Query(
+        () => BookEntity, //
+        { description: '단일 책 조회' },
+    )
     fetchBook(
         @Args('bookID') bookID: string, //
     ): Promise<BookEntity> {
@@ -33,8 +47,15 @@ export default class BookResolver {
     ///////////////////////////////////////////////////////////////////
     // 생성 //
 
-    // POST 책 생성
-    @Mutation(() => BookEntity)
+    /**
+     * POST /api/book
+     * @param createBookInput
+     * @response 생성된 책 정보
+     */
+    @Mutation(
+        () => BookEntity, //
+        { description: '책 정보 생성' },
+    )
     createBook(
         @Args('createBookInput') createBookInput: CreateBookInput,
     ): Promise<BookEntity> {
@@ -44,8 +65,16 @@ export default class BookResolver {
     ///////////////////////////////////////////////////////////////////
     // 수정 //
 
-    // PATCH 책 수정
-    @Mutation(() => BookEntity)
+    /**
+     * PATCH /api/book/:id
+     * @param bookID
+     * @param updateBookInput
+     * @response 수정된 책 정보
+     */
+    @Mutation(
+        () => BookEntity, //
+        { description: '책 정보 수정' },
+    )
     updateBook(
         @Args('bookID') bookID: string,
         @Args('updateBookInput') updateBookInput: UpdateBookInput,
@@ -53,8 +82,15 @@ export default class BookResolver {
         return this.bookService.update(bookID, updateBookInput);
     }
 
-    // POST 책 삭제 취소
-    @Mutation(() => ResultMessage)
+    /**
+     * PUT /api/book/:id
+     * @param bookID
+     * @response ResultMessage
+     */
+    @Mutation(
+        () => ResultMessage, //
+        { description: '책 정보 삭제 취소' },
+    )
     restoreBook(
         @Args('bookID') bookID: string, //
     ): Promise<ResultMessage> {
@@ -64,22 +100,41 @@ export default class BookResolver {
     ///////////////////////////////////////////////////////////////////
     // 삭제 //
 
-    // DELETE 모든 책 삭제 ( 삭제 O )
-    @Mutation(() => ResultMessage)
+    /**
+     * DELETE /admin/books/
+     * @response ResultMessage
+     */
+    @Mutation(
+        () => ResultMessage, //
+        { description: '모든 책 삭제 ( Real )' },
+    )
     async deleteBookAll(): Promise<ResultMessage> {
         return await this.bookService.deleteAll();
     }
 
-    // DELETE 단일 책 삭제 ( 삭제 O )
-    @Mutation(() => ResultMessage)
+    /**
+     * DELETE /admin/book/:id
+     * @response ResultMessage
+     */
+    @Mutation(
+        () => ResultMessage, //
+        { description: '단일 책 삭제 ( Real )' },
+    )
     async deleteBook(
         @Args('bookID') bookID: string, //
     ): Promise<ResultMessage> {
         return await this.bookService.delete(bookID);
     }
 
-    // DELETE 단일 책 삭제 ( 삭제 X )
-    @Mutation(() => ResultMessage)
+    /**
+     * DELETE /api/book/:id
+     * @param bookID
+     * @returns ResultMessage
+     */
+    @Mutation(
+        () => ResultMessage, //
+        { description: '단일 책 삭제 ( Soft )' },
+    )
     async softDeleteBook(
         @Args('bookID') bookID: string, //
     ): Promise<ResultMessage> {

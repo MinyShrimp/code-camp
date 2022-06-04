@@ -1,12 +1,9 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { InputType, PickType } from '@nestjs/graphql';
+import PublisherEntity from '../entities/publisher.entity';
 
 @InputType()
-export default class CreatePublisherInput {
-    // 이름
-    @Field(() => String)
-    name: string;
-
-    // 설명
-    @Field(() => String)
-    description: string;
-}
+export default class CreatePublisherInput extends PickType(
+    PublisherEntity,
+    ['name', 'description'],
+    InputType,
+) {}

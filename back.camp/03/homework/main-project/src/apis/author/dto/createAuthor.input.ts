@@ -1,10 +1,9 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { InputType, PickType } from '@nestjs/graphql';
+import AuthorEntity from '../entities/author.entity';
 
 @InputType()
-export default class CreateAuthorInput {
-    @Field(() => String)
-    name: string;
-
-    @Field(() => String)
-    description: string;
-}
+export default class CreateAuthorInput extends PickType(
+    AuthorEntity,
+    ['name', 'description'],
+    InputType,
+) {}

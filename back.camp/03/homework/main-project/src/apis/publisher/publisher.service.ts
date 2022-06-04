@@ -101,7 +101,7 @@ export default class PublisherService {
     // 삭제 //
 
     /**
-     * 단일 출판사 삭제 ( 삭제 O )
+     * 단일 출판사 삭제 ( Real )
      * @param publisherID
      * @returns ResultMessage
      */
@@ -123,7 +123,7 @@ export default class PublisherService {
     }
 
     /**
-     * 단일 출판사 삭제 ( 삭제 X )
+     * 단일 출판사 삭제 ( Soft )
      * @param publisherID
      * @returns ResultMessage
      */

@@ -5,28 +5,37 @@
 
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import {
-    Column,
     Entity,
-    PrimaryGeneratedColumn,
+    Column,
     Tree,
     TreeChildren,
     TreeParent,
+    PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@ObjectType()
-@Entity({ name: 'product_category' })
 @Tree('closure-table')
+@Entity({ name: 'product_category' })
+@ObjectType({ description: '상품 분류 Entity' })
 export default class ProductCategoryEntity {
-    @Field(() => ID)
     @PrimaryGeneratedColumn('uuid')
+    @Field(() => ID)
     id: string;
 
-    @Field(() => String)
     @Column()
+    @Field(
+        () => String, //
+        { description: '분류 이름' },
+    )
     name: string;
 
-    @Field(() => [ProductCategoryEntity], { nullable: true })
     @TreeChildren({ cascade: true })
+    @Field(
+        () => [ProductCategoryEntity], //
+        {
+            nullable: true,
+            description: '하위 분류',
+        },
+    )
     children: ProductCategoryEntity[];
 
     @TreeParent({ onDelete: 'CASCADE' })

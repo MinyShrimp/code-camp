@@ -244,7 +244,7 @@ export default class UserService {
     /**
      * 회원 탈퇴 취소
      * @param userID
-     * @returns
+     * @returns ResultMessage
      */
     async restore(
         userID: string, //
@@ -269,7 +269,7 @@ export default class UserService {
     /**
      * 회원 삭제 ( 삭제 O )
      * @param userID
-     * @returns Result Message
+     * @returns ResultMessage
      */
     async delete(
         userID: string, //
@@ -290,7 +290,7 @@ export default class UserService {
     /**
      * 회원 삭제 ( 삭제 X )
      * @param userID
-     * @returns Result Message
+     * @returns ResultMessage
      */
     async softDelete(
         userID: string, //

@@ -3,6 +3,7 @@
  */
 
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { IsEmail } from 'class-validator';
 import {
     Entity,
     Column,
@@ -12,21 +13,22 @@ import {
     PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@ObjectType()
 @Entity({ name: 'user' })
+@ObjectType({ description: '유저 Entity' })
 export default class UserEntity {
-    @Field(() => ID)
     @PrimaryGeneratedColumn('uuid')
+    @Field(() => ID)
     id: string;
 
     // 이름
-    @Field(() => String)
     @Column()
+    @Field(() => String, { description: '이름' })
     name: string;
 
     // 이메일
-    @Field(() => String)
     @Column()
+    @IsEmail()
+    @Field(() => String, { description: '이메일' })
     email: string;
 
     // 비밀번호

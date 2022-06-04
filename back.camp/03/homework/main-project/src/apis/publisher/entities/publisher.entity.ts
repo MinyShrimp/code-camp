@@ -11,21 +11,21 @@ import {
 /**
  * 출판사 Entity
  */
-@ObjectType()
 @Entity({ name: 'publisher' })
+@ObjectType({ description: '출판사 Entity' })
 export default class PublisherEntity {
-    @Field(() => ID)
     @PrimaryGeneratedColumn('uuid')
+    @Field(() => ID)
     id: string;
 
     // 이름
-    @Field(() => String)
     @Column()
+    @Field(() => String, { description: '이름' })
     name: string;
 
     // 설명
-    @Field(() => String)
     @Column()
+    @Field(() => String, { description: '설명' })
     description: string;
 
     // 생성 시간
