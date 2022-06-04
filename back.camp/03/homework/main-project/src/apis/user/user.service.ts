@@ -271,7 +271,7 @@ export default class UserService {
      * @param userID
      * @returns Result Message
      */
-    private async __delete(
+    async delete(
         userID: string, //
     ): Promise<ResultMessage> {
         const result = await this.userRepository.delete({

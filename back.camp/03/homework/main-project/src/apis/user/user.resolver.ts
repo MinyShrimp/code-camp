@@ -82,9 +82,17 @@ export default class UserResolver {
     ///////////////////////////////////////////////////////////////////
     // 삭제 //
 
-    // DELETE 단일 유저 삭제 ( 삭제 X )
+    // DELETE 단일 유저 삭제 ( 삭제 O )
     @Mutation(() => ResultMessage)
     deleteUser(
+        @Args('userID') userID: string, //
+    ): Promise<ResultMessage> {
+        return this.userService.delete(userID);
+    }
+
+    // DELETE 단일 유저 삭제 ( 삭제 X )
+    @Mutation(() => ResultMessage)
+    softDeleteUser(
         @Args('userID') userID: string, //
     ): Promise<ResultMessage> {
         return this.userService.softDelete(userID);
