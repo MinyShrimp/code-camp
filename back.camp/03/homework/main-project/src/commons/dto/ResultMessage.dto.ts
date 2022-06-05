@@ -1,19 +1,21 @@
-import { Field, ObjectType } from '@nestjs/graphql';
-import Message from 'src/commons/interfaces/Message.interface';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Message } from 'src/commons/interfaces/Message.interface';
 
 @ObjectType({
     description: '결과 메세지',
 })
-export default class ResultMessage {
+export class ResultMessage {
     /**
      * Message {
      *   id?: string;
+     *   status?: number;
      *   contents: string;
      *   isSuccess: boolean;
      * }
      */
     constructor(msg: Message) {
         this.id = msg.id ?? null;
+        this.status = msg.status ?? 200;
         this.msg = msg.contents;
         this.isSuccess = msg.isSuccess;
     }
@@ -23,6 +25,12 @@ export default class ResultMessage {
         { nullable: true, description: '대상 ID' },
     )
     id?: string;
+
+    @Field(
+        () => Int, //
+        { description: '상태 코드' },
+    )
+    status: number;
 
     @Field(
         () => String, //

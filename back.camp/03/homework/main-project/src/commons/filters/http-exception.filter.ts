@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 import { Request, Response } from 'express';
+import { ResultMessage } from '../dto/ResultMessage.dto';
 
 @Catch(HttpException)
 class HttpExceptionFilter implements ExceptionFilter<HttpException> {
@@ -24,10 +25,17 @@ class HttpExceptionFilter implements ExceptionFilter<HttpException> {
         console.log('================================');
 
         /* 이미 판매 완료된 상품입니다 */
-        console.log(msg);
+        // console.log(msg);
 
         /* 422 */
-        console.log(status);
+        // console.log(status);
+
+        const res = new ResultMessage({
+            status: status,
+            contents: msg,
+            isSuccess: false,
+        });
+        console.log(res);
 
         // const ctx = host.switchToHttp();
         // const response = ctx.getResponse();

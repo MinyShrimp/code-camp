@@ -18,6 +18,9 @@ type ResultMessage {
   """대상 ID"""
   id: String
 
+  """상태 코드"""
+  status: Int!
+
   """Message"""
   msg: String!
 

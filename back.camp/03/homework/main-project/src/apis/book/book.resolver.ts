@@ -1,6 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-import ResultMessage from 'src/commons/dto/ResultMessage.dto';
+import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
 import BookEntity from './entities/book.entity';
 import CreateBookInput from './dto/createBook.input';

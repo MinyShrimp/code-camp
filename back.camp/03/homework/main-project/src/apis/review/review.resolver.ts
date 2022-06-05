@@ -1,9 +1,10 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import ResultMessage from 'src/commons/dto/ResultMessage.dto';
-import CreateReviewInput from './dto/createReview.input';
-import UpdateReviewInput from './dto/updateReview.input';
+
+import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
 import ReviewEntity from './entities/review.entity';
+import CreateReviewInput from './dto/createReview.input';
+import UpdateReviewInput from './dto/updateReview.input';
 import ReviewService from './review.service';
 
 /* 리뷰 API */

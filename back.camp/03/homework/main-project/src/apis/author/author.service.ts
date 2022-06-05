@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import ResultMessage from 'src/commons/dto/ResultMessage.dto';
+import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
 import AuthorEntity from './entities/author.entity';
 import CreateAuthorInput from './dto/createAuthor.input';

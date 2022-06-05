@@ -1,6 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-import ResultMessage from 'src/commons/dto/ResultMessage.dto';
+import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
 import LoginInput from './dto/Login.input';
 import SignupInput from './dto/Signup.input';
