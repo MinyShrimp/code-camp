@@ -2,6 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { DateUtil } from 'src/commons/utils/date.util';
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
 import { SignupInput } from './dto/Signup.input';
@@ -161,14 +162,13 @@ export class UserService {
         userID: string, //
         updateInput: UpdateUserInput,
     ): Promise<UserEntity> {
-        const input = updateInput;
+        const { ...input } = updateInput;
 
         // 존재 여부 확인
         const user = await this.__checkValidUser(userID);
 
         return await this.userRepository.save({
             ...user,
-            id: userID,
             ...input,
         });
     }
@@ -185,7 +185,7 @@ export class UserService {
     async Login(
         loginInput: LoginInput, //
     ): Promise<UserEntity> {
-        const input = loginInput;
+        const { ...input } = loginInput;
 
         // 이메일, 패스워드 검사
         const user = await this.userRepository.findOne({
@@ -201,8 +201,7 @@ export class UserService {
         // 로그인 성공
         return await this.userRepository.save({
             ...user,
-            id: user.id,
-            loginAt: new Date(),
+            loginAt: DateUtil.getKorDateNow(),
             isLogin: true,
         });
     }
@@ -225,12 +224,12 @@ export class UserService {
         // 로그아웃 성공
         await this.userRepository.update(
             { id: user.id },
-            { logoutAt: new Date(), isLogin: false },
+            { logoutAt: DateUtil.getKorDateNow(), isLogin: false },
         );
 
         // 메세지 반환
         return new ResultMessage({
-            id: user.id,
+            id: userID,
             isSuccess: true,
             contents: 'Completed Logout',
         });
