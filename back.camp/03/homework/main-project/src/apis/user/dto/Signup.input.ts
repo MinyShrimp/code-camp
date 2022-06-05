@@ -7,6 +7,6 @@ export default class SignupInput extends PickType(
     ['name', 'email'],
     InputType,
 ) {
-    @Field(() => String)
+    @Field(() => String, { description: '비밀번호' })
     pwd: string;
 }

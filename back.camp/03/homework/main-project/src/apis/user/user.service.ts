@@ -176,7 +176,7 @@ export default class UserService {
     /**
      * 로그인
      * @param loginInput
-     * @returns ResultMessage
+     * @returns 로그인된 회원 정보
      *
      * 이메일, 패스워드 검사
      * 로그인 여부 검사
@@ -184,7 +184,7 @@ export default class UserService {
      */
     async Login(
         loginInput: LoginInput, //
-    ): Promise<ResultMessage> {
+    ): Promise<UserEntity> {
         const input = loginInput;
 
         // 이메일, 패스워드 검사
@@ -199,16 +199,11 @@ export default class UserService {
         await this.__checkLogin(user);
 
         // 로그인 성공
-        await this.userRepository.update(
-            { id: user.id },
-            { loginAt: new Date(), isLogin: true },
-        );
-
-        // 메세지 반환
-        return new ResultMessage({
+        return await this.userRepository.save({
+            ...user,
             id: user.id,
-            isSuccess: true,
-            contents: 'Completed Login',
+            loginAt: new Date(),
+            isLogin: true,
         });
     }
 
