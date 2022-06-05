@@ -10,7 +10,7 @@ import {
 
 @Entity({ name: 'author' })
 @ObjectType({ description: '저자 Entity' })
-export default class AuthorEntity {
+export class AuthorEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

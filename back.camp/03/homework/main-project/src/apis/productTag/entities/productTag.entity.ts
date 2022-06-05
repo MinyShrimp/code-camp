@@ -10,11 +10,11 @@ import {
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import ProductEntity from 'src/apis/product/entities/product.entity';
+import { ProductEntity } from 'src/apis/product/entities/product.entity';
 
 @Entity({ name: 'product_tag' })
 @ObjectType({ description: '상품 태그 Entity' })
-export default class ProductTagEntity {
+export class ProductTagEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

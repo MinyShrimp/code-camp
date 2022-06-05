@@ -4,12 +4,12 @@ import { Repository } from 'typeorm';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
-import PublisherEntity from './entities/publisher.entity';
-import CreatePublisherInput from './dto/createPublisher.input';
-import UpdatePublisherInput from './dto/updatePublisher.input';
+import { PublisherEntity } from './entities/publisher.entity';
+import { CreatePublisherInput } from './dto/createPublisher.input';
+import { UpdatePublisherInput } from './dto/updatePublisher.input';
 
 @Injectable()
-export default class PublisherService {
+export class PublisherService {
     constructor(
         @InjectRepository(PublisherEntity)
         private readonly publisherRepository: Repository<PublisherEntity>,

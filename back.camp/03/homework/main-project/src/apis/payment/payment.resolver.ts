@@ -2,14 +2,14 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
-import PaymentEntity from './entities/payment.entity';
-import CreatePaymentInput from './dto/createPayment.input';
-import UpdatePaymentInput from './dto/updatePayment.input';
-import PaymentService from './payment.service';
+import { PaymentEntity } from './entities/payment.entity';
+import { CreatePaymentInput } from './dto/createPayment.input';
+import { UpdatePaymentInput } from './dto/updatePayment.input';
+import { PaymentService } from './payment.service';
 
 /* 결제 API */
 @Resolver()
-export default class PaymentResolver {
+export class PaymentResolver {
     constructor(
         private readonly paymentService: PaymentService, //
     ) {}

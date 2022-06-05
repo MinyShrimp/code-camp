@@ -6,16 +6,16 @@ import { Repository } from 'typeorm';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
-import ProductTagService from '../productTag/productTag.service';
-import ProductPriceService from '../productPrice/productPrice.service';
-import ProductCategorySearchService from '../productCategorySearch/productCategorySearch.service';
+import { ProductTagService } from '../productTag/productTag.service';
+import { ProductPriceService } from '../productPrice/productPrice.service';
+import { ProductCategorySearchService } from '../productCategorySearch/productCategorySearch.service';
 
-import ProductEntity from './entities/product.entity';
-import CreateProductInput from './dto/createProduct.input';
-import UpdateProductInput from './dto/updateProduct.input';
+import { ProductEntity } from './entities/product.entity';
+import { CreateProductInput } from './dto/createProduct.input';
+import { UpdateProductInput } from './dto/updateProduct.input';
 
 @Injectable()
-export default class ProductService {
+export class ProductService {
     constructor(
         @InjectRepository(ProductEntity)
         private readonly productRepository: Repository<ProductEntity>,

@@ -1,9 +1,9 @@
 import { Field, InputType, Int, PickType } from '@nestjs/graphql';
 import { Min } from 'class-validator';
-import ProductEntity from '../entities/product.entity';
+import { ProductEntity } from '../entities/product.entity';
 
 @InputType()
-export default class CreateProductInput extends PickType(
+export class CreateProductInput extends PickType(
     ProductEntity,
     ['url', 'stock_count'],
     InputType,

@@ -13,21 +13,21 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 
 // Modules //
-import UserModule from './apis/user/user.module';
+import { UserModule } from './apis/user/user.module';
 
-import ReviewModule from './apis/review/review.module';
-import PaymentModule from './apis/payment/payment.module';
+import { ReviewModule } from './apis/review/review.module';
+import { PaymentModule } from './apis/payment/payment.module';
 
-import BookModule from './apis/book/book.module';
-import AuthorModule from './apis/author/author.module';
-import PublisherModule from './apis/publisher/publisher.module';
-import BookImageModule from './apis/bookImage/bookImage.module';
+import { BookModule } from './apis/book/book.module';
+import { AuthorModule } from './apis/author/author.module';
+import { PublisherModule } from './apis/publisher/publisher.module';
+import { BookImageModule } from './apis/bookImage/bookImage.module';
 
-import ProductModule from './apis/product/product.module';
-import ProductTagModule from './apis/productTag/productTag.module';
-import ProductPriceModule from './apis/productPrice/productPrice.module';
-import ProductCategoryModule from './apis/productCategory/productCategory.module';
-import ProductCategorySearchModule from './apis/productCategorySearch/productCategorySearch.module';
+import { ProductModule } from './apis/product/product.module';
+import { ProductTagModule } from './apis/productTag/productTag.module';
+import { ProductPriceModule } from './apis/productPrice/productPrice.module';
+import { ProductCategoryModule } from './apis/productCategory/productCategory.module';
+import { ProductCategorySearchModule } from './apis/productCategorySearch/productCategorySearch.module';
 
 ///////////////////////////////////////////////////////////////////////////
 

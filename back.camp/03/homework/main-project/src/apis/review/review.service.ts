@@ -4,12 +4,12 @@ import { Repository } from 'typeorm';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
-import ReviewEntity from './entities/review.entity';
-import CreateReviewInput from './dto/createReview.input';
-import UpdateReviewInput from './dto/updateReview.input';
+import { ReviewEntity } from './entities/review.entity';
+import { CreateReviewInput } from './dto/createReview.input';
+import { UpdateReviewInput } from './dto/updateReview.input';
 
 @Injectable()
-export default class ReviewService {
+export class ReviewService {
     constructor(
         @InjectRepository(ReviewEntity)
         private readonly reviewRepository: Repository<ReviewEntity>,

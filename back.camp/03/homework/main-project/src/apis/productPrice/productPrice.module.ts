@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import ProductPriceEntity from './entities/productPrice.entity';
-
-import ProductPriceService from './productPrice.service';
+import { ProductPriceEntity } from './entities/productPrice.entity';
+import { ProductPriceService } from './productPrice.service';
 
 @Module({
     imports: [
@@ -20,4 +19,4 @@ import ProductPriceService from './productPrice.service';
         ProductPriceService, //
     ],
 })
-export default class ProductPriceModule {}
+export class ProductPriceModule {}

@@ -1,8 +1,8 @@
 import { Field, InputType, PickType } from '@nestjs/graphql';
-import ReviewEntity from '../entities/review.entity';
+import { ReviewEntity } from '../entities/review.entity';
 
 @InputType()
-export default class CreateReviewInput extends PickType(
+export class CreateReviewInput extends PickType(
     ReviewEntity,
     ['contents', 'star', 'like'],
     InputType,

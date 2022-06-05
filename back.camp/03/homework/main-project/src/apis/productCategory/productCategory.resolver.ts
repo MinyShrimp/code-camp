@@ -2,13 +2,13 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
-import CreateProductCategoryInput from './dto/createProductCategory.input';
-import ProductCategoryEntity from './entities/productCategory.entity';
-import ProductCategoryService from './productCategory.service';
+import { CreateProductCategoryInput } from './dto/createProductCategory.input';
+import { ProductCategoryEntity } from './entities/productCategory.entity';
+import { ProductCategoryService } from './productCategory.service';
 
 /* 상품 분류 API */
 @Resolver()
-export default class ProductCategoryResolver {
+export class ProductCategoryResolver {
     constructor(
         private readonly productCategoryService: ProductCategoryService,
     ) {}

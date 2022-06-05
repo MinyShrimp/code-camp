@@ -2,17 +2,17 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
-import ProductEntity from './entities/product.entity';
-import CreateProductInput from './dto/createProduct.input';
-import UpdateProductInput from './dto/updateProduct.input';
+import { ProductEntity } from './entities/product.entity';
+import { CreateProductInput } from './dto/createProduct.input';
+import { UpdateProductInput } from './dto/updateProduct.input';
 
-import ProductService from './product.service';
+import { ProductService } from './product.service';
 
 /**
  * 상품 API
  */
 @Resolver()
-export default class ProductResolver {
+export class ProductResolver {
     constructor(
         private readonly productService: ProductService, //
     ) {}

@@ -2,14 +2,14 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
-import PublisherEntity from './entities/publisher.entity';
-import CreatePublisherInput from './dto/createPublisher.input';
-import UpdatePublisherInput from './dto/updatePublisher.input';
-import PublisherService from './publisher.service';
+import { PublisherEntity } from './entities/publisher.entity';
+import { CreatePublisherInput } from './dto/createPublisher.input';
+import { UpdatePublisherInput } from './dto/updatePublisher.input';
+import { PublisherService } from './publisher.service';
 
 /* 출판사 API */
 @Resolver()
-export default class PublisherResolver {
+export class PublisherResolver {
     constructor(
         private readonly publisherService: PublisherService, //
     ) {}

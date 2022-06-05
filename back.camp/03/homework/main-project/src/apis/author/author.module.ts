@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import AuthorEntity from './entities/author.entity';
-import AuthorResolver from './author.resolver';
-import AuthorService from './author.service';
+import { AuthorEntity } from './entities/author.entity';
+import { AuthorResolver } from './author.resolver';
+import { AuthorService } from './author.service';
 
 @Module({
     imports: [
@@ -16,4 +16,4 @@ import AuthorService from './author.service';
         AuthorService,
     ],
 })
-export default class AuthorModule {}
+export class AuthorModule {}

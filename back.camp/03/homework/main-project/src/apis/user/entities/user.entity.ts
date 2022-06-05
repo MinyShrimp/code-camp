@@ -15,7 +15,7 @@ import {
 
 @Entity({ name: 'user' })
 @ObjectType({ description: '유저 Entity' })
-export default class UserEntity {
+export class UserEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

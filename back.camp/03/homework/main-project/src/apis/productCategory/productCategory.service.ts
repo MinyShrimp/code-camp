@@ -4,11 +4,11 @@ import { getManager, Repository } from 'typeorm';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
-import CreateProductCategoryInput from './dto/createProductCategory.input';
-import ProductCategoryEntity from './entities/productCategory.entity';
+import { CreateProductCategoryInput } from './dto/createProductCategory.input';
+import { ProductCategoryEntity } from './entities/productCategory.entity';
 
 @Injectable()
-export default class ProductCategoryService {
+export class ProductCategoryService {
     constructor(
         @InjectRepository(ProductCategoryEntity)
         private readonly productCategoryRepository: Repository<ProductCategoryEntity>,

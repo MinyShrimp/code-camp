@@ -2,16 +2,16 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
-import LoginInput from './dto/Login.input';
-import SignupInput from './dto/Signup.input';
-import UpdateUserInput from './dto/updateUser.input';
+import { LoginInput } from './dto/Login.input';
+import { SignupInput } from './dto/Signup.input';
+import { UpdateUserInput } from './dto/updateUser.input';
 
-import UserEntity from './entities/user.entity';
-import UserService from './user.service';
+import { UserEntity } from './entities/user.entity';
+import { UserService } from './user.service';
 
 /* 유저 API */
 @Resolver()
-export default class UserResolver {
+export class UserResolver {
     constructor(
         private readonly userService: UserService, //
     ) {}

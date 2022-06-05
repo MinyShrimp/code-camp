@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import ProductCategoryModule from '../productCategory/productCategory.module';
+import { ProductCategoryModule } from '../productCategory/productCategory.module';
 
-import ProductCategorySearchEntity from './entities/productCategorySearch.entity';
-import ProductCategorySearchResolver from './productCategorySearch.resolver';
-import ProductCategorySearchService from './productCategorySearch.service';
+import { ProductCategorySearchEntity } from './entities/productCategorySearch.entity';
+import { ProductCategorySearchResolver } from './productCategorySearch.resolver';
+import { ProductCategorySearchService } from './productCategorySearch.service';
 
 @Module({
     imports: [
@@ -23,4 +23,4 @@ import ProductCategorySearchService from './productCategorySearch.service';
         ProductCategorySearchService,
     ],
 })
-export default class ProductCategorySearchModule {}
+export class ProductCategorySearchModule {}

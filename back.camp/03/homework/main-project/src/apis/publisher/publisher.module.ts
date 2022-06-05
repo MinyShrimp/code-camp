@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import PublisherEntity from './entities/publisher.entity';
-import PublisherResolver from './publisher.resolver';
-import PublisherService from './publisher.service';
+import { PublisherEntity } from './entities/publisher.entity';
+import { PublisherResolver } from './publisher.resolver';
+import { PublisherService } from './publisher.service';
 
 @Module({
     imports: [
@@ -16,4 +16,4 @@ import PublisherService from './publisher.service';
         PublisherService,
     ],
 })
-export default class PublisherModule {}
+export class PublisherModule {}

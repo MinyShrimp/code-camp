@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import BookImageEntity from './entities/bookImage.entity';
-import BookImageResolver from './bookImage.resolver';
-import BookImageService from './bookImage.service';
+import { BookImageEntity } from './entities/bookImage.entity';
+import { BookImageResolver } from './bookImage.resolver';
+import { BookImageService } from './bookImage.service';
 
 @Module({
     imports: [
@@ -16,4 +16,4 @@ import BookImageService from './bookImage.service';
         BookImageService,
     ],
 })
-export default class BookImageModule {}
+export class BookImageModule {}

@@ -2,14 +2,14 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
-import BookEntity from './entities/book.entity';
-import CreateBookInput from './dto/createBook.input';
-import UpdateBookInput from './dto/updateBook.input';
-import BookService from './book.service';
+import { BookEntity } from './entities/book.entity';
+import { CreateBookInput } from './dto/createBook.input';
+import { UpdateBookInput } from './dto/updateBook.input';
+import { BookService } from './book.service';
 
 /* 책 API */
 @Resolver()
-export default class BookResolver {
+export class BookResolver {
     constructor(
         private readonly bookService: BookService, //
     ) {}

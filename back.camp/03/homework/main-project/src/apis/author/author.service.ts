@@ -4,12 +4,12 @@ import { Repository } from 'typeorm';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
-import AuthorEntity from './entities/author.entity';
-import CreateAuthorInput from './dto/createAuthor.input';
-import UpdateAuthorInput from './dto/updateAuthor.input';
+import { AuthorEntity } from './entities/author.entity';
+import { CreateAuthorInput } from './dto/createAuthor.input';
+import { UpdateAuthorInput } from './dto/updateAuthor.input';
 
 @Injectable()
-export default class AuthorService {
+export class AuthorService {
     constructor(
         @InjectRepository(AuthorEntity)
         private readonly authorRepository: Repository<AuthorEntity>,

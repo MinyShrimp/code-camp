@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import PaymentEntity from './entities/payment.entity';
-import PaymentResolver from './payment.resolver';
-import PaymentService from './payment.service';
+import { PaymentEntity } from './entities/payment.entity';
+import { PaymentResolver } from './payment.resolver';
+import { PaymentService } from './payment.service';
 
 @Module({
     imports: [
@@ -16,4 +16,4 @@ import PaymentService from './payment.service';
         PaymentService,
     ],
 })
-export default class PaymentModule {}
+export class PaymentModule {}

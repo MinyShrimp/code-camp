@@ -1,8 +1,8 @@
 import { InputType, PickType } from '@nestjs/graphql';
-import BookEntity from '../entities/book.entity';
+import { BookEntity } from '../entities/book.entity';
 
 @InputType()
-export default class CreateBookInput extends PickType(
+export class CreateBookInput extends PickType(
     BookEntity,
     [
         'title',

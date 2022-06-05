@@ -2,14 +2,14 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
-import BookImageEntity from './entities/bookImage.entity';
-import CreateBookImageInput from './dto/createBookImage.input';
-import UpdateBookImageInput from './dto/updateBookImage.input';
-import BookImageService from './bookImage.service';
+import { BookImageEntity } from './entities/bookImage.entity';
+import { CreateBookImageInput } from './dto/createBookImage.input';
+import { UpdateBookImageInput } from './dto/updateBookImage.input';
+import { BookImageService } from './bookImage.service';
 
 /* 책 이미지 API */
 @Resolver()
-export default class BookImageResolver {
+export class BookImageResolver {
     constructor(
         private readonly bookImageService: BookImageService, //
     ) {}

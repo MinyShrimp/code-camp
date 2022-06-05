@@ -4,12 +4,12 @@ import { Repository } from 'typeorm';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
-import PaymentEntity from './entities/payment.entity';
-import CreatePaymentInput from './dto/createPayment.input';
-import UpdatePaymentInput from './dto/updatePayment.input';
+import { PaymentEntity } from './entities/payment.entity';
+import { CreatePaymentInput } from './dto/createPayment.input';
+import { UpdatePaymentInput } from './dto/updatePayment.input';
 
 @Injectable()
-export default class PaymentService {
+export class PaymentService {
     constructor(
         @InjectRepository(PaymentEntity)
         private readonly paymentRepository: Repository<PaymentEntity>,

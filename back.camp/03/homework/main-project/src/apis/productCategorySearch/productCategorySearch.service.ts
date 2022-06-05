@@ -4,12 +4,12 @@ import { Repository } from 'typeorm';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
-import ProductCategoryService from '../productCategory/productCategory.service';
-import ProductCategorySearchDto from './dto/productCategorySearch.dto';
-import ProductCategorySearchEntity from './entities/productCategorySearch.entity';
+import { ProductCategoryService } from '../productCategory/productCategory.service';
+import { ProductCategorySearchDto } from './dto/productCategorySearch.dto';
+import { ProductCategorySearchEntity } from './entities/productCategorySearch.entity';
 
 @Injectable()
-export default class ProductCategorySearchService {
+export class ProductCategorySearchService {
     constructor(
         @InjectRepository(ProductCategorySearchEntity)
         private readonly productCategorySearchRepository: Repository<ProductCategorySearchEntity>,

@@ -16,7 +16,7 @@ import {
 @Tree('closure-table')
 @Entity({ name: 'product_category' })
 @ObjectType({ description: '상품 분류 Entity' })
-export default class ProductCategoryEntity {
+export class ProductCategoryEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

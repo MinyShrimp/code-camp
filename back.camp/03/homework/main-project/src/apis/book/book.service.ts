@@ -4,12 +4,12 @@ import { Repository } from 'typeorm';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
-import BookEntity from './entities/book.entity';
-import CreateBookInput from './dto/createBook.input';
-import UpdateBookInput from './dto/updateBook.input';
+import { BookEntity } from './entities/book.entity';
+import { CreateBookInput } from './dto/createBook.input';
+import { UpdateBookInput } from './dto/updateBook.input';
 
 @Injectable()
-export default class BookService {
+export class BookService {
     constructor(
         @InjectRepository(BookEntity)
         private readonly bookRepository: Repository<BookEntity>,

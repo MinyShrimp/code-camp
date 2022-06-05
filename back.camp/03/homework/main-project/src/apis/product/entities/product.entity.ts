@@ -14,14 +14,14 @@ import {
 import { IsUrl, Min } from 'class-validator';
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 
-import BookEntity from 'src/apis/book/entities/book.entity';
-import ProductTagEntity from 'src/apis/productTag/entities/productTag.entity';
-import ProductPriceEntity from 'src/apis/productPrice/entities/productPrice.entity';
-import ProductCategorySearchEntity from 'src/apis/productCategorySearch/entities/productCategorySearch.entity';
+import { BookEntity } from 'src/apis/book/entities/book.entity';
+import { ProductTagEntity } from 'src/apis/productTag/entities/productTag.entity';
+import { ProductPriceEntity } from 'src/apis/productPrice/entities/productPrice.entity';
+import { ProductCategorySearchEntity } from 'src/apis/productCategorySearch/entities/productCategorySearch.entity';
 
 @Entity({ name: 'product' })
 @ObjectType({ description: '상품 Entity' })
-export default class ProductEntity {
+export class ProductEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

@@ -11,12 +11,12 @@ import {
     PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import AuthorEntity from 'src/apis/author/entities/author.entity';
-import PublisherEntity from 'src/apis/publisher/entities/publisher.entity';
+import { AuthorEntity } from 'src/apis/author/entities/author.entity';
+import { PublisherEntity } from 'src/apis/publisher/entities/publisher.entity';
 
 @Entity({ name: 'book' })
 @ObjectType({ description: '책 Entity' })
-export default class BookEntity {
+export class BookEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

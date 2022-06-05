@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import ProductTagModule from '../productTag/productTag.module';
-import ProductPriceModule from '../productPrice/productPrice.module';
-import ProductCategorySearchModule from '../productCategorySearch/productCategorySearch.module';
+import { ProductTagModule } from '../productTag/productTag.module';
+import { ProductPriceModule } from '../productPrice/productPrice.module';
+import { ProductCategorySearchModule } from '../productCategorySearch/productCategorySearch.module';
 
-import ProductEntity from './entities/product.entity';
+import { ProductEntity } from './entities/product.entity';
 
-import ProductResolver from './product.resolver';
-import ProductService from './product.service';
+import { ProductResolver } from './product.resolver';
+import { ProductService } from './product.service';
 
 @Module({
     imports: [
@@ -26,4 +26,4 @@ import ProductService from './product.service';
         ProductService,
     ],
 })
-export default class ProductModule {}
+export class ProductModule {}

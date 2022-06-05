@@ -1,7 +1,7 @@
 import { Field, ID, InputType } from '@nestjs/graphql';
 
 @InputType()
-export default class CreateProductCategoryInput {
+export class CreateProductCategoryInput {
     @Field(
         () => String, //
         { description: '분류 이름' },

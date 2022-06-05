@@ -14,7 +14,7 @@ import {
 
 @Entity({ name: 'product_price' })
 @ObjectType({ description: '상품 가격 Entity' })
-export default class ProductPriceEntity {
+export class ProductPriceEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

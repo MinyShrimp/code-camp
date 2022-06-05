@@ -4,14 +4,14 @@ import { Repository } from 'typeorm';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
-import SignupInput from './dto/Signup.input';
-import LoginInput from './dto/Login.input';
-import UpdateUserInput from './dto/updateUser.input';
+import { SignupInput } from './dto/Signup.input';
+import { LoginInput } from './dto/Login.input';
+import { UpdateUserInput } from './dto/updateUser.input';
 
-import UserEntity from './entities/user.entity';
+import { UserEntity } from './entities/user.entity';
 
 @Injectable()
-export default class UserService {
+export class UserService {
     constructor(
         @InjectRepository(UserEntity)
         private readonly userRepository: Repository<UserEntity>,

@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import ProductTagEntity from './entities/productTag.entity';
-import ProductTagService from './productTag.service';
+import { ProductTagEntity } from './entities/productTag.entity';
+import { ProductTagService } from './productTag.service';
 
 @Module({
     imports: [
@@ -17,4 +17,4 @@ import ProductTagService from './productTag.service';
         ProductTagService, //
     ],
 })
-export default class ProductTagModule {}
+export class ProductTagModule {}

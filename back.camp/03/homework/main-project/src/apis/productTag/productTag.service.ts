@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import ProductTagEntity from './entities/productTag.entity';
+import { ProductTagEntity } from './entities/productTag.entity';
 
 @Injectable()
-export default class ProductTagService {
+export class ProductTagService {
     constructor(
         @InjectRepository(ProductTagEntity)
         private readonly productTagRepository: Repository<ProductTagEntity>,

@@ -2,12 +2,12 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
-import ProductCategorySearchEntity from './entities/productCategorySearch.entity';
-import ProductCategorySearchService from './productCategorySearch.service';
+import { ProductCategorySearchEntity } from './entities/productCategorySearch.entity';
+import { ProductCategorySearchService } from './productCategorySearch.service';
 
 /* 검색용 분류 API */
 @Resolver()
-export default class ProductCategorySearchResolver {
+export class ProductCategorySearchResolver {
     constructor(
         private readonly categorySearchService: ProductCategorySearchService,
     ) {}

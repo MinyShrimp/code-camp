@@ -2,15 +2,14 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
-import AuthorEntity from './entities/author.entity';
-import CreateAuthorInput from './dto/createAuthor.input';
-import UpdateAuthorInput from './dto/updateAuthor.input';
-
-import AuthorService from './author.service';
+import { AuthorEntity } from './entities/author.entity';
+import { CreateAuthorInput } from './dto/createAuthor.input';
+import { UpdateAuthorInput } from './dto/updateAuthor.input';
+import { AuthorService } from './author.service';
 
 /* 저자 API */
 @Resolver()
-export default class AuthorResolver {
+export class AuthorResolver {
     constructor(
         private readonly authorService: AuthorService, //
     ) {}

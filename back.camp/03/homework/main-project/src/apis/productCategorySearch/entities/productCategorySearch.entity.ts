@@ -7,7 +7,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'product_category_search' })
 @ObjectType({ description: '검색용 상품 카테고리 Entity' })
-export default class ProductCategorySearchEntity {
+export class ProductCategorySearchEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

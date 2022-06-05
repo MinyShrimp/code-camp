@@ -13,7 +13,7 @@ import {
  */
 @Entity({ name: 'publisher' })
 @ObjectType({ description: '출판사 Entity' })
-export default class PublisherEntity {
+export class PublisherEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

@@ -2,14 +2,14 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
-import ReviewEntity from './entities/review.entity';
-import CreateReviewInput from './dto/createReview.input';
-import UpdateReviewInput from './dto/updateReview.input';
-import ReviewService from './review.service';
+import { ReviewEntity } from './entities/review.entity';
+import { CreateReviewInput } from './dto/createReview.input';
+import { UpdateReviewInput } from './dto/updateReview.input';
+import { ReviewService } from './review.service';
 
 /* 리뷰 API */
 @Resolver()
-export default class ReviewResolver {
+export class ReviewResolver {
     constructor(
         private readonly reviewService: ReviewService, //
     ) {}

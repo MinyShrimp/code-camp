@@ -3,12 +3,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
-import BookImageEntity from './entities/bookImage.entity';
-import CreateBookImageInput from './dto/createBookImage.input';
-import UpdateBookImageInput from './dto/updateBookImage.input';
+import { BookImageEntity } from './entities/bookImage.entity';
+import { CreateBookImageInput } from './dto/createBookImage.input';
+import { UpdateBookImageInput } from './dto/updateBookImage.input';
 
 @Injectable()
-export default class BookImageService {
+export class BookImageService {
     constructor(
         @InjectRepository(BookImageEntity)
         private readonly bookImageRepository: Repository<BookImageEntity>,

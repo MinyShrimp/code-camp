@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import UserEntity from './entities/user.entity';
-import UserResolver from './user.resolver';
-import UserService from './user.service';
+import { UserEntity } from './entities/user.entity';
+import { UserResolver } from './user.resolver';
+import { UserService } from './user.service';
 
 @Module({
     imports: [
@@ -16,4 +16,4 @@ import UserService from './user.service';
         UserService,
     ],
 })
-export default class UserModule {}
+export class UserModule {}

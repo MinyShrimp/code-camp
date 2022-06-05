@@ -5,10 +5,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
-import ProductPriceEntity from './entities/productPrice.entity';
+import { ProductPriceEntity } from './entities/productPrice.entity';
 
 @Injectable()
-export default class ProductPriceService {
+export class ProductPriceService {
     constructor(
         @InjectRepository(ProductPriceEntity)
         private readonly productPriceRepository: Repository<ProductPriceEntity>,

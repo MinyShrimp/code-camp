@@ -1,7 +1,7 @@
 import { OmitType } from '@nestjs/graphql';
-import ProductCategorySearchEntity from '../entities/productCategorySearch.entity';
+import { ProductCategorySearchEntity } from '../entities/productCategorySearch.entity';
 
-export default class ProductCategorySearchDto extends OmitType(
+export class ProductCategorySearchDto extends OmitType(
     ProductCategorySearchEntity,
     ['id'],
 ) {}
