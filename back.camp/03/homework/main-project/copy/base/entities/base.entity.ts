@@ -1,14 +1,14 @@
-/**
- * Base Entity
- */
-
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { DeleteDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@ObjectType()
+/* Base Entity */
 @Entity({ name: 'base' })
-export default class BaseEntity {
-    @Field(() => ID)
+@ObjectType({ description: 'Base Entity' })
+export class BaseEntity {
     @PrimaryGeneratedColumn('uuid')
+    @Field(() => ID)
     id: string;
+
+    @DeleteDateColumn()
+    deleteAt: Date;
 }

@@ -1,4 +1,9 @@
-import { InputType } from '@nestjs/graphql';
+import { InputType, PickType } from '@nestjs/graphql';
+import { BaseEntity } from '../entities/base.entity';
 
 @InputType()
-export default class CreateBaseInput {}
+export class CreateBaseInput extends PickType(
+    BaseEntity, //
+    [],
+    InputType,
+) {}
