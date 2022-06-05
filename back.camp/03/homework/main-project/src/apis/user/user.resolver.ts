@@ -1,6 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
 
 import { LoginInput } from './dto/Login.input';
 import { SignupInput } from './dto/Signup.input';
@@ -43,7 +43,7 @@ export class UserResolver {
     fetchUser(
         @Args('userID') userID: string, //
     ): Promise<UserEntity> {
-        return this.userService.findOne(userID);
+        return this.userService.findOneByID(userID);
     }
 
     ///////////////////////////////////////////////////////////////////

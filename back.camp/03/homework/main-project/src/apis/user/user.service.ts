@@ -1,121 +1,51 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { DateUtil } from 'src/commons/utils/date.util';
-import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
+import { DateUtil } from '../../commons/utils/date.util';
+import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
 
 import { SignupInput } from './dto/Signup.input';
 import { LoginInput } from './dto/Login.input';
 import { UpdateUserInput } from './dto/updateUser.input';
 
 import { UserEntity } from './entities/user.entity';
+import { UserCheckService } from './userCheck.service';
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectRepository(UserEntity)
         private readonly userRepository: Repository<UserEntity>,
+        private readonly userCheckService: UserCheckService,
     ) {}
 
     ///////////////////////////////////////////////////////////////////
     // Utils //
 
-    /**
-     * 가입된 회원 여부 검사
-     * @param userID
-     * @returns
-     * 존재하지 않으면 ConflictException
-     */
-    private async __checkValidUser(
-        userID: string, //
-    ): Promise<UserEntity> {
-        const user = await this.findOne(userID);
-        if (user === undefined) {
-            throw new ConflictException(
-                '존재하지 않는 유저입니다.', //
-            );
-        }
-        return user;
-    }
-
-    /**
-     * 이메일 중복 검사
-     * @param email
-     * @returns
-     * 존재하면 ConflictException
-     */
-    private async __checkOverlapEmail(
-        email: string, //
-    ): Promise<UserEntity> {
-        const user = await this.__findOneByEmail(email);
-        if (user !== undefined) {
-            throw new ConflictException(
-                '이미 존재하는 이메일입니다.', //
-            );
-        }
-        return user;
-    }
-
-    /**
-     * 로그인 여부 검사
-     * @param user
-     * @returns
-     */
-    private async __checkLogin(
-        user: UserEntity, //
-    ): Promise<UserEntity> {
-        if (user.isLogin) {
-            throw new ConflictException(
-                '이미 로그인된 유저입니다.', //
-            );
-        }
-        return user;
-    }
-
-    /**
-     * 로그아웃 여부 검사
-     * @param user
-     * @returns
-     */
-    private async __checkLogout(
-        user: UserEntity, //
-    ): Promise<UserEntity> {
-        if (!user.isLogin) {
-            throw new ConflictException(
-                '이미 로그아웃된 유저입니다.', //
-            );
-        }
-        return user;
-    }
-
     ///////////////////////////////////////////////////////////////////
     // 조회 //
 
     /**
-     * 이메일 기반 조회
-     * @param email
-     * @returns 조회된 회원 정보
+     * ID 기반 회원 조회
+     * @param userID
+     * @returns 회원 정보
      */
-    private async __findOneByEmail(
-        email: string, //
+    async findOneByID(
+        userID: string, //
     ): Promise<UserEntity> {
-        return await this.userRepository.findOne({
-            where: { email: email },
-        });
+        return await this.userCheckService.findOneByID(userID);
     }
 
     /**
-     * ID 기반 조회
-     * @param userID
-     * @returns 조회된 회원 정보
+     * Email 기반 회원 조회
+     * @param email
+     * @returns 회원 정보
      */
-    async findOne(
-        userID: string, //
+    async findOneByEmail(
+        email: string, //
     ): Promise<UserEntity> {
-        return await this.userRepository.findOne({
-            where: { id: userID },
-        });
+        return await this.userCheckService.findOneByEmail(email);
     }
 
     /**
@@ -139,10 +69,10 @@ export class UserService {
     async Signup(
         signupInput: SignupInput, //
     ): Promise<UserEntity> {
-        const input = signupInput;
+        const { ...input } = signupInput;
 
         // 이메일 중복 체크
-        await this.__checkOverlapEmail(input.email);
+        await this.userCheckService.checkOverlapEmail(input.email);
 
         return await this.userRepository.save({
             ...input,
@@ -165,7 +95,7 @@ export class UserService {
         const { ...input } = updateInput;
 
         // 존재 여부 확인
-        const user = await this.__checkValidUser(userID);
+        const user = await this.userCheckService.checkValidUser(userID);
 
         return await this.userRepository.save({
             ...user,
@@ -187,16 +117,16 @@ export class UserService {
     ): Promise<UserEntity> {
         const { ...input } = loginInput;
 
-        // 이메일, 패스워드 검사
-        const user = await this.userRepository.findOne({
-            where: {
-                email: input.email, //
-                pwd: input.pwd,
-            },
-        });
+        // 이메일 검사
+        const user = await this.userCheckService.checkValidUserByEmail(
+            input.email,
+        );
+
+        // 비밀번호 검사
+        this.userCheckService.checkPassword(user, input.pwd);
 
         // 로그인 여부 검사
-        await this.__checkLogin(user);
+        await this.userCheckService.checkLogin(user);
 
         // 로그인 성공
         return await this.userRepository.save({
@@ -214,12 +144,11 @@ export class UserService {
     async Logout(
         userID: string, //
     ): Promise<ResultMessage> {
-        const user = await this.userRepository.findOne({
-            where: { id: userID },
-        });
+        // 존재 여부 검사
+        const user = await this.userCheckService.checkValidUser(userID);
 
         // 로그아웃 여부 검사
-        await this.__checkLogout(user);
+        await this.userCheckService.checkLogout(user);
 
         // 로그아웃 성공
         await this.userRepository.update(

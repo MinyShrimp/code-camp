@@ -8,21 +8,25 @@ import {
     ExceptionFilter,
     HttpException,
 } from '@nestjs/common';
-import { HttpAdapterHost } from '@nestjs/core';
-import { Request, Response } from 'express';
 import { ResultMessage } from '../dto/ResultMessage.dto';
 
 @Catch(HttpException)
-class HttpExceptionFilter implements ExceptionFilter<HttpException> {
-    constructor(
-        private readonly httpAdapterHost: HttpAdapterHost, //
-    ) {}
+export class HttpExceptionFilter implements ExceptionFilter<HttpException> {
+    constructor() {}
 
     catch(exception: HttpException, host: ArgumentsHost) {
         const msg = exception.message;
         const status = exception.getStatus();
 
-        console.log('================================');
+        return exception;
+
+        // return new ResultMessage({
+        //     status: status,
+        //     contents: msg,
+        //     isSuccess: false,
+        // });
+
+        // console.log('================================');
 
         /* 이미 판매 완료된 상품입니다 */
         // console.log(msg);
@@ -30,30 +34,7 @@ class HttpExceptionFilter implements ExceptionFilter<HttpException> {
         /* 422 */
         // console.log(status);
 
-        const res = new ResultMessage({
-            status: status,
-            contents: msg,
-            isSuccess: false,
-        });
-        console.log(res);
-
-        // const ctx = host.switchToHttp();
-        // const response = ctx.getResponse();
-
-        // const { httpAdapter } = this.httpAdapterHost;
-        // httpAdapter.reply(
-        //     response,
-        //     {
-        //         statusCode: status,
-        //         timestamp: new Date().toISOString(),
-        //     },
-        //     status,
-        // );
-
-        // response.json({
-        //     statusCode: status,
-        //     timestamp: new Date().toISOString(),
-        // });
+        //const gqlHost = GqlArgumentsHost.create(host);
 
         /**
          * {
@@ -112,8 +93,6 @@ class HttpExceptionFilter implements ExceptionFilter<HttpException> {
          */
         // console.log(host);
 
-        console.log('================================');
+        // console.log('================================');
     }
 }
-
-export default HttpExceptionFilter;
