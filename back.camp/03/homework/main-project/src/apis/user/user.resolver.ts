@@ -92,7 +92,7 @@ export class UserResolver {
         () => ResultMessage, //
         { description: '회원 탈퇴 취소, Bearer JWT' },
     )
-    restoreLoginUser(
+    restoreUser(
         @Args('userID') userID: string, //
     ): Promise<ResultMessage> {
         return this.userService.restore(userID);

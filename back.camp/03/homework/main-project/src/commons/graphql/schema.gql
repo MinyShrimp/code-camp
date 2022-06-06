@@ -272,7 +272,7 @@ type Mutation {
   updateLoginUser(updateInput: UpdateUserInput!): UserEntity!
 
   """회원 탈퇴 취소, Bearer JWT"""
-  restoreLoginUser(userID: String!): ResultMessage!
+  restoreUser(userID: String!): ResultMessage!
 
   """회원 삭제 ( Real )"""
   deleteUser(userID: String!): ResultMessage!
