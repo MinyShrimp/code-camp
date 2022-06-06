@@ -8,7 +8,7 @@ import { UserEntity } from './entities/user.entity';
 export class UserCheckService {
     constructor(
         @InjectRepository(UserEntity)
-        private readonly userRepository: Repository<UserEntity>,
+        private readonly userRepository: Repository<UserEntity>, //
     ) {}
 
     ///////////////////////////////////////////////////////////////////

@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { DateUtil } from '../../commons/utils/date.util';
@@ -11,6 +10,7 @@ import { UpdateUserInput } from './dto/updateUser.input';
 
 import { UserEntity } from './entities/user.entity';
 import { UserCheckService } from './userCheck.service';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UserService {
@@ -151,7 +151,7 @@ export class UserService {
         await this.userCheckService.checkLogout(user);
 
         // 로그아웃 성공
-        await this.userRepository.update(
+        const result = await this.userRepository.update(
             { id: user.id },
             { logoutAt: DateUtil.getKorDateNow(), isLogin: false },
         );
