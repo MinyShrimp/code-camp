@@ -1,5 +1,7 @@
-import { InputType, PartialType } from '@nestjs/graphql';
-import { SignupInput } from './Signup.input';
+import { InputType, PartialType, PickType } from '@nestjs/graphql';
+import { UserEntity } from '../entities/user.entity';
 
 @InputType()
-export class UpdateUserInput extends PartialType(SignupInput) {}
+export class UpdateUserInput extends PartialType(
+    PickType(UserEntity, ['name', 'email'], InputType),
+) {}

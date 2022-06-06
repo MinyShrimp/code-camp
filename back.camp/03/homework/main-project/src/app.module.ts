@@ -28,6 +28,7 @@ import { ProductTagModule } from './apis/productTag/productTag.module';
 import { ProductPriceModule } from './apis/productPrice/productPrice.module';
 import { ProductCategoryModule } from './apis/productCategory/productCategory.module';
 import { ProductCategorySearchModule } from './apis/productCategorySearch/productCategorySearch.module';
+import { AuthModule } from './apis/auth/auth.module';
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -38,6 +39,7 @@ import { ProductCategorySearchModule } from './apis/productCategorySearch/produc
         // 최상단에 위치
         ConfigModule.forRoot({
             envFilePath: '.env',
+            isGlobal: true,
         }),
 
         ///////////////////////////////////////////////////////////////////////////
@@ -64,6 +66,7 @@ import { ProductCategorySearchModule } from './apis/productCategorySearch/produc
 
         ///////////////////////////////////////////////////////////////////////////
         // Modules //
+        AuthModule,
         UserModule,
 
         ReviewModule,

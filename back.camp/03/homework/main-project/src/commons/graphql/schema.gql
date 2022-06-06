@@ -200,8 +200,8 @@ type Query {
   """회원 전체 조회"""
   fetchUsers: [UserEntity!]!
 
-  """회원 단일 조회"""
-  fetchUser(userID: String!): UserEntity
+  """회원 단일 조회, Bearer JWT"""
+  fetchLoginUser: UserEntity
 
   """리뷰 전체 조회"""
   fetchReviews: [ReviewEntity!]!
@@ -259,23 +259,26 @@ type Mutation {
   """회원가입"""
   createUser(signupInput: SignupInput!): UserEntity!
 
-  """회원 정보 수정"""
-  updateUser(userID: String!, updateUserInput: UpdateUserInput!): UserEntity!
+  """비밀번호 변경, Bearer JWT"""
+  updateUserPwd(pwd: String!): ResultMessage!
 
-  """로그인"""
-  Login(loginInput: LoginInput!): UserEntity!
+  """로그인, Get AccessToken"""
+  Login(loginInput: LoginInput!): String!
 
-  """로그아웃"""
-  Logout(userID: String!): ResultMessage!
+  """로그아웃, Bearer JWT"""
+  Logout: ResultMessage!
 
-  """회원 탈퇴 취소"""
-  restoreUser(userID: String!): ResultMessage!
+  """회원 정보 수정, Bearer JWT"""
+  updateLoginUser(updateInput: UpdateUserInput!): UserEntity!
+
+  """회원 탈퇴 취소, Bearer JWT"""
+  restoreLoginUser(userID: String!): ResultMessage!
 
   """회원 삭제 ( Real )"""
   deleteUser(userID: String!): ResultMessage!
 
-  """회원 탈퇴 ( Soft )"""
-  softDeleteUser(userID: String!): ResultMessage!
+  """회원 탈퇴 ( Soft ), Bearer JWT"""
+  deleteLoginUser: ResultMessage!
 
   """리뷰 생성"""
   createReview(createReviewInput: CreateReviewInput!): ReviewEntity!
@@ -415,23 +418,20 @@ input SignupInput {
   pwd: String!
 }
 
-input UpdateUserInput {
-  """이름"""
-  name: String
-
-  """이메일"""
-  email: String
-
-  """비밀번호"""
-  pwd: String
-}
-
 input LoginInput {
   """이메일"""
   email: String!
 
   """비밀번호"""
   pwd: String!
+}
+
+input UpdateUserInput {
+  """이름"""
+  name: String
+
+  """이메일"""
+  email: String
 }
 
 input CreateReviewInput {

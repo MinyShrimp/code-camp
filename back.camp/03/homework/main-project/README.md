@@ -5,6 +5,8 @@ yarn add @nestjs/config
 yarn add @nestjs/typeorm typeorm@0.2 mysql2
 yarn add @nestjs/graphql @nestjs/apollo graphql apollo-server-express
 yarn add class-validator class-transformer
+yarn add bcrypt @types/bcrypt
+yarn add @nestjs/jwt passport-jwt @nestjs/passport passport @types/passport-jwt
 ```
 
 ## 설정
@@ -111,3 +113,12 @@ bootstrap();
 -   [x] user 테이블에 데이터를 조회하는 API를 요청할 수 있다.
     -   [x] 조회할 때 비밀번호는 포함되지 않는다.
 -   [x] user 테이블에 데이터를 수정하는 API를 요청할 수 있다.
+
+### Day 21
+
+-   [x] playground로 로그인 API를 요청할 수 있다.
+    -   [x] 로그인이 완료되면 `accessToken` 을 받는다.
+    -   [x] 검증되지 않은 회원일 경우 Guard에서 에러를 반환한다.
+-   [x] playground로 `updateUserPwd` API를 요청할 수 있다.
+-   [x] playground로 `fetchLoginUser` API를 요청할 수 있다.
+-   [x] playground로 `deleteLoginUser` API를 요청할 수 있다.

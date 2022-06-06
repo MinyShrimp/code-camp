@@ -15,6 +15,14 @@ export class UserCheckService {
     // 기본 조회 //
 
     /**
+     * 전체 조회
+     * @returns 조회된 회원 정보 목록
+     */
+    async findAll(): Promise<UserEntity[]> {
+        return await this.userRepository.find({});
+    }
+
+    /**
      * ID 기반 회원 조회
      * @param userID
      * @returns 회원 정보
@@ -127,24 +135,6 @@ export class UserCheckService {
         if (!user.isLogin) {
             throw new ConflictException(
                 '이미 로그아웃된 유저입니다.', //
-            );
-        }
-        return user;
-    }
-
-    /**
-     * 비밀번호 검사
-     * @param user
-     * @param pwd
-     * @returns 회원 정보
-     */
-    checkPassword(
-        user: UserEntity, //
-        pwd: string,
-    ): UserEntity {
-        if (user.pwd !== pwd) {
-            throw new ConflictException(
-                '비밀번호가 다릅니다.', //
             );
         }
         return user;

@@ -1,19 +1,23 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
+import { PayloadDto } from 'src/commons/dto/payload.dto';
+import { CurrentUser } from 'src/commons/auth/gql-user.param';
+import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
+import { GqlAuthAccessGuard } from 'src/commons/auth/gql-auth.guard';
 
-import { LoginInput } from './dto/Login.input';
-import { SignupInput } from './dto/Signup.input';
 import { UpdateUserInput } from './dto/updateUser.input';
 
 import { UserEntity } from './entities/user.entity';
 import { UserService } from './user.service';
+import { UserCheckService } from './userCheck.service';
 
 /* 유저 API */
 @Resolver()
 export class UserResolver {
     constructor(
         private readonly userService: UserService, //
+        private readonly userCheckService: UserCheckService,
     ) {}
 
     ///////////////////////////////////////////////////////////////////
@@ -28,102 +32,67 @@ export class UserResolver {
         { description: '회원 전체 조회' },
     )
     fetchUsers(): Promise<UserEntity[]> {
-        return this.userService.findAll();
+        return this.userCheckService.findAll();
     }
 
     /**
-     * GET /api/user/:id
-     * @param userID
+     * GET /api/user
+     * - Bearer JWT
      * @response 회원 단일 조회
      */
+    @UseGuards(GqlAuthAccessGuard)
     @Query(
         () => UserEntity, //
-        { description: '회원 단일 조회', nullable: true },
+        { description: '회원 단일 조회, Bearer JWT', nullable: true },
     )
-    fetchUser(
-        @Args('userID') userID: string, //
+    fetchLoginUser(
+        @CurrentUser() currentUser: PayloadDto, //
     ): Promise<UserEntity> {
-        return this.userService.findOneByID(userID);
+        return this.userCheckService.findOneByID(currentUser.id);
     }
 
     ///////////////////////////////////////////////////////////////////
     // 생성 //
 
-    /**
-     * POST /api/signup
-     * @param signupInput
-     * @response 생성된 회원 정보
-     */
-    @Mutation(
-        () => UserEntity, //
-        { description: '회원가입' },
-    )
-    createUser(
-        @Args('signupInput') signupInput: SignupInput, //
-    ): Promise<UserEntity> {
-        return this.userService.Signup(signupInput);
-    }
+    /* Auth Resolver로 이관됨 */
 
     ///////////////////////////////////////////////////////////////////
     // 수정 //
 
     /**
-     * PATCH /api/user/:id
-     * @param userID
+     * PATCH /api/user
+     * - Bearer JWT
      * @param updateInput
      * @response 수정된 회원 정보
      */
+    @UseGuards(GqlAuthAccessGuard)
     @Mutation(
         () => UserEntity, //
-        { description: '회원 정보 수정' },
+        { description: '회원 정보 수정, Bearer JWT' },
     )
-    updateUser(
-        @Args('userID') userID: string,
-        @Args('updateUserInput') updateInput: UpdateUserInput,
+    async updateLoginUser(
+        @CurrentUser() currentUser: PayloadDto,
+        @Args('updateInput') updateInput: UpdateUserInput,
     ): Promise<UserEntity> {
-        return this.userService.update(userID, updateInput);
+        const userID = currentUser.id;
+
+        // 존재 여부 확인
+        const user = await this.userCheckService.checkValidUser(userID);
+
+        // 수정
+        return this.userService.updateUser(user, updateInput);
     }
 
     /**
-     * POST /api/login
-     * @param loginInput
-     * @response 로그인된 회원 정보
-     */
-    @Mutation(
-        () => UserEntity, //
-        { description: '로그인' },
-    )
-    Login(
-        @Args('loginInput') loginInput: LoginInput, //
-    ): Promise<UserEntity> {
-        return this.userService.Login(loginInput);
-    }
-
-    /**
-     * POST /api/logout
+     * PUT /admin/user/:id
      * @param userID
      * @response ResultMessage
      */
     @Mutation(
         () => ResultMessage, //
-        { description: '로그아웃' },
+        { description: '회원 탈퇴 취소, Bearer JWT' },
     )
-    Logout(
-        @Args('userID') userID: string, //
-    ): Promise<ResultMessage> {
-        return this.userService.Logout(userID);
-    }
-
-    /**
-     * PUT /api/user/:id
-     * @param userID
-     * @response ResultMessage
-     */
-    @Mutation(
-        () => ResultMessage, //
-        { description: '회원 탈퇴 취소' },
-    )
-    restoreUser(
+    restoreLoginUser(
         @Args('userID') userID: string, //
     ): Promise<ResultMessage> {
         return this.userService.restore(userID);
@@ -148,17 +117,18 @@ export class UserResolver {
     }
 
     /**
-     * DELETE /api/user/:id
-     * @param userID
+     * DELETE /api/user
+     * - Bearer JWT
      * @response ResultMessage
      */
+    @UseGuards(GqlAuthAccessGuard)
     @Mutation(
         () => ResultMessage, //
-        { description: '회원 탈퇴 ( Soft )' },
+        { description: '회원 탈퇴 ( Soft ), Bearer JWT' },
     )
-    softDeleteUser(
-        @Args('userID') userID: string, //
+    deleteLoginUser(
+        @CurrentUser() currentUser: PayloadDto, //
     ): Promise<ResultMessage> {
-        return this.userService.softDelete(userID);
+        return this.userService.softDelete(currentUser.id);
     }
 }

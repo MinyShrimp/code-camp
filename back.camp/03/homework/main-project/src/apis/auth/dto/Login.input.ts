@@ -1,5 +1,5 @@
 import { Field, InputType, PickType } from '@nestjs/graphql';
-import { UserEntity } from '../entities/user.entity';
+import { UserEntity } from 'src/apis/user/entities/user.entity';
 
 @InputType()
 export class LoginInput extends PickType(
