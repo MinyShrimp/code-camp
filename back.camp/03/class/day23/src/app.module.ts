@@ -15,6 +15,7 @@ import BoardsModule from "./apis/boards/boards.module";
 import ProductModule from "./apis/products/product.module";
 import ProductCategoryModule from "./apis/productsCategory/productCategory.module";
 import UserModule from "./apis/users/users.module";
+import AuthModule from "./apis/auth/auth.module";
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -25,6 +26,7 @@ import UserModule from "./apis/users/users.module";
         // 최상단에 위치
         ConfigModule.forRoot({
             envFilePath: ".env",
+            isGlobal: true,
         }),
 
         ///////////////////////////////////////////////////////////////////////////
@@ -55,6 +57,7 @@ import UserModule from "./apis/users/users.module";
         ProductCategoryModule,
 
         UserModule,
+        AuthModule,
     ],
     controllers: [],
     providers: [],

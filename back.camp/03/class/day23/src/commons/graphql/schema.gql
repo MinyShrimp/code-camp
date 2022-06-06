@@ -59,6 +59,7 @@ type Query {
   fetchProduct(productID: String!): ProductEntity!
   fetchProductCategoryAll: [ProductCategoryEntity!]!
   fetchUsers: [UserEntity!]!
+  fetchUser: String!
 }
 
 type Mutation {
@@ -70,6 +71,7 @@ type Mutation {
   createProductCategory(name: String!): ProductCategoryEntity!
   deleteProductCategoryAll: String!
   signUp(signupInput: SignupInput!): UserEntity!
+  Login(loginInput: LoginInput!): String!
 }
 
 input CreateBoardInput {
@@ -109,4 +111,9 @@ input SignupInput {
   pwd: String!
   name: String!
   age: Int!
+}
+
+input LoginInput {
+  email: String!
+  pwd: String!
 }

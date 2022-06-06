@@ -1,6 +1,8 @@
-import { ConflictException, HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { ConflictException, Injectable, UnprocessableEntityException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import * as bcrypt from "bcrypt";
+
 import SignupInput from "./dto/signup.input";
 import UserEntity from "./entities/user.entity";
 
@@ -11,13 +13,47 @@ export default class UserService {
         private readonly userRepository: Repository<UserEntity>
     ) {}
 
-    async findAll() {
+    async findAll(): Promise<UserEntity[]> {
         return await this.userRepository.find({});
+    }
+
+    async findOne(
+        userID: string //
+    ): Promise<UserEntity> {
+        // return await this.userRepository
+        //     .createQueryBuilder("user")
+        //     .select(["user.name"])
+        //     .where(`user.id = ${userID}`)
+        //     .getOne();
+        return await this.userRepository.findOne({
+            where: { id: userID },
+        });
+    }
+
+    async findOneByEmail(
+        email: string //
+    ): Promise<UserEntity> {
+        const user = await this.userRepository.findOne({
+            where: { email: email },
+        });
+
+        if (!user) {
+            throw new UnprocessableEntityException("일치하는 유저가 없습니다.");
+        }
+
+        return user;
+    }
+
+    private __createPassword(
+        originPwd: string //
+    ): string {
+        const salt = bcrypt.genSaltSync();
+        return bcrypt.hashSync(originPwd, salt);
     }
 
     async create(
         input: SignupInput //
-    ) {
+    ): Promise<UserEntity> {
         const user = await this.userRepository.findOne({
             email: input.email,
         });
@@ -30,6 +66,7 @@ export default class UserService {
             );
         }
 
+        input.pwd = this.__createPassword(input.pwd);
         return await this.userRepository.save({
             ...input,
         });

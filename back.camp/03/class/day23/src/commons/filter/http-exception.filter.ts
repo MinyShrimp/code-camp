@@ -18,6 +18,8 @@ class HttpExceptionFilter implements ExceptionFilter<HttpException> {
         /* 422 */
         console.log(status);
 
+        // return new HttpException(msg, 400);
+
         /**
          * {
          *     statusCode: 422,
