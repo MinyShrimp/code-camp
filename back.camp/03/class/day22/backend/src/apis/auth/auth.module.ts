@@ -18,7 +18,7 @@ import AuthService from "./auth.service";
         AuthController, //
     ],
     providers: [
-        // OAuthGoogleStrategy,
+        OAuthGoogleStrategy,
         JwtRefreshStrategy, //
         AuthResolver,
         AuthService,

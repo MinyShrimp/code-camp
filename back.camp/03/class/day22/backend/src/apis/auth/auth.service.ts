@@ -36,7 +36,8 @@ export default class AuthService {
         });
 
         // 개발 환경
-        res.setHeader("Set-Cookie", `refreshToken=${refreshToken}`);
+        // 소셜 로그인에서 path설정 반드시 필요
+        res.setHeader("Set-Cookie", `refreshToken=${refreshToken}; path=/;`);
 
         // 배포 환경
         // res.setHeader('Access-Control-Allow-Origin', 'https://myfrontsite.com')

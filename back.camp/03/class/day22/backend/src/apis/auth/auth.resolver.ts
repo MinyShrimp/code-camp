@@ -2,12 +2,13 @@ import * as bcrypt from "bcrypt";
 import { UnprocessableEntityException, UseGuards } from "@nestjs/common";
 import { Args, Context, GraphQLExecutionContext, Mutation, Resolver } from "@nestjs/graphql";
 
+import { CurrentUser } from "../../commons/auth/gql-user.param";
+import { GqlAuthJwtGuard } from "../../commons/auth/gql-auth.guard";
+
 import UserService from "../users/users.service";
 
 import AuthService from "./auth.service";
 import LoginInput from "./dto/login.input";
-import { CurrentUser } from "../../commons/auth/gql-user.param";
-import { GqlAuthJwtGuard } from "../../commons/auth/gql-auth.guard";
 
 @Resolver()
 export default class AuthResolver {
@@ -37,8 +38,6 @@ export default class AuthResolver {
         // Get AccessToken
         return this.authService.getAccessToken(user);
     }
-
-    async LoginGoogle() {}
 
     @UseGuards(GqlAuthJwtGuard)
     @Mutation(() => String)

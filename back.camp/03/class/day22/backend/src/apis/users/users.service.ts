@@ -33,18 +33,12 @@ export default class UserService {
     async findOneByEmail(
         email: string //
     ): Promise<UserEntity> {
-        const user = await this.userRepository.findOne({
+        return await this.userRepository.findOne({
             where: { email: email },
         });
-
-        if (!user) {
-            throw new UnprocessableEntityException("일치하는 유저가 없습니다.");
-        }
-
-        return user;
     }
 
-    private __createPassword(
+    createPassword(
         originPwd: string //
     ): string {
         const salt = bcrypt.genSaltSync();
@@ -66,7 +60,7 @@ export default class UserService {
             );
         }
 
-        input.pwd = this.__createPassword(input.pwd);
+        input.pwd = this.createPassword(input.pwd);
         return await this.userRepository.save({
             ...input,
         });

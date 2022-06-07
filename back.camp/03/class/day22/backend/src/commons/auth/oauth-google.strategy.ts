@@ -19,10 +19,15 @@ export class OAuthGoogleStrategy extends PassportStrategy(Strategy, "google") {
      */
     validate(
         accessToken: string, //
-        refreshToken: string,
+        _: string,
         profile: any
     ) {
-        console.log(accessToken, refreshToken, profile);
+        const user_info = profile._json;
+
+        return {
+            email: user_info.email,
+            name: user_info.name,
+        };
 
         // return {
         //     accessToken,
