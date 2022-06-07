@@ -4,7 +4,7 @@ import SignupInput from "./dto/signup.input";
 
 import UserEntity from "./entities/user.entity";
 import UserService from "./users.service";
-import { GqlAuthAccessGuard } from "src/commons/auth/gql-auth.guard";
+import { GqlAuthJwtGuard } from "src/commons/auth/gql-auth.guard";
 import { CurrentUser } from "src/commons/auth/gql-user.param";
 
 @Resolver()
@@ -21,7 +21,7 @@ export default class UserResolver {
     /**
      * User Resolver => GQL Auth Guard => JwtAccessStrategy => GQL User Param => User Resolver
      */
-    @UseGuards(GqlAuthAccessGuard)
+    @UseGuards(GqlAuthJwtGuard)
     @Query(() => String)
     fetchUser(
         @CurrentUser() currentUser: any //

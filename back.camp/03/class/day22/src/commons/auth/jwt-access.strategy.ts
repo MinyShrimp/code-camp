@@ -4,7 +4,7 @@ import { Strategy, ExtractJwt } from "passport-jwt";
 /**
  * GQL Auth Guard => JwtAccessStrategy => GQL User Param
  */
-export class JwtAccessStrategy extends PassportStrategy(Strategy, "jwtGuard") {
+export class JwtAccessStrategy extends PassportStrategy(Strategy, "jwtAccessGuard") {
     constructor() {
         super({
             // jwtFromRequest: (req) => req.headers.Authorization.replace("Bearer", "") },
@@ -17,8 +17,6 @@ export class JwtAccessStrategy extends PassportStrategy(Strategy, "jwtGuard") {
      * 검증 성공 시 실행
      */
     validate(payload: any) {
-        console.log(payload);
-
         /* req.user */
         return {
             id: payload.sub,

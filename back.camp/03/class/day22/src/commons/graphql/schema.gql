@@ -72,6 +72,7 @@ type Mutation {
   deleteProductCategoryAll: String!
   signUp(signupInput: SignupInput!): UserEntity!
   Login(loginInput: LoginInput!): String!
+  restoreAccessToken: String!
 }
 
 input CreateBoardInput {

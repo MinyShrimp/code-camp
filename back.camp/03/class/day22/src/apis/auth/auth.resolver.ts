@@ -1,10 +1,14 @@
-import { UnprocessableEntityException } from "@nestjs/common";
-import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import * as bcrypt from "bcrypt";
+import { UnprocessableEntityException, UseGuards } from "@nestjs/common";
+import { Args, Context, GraphQLExecutionContext, Mutation, Resolver } from "@nestjs/graphql";
+
+import { GqlAuthJwtGuard } from "src/commons/auth/gql-auth.guard";
 
 import UserService from "../users/users.service";
+
 import AuthService from "./auth.service";
 import LoginInput from "./dto/login.input";
+import { CurrentUser } from "src/commons/auth/gql-user.param";
 
 @Resolver()
 export default class AuthResolver {
@@ -15,7 +19,8 @@ export default class AuthResolver {
 
     @Mutation(() => String)
     async Login(
-        @Args("loginInput") loginInput: LoginInput //
+        @Context() context: GraphQLExecutionContext,
+        @Args("loginInput") loginInput: LoginInput
     ): Promise<string> {
         // 이메일로 비번 찾기
         const user = await this.userService.findOneByEmail(loginInput.email);
@@ -26,7 +31,19 @@ export default class AuthResolver {
             throw new UnprocessableEntityException("비밀번호가 일치하지 않습니다.");
         }
 
-        // JWT
-        return await this.authService.getAccessToken(user);
+        // Set RefreshToken
+        // @ts-ignore
+        this.authService.setRefreshToken(user, context.res);
+
+        // Get AccessToken
+        return this.authService.getAccessToken(user);
+    }
+
+    @UseGuards(GqlAuthJwtGuard)
+    @Mutation(() => String)
+    async restoreAccessToken(
+        @CurrentUser() currentUser: any //
+    ): Promise<string> {
+        return this.authService.signAccessToken(currentUser);
     }
 }
