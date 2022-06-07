@@ -4,10 +4,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { JwtAccessStrategy } from 'src/commons/auth/jwt-access.strategy';
 import { JwtRefreshStrategy } from 'src/commons/auth/jwt-refresh.strategy';
+import { OAuthGoogleStrategy } from 'src/commons/auth/oauth-google.strategy';
 
 import { UserEntity } from '../user/entities/user.entity';
 import { UserModule } from '../user/user.module';
 
+import { AuthController } from './auth.controller';
 import { AuthResolver } from './auth.resolver';
 import { AuthService } from './auth.service';
 
@@ -19,11 +21,13 @@ import { AuthService } from './auth.service';
         JwtModule.register({}),
         UserModule,
     ],
+    controllers: [AuthController],
     providers: [
-        AuthResolver, //
-        AuthService,
-        JwtAccessStrategy,
+        OAuthGoogleStrategy,
         JwtRefreshStrategy,
+        JwtAccessStrategy,
+        AuthResolver,
+        AuthService,
     ],
 })
 export class AuthModule {}

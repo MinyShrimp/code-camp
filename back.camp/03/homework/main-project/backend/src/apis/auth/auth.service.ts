@@ -29,7 +29,7 @@ export class AuthService {
      * @param originPwd
      * @returns Hasing Password
      */
-    private createPassword(
+    createPassword(
         originPwd: string, //
     ): string {
         return bcrypt.hashSync(originPwd, bcrypt.genSaltSync());
@@ -41,7 +41,7 @@ export class AuthService {
      * @param hashPwd
      * @returns isCompare
      */
-    private comparePassword(
+    comparePassword(
         originPwd: string, //
         hashPwd: string,
     ): boolean {
@@ -96,7 +96,7 @@ export class AuthService {
         });
 
         // 개발 환경
-        res.setHeader('Set-Cookie', `refreshToken=${refreshToken}`);
+        res.setHeader('Set-Cookie', `refreshToken=${refreshToken}; path=/;`);
 
         // 배포 환경
         // res.setHeader('Access-Control-Allow-Origin', 'https://myfrontsite.com')
