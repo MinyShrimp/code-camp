@@ -50,6 +50,18 @@ type PublisherEntity {
   description: String!
 }
 
+"""책 이미지 Entity"""
+type BookImageEntity {
+  id: ID!
+
+  """책 이미지 URL"""
+  url: String!
+
+  """메인 이미지 여부"""
+  isMain: Boolean!
+  book: BookEntity!
+}
+
 """책 Entity"""
 type BookEntity {
   id: ID!
@@ -74,8 +86,9 @@ type BookEntity {
 
   """출간일"""
   publish_at: DateTime!
-  publisher: PublisherEntity!
-  author: AuthorEntity!
+  publisher: PublisherEntity
+  author: AuthorEntity
+  book_images: [BookImageEntity!]!
 }
 
 """
@@ -173,18 +186,6 @@ type PaymentEntity {
   product: ProductEntity!
 }
 
-"""책 이미지 Entity"""
-type BookImageEntity {
-  id: ID!
-
-  """책 이미지 URL"""
-  url: String!
-
-  """메인 이미지 여부"""
-  isMain: Boolean!
-  book: BookEntity!
-}
-
 """상품 분류 Entity"""
 type ProductCategoryEntity {
   id: ID!
@@ -226,9 +227,6 @@ type Query {
 
   """출판사 정보 조회"""
   fetchPublisher(publisherID: String!): PublisherEntity!
-
-  """책 이미지 정보 조회"""
-  fetchBookImage(bookImageID: String!): BookImageEntity!
 
   """모든 상품 조회"""
   fetchProducts: [ProductEntity!]!
@@ -357,21 +355,6 @@ type Mutation {
 
   """출판사 정보 삭제 ( Soft )"""
   softDeletePublisher(publisherID: String!): ResultMessage!
-
-  """책 이미지 생성"""
-  createBookImage(createBookImageInput: CreateBookImageInput!): BookImageEntity!
-
-  """책 이미지 정보 수정"""
-  updateBookImage(bookImageID: String!, updateBookImageInput: UpdateBookImageInput!): BookImageEntity!
-
-  """책 이미지 삭제 취소"""
-  restoreBookImage(bookImageID: String!): ResultMessage!
-
-  """책 이미지 삭제 ( Real )"""
-  deleteBookImage(bookImageID: String!): ResultMessage!
-
-  """책 이미지 삭제 ( Soft )"""
-  softDeleteBookImage(bookImageID: String!): ResultMessage!
 
   """상품 정보 생성"""
   createProduct(createProductInput: CreateProductInput!): ProductEntity!
@@ -529,6 +512,21 @@ input CreateBookInput {
 
   """출간일"""
   publish_at: DateTime!
+
+  """출판사 ID"""
+  publisher_id: String!
+
+  """저자 ID"""
+  author_id: String!
+  book_imgs: [CreateBookImageInput!]!
+}
+
+input CreateBookImageInput {
+  """책 이미지 URL"""
+  url: String!
+
+  """메인 이미지 여부"""
+  isMain: Boolean!
 }
 
 input UpdateBookInput {
@@ -552,6 +550,13 @@ input UpdateBookInput {
 
   """출간일"""
   publish_at: DateTime
+
+  """출판사 ID"""
+  publisher_id: String
+
+  """저자 ID"""
+  author_id: String
+  book_imgs: [CreateBookImageInput!]
 }
 
 input CreateAuthorInput {
@@ -584,22 +589,6 @@ input UpdatePublisherInput {
 
   """설명"""
   description: String
-}
-
-input CreateBookImageInput {
-  """책 이미지 URL"""
-  url: String!
-
-  """메인 이미지 여부"""
-  isMain: Boolean!
-}
-
-input UpdateBookImageInput {
-  """책 이미지 URL"""
-  url: String
-
-  """메인 이미지 여부"""
-  isMain: Boolean
 }
 
 input CreateProductInput {

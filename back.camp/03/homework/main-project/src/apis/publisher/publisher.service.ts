@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -29,9 +29,13 @@ export class PublisherService {
     async findOne(
         publisherID: string, //
     ): Promise<PublisherEntity> {
-        return await this.publisherRepository.findOne({
+        const publisher = await this.publisherRepository.findOne({
             where: { id: publisherID },
         });
+        if (!publisher) {
+            throw new ConflictException('출판사를 찾을 수 없습니다.');
+        }
+        return publisher;
     }
 
     ///////////////////////////////////////////////////////////////////

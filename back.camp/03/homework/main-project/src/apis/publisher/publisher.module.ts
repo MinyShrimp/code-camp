@@ -11,6 +11,7 @@ import { PublisherService } from './publisher.service';
             PublisherEntity, //
         ]),
     ],
+    exports: [PublisherService],
     providers: [
         PublisherResolver, //
         PublisherService,

@@ -32,7 +32,7 @@ export class UserResolver {
         { description: '회원 전체 조회' },
     )
     fetchUsers(): Promise<UserEntity[]> {
-        return this.userCheckService.findAll();
+        return this.userService.findAll();
     }
 
     /**
@@ -48,7 +48,7 @@ export class UserResolver {
     fetchLoginUser(
         @CurrentUser() currentUser: PayloadDto, //
     ): Promise<UserEntity> {
-        return this.userCheckService.findOneByID(currentUser.id);
+        return this.userService.findOneByID(currentUser.id);
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -76,8 +76,11 @@ export class UserResolver {
     ): Promise<UserEntity> {
         const userID = currentUser.id;
 
+        // 검색
+        const user = await this.userService.findOneByID(userID);
+
         // 존재 여부 확인
-        const user = await this.userCheckService.checkValidUser(userID);
+        await this.userCheckService.checkValidUser(user);
 
         // 수정
         return this.userService.updateUser(user, updateInput);

@@ -2,6 +2,10 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
 
+import { AuthorService } from '../author/author.service';
+import { PublisherService } from '../publisher/publisher.service';
+import { BookImageService } from '../bookImage/bookImage.service';
+
 import { BookEntity } from './entities/book.entity';
 import { CreateBookInput } from './dto/createBook.input';
 import { UpdateBookInput } from './dto/updateBook.input';
@@ -11,7 +15,10 @@ import { BookService } from './book.service';
 @Resolver()
 export class BookResolver {
     constructor(
-        private readonly bookService: BookService, //
+        private readonly bookService: BookService,
+        private readonly authorService: AuthorService,
+        private readonly publisherService: PublisherService,
+        private readonly bookImageService: BookImageService,
     ) {}
 
     ///////////////////////////////////////////////////////////////////
@@ -56,10 +63,27 @@ export class BookResolver {
         () => BookEntity, //
         { description: '책 정보 생성' },
     )
-    createBook(
+    async createBook(
         @Args('createBookInput') createBookInput: CreateBookInput,
     ): Promise<BookEntity> {
-        return this.bookService.create(createBookInput);
+        const {
+            book_imgs, //
+            author_id,
+            publisher_id,
+            ...input
+        } = createBookInput;
+
+        const author = await this.authorService.findOne(author_id);
+        const publisher = await this.publisherService.findOne(publisher_id);
+        const book = await this.bookService.create(input, author, publisher);
+        const book_images = await this.bookImageService.create(book, book_imgs);
+
+        this.bookService.update(
+            { ...input, author, publisher, book_images },
+            book,
+        );
+
+        return await this.bookService.findOne(book.id);
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -75,11 +99,22 @@ export class BookResolver {
         () => BookEntity, //
         { description: '책 정보 수정' },
     )
-    updateBook(
+    async updateBook(
         @Args('bookID') bookID: string,
         @Args('updateBookInput') updateBookInput: UpdateBookInput,
     ): Promise<BookEntity> {
-        return this.bookService.update(bookID, updateBookInput);
+        const {
+            book_imgs,
+            author_id,
+            publisher_id, //
+            ...input
+        } = updateBookInput;
+
+        const book = await this.bookService.findOne(bookID);
+        const author = await this.authorService.findOne(author_id);
+        const publisher = await this.publisherService.findOne(publisher_id);
+
+        return this.bookService.update({ ...input, author, publisher }, book);
     }
 
     /**
@@ -109,6 +144,7 @@ export class BookResolver {
         { description: '모든 책 삭제 ( Real )' },
     )
     async deleteBookAll(): Promise<ResultMessage> {
+        await this.bookImageService.deleteAll();
         return await this.bookService.deleteAll();
     }
 

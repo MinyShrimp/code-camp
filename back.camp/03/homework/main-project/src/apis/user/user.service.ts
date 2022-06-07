@@ -21,7 +21,39 @@ export class UserService {
     ///////////////////////////////////////////////////////////////////
     // 조회 //
 
-    /* UserCheck Service로 이관됨 */
+    /**
+     * 전체 조회
+     * @returns 조회된 회원 정보 목록
+     */
+    async findAll(): Promise<UserEntity[]> {
+        return await this.userRepository.find({});
+    }
+
+    /**
+     * ID 기반 회원 조회
+     * @param userID
+     * @returns 회원 정보
+     */
+    async findOneByID(
+        userID: string, //
+    ): Promise<UserEntity> {
+        return await this.userRepository.findOne({
+            where: { id: userID },
+        });
+    }
+
+    /**
+     * Email 기반 회원 조회
+     * @param email
+     * @returns 회원 정보
+     */
+    async findOneByEmail(
+        email: string, //
+    ): Promise<UserEntity> {
+        return await this.userRepository.findOne({
+            where: { email: email },
+        });
+    }
 
     ///////////////////////////////////////////////////////////////////
     // 생성 //

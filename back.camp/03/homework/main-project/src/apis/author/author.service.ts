@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -37,9 +37,13 @@ export class AuthorService {
     async findOne(
         authorID: string, //
     ): Promise<AuthorEntity> {
-        return await this.authorRepository.findOne({
+        const author = await this.authorRepository.findOne({
             where: { id: authorID },
         });
+        if (author === undefined) {
+            throw new ConflictException('저자 정보를 찾을 수 없습니다.');
+        }
+        return author;
     }
 
     ///////////////////////////////////////////////////////////////////

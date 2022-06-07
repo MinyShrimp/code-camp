@@ -6,6 +6,7 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    Index,
     ManyToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -20,7 +21,8 @@ export class ProductTagEntity {
     id: string;
 
     // 이름
-    @Column()
+    // @Index()
+    @Column({ unique: true })
     @Field(() => String, { description: '이름' })
     name: string;
 

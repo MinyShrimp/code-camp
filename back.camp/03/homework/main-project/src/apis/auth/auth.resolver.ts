@@ -13,12 +13,14 @@ import { LoginInput } from './dto/Login.input';
 import { SignupInput } from './dto/Signup.input';
 
 import { AuthService } from './auth.service';
+import { UserService } from '../user/user.service';
 
 /* Auth API */
 @Resolver()
 export class AuthResolver {
     constructor(
         private readonly authService: AuthService,
+        private readonly userService: UserService,
         private readonly userCheckService: UserCheckService,
     ) {}
 
@@ -40,8 +42,11 @@ export class AuthResolver {
     async createUser(
         @Args('signupInput') input: SignupInput, //
     ): Promise<UserEntity> {
+        // 검색
+        const user = await this.userService.findOneByEmail(input.email);
+
         // 이메일 중복 체크
-        await this.userCheckService.checkOverlapEmail(input.email);
+        await this.userCheckService.checkOverlapEmail(user);
 
         // 회원가입
         return this.authService.Signup(input);
@@ -66,8 +71,11 @@ export class AuthResolver {
     ): Promise<ResultMessage> {
         const userID = currentUser.id;
 
+        // 검색
+        const user = await this.userService.findOneByID(userID);
+
         // 존재 여부 검사
-        await this.userCheckService.checkValidUser(userID);
+        await this.userCheckService.checkValidUser(user);
 
         // 비밀번호 변경 + 로그아웃
         return this.authService.updatePwd(userID, pwd);
@@ -85,10 +93,11 @@ export class AuthResolver {
     async Login(
         @Args('loginInput') input: LoginInput, //
     ): Promise<string> {
+        // 검색
+        const user = await this.userService.findOneByEmail(input.email);
+
         // 이메일 검사
-        const user = await this.userCheckService.checkValidUserByEmail(
-            input.email,
-        );
+        await this.userCheckService.checkValidUser(user);
 
         // 로그인 여부 검사
         await this.userCheckService.checkLogin(user);
@@ -112,8 +121,11 @@ export class AuthResolver {
     ): Promise<ResultMessage> {
         const userID = currentUser.id;
 
+        // 검색
+        const user = await this.userService.findOneByID(userID);
+
         // 존재 여부 검사
-        const user = await this.userCheckService.checkValidUser(userID);
+        await this.userCheckService.checkValidUser(user);
 
         // 로그아웃 여부 검사
         await this.userCheckService.checkLogout(user);

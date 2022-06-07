@@ -1,6 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { AuthorModule } from '../author/author.module';
+import { PublisherModule } from '../publisher/publisher.module';
+import { BookImageModule } from '../bookImage/bookImage.module';
+
 import { BookEntity } from './entities/book.entity';
 import { BookResolver } from './book.resolver';
 import { BookService } from './book.service';
@@ -10,6 +14,9 @@ import { BookService } from './book.service';
         TypeOrmModule.forFeature([
             BookEntity, //
         ]),
+        AuthorModule,
+        PublisherModule,
+        BookImageModule,
     ],
     providers: [
         BookResolver, //

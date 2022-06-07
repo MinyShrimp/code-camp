@@ -9,10 +9,12 @@ import {
     UpdateDateColumn,
     DeleteDateColumn,
     PrimaryGeneratedColumn,
+    OneToMany,
 } from 'typeorm';
 
 import { AuthorEntity } from 'src/apis/author/entities/author.entity';
 import { PublisherEntity } from 'src/apis/publisher/entities/publisher.entity';
+import { BookImageEntity } from 'src/apis/bookImage/entities/bookImage.entity';
 
 @Entity({ name: 'book' })
 @ObjectType({ description: '책 Entity' })
@@ -92,13 +94,31 @@ export class BookEntity {
 
     // 출판사
     @JoinColumn()
-    @ManyToOne(() => PublisherEntity)
-    @Field(() => PublisherEntity)
+    @ManyToOne(() => PublisherEntity, {
+        cascade: true,
+        onDelete: 'CASCADE',
+    })
+    @Field(() => PublisherEntity, { nullable: true })
     publisher: PublisherEntity;
 
     // 저자
     @JoinColumn()
-    @ManyToOne(() => AuthorEntity)
-    @Field(() => AuthorEntity)
+    @ManyToOne(() => AuthorEntity, {
+        cascade: true,
+        onDelete: 'CASCADE',
+    })
+    @Field(() => AuthorEntity, { nullable: true })
     author: AuthorEntity;
+
+    // 책 이미지
+    @OneToMany(
+        () => BookImageEntity, //
+        (book_img) => book_img.book,
+        {
+            cascade: true,
+            onDelete: 'CASCADE',
+        },
+    )
+    @Field(() => [BookImageEntity])
+    book_images: BookImageEntity[];
 }

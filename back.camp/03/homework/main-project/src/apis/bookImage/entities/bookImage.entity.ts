@@ -1,13 +1,14 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { IsBoolean, IsUrl } from 'class-validator';
 import {
-    Column,
-    CreateDateColumn,
-    DeleteDateColumn,
     Entity,
+    Column,
     ManyToOne,
-    PrimaryGeneratedColumn,
+    JoinColumn,
+    CreateDateColumn,
     UpdateDateColumn,
+    DeleteDateColumn,
+    PrimaryGeneratedColumn,
 } from 'typeorm';
 
 import { BookEntity } from 'src/apis/book/entities/book.entity';
@@ -38,7 +39,11 @@ export class BookImageEntity {
     isMain: boolean;
 
     // 책
-    @ManyToOne(() => BookEntity)
+    @JoinColumn()
+    @ManyToOne(
+        () => BookEntity, //
+        (book) => book.book_images,
+    )
     @Field(() => BookEntity)
     book: BookEntity;
 

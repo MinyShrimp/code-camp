@@ -11,6 +11,7 @@ import { AuthorService } from './author.service';
             AuthorEntity, //
         ]),
     ],
+    exports: [AuthorService],
     providers: [
         AuthorResolver, //
         AuthorService,
