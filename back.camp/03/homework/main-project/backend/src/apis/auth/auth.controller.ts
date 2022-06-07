@@ -46,6 +46,6 @@ export class AuthController {
         this.authService.setRefreshToken(user, res);
 
         // 3. Redirect
-        res.redirect('http://localhost:5500/');
+        res.redirect('http://localhost:5500/frontend/login/index.html');
     }
 }

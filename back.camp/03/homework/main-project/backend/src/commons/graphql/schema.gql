@@ -257,6 +257,9 @@ type Mutation {
   """회원가입"""
   createUser(signupInput: SignupInput!): UserEntity!
 
+  """AccessToken 재발급"""
+  restoreToken: String!
+
   """비밀번호 변경, Bearer JWT"""
   updateUserPwd(pwd: String!): ResultMessage!
 
