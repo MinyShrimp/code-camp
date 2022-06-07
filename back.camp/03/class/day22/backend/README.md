@@ -7,8 +7,8 @@ yarn add @nestjs/graphql @nestjs/apollo graphql apollo-server-express
 yarn add class-validator class-transformer
 yarn add bcrypt
 yarn add @types/bcrypt -D
-yarn add @nestjs/jwt passport-jwt @nestjs/passport passport
-yarn add @types/passport-jwt -D
+yarn add @nestjs/jwt passport-jwt @nestjs/passport passport @types/passport-jwt
+yarn add passport-google-oauth20 @types/passport-google-oauth20
 ```
 
 ## Setting
