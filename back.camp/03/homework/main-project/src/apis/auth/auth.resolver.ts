@@ -1,10 +1,10 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
 
 import { PayloadDto } from 'src/commons/dto/payload.dto';
 import { CurrentUser } from 'src/commons/auth/gql-user.param';
 import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
-import { GqlAuthAccessGuard } from 'src/commons/auth/gql-auth.guard';
+import { GqlAuthJwtGuard } from 'src/commons/auth/gql-auth.guard';
 
 import { UserEntity } from '../user/entities/user.entity';
 import { UserCheckService } from '../user/userCheck.service';
@@ -52,6 +52,21 @@ export class AuthResolver {
         return this.authService.Signup(input);
     }
 
+    /**
+     * POST /api/retore/token
+     * @param currentUser
+     * @response JWT Access Token
+     */
+    @UseGuards(GqlAuthJwtGuard)
+    @Mutation(() => String, { description: 'AccessToken 재발급' })
+    async restoreToken(
+        @CurrentUser() currentUser: PayloadDto, //
+    ) {
+        const user = await this.userService.findOneByID(currentUser.id);
+        await this.userCheckService.checkValidUser(user);
+        return this.authService.getAccessToken(user);
+    }
+
     ///////////////////////////////////////////////////////////////////
     // 수정 //
 
@@ -60,7 +75,7 @@ export class AuthResolver {
      * @param pwd
      * @response ResultMessage
      */
-    @UseGuards(GqlAuthAccessGuard)
+    @UseGuards(GqlAuthJwtGuard)
     @Mutation(
         () => ResultMessage, //
         { description: '비밀번호 변경, Bearer JWT' },
@@ -91,6 +106,7 @@ export class AuthResolver {
         { description: '로그인, Get AccessToken' },
     )
     async Login(
+        @Context() context: any,
         @Args('loginInput') input: LoginInput, //
     ): Promise<string> {
         // 검색
@@ -102,6 +118,9 @@ export class AuthResolver {
         // 로그인 여부 검사
         await this.userCheckService.checkLogin(user);
 
+        // Set Refresh Token
+        this.authService.setRefreshToken(user, context.res);
+
         // 로그인
         return this.authService.Login(user, input);
     }
@@ -111,7 +130,7 @@ export class AuthResolver {
      * - Bearer JWT
      * @response ResultMessage
      */
-    @UseGuards(GqlAuthAccessGuard)
+    @UseGuards(GqlAuthJwtGuard)
     @Mutation(
         () => ResultMessage, //
         { description: '로그아웃, Bearer JWT' },

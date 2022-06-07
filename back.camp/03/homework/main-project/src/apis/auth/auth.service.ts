@@ -1,4 +1,5 @@
 import * as bcrypt from 'bcrypt';
+import { Response } from 'express';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -50,26 +51,59 @@ export class AuthService {
         return true;
     }
 
+    private getPayload(user: UserEntity) {
+        return {
+            sub: user.id,
+            name: user.name,
+            email: user.email,
+        };
+    }
+
     /**
-     * JWT 생성
+     * JWT Get Access Token
      * @param user
      * @returns Access Token
+     *
+     * 만료 기간: 1시간
      */
-    private async getAccessToken(
+    getAccessToken(
         user: UserEntity, //
-    ): Promise<string> {
-        return this.jwtService.sign(
-            {
-                /* Payloads */
-                sub: user.id,
-                name: user.name,
-                email: user.email,
-            },
-            {
-                /* Options */
-                secret: process.env.JWT_ACCESS_KEY,
-            },
-        );
+    ): string {
+        const payload = this.getPayload(user);
+        return this.jwtService.sign(payload, {
+            /* Options */
+            secret: process.env.JWT_ACCESS_KEY,
+            expiresIn: '1h',
+        });
+    }
+
+    /**
+     * JWT Set Refresh Token
+     * @param user
+     *
+     * 만료기간: 2주
+     */
+    setRefreshToken(
+        user: UserEntity, //
+        res: Response,
+    ): void {
+        const payload = this.getPayload(user);
+
+        const refreshToken = this.jwtService.sign(payload, {
+            /* Options */
+            secret: process.env.JWT_REFRESH_KEY,
+            expiresIn: '2w',
+        });
+
+        // 개발 환경
+        res.setHeader('Set-Cookie', `refreshToken=${refreshToken}`);
+
+        // 배포 환경
+        // res.setHeader('Access-Control-Allow-Origin', 'https://myfrontsite.com')
+        // res.setHeader(
+        //   'Set-Cookie',
+        //   `refreshToken=${refreshToken}; path=/; domain=.mybacksite.com; SameSite=None; Secure; httpOnly;`
+        // )
     }
 
     ///////////////////////////////////////////////////////////////////

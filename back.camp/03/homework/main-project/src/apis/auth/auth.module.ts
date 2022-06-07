@@ -3,6 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { JwtAccessStrategy } from 'src/commons/auth/jwt-access.strategy';
+import { JwtRefreshStrategy } from 'src/commons/auth/jwt-refresh.strategy';
 
 import { UserEntity } from '../user/entities/user.entity';
 import { UserModule } from '../user/user.module';
@@ -15,15 +16,14 @@ import { AuthService } from './auth.service';
         TypeOrmModule.forFeature([
             UserEntity, //
         ]),
-        JwtModule.register({
-            signOptions: { expiresIn: '60d' },
-        }),
+        JwtModule.register({}),
         UserModule,
     ],
     providers: [
         AuthResolver, //
         AuthService,
         JwtAccessStrategy,
+        JwtRefreshStrategy,
     ],
 })
 export class AuthModule {}

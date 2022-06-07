@@ -7,6 +7,7 @@ yarn add @nestjs/graphql @nestjs/apollo graphql apollo-server-express
 yarn add class-validator class-transformer
 yarn add bcrypt @types/bcrypt
 yarn add @nestjs/jwt passport-jwt @nestjs/passport passport @types/passport-jwt
+yarn add passport-google-oauth20 @types/passport-google-oauth20
 ```
 
 ## 설정
