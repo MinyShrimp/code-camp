@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { getManager, Repository } from 'typeorm';
 
-import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../commons/message/ResultMessage.dto';
+import { MESSAGES } from '../../commons/message/Message.enum';
 
 import { CreateProductCategoryInput } from './dto/createProductCategory.input';
 import { ProductCategoryEntity } from './entities/productCategory.entity';
@@ -100,8 +101,8 @@ export class ProductCategoryService {
             id: categoryID,
             isSuccess,
             contents: isSuccess
-                ? 'Completed Category Delete'
-                : 'Failed Category Delete',
+                ? MESSAGES.CATEGORY_TREE_DELETE_SUCCESSED
+                : MESSAGES.CATEGORY_TREE_DELETE_FAILED,
         });
     }
 
@@ -117,8 +118,8 @@ export class ProductCategoryService {
         return new ResultMessage({
             isSuccess,
             contents: isSuccess
-                ? 'Completed Category All Delete'
-                : 'Failed Category All Delete',
+                ? MESSAGES.CATEGORY_TREE_DELETE_ALL_SUCCESSED
+                : MESSAGES.CATEGORY_TREE_DELETE_ALL_FAILED,
         });
     }
 }

@@ -7,7 +7,8 @@ import { ConflictException, Injectable } from '@nestjs/common';
 
 import { IPayloadSub } from '../../commons/interfaces/Payload.interface';
 import { DateUtil } from '../../commons/utils/date.util';
-import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../commons/message/ResultMessage.dto';
+import { MESSAGES } from '../../commons/message/Message.enum';
 
 import { UserEntity } from '../user/entities/user.entity';
 
@@ -47,7 +48,7 @@ export class AuthService {
         hashPwd: string,
     ): boolean {
         if (!bcrypt.compareSync(originPwd, hashPwd)) {
-            throw new ConflictException('비밀번호가 다릅니다.');
+            throw new ConflictException(MESSAGES.USER_COMPARE_PWD_FAILED);
         }
         return true;
     }
@@ -167,8 +168,8 @@ export class AuthService {
             id: userID,
             isSuccess,
             contents: isSuccess
-                ? 'Completed Change Password'
-                : 'Failed Change Password',
+                ? MESSAGES.USER_UPDATE_PWD_SUCCESSED
+                : MESSAGES.USER_UPDATE_PWD_FAILED,
         });
     }
 
@@ -221,7 +222,9 @@ export class AuthService {
         return new ResultMessage({
             id: userID,
             isSuccess,
-            contents: isSuccess ? 'Completed Logout' : 'Failed Logout',
+            contents: isSuccess
+                ? MESSAGES.USER_LOGOUT_SUCCESSED
+                : MESSAGES.USER_LOGOUT_FAILED,
         });
     }
 

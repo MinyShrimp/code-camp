@@ -1,6 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../commons/message/ResultMessage.dto';
 
 import { AuthorService } from '../author/author.service';
 import { PublisherService } from '../publisher/publisher.service';

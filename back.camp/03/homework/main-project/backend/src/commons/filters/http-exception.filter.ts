@@ -8,7 +8,7 @@ import {
     ExceptionFilter,
     HttpException,
 } from '@nestjs/common';
-import { ResultMessage } from '../dto/ResultMessage.dto';
+import { ResultMessage } from '../message/ResultMessage.dto';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter<HttpException> {

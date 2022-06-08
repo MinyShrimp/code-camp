@@ -2,7 +2,8 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../commons/message/ResultMessage.dto';
+import { MESSAGES } from '../../commons/message/Message.enum';
 
 import { PublisherEntity } from './entities/publisher.entity';
 import { CreatePublisherInput } from './dto/createPublisher.input';
@@ -33,7 +34,9 @@ export class PublisherService {
             where: { id: publisherID },
         });
         if (!publisher) {
-            throw new ConflictException('출판사를 찾을 수 없습니다.');
+            throw new ConflictException(
+                MESSAGES.PUBLISHER_FIND_ONE_FAILED, //
+            );
         }
         return publisher;
     }
@@ -96,8 +99,8 @@ export class PublisherService {
             id: publisherID,
             isSuccess,
             contents: isSuccess
-                ? 'Completed Publisher Restore'
-                : 'Failed Publisher Restore',
+                ? MESSAGES.PUBLISHER_RESTORE_SUCCESSED
+                : MESSAGES.PUBLISHER_RESTORE_FAILED,
         });
     }
 
@@ -121,8 +124,8 @@ export class PublisherService {
             id: publisherID,
             isSuccess,
             contents: isSuccess
-                ? 'Completed Publisher Delete'
-                : 'Failed Publisher Delete',
+                ? MESSAGES.PUBLISHER_DELETE_SUCCESSED
+                : MESSAGES.PUBLISHER_DELETE_FAILED,
         });
     }
 
@@ -143,8 +146,8 @@ export class PublisherService {
             id: publisherID,
             isSuccess,
             contents: isSuccess
-                ? 'Completed Publisher Soft Delete'
-                : 'Failed Publisher Soft Delete',
+                ? MESSAGES.PUBLISHER_SOFT_DELETE_SUCCESSED
+                : MESSAGES.PUBLISHER_SOFT_DELETE_FAILED,
         });
     }
 }

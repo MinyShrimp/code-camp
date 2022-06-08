@@ -2,7 +2,8 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../commons/message/ResultMessage.dto';
+import { MESSAGES } from '../../commons/message/Message.enum';
 
 import { AuthorEntity } from '../author/entities/author.entity';
 import { PublisherEntity } from '../publisher/entities/publisher.entity';
@@ -73,7 +74,7 @@ export class BookService {
             .where(`book.id = '${bookID}'`)
             .getOne();
         if (!book) {
-            throw new ConflictException('책을 찾을 수 없습니다');
+            throw new ConflictException(MESSAGES.BOOK_FIND_ONE_FAILED);
         }
         return book;
     }
@@ -130,14 +131,14 @@ export class BookService {
         const result = await this.bookRepository.restore({
             id: bookID,
         });
-        const isSuccess = result ? true : false;
+        const isSuccess = result.affected ? true : false;
 
         return new ResultMessage({
             id: bookID,
             isSuccess,
             contents: isSuccess
-                ? 'Completed Book Restore'
-                : 'Failed Book Restore',
+                ? MESSAGES.BOOK_RESTORE_SUCCESSED
+                : MESSAGES.BOOK_RESTORE_FAILED,
         });
     }
 
@@ -150,13 +151,13 @@ export class BookService {
      */
     async deleteAll(): Promise<ResultMessage> {
         const result = await this.bookRepository.delete({});
-        const isSuccess = result ? true : false;
+        const isSuccess = result.affected ? true : false;
 
         return new ResultMessage({
             isSuccess,
             contents: isSuccess
-                ? 'Completed All Book Delete'
-                : 'Failed All Book Delete',
+                ? MESSAGES.BOOK_DELETE_ALL_SUCCESSED
+                : MESSAGES.BOOK_DELETE_ALL_FAILED,
         });
     }
 
@@ -166,13 +167,13 @@ export class BookService {
      */
     async softDeleteAll(): Promise<ResultMessage> {
         const result = await this.bookRepository.softDelete({});
-        const isSuccess = result ? true : false;
+        const isSuccess = result.affected ? true : false;
 
         return new ResultMessage({
             isSuccess,
             contents: isSuccess
-                ? 'Completed All Book Soft Delete'
-                : 'Failed All Book Soft Delete',
+                ? MESSAGES.BOOK_SOFT_DELETE_ALL_SUCCESSED
+                : MESSAGES.BOOK_SOFT_DELETE_ALL_FAILED,
         });
     }
 
@@ -187,14 +188,14 @@ export class BookService {
         const result = await this.bookRepository.delete({
             id: bookID,
         });
-        const isSuccess = result ? true : false;
+        const isSuccess = result.affected ? true : false;
 
         return new ResultMessage({
             id: bookID,
             isSuccess,
             contents: isSuccess
-                ? 'Completed Book Delete'
-                : 'Failed Book Delete',
+                ? MESSAGES.BOOK_DELETE_SUCCESSED
+                : MESSAGES.BOOK_DELETE_FAILED,
         });
     }
 
@@ -209,14 +210,14 @@ export class BookService {
         const result = await this.bookRepository.softDelete({
             id: bookID,
         });
-        const isSuccess = result ? true : false;
+        const isSuccess = result.affected ? true : false;
 
         return new ResultMessage({
             id: bookID,
             isSuccess,
             contents: isSuccess
-                ? 'Completed Book Soft Delete'
-                : 'Failed Book Soft Delete',
+                ? MESSAGES.BOOK_SOFT_DELETE_SUCCESSED
+                : MESSAGES.BOOK_SOFT_DELETE_FAILED,
         });
     }
 }

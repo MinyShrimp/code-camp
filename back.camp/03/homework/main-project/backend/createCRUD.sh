@@ -37,7 +37,7 @@ export class ${UPPER}Module {}" >> $MODULE_FILE
 RESOLVER_FILE=$APIDIR/$FILENAME.resolver.ts
 echo "import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
 
 import { ${UPPER}Entity } from './entities/${FILENAME}.entity';
 import { Create${UPPER}Input } from './dto/create${UPPER}.input';
@@ -177,7 +177,7 @@ echo "import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
 
 import { ${UPPER}Entity } from './entities/${FILENAME}.entity';
 import { Create${UPPER}Input } from './dto/create${UPPER}.input';

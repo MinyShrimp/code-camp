@@ -2,7 +2,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 // import { randomInt } from 'crypto';
-import { ResultMessage } from '../../../commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../../commons/message/ResultMessage.dto';
 
 import { UserEntity } from '../entities/user.entity';
 import { UserService } from '../user.service';

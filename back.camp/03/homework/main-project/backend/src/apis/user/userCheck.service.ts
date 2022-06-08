@@ -1,4 +1,5 @@
 import { ConflictException, Injectable } from '@nestjs/common';
+import { MESSAGES } from '../../commons/message/Message.enum';
 import { UserEntity } from './entities/user.entity';
 
 @Injectable()
@@ -19,7 +20,7 @@ export class UserCheckService {
     ): Promise<UserEntity> {
         if (user === undefined) {
             throw new ConflictException(
-                '존재하지 않는 유저입니다.', //
+                MESSAGES.USER_FIND_ONE_FAILED, //
             );
         }
         return user;
@@ -36,7 +37,7 @@ export class UserCheckService {
     ): Promise<UserEntity> {
         if (user !== undefined) {
             throw new ConflictException(
-                '이미 존재하는 이메일입니다.', //
+                MESSAGES.USER_OVERLAP_EMAIL, //
             );
         }
         return user;
@@ -52,7 +53,7 @@ export class UserCheckService {
     ): Promise<UserEntity> {
         if (user.isLogin) {
             throw new ConflictException(
-                '이미 로그인된 유저입니다.', //
+                MESSAGES.USER_ALREADY_LOGIN, //
             );
         }
         return user;
@@ -68,7 +69,7 @@ export class UserCheckService {
     ): Promise<UserEntity> {
         if (!user.isLogin) {
             throw new ConflictException(
-                '이미 로그아웃된 유저입니다.', //
+                MESSAGES.USER_ALREADY_LOGOUT, //
             );
         }
         return user;

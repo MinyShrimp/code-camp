@@ -4,7 +4,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
 import { ProductPriceEntity } from './entities/productPrice.entity';
 
 @Injectable()
@@ -65,18 +64,12 @@ export class ProductPriceService {
      */
     async restore(
         priceID: string, //
-    ): Promise<ResultMessage> {
+    ): Promise<boolean> {
         const result = await this.productPriceRepository.restore({
             id: priceID,
         });
 
-        const isSuccess = result ? true : false;
-        return new ResultMessage({
-            isSuccess,
-            contents: isSuccess
-                ? 'Completed All Price Soft Delete'
-                : 'Failed All Price Soft Delete',
-        });
+        return result.affected ? true : false;
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -86,30 +79,18 @@ export class ProductPriceService {
      * 전체 삭제 ( Real )
      * @returns ResultMessage
      */
-    async deleteAll(): Promise<ResultMessage> {
+    async deleteAll(): Promise<boolean> {
         const result = await this.productPriceRepository.delete({});
-        const isSuccess = result ? true : false;
-        return new ResultMessage({
-            isSuccess,
-            contents: isSuccess
-                ? 'Completed All Price Delete'
-                : 'Failed All Price Delete',
-        });
+        return result.affected ? true : false;
     }
 
     /**
      * 전체 삭제 ( Soft )
      * @returns ResultMessage
      */
-    async softDeleteAll(): Promise<ResultMessage> {
+    async softDeleteAll(): Promise<boolean> {
         const result = await this.productPriceRepository.softDelete({});
-        const isSuccess = result ? true : false;
-        return new ResultMessage({
-            isSuccess,
-            contents: isSuccess
-                ? 'Completed All Price Soft Delete'
-                : 'Failed All Price Soft Delete',
-        });
+        return result.affected ? true : false;
     }
 
     /**
@@ -119,18 +100,11 @@ export class ProductPriceService {
      */
     async delete(
         priceID: string, //
-    ): Promise<ResultMessage> {
+    ): Promise<boolean> {
         const result = await this.productPriceRepository.delete({
             id: priceID,
         });
-
-        const isSuccess = result ? true : false;
-        return new ResultMessage({
-            isSuccess,
-            contents: isSuccess
-                ? 'Completed Price Delete'
-                : 'Failed Price Delete',
-        });
+        return result.affected ? true : false;
     }
 
     /**
@@ -140,17 +114,10 @@ export class ProductPriceService {
      */
     async softDelete(
         priceID: string, //
-    ): Promise<ResultMessage> {
+    ): Promise<boolean> {
         const result = await this.productPriceRepository.softDelete({
             id: priceID,
         });
-
-        const isSuccess = result ? true : false;
-        return new ResultMessage({
-            isSuccess,
-            contents: isSuccess
-                ? 'Completed Price Soft Delete'
-                : 'Failed Price Soft Delete',
-        });
+        return result.affected ? true : false;
     }
 }

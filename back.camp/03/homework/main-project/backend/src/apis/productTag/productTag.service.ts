@@ -39,7 +39,7 @@ export class ProductTagService {
      */
     async create(
         tags: string[], //
-    ) {
+    ): Promise<Array<ProductTagEntity>> {
         const tagNames = tags.map((tag) => tag.replace('#', ''));
         const tagEntities: Array<ProductTagEntity> = tagNames.reduce(
             (result, tag) => {

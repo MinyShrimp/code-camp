@@ -1,6 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../commons/message/ResultMessage.dto';
 
 import { CreateProductCategoryInput } from './dto/createProductCategory.input';
 import { ProductCategoryEntity } from './entities/productCategory.entity';

@@ -3,7 +3,7 @@ import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
 
 import { IPayload } from '../../commons/interfaces/Payload.interface';
 import { CurrentUser } from '../../commons/auth/gql-user.param';
-import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../commons/message/ResultMessage.dto';
 import { GqlAuthJwtGuard } from '../../commons/auth/gql-auth.guard';
 
 import { UserEntity } from '../user/entities/user.entity';

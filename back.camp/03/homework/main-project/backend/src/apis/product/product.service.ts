@@ -4,7 +4,8 @@ import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../commons/message/ResultMessage.dto';
+import { MESSAGES } from '../../commons/message/Message.enum';
 
 import { ProductTagService } from '../productTag/productTag.service';
 import { ProductPriceService } from '../productPrice/productPrice.service';
@@ -36,7 +37,7 @@ export class ProductService {
     ): Promise<boolean> {
         if (product.stock_count <= 0) {
             throw new UnprocessableEntityException(
-                '이미 판매 완료된 상품입니다.',
+                MESSAGES.PRODUCT_SOLD_OUT, //
             );
         }
         return true;
@@ -53,7 +54,9 @@ export class ProductService {
         product: ProductEntity, //
     ): boolean {
         if (product === undefined) {
-            throw new UnprocessableEntityException('Unvalid Product ID');
+            throw new UnprocessableEntityException(
+                MESSAGES.PRODUCT_FIND_ONE_FAILED,
+            );
         }
         return true;
     }
@@ -219,8 +222,8 @@ export class ProductService {
             id: productID,
             isSuccess: result.affected ? true : false,
             contents: result.affected
-                ? 'Completed Product Restore'
-                : 'Failed Product Restore',
+                ? MESSAGES.PRODUCT_RESTORE_SUCCESSED
+                : MESSAGES.PRODUCT_RESTORE_FAILED,
         });
     }
 
@@ -238,8 +241,8 @@ export class ProductService {
         return new ResultMessage({
             isSuccess: result.affected ? true : false,
             contents: result.affected
-                ? `Completed All Product Delete`
-                : `Failed All Product Delete`,
+                ? MESSAGES.PRODUCT_DELETE_ALL_SUCCESSED
+                : MESSAGES.PRODUCT_DELETE_ALL_FAILED,
         });
     }
 
@@ -254,8 +257,8 @@ export class ProductService {
         return new ResultMessage({
             isSuccess: result.affected ? true : false,
             contents: result.affected
-                ? `Completed All Product Soft Delete`
-                : `Failed All Product Soft Delete`,
+                ? MESSAGES.PRODUCT_SOFT_DELETE_ALL_SUCCESSED
+                : MESSAGES.PRODUCT_SOFT_DELETE_ALL_FAILED,
         });
     }
 
@@ -278,8 +281,8 @@ export class ProductService {
             id: productID,
             isSuccess: result.affected ? true : false,
             contents: result.affected
-                ? `Completed Product Delete`
-                : `Failed Product Delete`,
+                ? MESSAGES.PRODUCT_DELETE_SUCCESSED
+                : MESSAGES.PRODUCT_DELETE_FAILED,
         });
     }
 
@@ -302,8 +305,8 @@ export class ProductService {
             id: productID,
             isSuccess: result.affected ? true : false,
             contents: result.affected
-                ? `Completed Product Soft Delete`
-                : `Failed Product Soft Delete`,
+                ? MESSAGES.PRODUCT_SOFT_DELETE_SUCCESSED
+                : MESSAGES.PRODUCT_SOFT_DELETE_FAILED,
         });
     }
 }

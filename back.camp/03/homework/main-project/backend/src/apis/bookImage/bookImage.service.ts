@@ -2,7 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
+import { MESSAGES } from '../../commons/message/Message.enum';
 
 import { BookImageEntity } from './entities/bookImage.entity';
 import { CreateBookImageInput } from './dto/createBookImage.input';
@@ -34,7 +34,7 @@ export class BookImageService {
             where: { id: bookImageID },
         });
         if (!bookImage) {
-            throw new ConflictException('책 이미지를 찾을 수 없습니다.');
+            throw new ConflictException(MESSAGES.BOOK_IMG_FINE_ONE_FAILED);
         }
         return bookImage;
     }
@@ -90,15 +90,9 @@ export class BookImageService {
     ///////////////////////////////////////////////////////////////////
     // 삭제 //
 
-    async deleteAll(): Promise<ResultMessage> {
+    async deleteAll(): Promise<Boolean> {
         const result = await this.bookImageRepository.delete({});
         const isSuccess = result.affected ? true : false;
-
-        return new ResultMessage({
-            isSuccess,
-            contents: isSuccess
-                ? 'Completed Book Image All Delete'
-                : 'Failed Book Image All Delete',
-        });
+        return isSuccess;
     }
 }

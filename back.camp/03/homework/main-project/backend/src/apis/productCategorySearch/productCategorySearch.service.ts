@@ -2,7 +2,8 @@ import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../commons/message/ResultMessage.dto';
+import { MESSAGES } from '../../commons/message/Message.enum';
 
 import { ProductCategoryService } from '../productCategory/productCategory.service';
 import { ProductCategorySearchDto } from './dto/productCategorySearch.dto';
@@ -30,7 +31,9 @@ export class ProductCategorySearchService {
         category: ProductCategorySearchEntity,
     ): boolean {
         if (category === undefined) {
-            throw new UnprocessableEntityException('Unvalid Category ID');
+            throw new UnprocessableEntityException(
+                MESSAGES.CATEGORY_SEARCH_FIND_ONE_FAILED,
+            );
         }
 
         return true;
@@ -168,7 +171,7 @@ export class ProductCategorySearchService {
         });
 
         return new ResultMessage({
-            contents: 'Create OK',
+            contents: MESSAGES.CATEGORY_SEARCH_CREATE,
             isSuccess: true,
         });
     }

@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Message } from 'src/commons/interfaces/Message.interface';
+import { Message } from './Message.interface';
 
 @ObjectType({
     description: '결과 메세지',

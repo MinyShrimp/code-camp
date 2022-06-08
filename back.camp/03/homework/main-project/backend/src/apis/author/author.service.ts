@@ -2,7 +2,8 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../commons/message/ResultMessage.dto';
+import { MESSAGES } from '../../commons/message/Message.enum';
 
 import { AuthorEntity } from './entities/author.entity';
 import { CreateAuthorInput } from './dto/createAuthor.input';
@@ -41,7 +42,9 @@ export class AuthorService {
             where: { id: authorID },
         });
         if (author === undefined) {
-            throw new ConflictException('저자 정보를 찾을 수 없습니다.');
+            throw new ConflictException(
+                MESSAGES.AUTHOR_FIND_ONE_FAILED, //
+            );
         }
         return author;
     }
@@ -103,8 +106,8 @@ export class AuthorService {
             id: authorID,
             isSuccess,
             contents: isSuccess
-                ? 'Completed Restore Author'
-                : 'Failed Restore Author',
+                ? MESSAGES.AUTHOR_RESTORE_SUCCESSED
+                : MESSAGES.AUTHOR_RESTORE_FAILED,
         });
     }
 
@@ -128,8 +131,8 @@ export class AuthorService {
             id: authorID,
             isSuccess,
             contents: isSuccess
-                ? 'Completed Delete Author'
-                : 'Failed Delete Author',
+                ? MESSAGES.AUTHOR_DELETE_SUCCESSED
+                : MESSAGES.AUTHOR_DELETE_FAILED,
         });
     }
 
@@ -150,8 +153,8 @@ export class AuthorService {
             id: authorID,
             isSuccess,
             contents: isSuccess
-                ? 'Completed Soft Delete Author'
-                : 'Failed Soft Delete Author',
+                ? MESSAGES.AUTHOR_SOFT_DELETE_SUCCESSED
+                : MESSAGES.AUTHOR_SOFT_DELETE_FAILED,
         });
     }
 }

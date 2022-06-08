@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../commons/message/ResultMessage.dto';
+import { MESSAGES } from '../../commons/message/Message.enum';
 
 import { ReviewEntity } from './entities/review.entity';
 import { CreateReviewInput } from './dto/createReview.input';
@@ -37,9 +38,17 @@ export class ReviewService {
     async findOne(
         reviewID: string, //
     ): Promise<ReviewEntity> {
-        return await this.reviewRepository.findOne({
+        const review = await this.reviewRepository.findOne({
             id: reviewID,
         });
+
+        if (!review) {
+            throw new ConflictException(
+                MESSAGES.REVIEW_FIND_ONE_FAILED, //
+            );
+        }
+
+        return review;
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -100,8 +109,8 @@ export class ReviewService {
             id: reviewID,
             isSuccess,
             contents: isSuccess
-                ? 'Completed Review Restore'
-                : 'Failed Review Restore',
+                ? MESSAGES.REVIEW_RESTORE_SUCCESSED
+                : MESSAGES.REVIEW_RESTORE_FAILED,
         });
     }
 
@@ -125,8 +134,8 @@ export class ReviewService {
             id: reviewID,
             isSuccess,
             contents: isSuccess
-                ? 'Completed Review Delete'
-                : 'Failed Review Delete',
+                ? MESSAGES.REVIEW_DELETE_SUCCESSED
+                : MESSAGES.REVIEW_DELETE_FAILED,
         });
     }
 
@@ -147,8 +156,8 @@ export class ReviewService {
             id: reviewID,
             isSuccess,
             contents: isSuccess
-                ? 'Completed Review Soft Delete'
-                : 'Failed Review Soft Delete',
+                ? MESSAGES.REVIEW_SOFT_DELETE_SUCCESSED
+                : MESSAGES.REVIEW_SOFT_DELETE_FAILED,
         });
     }
 }

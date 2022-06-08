@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../commons/message/ResultMessage.dto';
+import { MESSAGES } from '../../commons/message/Message.enum';
 
 import { PaymentEntity } from './entities/payment.entity';
 import { CreatePaymentInput } from './dto/createPayment.input';
@@ -98,8 +99,8 @@ export class PaymentService {
             id: paymentID,
             isSuccess,
             contents: isSuccess
-                ? 'Completed Payment Restore'
-                : 'Failed Payment Restore',
+                ? MESSAGES.PAYMENT_RESTORE_SUCCESSED
+                : MESSAGES.PAYMENT_RESTORE_FAILED,
         });
     }
 
@@ -123,8 +124,8 @@ export class PaymentService {
             id: paymentID,
             isSuccess,
             contents: isSuccess
-                ? 'Completed Payment Delete'
-                : 'Failed Payment Delete',
+                ? MESSAGES.PAYMENT_DELETE_SUCCESSED
+                : MESSAGES.PAYMENT_DELETE_FAILED,
         });
     }
 
@@ -145,8 +146,8 @@ export class PaymentService {
             id: paymentID,
             isSuccess,
             contents: isSuccess
-                ? 'Completed Payment Soft Delete'
-                : 'Failed Payment Soft Delete',
+                ? MESSAGES.PAYMENT_SOFT_DELETE_SUCCESSED
+                : MESSAGES.PAYMENT_SOFT_DELETE_FAILED,
         });
     }
 }

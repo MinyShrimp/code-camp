@@ -2,7 +2,8 @@ import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../commons/message/ResultMessage.dto';
+import { MESSAGES } from '../../commons/message/Message.enum';
 
 import { UpdateUserInput } from './dto/updateUser.input';
 
@@ -98,8 +99,8 @@ export class UserService {
             id: userID,
             isSuccess,
             contents: isSuccess
-                ? 'Completed User Restore'
-                : 'Failed User Restore',
+                ? MESSAGES.USER_RESTORE_SUCCESSED
+                : MESSAGES.USER_RESTORE_FAILED,
         });
     }
 
@@ -122,8 +123,8 @@ export class UserService {
             id: userID,
             isSuccess: result.affected ? true : false,
             contents: result.affected
-                ? `Completed User Delete`
-                : `Failed User Delete`,
+                ? MESSAGES.USER_DELETE_SUCCESSED
+                : MESSAGES.USER_DELETE_FAILED,
         });
     }
 
@@ -143,8 +144,8 @@ export class UserService {
             id: userID,
             isSuccess: result.affected ? true : false,
             contents: result.affected
-                ? `Completed User Soft Delete`
-                : `Failed User Soft Delete`,
+                ? MESSAGES.USER_SOFT_DELETE_SUCCESSED
+                : MESSAGES.USER_SOFT_DELETE_FAILED,
         });
     }
 }
