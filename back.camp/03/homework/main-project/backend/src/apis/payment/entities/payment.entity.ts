@@ -11,17 +11,18 @@ import {
     UpdateDateColumn,
     DeleteDateColumn,
     PrimaryGeneratedColumn,
+    BaseEntity,
 } from 'typeorm';
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { IsBoolean, Min } from 'class-validator';
 
-import { ProductEntity } from 'src/apis/product/entities/product.entity';
-import { UserEntity } from 'src/apis/user/entities/user.entity';
+import { ProductEntity } from '../../product/entities/product.entity';
+import { UserEntity } from '../../user/entities/user.entity';
 
 /* 결제 Entity */
 @Entity({ name: 'payment' })
 @ObjectType({ description: '결제 Entity' })
-export class PaymentEntity {
+export class PaymentEntity extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

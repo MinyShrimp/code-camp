@@ -6,11 +6,12 @@ import {
     UpdateDateColumn,
     DeleteDateColumn,
     PrimaryGeneratedColumn,
+    BaseEntity,
 } from 'typeorm';
 
 @Entity({ name: 'author' })
 @ObjectType({ description: '저자 Entity' })
-export class AuthorEntity {
+export class AuthorEntity extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

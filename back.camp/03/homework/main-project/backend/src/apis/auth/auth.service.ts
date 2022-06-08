@@ -1,4 +1,4 @@
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { Response } from 'express';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';

@@ -10,15 +10,16 @@ import {
     DeleteDateColumn,
     PrimaryGeneratedColumn,
     OneToMany,
+    BaseEntity,
 } from 'typeorm';
 
-import { AuthorEntity } from 'src/apis/author/entities/author.entity';
-import { PublisherEntity } from 'src/apis/publisher/entities/publisher.entity';
-import { BookImageEntity } from 'src/apis/bookImage/entities/bookImage.entity';
+import { AuthorEntity } from '../../author/entities/author.entity';
+import { PublisherEntity } from '../../publisher/entities/publisher.entity';
+import { BookImageEntity } from '../../bookImage/entities/bookImage.entity';
 
 @Entity({ name: 'book' })
 @ObjectType({ description: '책 Entity' })
-export class BookEntity {
+export class BookEntity extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

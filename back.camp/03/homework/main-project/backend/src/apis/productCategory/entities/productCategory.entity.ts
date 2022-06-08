@@ -11,12 +11,13 @@ import {
     TreeChildren,
     TreeParent,
     PrimaryGeneratedColumn,
+    BaseEntity,
 } from 'typeorm';
 
 @Tree('closure-table')
 @Entity({ name: 'product_category' })
 @ObjectType({ description: '상품 분류 Entity' })
-export class ProductCategoryEntity {
+export class ProductCategoryEntity extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

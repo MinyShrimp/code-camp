@@ -9,13 +9,14 @@ import {
     UpdateDateColumn,
     DeleteDateColumn,
     PrimaryGeneratedColumn,
+    BaseEntity,
 } from 'typeorm';
 
-import { BookEntity } from 'src/apis/book/entities/book.entity';
+import { BookEntity } from '../../book/entities/book.entity';
 
 @Entity({ name: 'book_img' })
 @ObjectType({ description: '책 이미지 Entity' })
-export class BookImageEntity {
+export class BookImageEntity extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

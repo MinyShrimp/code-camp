@@ -7,16 +7,17 @@ import {
     JoinColumn,
     ManyToOne,
     PrimaryGeneratedColumn,
+    BaseEntity,
 } from 'typeorm';
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
 
-import { ProductEntity } from 'src/apis/product/entities/product.entity';
-import { UserEntity } from 'src/apis/user/entities/user.entity';
+import { ProductEntity } from '../../product/entities/product.entity';
+import { UserEntity } from '../../user/entities/user.entity';
 
 /* 리뷰 Entity */
 @Entity({ name: 'review' })
 @ObjectType({ description: '리뷰 Entity' })
-export class ReviewEntity {
+export class ReviewEntity extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

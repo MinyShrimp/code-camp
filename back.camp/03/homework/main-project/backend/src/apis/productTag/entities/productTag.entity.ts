@@ -3,6 +3,7 @@
  */
 
 import {
+    BaseEntity,
     Column,
     CreateDateColumn,
     Entity,
@@ -11,11 +12,11 @@ import {
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { ProductEntity } from 'src/apis/product/entities/product.entity';
+import { ProductEntity } from '../../product/entities/product.entity';
 
 @Entity({ name: 'product_tag' })
 @ObjectType({ description: '상품 태그 Entity' })
-export class ProductTagEntity {
+export class ProductTagEntity extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

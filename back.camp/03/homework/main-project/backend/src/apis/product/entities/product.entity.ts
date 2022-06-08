@@ -10,18 +10,19 @@ import {
     UpdateDateColumn,
     DeleteDateColumn,
     CreateDateColumn,
+    BaseEntity,
 } from 'typeorm';
 import { IsUrl, Min } from 'class-validator';
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 
-import { BookEntity } from 'src/apis/book/entities/book.entity';
-import { ProductTagEntity } from 'src/apis/productTag/entities/productTag.entity';
-import { ProductPriceEntity } from 'src/apis/productPrice/entities/productPrice.entity';
-import { ProductCategorySearchEntity } from 'src/apis/productCategorySearch/entities/productCategorySearch.entity';
+import { BookEntity } from '../../book/entities/book.entity';
+import { ProductTagEntity } from '../../productTag/entities/productTag.entity';
+import { ProductPriceEntity } from '../../productPrice/entities/productPrice.entity';
+import { ProductCategorySearchEntity } from '../../productCategorySearch/entities/productCategorySearch.entity';
 
 @Entity({ name: 'product' })
 @ObjectType({ description: '상품 Entity' })
-export class ProductEntity {
+export class ProductEntity extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

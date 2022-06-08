@@ -5,6 +5,7 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Min } from 'class-validator';
 import {
+    BaseEntity,
     Column,
     DeleteDateColumn,
     Entity,
@@ -14,7 +15,7 @@ import {
 
 @Entity({ name: 'product_price' })
 @ObjectType({ description: '상품 가격 Entity' })
-export class ProductPriceEntity {
+export class ProductPriceEntity extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

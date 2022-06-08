@@ -5,11 +5,12 @@ yarn add @nestjs/config
 yarn add @nestjs/typeorm typeorm@0.2 mysql2
 yarn add @nestjs/graphql @nestjs/apollo graphql apollo-server-express
 yarn add class-validator class-transformer
-yarn add bcrypt @types/bcrypt
+yarn add bcryptjs @types/bcryptjs
 yarn add @nestjs/jwt passport-jwt @nestjs/passport passport @types/passport-jwt
 yarn add passport-google-oauth20 @types/passport-google-oauth20
 yarn add passport-kakao @types/passport-kakao
 yarn add passport-naver @types/passport-naver
+yarn add express-session
 ```
 
 ## 설정
