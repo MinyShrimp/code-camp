@@ -1,11 +1,12 @@
 import { Response } from 'express';
+import { randomUUID } from 'crypto';
 import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 import { IUser } from '../../commons/interfaces/User.interface';
 
-import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
+import { AuthService } from './auth.service';
 
 interface IOAuthRequest extends Request {
     user: IUser;
@@ -22,12 +23,10 @@ export class AuthController {
      * OAuth Login Process
      * @param userInfo
      * @param res
-     * @param type
      */
     private async OAuthLogin(
-        userInfo: IUser,
+        userInfo: IUser, //
         res: Response,
-        type: string,
     ): Promise<void> {
         // 1. 가입 확인
         let user = await this.userService.findOneByEmail(userInfo.email);
@@ -38,7 +37,7 @@ export class AuthController {
             user = await this.authService.Signup({
                 email: userInfo.email,
                 name: userInfo.name,
-                pwd: type,
+                pwd: randomUUID(), // DB에 저장하는 비밀번호를 랜덤한 uuid로 저장한다
             });
         }
 
@@ -61,7 +60,7 @@ export class AuthController {
         // 1-1. 이미 가입되어 있으면 통과
         // 1-2. 가입이 안되어 있으면 회원가입
         // 2. 로그인
-        await this.OAuthLogin(req.user, res, 'google');
+        await this.OAuthLogin(req.user, res);
 
         // 3. Redirect
         res.redirect('http://localhost:5500/frontend/login/index.html');
@@ -82,7 +81,7 @@ export class AuthController {
         // 1-1. 이미 가입되어 있으면 통과
         // 1-2. 가입이 안되어 있으면 회원가입
         // 2. 로그인
-        await this.OAuthLogin(req.user, res, 'kakao');
+        await this.OAuthLogin(req.user, res);
 
         // 3. Redirect
         res.redirect('http://localhost:5500/frontend/login/index.html');
@@ -103,7 +102,7 @@ export class AuthController {
         // 1-1. 이미 가입되어 있으면 통과
         // 1-2. 가입이 안되어 있으면 회원가입
         // 2. 로그인
-        await this.OAuthLogin(req.user, res, 'naver');
+        await this.OAuthLogin(req.user, res);
 
         // 3. Redirect
         res.redirect('http://localhost:5500/frontend/login/index.html');
