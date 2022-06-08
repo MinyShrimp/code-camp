@@ -36,24 +36,8 @@ import { ProductCategoryModule } from './apis/productCategory/productCategory.mo
 import { ProductCategorySearchModule } from './apis/productCategorySearch/productCategorySearch.module';
 
 // Entity //
-// import { UserEntity } from './apis/user/entities/user.entity';
-
-// import { BookEntity } from './apis/book/entities/book.entity';
-// import { AuthorEntity } from './apis/author/entities/author.entity';
-// import { BookImageEntity } from './apis/bookImage/entities/bookImage.entity';
-// import { PublisherEntity } from './apis/publisher/entities/publisher.entity';
-
-// import { ReviewEntity } from './apis/review/entities/review.entity';
-// import { PaymentEntity } from './apis/payment/entities/payment.entity';
-
-// import { ProductEntity } from './apis/product/entities/product.entity';
-// import { ProductTagEntity } from './apis/productTag/entities/productTag.entity';
-// import { ProductPriceEntity } from './apis/productPrice/entities/productPrice.entity';
-// import { ProductCategoryEntity } from './apis/productCategory/entities/productCategory.entity';
-// import { ProductCategorySearchEntity } from './apis/productCategorySearch/entities/productCategorySearch.entity';
 
 ///////////////////////////////////////////////////////////////////////////
-// adminBro.registerAdapter({ Database, Resource });
 @Module({
     imports: [
         ///////////////////////////////////////////////////////////////////////////
@@ -88,35 +72,6 @@ import { ProductCategorySearchModule } from './apis/productCategorySearch/produc
             synchronize: true,
             logging: true,
         }),
-
-        ///////////////////////////////////////////////////////////////////////////
-        // AdminBro //
-        // AdminModule,
-        // AdminModule.createAdmin({
-        //     adminJsOptions: {
-        //         resources: [
-        //             UserEntity,
-
-        //             ReviewEntity,
-        //             PaymentEntity,
-
-        //             BookEntity,
-        //             AuthorEntity,
-        //             PublisherEntity,
-        //             BookImageEntity,
-
-        //             ProductEntity,
-        //             ProductTagEntity,
-        //             ProductPriceEntity,
-        //             ProductCategoryEntity,
-        //             ProductCategorySearchEntity,
-        //         ],
-        //         rootPath: '/admin',
-        //     },
-        //     auth: {
-
-        //     }
-        // }),
 
         ///////////////////////////////////////////////////////////////////////////
         // Modules //
