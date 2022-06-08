@@ -4,7 +4,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { IPayload } from '../../commons/interfaces/Payload.interface';
 import { CurrentUser } from '../../commons/auth/gql-user.param';
 import { ResultMessage } from '../../commons/message/ResultMessage.dto';
-import { GqlAuthJwtGuard } from '../../commons/auth/gql-auth.guard';
+import { GqlJwtAccessGuard } from '../../commons/auth/gql-auth.guard';
 
 import { UpdateUserInput } from './dto/updateUser.input';
 
@@ -40,7 +40,7 @@ export class UserResolver {
      * - Bearer JWT
      * @response 회원 단일 조회
      */
-    @UseGuards(GqlAuthJwtGuard)
+    @UseGuards(GqlJwtAccessGuard)
     @Query(
         () => UserEntity, //
         { description: '회원 단일 조회, Bearer JWT', nullable: true },
@@ -65,7 +65,7 @@ export class UserResolver {
      * @param updateInput
      * @response 수정된 회원 정보
      */
-    @UseGuards(GqlAuthJwtGuard)
+    @UseGuards(GqlJwtAccessGuard)
     @Mutation(
         () => UserEntity, //
         { description: '회원 정보 수정, Bearer JWT' },
@@ -124,7 +124,7 @@ export class UserResolver {
      * - Bearer JWT
      * @response ResultMessage
      */
-    @UseGuards(GqlAuthJwtGuard)
+    @UseGuards(GqlJwtAccessGuard)
     @Mutation(
         () => ResultMessage, //
         { description: '회원 탈퇴 ( Soft ), Bearer JWT' },

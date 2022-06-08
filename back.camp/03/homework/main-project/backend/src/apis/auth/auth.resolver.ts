@@ -4,7 +4,10 @@ import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
 import { IPayload } from '../../commons/interfaces/Payload.interface';
 import { CurrentUser } from '../../commons/auth/gql-user.param';
 import { ResultMessage } from '../../commons/message/ResultMessage.dto';
-import { GqlAuthJwtGuard } from '../../commons/auth/gql-auth.guard';
+import {
+    GqlJwtAccessGuard,
+    GqlJwtRefreshGuard,
+} from '../../commons/auth/gql-auth.guard';
 
 import { UserEntity } from '../user/entities/user.entity';
 import { UserCheckService } from '../user/userCheck.service';
@@ -57,7 +60,7 @@ export class AuthResolver {
      * @param currentUser
      * @response JWT Access Token
      */
-    @UseGuards(GqlAuthJwtGuard)
+    @UseGuards(GqlJwtRefreshGuard)
     @Mutation(() => String, { description: 'AccessToken 재발급' })
     async restoreToken(
         @CurrentUser() currentUser: IPayload, //
@@ -75,7 +78,7 @@ export class AuthResolver {
      * @param pwd
      * @response ResultMessage
      */
-    @UseGuards(GqlAuthJwtGuard)
+    @UseGuards(GqlJwtAccessGuard)
     @Mutation(
         () => ResultMessage, //
         { description: '비밀번호 변경, Bearer JWT' },
@@ -130,7 +133,7 @@ export class AuthResolver {
      * - Bearer JWT
      * @response ResultMessage
      */
-    @UseGuards(GqlAuthJwtGuard)
+    @UseGuards(GqlJwtAccessGuard)
     @Mutation(
         () => ResultMessage, //
         { description: '로그아웃, Bearer JWT' },

@@ -14,6 +14,9 @@ interface IOAuthRequest extends Request {
 
 @Controller()
 export class AuthController {
+    private readonly REDIRECT =
+        'http://localhost:5500/frontend/login/index.html';
+
     constructor(
         private readonly authService: AuthService, //
         private readonly userService: UserService,
@@ -63,7 +66,7 @@ export class AuthController {
         await this.OAuthLogin(req.user, res);
 
         // 3. Redirect
-        res.redirect('http://localhost:5500/frontend/login/index.html');
+        res.redirect(this.REDIRECT);
     }
 
     /**
@@ -84,7 +87,7 @@ export class AuthController {
         await this.OAuthLogin(req.user, res);
 
         // 3. Redirect
-        res.redirect('http://localhost:5500/frontend/login/index.html');
+        res.redirect(this.REDIRECT);
     }
 
     /**
@@ -105,6 +108,6 @@ export class AuthController {
         await this.OAuthLogin(req.user, res);
 
         // 3. Redirect
-        res.redirect('http://localhost:5500/frontend/login/index.html');
+        res.redirect(this.REDIRECT);
     }
 }

@@ -5,10 +5,14 @@ import { AuthGuard } from '@nestjs/passport';
 /**
  * User Resolver => GQL Auth Guard => JwtAccessStrategy
  */
-export class GqlAuthJwtGuard extends AuthGuard([
-    'jwtAccessGuard',
-    'jwtRefreshGuard',
-]) {
+export class GqlJwtAccessGuard extends AuthGuard('jwtAccessGuard') {
+    getRequest(context: ExecutionContext) {
+        const ctx = GqlExecutionContext.create(context);
+        return ctx.getContext().req;
+    }
+}
+
+export class GqlJwtRefreshGuard extends AuthGuard('jwtRefreshGuard') {
     getRequest(context: ExecutionContext) {
         const ctx = GqlExecutionContext.create(context);
         return ctx.getContext().req;

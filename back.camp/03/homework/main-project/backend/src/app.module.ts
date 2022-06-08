@@ -13,6 +13,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 
 // Modules //
+import { AuthModule } from './apis/auth/auth.module';
 import { UserModule } from './apis/user/user.module';
 
 import { ReviewModule } from './apis/review/review.module';
@@ -28,7 +29,6 @@ import { ProductTagModule } from './apis/productTag/productTag.module';
 import { ProductPriceModule } from './apis/productPrice/productPrice.module';
 import { ProductCategoryModule } from './apis/productCategory/productCategory.module';
 import { ProductCategorySearchModule } from './apis/productCategorySearch/productCategorySearch.module';
-import { AuthModule } from './apis/auth/auth.module';
 
 ///////////////////////////////////////////////////////////////////////////
 

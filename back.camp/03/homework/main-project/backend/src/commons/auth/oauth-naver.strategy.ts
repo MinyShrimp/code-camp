@@ -1,11 +1,8 @@
 import { PassportStrategy } from '@nestjs/passport';
-import * as naver from 'passport-naver';
+import { Strategy } from 'passport-naver';
 import { IUser } from '../interfaces/User.interface';
 
-export class OAuthNaverStrategy extends PassportStrategy(
-    naver.Strategy,
-    'naver',
-) {
+export class OAuthNaverStrategy extends PassportStrategy(Strategy, 'naver') {
     constructor() {
         super({
             clientID: process.env.NAVER_CLIENT_ID,
@@ -23,11 +20,5 @@ export class OAuthNaverStrategy extends PassportStrategy(
             email: profile._json.email,
             name: profile.displayName,
         };
-        // const user_info = profile._json;
-
-        // return {
-        //     email: user_info.email,
-        //     name: user_info.name,
-        // };
     }
 }
