@@ -1,22 +1,25 @@
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-google-oauth20';
+import { IUser } from '../interfaces/User.interface';
 
 export class OAuthGoogleStrategy extends PassportStrategy(Strategy, 'google') {
     constructor() {
         super({
-            clientID: process.env.OAUTH_GOOGLE_ID,
-            clientSecret: process.env.OAUTH_GOOGLE_SECRET,
-            callbackURL: process.env.OAUTH_GOOGLE_CALLBACK_URL,
+            clientID: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            callbackURL: process.env.GOOGLE_CALLBACK_URL,
             scope: ['email', 'profile'],
         });
     }
 
-    validate(token: string, _: string, profile: any) {
-        const user_info = profile._json;
-
+    validate(
+        accessToken: string, //
+        refreshToken: string,
+        profile: any,
+    ): IUser {
         return {
-            email: user_info.email,
-            name: user_info.name,
+            email: profile._json.email,
+            name: profile._json.name,
         };
     }
 }

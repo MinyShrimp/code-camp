@@ -1,10 +1,10 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
 
-import { PayloadDto } from 'src/commons/dto/payload.dto';
-import { CurrentUser } from 'src/commons/auth/gql-user.param';
-import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
-import { GqlAuthJwtGuard } from 'src/commons/auth/gql-auth.guard';
+import { IPayload } from '../../commons/interfaces/Payload.interface';
+import { CurrentUser } from '../../commons/auth/gql-user.param';
+import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
+import { GqlAuthJwtGuard } from '../../commons/auth/gql-auth.guard';
 
 import { UserEntity } from '../user/entities/user.entity';
 import { UserCheckService } from '../user/userCheck.service';
@@ -60,7 +60,7 @@ export class AuthResolver {
     @UseGuards(GqlAuthJwtGuard)
     @Mutation(() => String, { description: 'AccessToken 재발급' })
     async restoreToken(
-        @CurrentUser() currentUser: PayloadDto, //
+        @CurrentUser() currentUser: IPayload, //
     ) {
         const user = await this.userService.findOneByID(currentUser.id);
         await this.userCheckService.checkValidUser(user);
@@ -81,7 +81,7 @@ export class AuthResolver {
         { description: '비밀번호 변경, Bearer JWT' },
     )
     async updateUserPwd(
-        @CurrentUser() currentUser: PayloadDto, //
+        @CurrentUser() currentUser: IPayload, //
         @Args('pwd') pwd: string,
     ): Promise<ResultMessage> {
         const userID = currentUser.id;
@@ -136,7 +136,7 @@ export class AuthResolver {
         { description: '로그아웃, Bearer JWT' },
     )
     async Logout(
-        @CurrentUser() currentUser: PayloadDto, //
+        @CurrentUser() currentUser: IPayload, //
     ): Promise<ResultMessage> {
         const userID = currentUser.id;
 

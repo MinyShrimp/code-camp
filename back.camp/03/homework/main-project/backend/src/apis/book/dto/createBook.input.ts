@@ -1,5 +1,5 @@
 import { Field, InputType, PickType } from '@nestjs/graphql';
-import { CreateBookImageInput } from 'src/apis/bookImage/dto/createBookImage.input';
+import { CreateBookImageInput } from '../../bookImage/dto/createBookImage.input';
 import { BookEntity } from '../entities/book.entity';
 
 @InputType()

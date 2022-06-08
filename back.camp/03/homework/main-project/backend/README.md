@@ -8,6 +8,8 @@ yarn add class-validator class-transformer
 yarn add bcrypt @types/bcrypt
 yarn add @nestjs/jwt passport-jwt @nestjs/passport passport @types/passport-jwt
 yarn add passport-google-oauth20 @types/passport-google-oauth20
+yarn add passport-kakao @types/passport-kakao
+yarn add passport-naver @types/passport-naver
 ```
 
 ## 설정

@@ -1,10 +1,10 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-import { PayloadDto } from 'src/commons/dto/payload.dto';
-import { CurrentUser } from 'src/commons/auth/gql-user.param';
-import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
-import { GqlAuthJwtGuard } from 'src/commons/auth/gql-auth.guard';
+import { IPayload } from '../../commons/interfaces/Payload.interface';
+import { CurrentUser } from '../../commons/auth/gql-user.param';
+import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
+import { GqlAuthJwtGuard } from '../../commons/auth/gql-auth.guard';
 
 import { UpdateUserInput } from './dto/updateUser.input';
 
@@ -46,7 +46,7 @@ export class UserResolver {
         { description: '회원 단일 조회, Bearer JWT', nullable: true },
     )
     fetchLoginUser(
-        @CurrentUser() currentUser: PayloadDto, //
+        @CurrentUser() currentUser: IPayload, //
     ): Promise<UserEntity> {
         return this.userService.findOneByID(currentUser.id);
     }
@@ -71,7 +71,7 @@ export class UserResolver {
         { description: '회원 정보 수정, Bearer JWT' },
     )
     async updateLoginUser(
-        @CurrentUser() currentUser: PayloadDto,
+        @CurrentUser() currentUser: IPayload,
         @Args('updateInput') updateInput: UpdateUserInput,
     ): Promise<UserEntity> {
         const userID = currentUser.id;
@@ -130,7 +130,7 @@ export class UserResolver {
         { description: '회원 탈퇴 ( Soft ), Bearer JWT' },
     )
     deleteLoginUser(
-        @CurrentUser() currentUser: PayloadDto, //
+        @CurrentUser() currentUser: IPayload, //
     ): Promise<ResultMessage> {
         return this.userService.softDelete(currentUser.id);
     }

@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { JwtAccessStrategy } from 'src/commons/auth/jwt-access.strategy';
-import { JwtRefreshStrategy } from 'src/commons/auth/jwt-refresh.strategy';
-import { OAuthGoogleStrategy } from 'src/commons/auth/oauth-google.strategy';
+import { JwtAccessStrategy } from '../../commons/auth/jwt-access.strategy';
+import { JwtRefreshStrategy } from '../../commons/auth/jwt-refresh.strategy';
+import { OAuthGoogleStrategy } from '../../commons/auth/oauth-google.strategy';
+import { OAuthKakaoStrategy } from '../../commons/auth/oauth-kakao.strategy';
+import { OAuthNaverStrategy } from '../../commons/auth/oauth-naver.strategy';
 
 import { UserEntity } from '../user/entities/user.entity';
 import { UserModule } from '../user/user.module';
@@ -24,6 +26,8 @@ import { AuthService } from './auth.service';
     controllers: [AuthController],
     providers: [
         OAuthGoogleStrategy,
+        OAuthKakaoStrategy,
+        OAuthNaverStrategy,
         JwtRefreshStrategy,
         JwtAccessStrategy,
         AuthResolver,

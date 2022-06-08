@@ -2,7 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
 
 import { PublisherEntity } from './entities/publisher.entity';
 import { CreatePublisherInput } from './dto/createPublisher.input';

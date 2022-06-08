@@ -1,7 +1,7 @@
 import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express';
 import { Strategy } from 'passport-jwt';
-import { PayloadDto } from '../dto/payload.dto';
+import { IPayload, IPayloadSub } from '../interfaces/Payload.interface';
 
 /**
  * GQL Auth Guard => JwtAccessStrategy => GQL User Param
@@ -24,7 +24,7 @@ export class JwtRefreshStrategy extends PassportStrategy(
     }
 
     /* 검증 성공 시 실행 */
-    validate(payload: any): PayloadDto {
+    validate(payload: IPayloadSub): IPayload {
         /* req.user */
         return {
             id: payload.sub,

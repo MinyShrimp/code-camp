@@ -5,13 +5,16 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ConflictException, Injectable } from '@nestjs/common';
 
-import { DateUtil } from 'src/commons/utils/date.util';
-import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
+import { IUser } from '../../commons/interfaces/User.interface';
+import { IPayloadSub } from '../../commons/interfaces/Payload.interface';
+import { DateUtil } from '../../commons/utils/date.util';
+import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
 
 import { UserEntity } from '../user/entities/user.entity';
 
 import { LoginInput } from './dto/Login.input';
 import { SignupInput } from './dto/Signup.input';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -19,6 +22,7 @@ export class AuthService {
         @InjectRepository(UserEntity)
         private readonly userRepository: Repository<UserEntity>,
         private readonly jwtService: JwtService,
+        private readonly userService: UserService,
     ) {}
 
     ///////////////////////////////////////////////////////////////////
@@ -51,7 +55,14 @@ export class AuthService {
         return true;
     }
 
-    private getPayload(user: UserEntity) {
+    /**
+     * JWT Payload Data
+     * @param user
+     * @returns Payload
+     */
+    private getPayload(
+        user: UserEntity, //
+    ): IPayloadSub {
         return {
             sub: user.id,
             name: user.name,
@@ -127,6 +138,34 @@ export class AuthService {
             ...input,
             pwd: this.createPassword(input.pwd),
         });
+    }
+
+    /**
+     * OAuth Login Process
+     * @param userInfo
+     * @param res
+     * @param type
+     */
+    async OAuthLogin(
+        userInfo: IUser,
+        res: Response,
+        type: string,
+    ): Promise<void> {
+        // 1. 가입 확인
+        let user = await this.userService.findOneByEmail(userInfo.email);
+
+        // 1-1. 이미 가입되어 있으면 통과
+        // 1-2. 가입이 안되어 있으면 회원가입
+        if (!user) {
+            user = await this.Signup({
+                email: userInfo.email,
+                name: userInfo.name,
+                pwd: type,
+            });
+        }
+
+        // 2. 로그인
+        this.setRefreshToken(user, res);
     }
 
     ///////////////////////////////////////////////////////////////////

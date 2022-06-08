@@ -2,7 +2,7 @@ import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
 
 import { ProductCategoryService } from '../productCategory/productCategory.service';
 import { ProductCategorySearchDto } from './dto/productCategorySearch.dto';

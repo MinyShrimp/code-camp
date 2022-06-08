@@ -1,6 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-import { ResultMessage } from 'src/commons/dto/ResultMessage.dto';
+import { ResultMessage } from '../../commons/dto/ResultMessage.dto';
 
 import { ReviewEntity } from './entities/review.entity';
 import { CreateReviewInput } from './dto/createReview.input';
