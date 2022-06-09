@@ -8,8 +8,6 @@ import {
     ManyToOne,
     JoinColumn,
     CreateDateColumn,
-    UpdateDateColumn,
-    DeleteDateColumn,
     PrimaryGeneratedColumn,
     BaseEntity,
 } from 'typeorm';
@@ -18,6 +16,7 @@ import { IsBoolean, Min } from 'class-validator';
 
 import { ProductEntity } from '../../product/entities/product.entity';
 import { UserEntity } from '../../user/entities/user.entity';
+import { PAYMENT_STATUS } from '../enums/payment.enum';
 
 /* 결제 Entity */
 @Entity({ name: 'payment' })
@@ -27,39 +26,33 @@ export class PaymentEntity extends BaseEntity {
     @Field(() => ID)
     id: string;
 
+    @Column()
+    @Field(() => String)
+    impUid: string;
+
+    // 결제 금액
     @Column({ unsigned: true })
     @Min(0)
-    @Field(() => Int, { description: '가격' })
-    money: number;
+    @Field(() => Int, { description: '결제 금액' })
+    amount: number;
 
+    // 상태
     @Column()
-    @IsBoolean()
-    @Field(() => Boolean, { description: '결제 성공 여부' })
-    state: boolean;
+    @Field(() => PAYMENT_STATUS, { description: '결제 상태' })
+    status: PAYMENT_STATUS;
 
-    @Column()
-    @Field(() => String, { description: '결제 방법' })
-    type: string;
-
-    @Column()
-    @Field(() => Date, { description: '결제 시간' })
-    paymentAt: Date;
-
+    // 결제 시간
     @CreateDateColumn()
     createAt: Date;
 
-    @UpdateDateColumn()
-    updateAt: Date;
-
-    @DeleteDateColumn()
-    deleteAt: Date;
-
-    @JoinColumn()
+    // 회원
+    @JoinColumn({ name: 'userId' })
     @ManyToOne(() => UserEntity)
     @Field(() => UserEntity)
     user: UserEntity;
 
-    @JoinColumn()
+    // 상품
+    @JoinColumn({ name: 'productId' })
     @ManyToOne(() => ProductEntity)
     @Field(() => ProductEntity)
     product: ProductEntity;

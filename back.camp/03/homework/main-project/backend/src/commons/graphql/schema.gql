@@ -11,6 +11,9 @@ type UserEntity {
 
   """이메일"""
   email: String!
+
+  """포인트"""
+  point: Int!
 }
 
 """결과 메세지"""
@@ -105,14 +108,6 @@ type ProductTagEntity {
   products: [ProductEntity!]!
 }
 
-"""상품 가격 Entity"""
-type ProductPriceEntity {
-  id: ID!
-
-  """상품 가격"""
-  price: Int!
-}
-
 """검색용 상품 카테고리 Entity"""
 type ProductCategorySearchEntity {
   id: ID!
@@ -145,7 +140,9 @@ type ProductEntity {
 
   """판매 개수"""
   selling_count: Int!
-  price: ProductPriceEntity!
+
+  """가격"""
+  price: Int!
   book: BookEntity!
   productCategory: ProductCategorySearchEntity
   productTags: [ProductTagEntity!]!
@@ -167,25 +164,6 @@ type ReviewEntity {
   user: UserEntity!
 }
 
-"""결제 Entity"""
-type PaymentEntity {
-  id: ID!
-
-  """가격"""
-  money: Int!
-
-  """결제 성공 여부"""
-  state: Boolean!
-
-  """결제 방법"""
-  type: String!
-
-  """결제 시간"""
-  paymentAt: DateTime!
-  user: UserEntity!
-  product: ProductEntity!
-}
-
 """상품 분류 Entity"""
 type ProductCategoryEntity {
   id: ID!
@@ -195,6 +173,25 @@ type ProductCategoryEntity {
 
   """하위 분류"""
   children: [ProductCategoryEntity!]
+}
+
+"""결제 Entity"""
+type PaymentEntity {
+  id: ID!
+  impUid: String!
+
+  """결제 금액"""
+  amount: Int!
+
+  """결제 상태"""
+  status: PAYMENT_STATUS!
+  user: UserEntity!
+  product: ProductEntity!
+}
+
+enum PAYMENT_STATUS {
+  PAYMENT
+  CANCEL
 }
 
 type Query {
@@ -210,11 +207,17 @@ type Query {
   """리뷰 단일 조회"""
   fetchReview(reviewID: String!): ReviewEntity!
 
-  """결제 정보 전체 조회"""
-  fetchPayments: [PaymentEntity!]!
+  """모든 상품 조회"""
+  fetchProducts: [ProductEntity!]!
 
-  """결제 정보 조회"""
-  fetchPayment(paymentID: String!): PaymentEntity!
+  """삭제된 데이터를 포함한 모든 상품 조회"""
+  fetchProductsWithDeleted: [ProductEntity!]!
+
+  """단일 상품 조회"""
+  fetchProduct(productID: String!): ProductEntity
+
+  """삭제된 데이터를 포함한 단일 상품 조회"""
+  fetchProductWithDeleted(productID: String!): ProductEntity
 
   """모든 책 조회"""
   fetchBooks: [BookEntity!]!
@@ -227,18 +230,6 @@ type Query {
 
   """출판사 정보 조회"""
   fetchPublisher(publisherID: String!): PublisherEntity!
-
-  """모든 상품 조회"""
-  fetchProducts: [ProductEntity!]!
-
-  """삭제된 데이터를 포함한 모든 상품 조회"""
-  fetchProductsWithDeleted: [ProductEntity!]!
-
-  """단일 상품 조회"""
-  fetchProduct(productID: String!): ProductEntity
-
-  """삭제된 데이터를 포함한 단일 상품 조회"""
-  fetchProductWithDeleted(productID: String!): ProductEntity
 
   """Search Category 전체 조회"""
   fetchCategorys: [ProductCategorySearchEntity!]!
@@ -299,17 +290,32 @@ type Mutation {
   """결제 정보 생성"""
   createPayment(createPaymentInput: CreatePaymentInput!): PaymentEntity!
 
-  """결제 정보 수정"""
-  updatePayment(paymentID: String!, updatePaymentInput: UpdatePaymentInput!): PaymentEntity!
-
   """결제 정보 삭제 취소"""
   restorePayment(paymentID: String!): ResultMessage!
 
-  """결제 정보 삭제 ( Real )"""
-  deletePayment(paymentID: String!): ResultMessage!
-
   """결제 정보 삭제 ( Soft )"""
   softDeletePayment(paymentID: String!): ResultMessage!
+
+  """상품 정보 생성"""
+  createProduct(createProductInput: CreateProductInput!): ProductEntity!
+
+  """상품 정보 수정"""
+  updateProduct(productID: String!, updateProductInput: UpdateProductInput!): ProductEntity!
+
+  """상품 정보 삭제 취소"""
+  restoreProduct(productID: String!): ResultMessage!
+
+  """모든 상품 삭제 ( Real )"""
+  deleteProductAll: ResultMessage!
+
+  """모든 상품 삭제 ( Soft )"""
+  softDeleteProductAll: ResultMessage!
+
+  """단일 상품 삭제 ( Real )"""
+  deleteProduct(productID: String!): ResultMessage!
+
+  """단일 상품 삭제 ( Soft )"""
+  softDeleteProduct(productID: String!): ResultMessage!
 
   """책 정보 생성"""
   createBook(createBookInput: CreateBookInput!): BookEntity!
@@ -358,27 +364,6 @@ type Mutation {
 
   """출판사 정보 삭제 ( Soft )"""
   softDeletePublisher(publisherID: String!): ResultMessage!
-
-  """상품 정보 생성"""
-  createProduct(createProductInput: CreateProductInput!): ProductEntity!
-
-  """상품 정보 수정"""
-  updateProduct(productID: String!, updateProductInput: UpdateProductInput!): ProductEntity!
-
-  """상품 정보 삭제 취소"""
-  restoreProduct(productID: String!): ResultMessage!
-
-  """모든 상품 삭제 ( Real )"""
-  deleteProductAll: ResultMessage!
-
-  """모든 상품 삭제 ( Soft )"""
-  softDeleteProductAll: ResultMessage!
-
-  """단일 상품 삭제 ( Real )"""
-  deleteProduct(productID: String!): ResultMessage!
-
-  """단일 상품 삭제 ( Soft )"""
-  softDeleteProduct(productID: String!): ResultMessage!
 
   """Search Category 전체 생성"""
   createCategorySearch: ResultMessage!
@@ -455,43 +440,56 @@ input UpdateReviewInput {
 }
 
 input CreatePaymentInput {
-  """가격"""
-  money: Int!
+  impUid: String!
 
-  """결제 성공 여부"""
-  state: Boolean!
+  """결제 금액"""
+  amount: Int!
 
-  """결제 방법"""
-  type: String!
-
-  """결제 시간"""
-  paymentAt: DateTime!
-
-  """회원 ID"""
-  userID: String!
+  """결제 상태"""
+  status: PAYMENT_STATUS!
 
   """상품 ID"""
   productID: String!
 }
 
-input UpdatePaymentInput {
+input CreateProductInput {
+  """상품 URL"""
+  url: String!
+
+  """재고 개수"""
+  stock_count: Int!
+
   """가격"""
-  money: Int
+  price: Int!
 
-  """결제 성공 여부"""
-  state: Boolean
+  """책 ID"""
+  book_id: String!
 
-  """결제 방법"""
-  type: String
+  """카테고리 ID"""
+  category_id: String!
 
-  """결제 시간"""
-  paymentAt: DateTime
+  """태그 목록 ( #몽환적인 )"""
+  product_tags: [String!]!
+}
 
-  """회원 ID"""
-  userID: String
+input UpdateProductInput {
+  """상품 URL"""
+  url: String
 
-  """상품 ID"""
-  productID: String
+  """재고 개수"""
+  stock_count: Int
+
+  """가격"""
+  price: Int
+
+  """책 ID"""
+  book_id: String
+
+  """카테고리 ID"""
+  category_id: String
+
+  """태그 목록 ( #몽환적인 )"""
+  product_tags: [String!]
 }
 
 input CreateBookInput {
@@ -592,40 +590,6 @@ input UpdatePublisherInput {
 
   """설명"""
   description: String
-}
-
-input CreateProductInput {
-  """상품 URL"""
-  url: String!
-
-  """재고 개수"""
-  stock_count: Int!
-
-  """가격"""
-  price: Int!
-
-  """카테고리 ID"""
-  category_id: String!
-
-  """태그 목록 ( #몽환적인 )"""
-  product_tags: [String!]!
-}
-
-input UpdateProductInput {
-  """상품 URL"""
-  url: String
-
-  """재고 개수"""
-  stock_count: Int
-
-  """가격"""
-  price: Int
-
-  """카테고리 ID"""
-  category_id: String
-
-  """태그 목록 ( #몽환적인 )"""
-  product_tags: [String!]
 }
 
 input CreateProductCategoryInput {

@@ -12,11 +12,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 // Config //
 import { ConfigModule } from '@nestjs/config';
 
-// AdminBro //
-// import adminBro from 'adminjs';
-// import { Database, Resource } from '@adminjs/typeorm';
-// import { AdminModule } from '@adminjs/nestjs';
-
 // Modules //
 import { AuthModule } from './apis/auth/auth.module';
 import { UserModule } from './apis/user/user.module';
@@ -31,7 +26,6 @@ import { BookImageModule } from './apis/bookImage/bookImage.module';
 
 import { ProductModule } from './apis/product/product.module';
 import { ProductTagModule } from './apis/productTag/productTag.module';
-import { ProductPriceModule } from './apis/productPrice/productPrice.module';
 import { ProductCategoryModule } from './apis/productCategory/productCategory.module';
 import { ProductCategorySearchModule } from './apis/productCategorySearch/productCategorySearch.module';
 
@@ -88,7 +82,6 @@ import { ProductCategorySearchModule } from './apis/productCategorySearch/produc
 
         ProductModule,
         ProductTagModule,
-        ProductPriceModule,
         ProductCategoryModule,
         ProductCategorySearchModule,
     ],

@@ -7,8 +7,8 @@ import { Repository } from 'typeorm';
 import { ResultMessage } from '../../commons/message/ResultMessage.dto';
 import { MESSAGES } from '../../commons/message/Message.enum';
 
+import { BookService } from '../book/book.service';
 import { ProductTagService } from '../productTag/productTag.service';
-import { ProductPriceService } from '../productPrice/productPrice.service';
 import { ProductCategorySearchService } from '../productCategorySearch/productCategorySearch.service';
 
 import { ProductEntity } from './entities/product.entity';
@@ -20,8 +20,8 @@ export class ProductService {
     constructor(
         @InjectRepository(ProductEntity)
         private readonly productRepository: Repository<ProductEntity>,
+        private readonly bookService: BookService,
         private readonly productTagsService: ProductTagService,
-        private readonly productPriceService: ProductPriceService,
         private readonly productCategoryService: ProductCategorySearchService,
     ) {}
 
@@ -30,7 +30,7 @@ export class ProductService {
 
     /**
      * 재고 소진 체크
-     * @param productID
+     * @param product
      */
     private async __checkSoldout(
         product: ProductEntity, //
@@ -70,7 +70,7 @@ export class ProductService {
      */
     async findAll(): Promise<ProductEntity[]> {
         return await this.productRepository.find({
-            relations: ['book', 'price', 'productCategory', 'productTags'],
+            relations: ['book', 'productCategory', 'productTags'],
         });
     }
 
@@ -80,7 +80,7 @@ export class ProductService {
      */
     async findAllWithDeleted(): Promise<ProductEntity[]> {
         return await this.productRepository.find({
-            relations: ['book', 'price', 'productCategory', 'productTags'],
+            relations: ['book', 'productCategory', 'productTags'],
             withDeleted: true,
         });
     }
@@ -95,7 +95,7 @@ export class ProductService {
     ): Promise<ProductEntity> {
         const product = await this.productRepository.findOne({
             where: { id: productID },
-            relations: ['book', 'price', 'productCategory', 'productTags'],
+            relations: ['book', 'productCategory', 'productTags'],
         });
         this.__checkValidProduct(product);
         return product;
@@ -111,7 +111,7 @@ export class ProductService {
     ): Promise<ProductEntity> {
         const product = await this.productRepository.findOne({
             where: { id: productID },
-            relations: ['book', 'price', 'productCategory', 'productTags'],
+            relations: ['book', 'productCategory', 'productTags'],
             withDeleted: true,
         });
         this.__checkValidProduct(product);
@@ -130,21 +130,21 @@ export class ProductService {
         createProductInput: CreateProductInput,
     ): Promise<ProductEntity> {
         const {
-            price, //
+            book_id, //
             category_id,
             product_tags,
             ...product
         } = createProductInput;
 
+        const book = await this.bookService.findOne(book_id);
         const category = await this.productCategoryService.findOneByID(
             category_id,
         );
-        const priceEntity = await this.productPriceService.create(price);
         const tagEntities = await this.productTagsService.create(product_tags);
 
         return await this.productRepository.save({
             ...product,
-            price: priceEntity,
+            book: book,
             productCategory: category,
             productTags: tagEntities,
         });
@@ -174,7 +174,7 @@ export class ProductService {
 
         // input data 뽑기
         const {
-            price, //
+            book_id, //
             category_id,
             product_tags,
             ...input
@@ -187,18 +187,11 @@ export class ProductService {
                 ? await this.productCategoryService.findOneByID(category_id)
                 : product.productCategory;
 
-        // 가격 업데이트
-        const priceEntity = await this.productPriceService.update(
-            product.price.id,
-            price,
-        );
-
         // 저장 후 변경된 데이터 반환
         return await this.productRepository.save({
             ...product,
             id: productID,
             ...input,
-            price: priceEntity,
             productCategory: category,
         });
     }
@@ -213,7 +206,6 @@ export class ProductService {
     ): Promise<ResultMessage> {
         const product = await this.findOneWithDeleted(productID);
 
-        await this.productPriceService.restore(product.price.id);
         const result = await this.productRepository.restore({
             id: product.id,
         });
@@ -235,7 +227,6 @@ export class ProductService {
      * @returns ResultMessage
      */
     async deleteAll(): Promise<ResultMessage> {
-        await this.productPriceService.deleteAll();
         const result = await this.productRepository.delete({});
 
         return new ResultMessage({
@@ -251,7 +242,6 @@ export class ProductService {
      * @returns ResultMessage
      */
     async softDeleteAll(): Promise<ResultMessage> {
-        await this.productPriceService.softDeleteAll();
         const result = await this.productRepository.softDelete({});
 
         return new ResultMessage({
@@ -272,7 +262,6 @@ export class ProductService {
     ): Promise<ResultMessage> {
         const product = await this.findOneWithDeleted(productID);
 
-        await this.productPriceService.delete(product.price.id);
         const result = await this.productRepository.delete({
             id: product.id,
         });
@@ -296,7 +285,6 @@ export class ProductService {
     ): Promise<ResultMessage> {
         const product = await this.findOne(productID);
 
-        await this.productPriceService.softDelete(product.price.id);
         const result = await this.productRepository.softDelete({
             id: product.id,
         });

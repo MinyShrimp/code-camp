@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -80,6 +80,22 @@ export class UserService {
             ...user,
             ...input,
         });
+    }
+
+    async updateAmount(
+        userID: string, //
+        amount: number,
+    ): Promise<UpdateResult> {
+        const user = await this.userRepository
+            .createQueryBuilder('user')
+            .select(['user.id', 'user.point'])
+            .where(`user.id = "${userID}"`)
+            .getOne();
+
+        return await this.userRepository.update(
+            { id: user.id },
+            { point: user.point + amount },
+        );
     }
 
     /**
