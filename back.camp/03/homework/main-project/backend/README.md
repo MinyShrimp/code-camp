@@ -135,5 +135,5 @@ bootstrap();
 
 ### Day 23
 
--   [ ] **payment.html** 화면에서 버튼을 눌러 `createPayment` API를 요청할 수 있다.
--   [ ] `createPayment` API가 요청되면 payment 테이블에 결제 정보가 저장된다.
+-   [x] **payment.html** 화면에서 버튼을 눌러 `createPayment` API를 요청할 수 있다.
+-   [x] `createPayment` API가 요청되면 payment 테이블에 결제 정보가 저장된다.
