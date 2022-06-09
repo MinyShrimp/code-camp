@@ -18,6 +18,7 @@ import { BookService } from './book.service';
         PublisherModule,
         BookImageModule,
     ],
+    exports: [BookService],
     providers: [
         BookResolver, //
         BookService,

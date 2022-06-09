@@ -1,18 +1,11 @@
-
-import { ProductCategoryEntity } from "../../apis/productCategory/entities/productCategory.entity";
-import { Resource } from "../interfaces/resource.interface";
+import { ProductCategoryEntity } from '../../apis/productCategory/entities/productCategory.entity';
+import { Resource } from '../interfaces/resource.interface';
 
 export const ProductCategoryResource: Resource = {
     resource: ProductCategoryEntity,
     options: {
-        listProperties: [
-            "id", "name", "chilren", "parent",
-        ],
-        editProperties: [
-            "id", "name", "chilren", "parent",
-        ],
-        showProperties: [
-            "id", "name", "chilren", "parent",
-        ]
-    }
-}
+        listProperties: ['id', 'name', 'parentId'],
+        editProperties: ['id', 'name', 'parentId'],
+        showProperties: ['id', 'name', 'parentId'],
+    },
+};

@@ -1,22 +1,27 @@
-
-import { PaymentEntity } from "../../apis/payment/entities/payment.entity";
-import { Resource } from "../interfaces/resource.interface";
+import { PaymentEntity } from '../../apis/payment/entities/payment.entity';
+import { Resource } from '../interfaces/resource.interface';
 
 export const PaymentResource: Resource = {
     resource: PaymentEntity,
     options: {
         listProperties: [
-            "id", "amount", "state", "type", 
-            "user", "product",
-            "createAt", "updateAt", 
+            'id',
+            'impUid',
+            'amount',
+            'status',
+            'userId',
+            'productId',
+            'createAt',
         ],
-        editProperties: [
-            "amount", "state", "type", "user", "product"
-        ],
+        editProperties: ['amount', 'status', 'userId', 'productId'],
         showProperties: [
-            "id", "amount", "state", "type", 
-            "user", "product",
-            "createAt", "updateAt", "deleteAt", 
-        ]
-    }
-}
+            'id',
+            'impUid',
+            'amount',
+            'status',
+            'userId',
+            'productId',
+            'createAt',
+        ],
+    },
+};

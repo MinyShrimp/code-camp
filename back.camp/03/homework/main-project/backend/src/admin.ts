@@ -7,6 +7,7 @@ import * as AdminBroExpress from '@admin-bro/express';
 import { Database, Resource } from '@admin-bro/typeorm';
 
 import { HttpExceptionFilter } from './commons/filters/http-exception.filter';
+
 import { AdminModule } from './admin/admin.module';
 
 // Entity //
@@ -32,7 +33,7 @@ async function runAdmin() {
         type: 'mysql',
         host: 'db',
         port: 3306,
-        username: "root",
+        username: 'root',
         password: process.env.MYSQL_ROOT_PASSWORD,
         database: process.env.MYSQL_DATABASE,
         entities: [__dirname + '/apis/**/*.entity.*'],
@@ -63,8 +64,8 @@ async function runAdmin() {
         ],
         rootPath: '/admin',
         branding: {
-            companyName: "CodeCamp"
-        }
+            companyName: 'CodeCamp',
+        },
     });
 
     // @ts-ignore

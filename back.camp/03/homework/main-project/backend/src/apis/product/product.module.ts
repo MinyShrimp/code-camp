@@ -8,6 +8,7 @@ import { ProductEntity } from './entities/product.entity';
 
 import { ProductResolver } from './product.resolver';
 import { ProductService } from './product.service';
+import { BookModule } from '../book/book.module';
 
 @Module({
     imports: [
@@ -16,9 +17,11 @@ import { ProductService } from './product.service';
             ProductEntity, //
         ]),
         // ProductPriceService를 사용해주기 위해 import
+        BookModule,
         ProductTagModule,
         ProductCategorySearchModule,
     ],
+    exports: [ProductService],
     providers: [
         ProductResolver, //
         ProductService,

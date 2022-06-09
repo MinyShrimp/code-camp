@@ -4,15 +4,9 @@ import { PaymentEntity } from '../entities/payment.entity';
 @InputType()
 export class CreatePaymentInput extends PickType(
     PaymentEntity,
-    ['amount', 'state', 'type'],
+    ['impUid', 'amount', 'status'],
     InputType,
 ) {
-    @Field(
-        () => String, //
-        { description: '회원 ID' },
-    )
-    userID: string;
-
     @Field(
         () => String, //
         { description: '상품 ID' },

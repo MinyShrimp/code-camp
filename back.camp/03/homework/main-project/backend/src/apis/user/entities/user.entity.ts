@@ -2,7 +2,7 @@
  * 유저 Entity
  */
 
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { IsEmail } from 'class-validator';
 import {
     Entity,
@@ -35,6 +35,11 @@ export class UserEntity extends BaseEntity {
     // 비밀번호
     @Column()
     pwd: string;
+
+    // 포인트
+    @Column({ default: 0, unsigned: true })
+    @Field(() => Int, { description: '포인트' })
+    point: number;
 
     // 로그인 시간
     @Column({ nullable: true })

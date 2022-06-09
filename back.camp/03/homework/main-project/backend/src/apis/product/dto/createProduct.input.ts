@@ -9,6 +9,12 @@ export class CreateProductInput extends PickType(
 ) {
     @Field(
         () => String, //
+        { description: '책 ID' },
+    )
+    book_id: string;
+
+    @Field(
+        () => String, //
         { description: '카테고리 ID' },
     )
     category_id: string;
