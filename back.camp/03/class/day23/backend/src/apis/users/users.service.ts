@@ -70,7 +70,7 @@ export default class UserService {
         // 2. 유저의 돈 찾아오기
         const user = await this.userRepository
             .createQueryBuilder("user")
-            .select("user.amount")
+            .select(["user.id", "user.amount"])
             .where(`user.id = '${userID}'`)
             .getOne();
 

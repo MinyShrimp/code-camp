@@ -136,5 +136,4 @@ input LoginInput {
 input CreatePointTransactionInput {
   impUid: String!
   amount: Int!
-  status: POINT_TRANSACTION_STATUS_ENUM!
 }

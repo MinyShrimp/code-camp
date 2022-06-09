@@ -21,6 +21,8 @@ export class PointTransactionResolver {
         createPointTransactionInput: CreatePointTransactionInput,
         @CurrentUser() currentUser: ICurrentUser
     ): Promise<PointTransationEntity> {
+        console.log(currentUser);
+
         // 1. pointTransaction 테이블에 거래 기록 생성
         const save = await this.pointTransactionService.create(createPointTransactionInput);
 
