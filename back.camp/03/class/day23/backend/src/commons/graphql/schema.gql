@@ -14,6 +14,7 @@ type UserEntity {
   name: String!
   email: String!
   age: Int!
+  amount: Int!
 }
 
 type ProductTagEntity {
@@ -53,6 +54,18 @@ type ProductEntity {
   productTags: [ProductTagEntity!]!
 }
 
+type PointTransationEntity {
+  id: ID!
+  impUid: String!
+  amount: Int!
+  status: POINT_TRANSACTION_STATUS_ENUM!
+}
+
+enum POINT_TRANSACTION_STATUS_ENUM {
+  PAYMENT
+  CANCEL
+}
+
 type Query {
   fetchBoards: [BoardEntity!]!
   fetchProducts: [ProductEntity!]!
@@ -73,6 +86,7 @@ type Mutation {
   signUp(signupInput: SignupInput!): UserEntity!
   Login(loginInput: LoginInput!): String!
   restoreAccessToken: String!
+  createPointTransaction(createPointTransactionInput: CreatePointTransactionInput!): PointTransationEntity!
 }
 
 input CreateBoardInput {
@@ -117,4 +131,10 @@ input SignupInput {
 input LoginInput {
   email: String!
   pwd: String!
+}
+
+input CreatePointTransactionInput {
+  impUid: String!
+  amount: Int!
+  status: POINT_TRANSACTION_STATUS_ENUM!
 }

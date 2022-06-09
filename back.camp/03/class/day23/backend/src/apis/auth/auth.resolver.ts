@@ -3,7 +3,7 @@ import { UnprocessableEntityException, UseGuards } from "@nestjs/common";
 import { Args, Context, GraphQLExecutionContext, Mutation, Resolver } from "@nestjs/graphql";
 
 import { CurrentUser } from "../../commons/auth/gql-user.param";
-import { GqlAuthJwtGuard } from "../../commons/auth/gql-auth.guard";
+import { GqlJwtAccessRefreshGuard } from "../../commons/auth/gql-auth.guard";
 
 import UserService from "../users/users.service";
 
@@ -39,7 +39,7 @@ export default class AuthResolver {
         return this.authService.getAccessToken(user);
     }
 
-    @UseGuards(GqlAuthJwtGuard)
+    @UseGuards(GqlJwtAccessRefreshGuard)
     @Mutation(() => String)
     async restoreAccessToken(
         @CurrentUser() currentUser: any //

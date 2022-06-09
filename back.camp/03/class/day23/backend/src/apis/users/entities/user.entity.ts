@@ -27,6 +27,11 @@ export default class UserEntity {
     @Column()
     age: number;
 
+    // 보유 금액
+    @Field(() => Int)
+    @Column({ default: 0 })
+    amount: number;
+
     // 비밀번호
     @Column()
     pwd: string;

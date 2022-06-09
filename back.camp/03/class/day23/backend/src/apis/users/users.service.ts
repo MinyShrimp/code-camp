@@ -65,4 +65,21 @@ export default class UserService {
             ...input,
         });
     }
+
+    async updateAmount(userID: string, amount: number): Promise<UserEntity> {
+        // 2. 유저의 돈 찾아오기
+        const user = await this.userRepository
+            .createQueryBuilder("user")
+            .select("user.amount")
+            .where(`user.id = '${userID}'`)
+            .getOne();
+
+        // 3. 유저의 돈 업데이트
+        await this.userRepository.update(
+            { id: user.id }, //
+            { amount: user.amount + amount }
+        );
+
+        return user;
+    }
 }

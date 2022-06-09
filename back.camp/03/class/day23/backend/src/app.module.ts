@@ -16,6 +16,7 @@ import ProductModule from "./apis/products/product.module";
 import ProductCategoryModule from "./apis/productsCategory/productCategory.module";
 import UserModule from "./apis/users/users.module";
 import AuthModule from "./apis/auth/auth.module";
+import { PointTransactionModule } from "./apis/pointTransaction/pointTransaction.module";
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -44,7 +45,7 @@ import AuthModule from "./apis/auth/auth.module";
         TypeOrmModule.forRoot({
             type: "mysql",
             host: "localhost",
-            port: 3306,
+            port: 3307,
             username: process.env.MYSQL_USER,
             password: process.env.MYSQL_PASSWORD,
             database: process.env.MYSQL_DATABASE,
@@ -61,6 +62,8 @@ import AuthModule from "./apis/auth/auth.module";
 
         UserModule,
         AuthModule,
+
+        PointTransactionModule,
     ],
     controllers: [],
     providers: [],

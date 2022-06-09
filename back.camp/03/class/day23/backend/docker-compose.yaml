@@ -1,11 +1,11 @@
 version: "3"
 
 services:
-    db:
+    class-db:
         image: mysql:5.7
         container_name: ClassDB
         ports:
-            - 3306:3306
+            - 3307:3306
         env_file: .env
         command:
             - --character-set-server=utf8mb4
