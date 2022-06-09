@@ -10,7 +10,7 @@ yarn add @nestjs/jwt passport-jwt @nestjs/passport passport @types/passport-jwt
 yarn add passport-google-oauth20 @types/passport-google-oauth20
 yarn add passport-kakao @types/passport-kakao
 yarn add passport-naver @types/passport-naver
-yarn add express-session
+yarn add express-session express-formidable admin-bro @admin-bro/express @admin-bro/typeorm
 ```
 
 ## 설정

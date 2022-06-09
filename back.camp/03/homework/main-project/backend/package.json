@@ -18,8 +18,7 @@
         "test:watch": "jest --watch",
         "test:cov": "jest --coverage",
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-        "test:e2e": "jest --config ./test/jest-e2e.json",
-        "start:admin": "ts-node ./src/admin"
+        "test:e2e": "jest --config ./test/jest-e2e.json"
     },
     "dependencies": {
         "@admin-bro/express": "^3.1.0",
@@ -33,7 +32,6 @@
         "@nestjs/passport": "^8.2.1",
         "@nestjs/platform-express": "^8.0.0",
         "@nestjs/typeorm": "^8.0.4",
-        "@types/bcrypt": "^5.0.0",
         "@types/bcryptjs": "^2.4.2",
         "@types/passport-google-oauth20": "^2.0.11",
         "@types/passport-jwt": "^3.0.6",
@@ -48,6 +46,7 @@
         "express-session": "^1.17.3",
         "graphql": "^16.5.0",
         "mysql2": "^2.3.3",
+        "nodemon": "^2.0.16",
         "passport": "^0.6.0",
         "passport-google-oauth20": "^2.0.0",
         "passport-jwt": "^4.0.0",
