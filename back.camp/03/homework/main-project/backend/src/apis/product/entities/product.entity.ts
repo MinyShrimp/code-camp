@@ -17,7 +17,6 @@ import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 
 import { BookEntity } from '../../book/entities/book.entity';
 import { ProductTagEntity } from '../../productTag/entities/productTag.entity';
-import { ProductPriceEntity } from '../../productPrice/entities/productPrice.entity';
 import { ProductCategorySearchEntity } from '../../productCategorySearch/entities/productCategorySearch.entity';
 
 @Entity({ name: 'product' })
@@ -54,6 +53,14 @@ export class ProductEntity extends BaseEntity {
     )
     selling_count: number;
 
+    @Column({ unsigned: true })
+    @Min(0)
+    @Field(
+        () => Int, //
+        { description: "가격" }
+    )
+    price: number;
+
     // 생성 시간
     @CreateDateColumn()
     createAt: Date;
@@ -65,16 +72,6 @@ export class ProductEntity extends BaseEntity {
     // 삭제 시간
     @DeleteDateColumn()
     deleteAt: Date;
-
-    // 가격
-    // 1:1
-    @JoinColumn({ name: 'price_id' })
-    @OneToOne(() => ProductPriceEntity, {
-        cascade: true,
-        onDelete: 'CASCADE',
-    })
-    @Field(() => ProductPriceEntity)
-    price: ProductPriceEntity;
 
     // 책
     // M:1

@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { ProductTagModule } from '../productTag/productTag.module';
-import { ProductPriceModule } from '../productPrice/productPrice.module';
 import { ProductCategorySearchModule } from '../productCategorySearch/productCategorySearch.module';
 
 import { ProductEntity } from './entities/product.entity';
@@ -18,7 +17,6 @@ import { ProductService } from './product.service';
         ]),
         // ProductPriceService를 사용해주기 위해 import
         ProductTagModule,
-        ProductPriceModule,
         ProductCategorySearchModule,
     ],
     providers: [

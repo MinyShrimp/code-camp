@@ -30,7 +30,7 @@ export class PaymentEntity extends BaseEntity {
     @Column({ unsigned: true })
     @Min(0)
     @Field(() => Int, { description: '가격' })
-    money: number;
+    amount: number;
 
     @Column()
     @IsBoolean()
@@ -40,10 +40,6 @@ export class PaymentEntity extends BaseEntity {
     @Column()
     @Field(() => String, { description: '결제 방법' })
     type: string;
-
-    @Column()
-    @Field(() => Date, { description: '결제 시간' })
-    paymentAt: Date;
 
     @CreateDateColumn()
     createAt: Date;

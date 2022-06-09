@@ -1,35 +1,34 @@
 import AdminBro from 'admin-bro';
+import { createConnection } from 'typeorm';
+import { validate } from 'class-validator';
+import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
 import * as AdminBroExpress from '@admin-bro/express';
 import { Database, Resource } from '@admin-bro/typeorm';
-import { validate } from 'class-validator';
-import { ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
 
 import { HttpExceptionFilter } from './commons/filters/http-exception.filter';
-import { AdminModule } from './admin.module';
+import { AdminModule } from './admin/admin.module';
 
 // Entity //
-import { UserEntity } from './apis/user/entities/user.entity';
+import { UserResource } from './admin/resources/user.resource';
 
-import { BookEntity } from './apis/book/entities/book.entity';
-import { AuthorEntity } from './apis/author/entities/author.entity';
-import { BookImageEntity } from './apis/bookImage/entities/bookImage.entity';
-import { PublisherEntity } from './apis/publisher/entities/publisher.entity';
+import { ReviewResource } from './admin/resources/review.resource';
+import { PaymentResource } from './admin/resources/payment.resource';
 
-import { ReviewEntity } from './apis/review/entities/review.entity';
-import { PaymentEntity } from './apis/payment/entities/payment.entity';
+import { BookResource } from './admin/resources/book.resource';
+import { AuthorResource } from './admin/resources/author.resource';
+import { PublisherResource } from './admin/resources/publisher.resource';
+import { BookImageResource } from './admin/resources/bookImage.resource';
 
-import { ProductEntity } from './apis/product/entities/product.entity';
-import { ProductTagEntity } from './apis/productTag/entities/productTag.entity';
-import { ProductPriceEntity } from './apis/productPrice/entities/productPrice.entity';
-import { ProductCategoryEntity } from './apis/productCategory/entities/productCategory.entity';
-import { ProductCategorySearchEntity } from './apis/productCategorySearch/entities/productCategorySearch.entity';
-import { createConnection } from 'typeorm';
+import { ProductResource } from './admin/resources/product.resource';
+import { ProductTagResource } from './admin/resources/productTag.resource';
+import { ProductCategoryResource } from './admin/resources/productCategory.resource';
+import { ProductCategorySearchResource } from './admin/resources/productCategorySearch.resource';
 
 async function runAdmin() {
     const app = await NestFactory.create(AdminModule);
 
-    const mysqlDB = await createConnection({
+    await createConnection({
         type: 'mysql',
         host: 'db',
         port: 3306,
@@ -38,33 +37,34 @@ async function runAdmin() {
         database: process.env.MYSQL_DATABASE,
         entities: [__dirname + '/apis/**/*.entity.*'],
         charset: 'utf8mb4',
-        synchronize: true,
+        synchronize: false,
         logging: true,
     });
 
-    Database.isAdapterFor(mysqlDB);
     Resource.validate = validate;
     AdminBro.registerAdapter({ Database, Resource });
 
     const adminBro = new AdminBro({
         resources: [
-            UserEntity,
+            UserResource,
 
-            ReviewEntity,
-            PaymentEntity,
+            ReviewResource,
+            PaymentResource,
 
-            BookEntity,
-            AuthorEntity,
-            PublisherEntity,
-            BookImageEntity,
+            BookResource,
+            AuthorResource,
+            PublisherResource,
+            BookImageResource,
 
-            ProductEntity,
-            ProductTagEntity,
-            ProductPriceEntity,
-            ProductCategoryEntity,
-            ProductCategorySearchEntity,
+            ProductResource,
+            ProductTagResource,
+            ProductCategoryResource,
+            ProductCategorySearchResource,
         ],
         rootPath: '/admin',
+        branding: {
+            companyName: "CodeCamp"
+        }
     });
 
     // @ts-ignore

@@ -105,14 +105,6 @@ type ProductTagEntity {
   products: [ProductEntity!]!
 }
 
-"""상품 가격 Entity"""
-type ProductPriceEntity {
-  id: ID!
-
-  """상품 가격"""
-  price: Int!
-}
-
 """검색용 상품 카테고리 Entity"""
 type ProductCategorySearchEntity {
   id: ID!
@@ -145,7 +137,9 @@ type ProductEntity {
 
   """판매 개수"""
   selling_count: Int!
-  price: ProductPriceEntity!
+
+  """가격"""
+  price: Int!
   book: BookEntity!
   productCategory: ProductCategorySearchEntity
   productTags: [ProductTagEntity!]!
@@ -172,16 +166,13 @@ type PaymentEntity {
   id: ID!
 
   """가격"""
-  money: Int!
+  amount: Int!
 
   """결제 성공 여부"""
   state: Boolean!
 
   """결제 방법"""
   type: String!
-
-  """결제 시간"""
-  paymentAt: DateTime!
   user: UserEntity!
   product: ProductEntity!
 }
@@ -456,16 +447,13 @@ input UpdateReviewInput {
 
 input CreatePaymentInput {
   """가격"""
-  money: Int!
+  amount: Int!
 
   """결제 성공 여부"""
   state: Boolean!
 
   """결제 방법"""
   type: String!
-
-  """결제 시간"""
-  paymentAt: DateTime!
 
   """회원 ID"""
   userID: String!
@@ -476,16 +464,13 @@ input CreatePaymentInput {
 
 input UpdatePaymentInput {
   """가격"""
-  money: Int
+  amount: Int
 
   """결제 성공 여부"""
   state: Boolean
 
   """결제 방법"""
   type: String
-
-  """결제 시간"""
-  paymentAt: DateTime
 
   """회원 ID"""
   userID: String

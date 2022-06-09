@@ -132,3 +132,8 @@ bootstrap();
 -   [x] 플레이그라운드로 로그인 API를 요청하면, Access token과 Refresh token을 얻는다.
 -   [x] 플레이그라운드로, Refresh token을 통해 Access token을 재발급해주는 API를 요청할 수 있다.
 -   [x] 구글 로그인 버튼을 클릭하면 `http://localhost:3000/login/google` 로 API를 요청한다.
+
+### Day 23
+
+-   [ ] **payment.html** 화면에서 버튼을 눌러 `createPayment` API를 요청할 수 있다.
+-   [ ] `createPayment` API가 요청되면 payment 테이블에 결제 정보가 저장된다.
