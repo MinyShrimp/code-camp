@@ -179,6 +179,7 @@ type ProductCategoryEntity {
 type PaymentEntity {
   id: ID!
   impUid: String!
+  merchantUid: String!
 
   """결제 금액"""
   amount: Int!
@@ -190,8 +191,8 @@ type PaymentEntity {
 }
 
 enum PAYMENT_STATUS {
-  PAYMENT
-  CANCEL
+  PAID
+  CANCELLED
 }
 
 type Query {
@@ -290,11 +291,8 @@ type Mutation {
   """결제 정보 생성"""
   createPayment(createPaymentInput: CreatePaymentInput!): PaymentEntity!
 
-  """결제 정보 삭제 취소"""
-  restorePayment(paymentID: String!): ResultMessage!
-
-  """결제 정보 삭제 ( Soft )"""
-  softDeletePayment(paymentID: String!): ResultMessage!
+  """결제 전부 취소"""
+  cancelPayment(cancelPaymentInput: CancelPaymentInput!): PaymentEntity!
 
   """상품 정보 생성"""
   createProduct(createProductInput: CreateProductInput!): ProductEntity!
@@ -441,6 +439,7 @@ input UpdateReviewInput {
 
 input CreatePaymentInput {
   impUid: String!
+  merchantUid: String!
 
   """결제 금액"""
   amount: Int!
@@ -450,6 +449,11 @@ input CreatePaymentInput {
 
   """상품 ID"""
   productID: String!
+}
+
+input CancelPaymentInput {
+  impUid: String!
+  merchantUid: String!
 }
 
 input CreateProductInput {

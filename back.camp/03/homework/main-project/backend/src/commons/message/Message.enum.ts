@@ -4,6 +4,12 @@ export const MESSAGES = {
     UNVLIAD_ACCESS: '잘못된 접근입니다.',
 
     ///////////////////////////////////////////////////////////////////
+    // 결제 //
+    PAYMENT_OVERLAP_UID: '중복된 값입니다.',
+    PAYMENT_UNVALID: '결제 정보를 찾을 수 없습니다.',
+    PAYMENT_ALREADY_CANCEL: '이미 취소된 결제입니다.',
+
+    ///////////////////////////////////////////////////////////////////
     // 회원 //
     USER_COMPARE_PWD_FAILED: '비밀번호가 다릅니다.',
     USER_FIND_ONE_FAILED: '회원 정보를 찾을 수 없습니다.',

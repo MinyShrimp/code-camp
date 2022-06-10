@@ -11,6 +11,7 @@ yarn add passport-google-oauth20 @types/passport-google-oauth20
 yarn add passport-kakao @types/passport-kakao
 yarn add passport-naver @types/passport-naver
 yarn add express-session express-formidable admin-bro @admin-bro/express @admin-bro/typeorm
+yarn add axios @types/axios
 ```
 
 ## 설정
@@ -127,13 +128,20 @@ bootstrap();
 -   [x] playground로 `fetchLoginUser` API를 요청할 수 있다.
 -   [x] playground로 `deleteLoginUser` API를 요청할 수 있다.
 
-### Day 22
+### Day 23
 
 -   [x] 플레이그라운드로 로그인 API를 요청하면, Access token과 Refresh token을 얻는다.
 -   [x] 플레이그라운드로, Refresh token을 통해 Access token을 재발급해주는 API를 요청할 수 있다.
 -   [x] 구글 로그인 버튼을 클릭하면 `http://localhost:3000/login/google` 로 API를 요청한다.
 
-### Day 23
+### Day 24
 
 -   [x] **payment.html** 화면에서 버튼을 눌러 `createPayment` API를 요청할 수 있다.
 -   [x] `createPayment` API가 요청되면 payment 테이블에 결제 정보가 저장된다.
+
+### Day 25
+
+-   [ ] createPayment에 유효하지 않은 imp_uid를 넘겨줄 경우 `UnprocessableEntityException` 에러를 반환한다.
+-   [ ] createPayment에 이미 결제 테이블에 추가된 imp_uid를 넘겨줄 경우 `ConflictException` 에러를 반환한다.
+-   [ ] `iamport.service.ts` 파일에 로직이 분리되어있다.
+-   [ ] 플레이그라운드에서 `cancelPayment` API를 요청해 결제를 취소할 수 있다.

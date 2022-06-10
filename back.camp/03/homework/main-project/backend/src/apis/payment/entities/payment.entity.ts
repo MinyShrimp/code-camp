@@ -26,13 +26,18 @@ export class PaymentEntity extends BaseEntity {
     @Field(() => ID)
     id: string;
 
+    // 아임포트 UID
     @Column()
     @Field(() => String)
     impUid: string;
 
+    // 아임포트 상품 UID
+    @Column()
+    @Field(() => String)
+    merchantUid: string;
+
     // 결제 금액
-    @Column({ unsigned: true })
-    @Min(0)
+    @Column()
     @Field(() => Int, { description: '결제 금액' })
     amount: number;
 

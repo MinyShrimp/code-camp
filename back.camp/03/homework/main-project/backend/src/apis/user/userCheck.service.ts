@@ -1,5 +1,10 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+    ConflictException,
+    Injectable,
+    UnprocessableEntityException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { IPayload } from 'src/commons/interfaces/Payload.interface';
 import { Repository } from 'typeorm';
 import { MESSAGES } from '../../commons/message/Message.enum';
 import { UserEntity } from './entities/user.entity';
@@ -13,18 +18,6 @@ export class UserCheckService {
 
     ///////////////////////////////////////////////////////////////////
     // 값 검사 //
-
-    async checkValid(
-        userID: string, //
-    ): Promise<boolean> {
-        const count = await this.userRepository.count({ id: userID });
-        if (count === 0) {
-            throw new ConflictException(
-                MESSAGES.USER_FIND_ONE_FAILED, //
-            );
-        }
-        return true;
-    }
 
     /**
      * 가입된 회원 여부 검사
@@ -87,6 +80,28 @@ export class UserCheckService {
         if (!user.isLogin) {
             throw new ConflictException(
                 MESSAGES.USER_ALREADY_LOGOUT, //
+            );
+        }
+        return user;
+    }
+
+    /**
+     * JWT와 회원정보 비교
+     * @param user
+     * @param currentUser
+     * @returns 회원 정보
+     */
+    checkPayload(
+        user: UserEntity, //
+        currentUser: IPayload,
+    ): UserEntity {
+        if (
+            currentUser.name !== user.name ||
+            currentUser.email !== user.email ||
+            currentUser.id !== user.id
+        ) {
+            throw new UnprocessableEntityException(
+                MESSAGES.UNVLIAD_ACCESS, //
             );
         }
         return user;
