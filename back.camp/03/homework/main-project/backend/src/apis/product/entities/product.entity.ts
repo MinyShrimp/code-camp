@@ -57,7 +57,7 @@ export class ProductEntity extends BaseEntity {
     @Min(0)
     @Field(
         () => Int, //
-        { description: "가격" }
+        { description: '가격' },
     )
     price: number;
 
@@ -75,7 +75,7 @@ export class ProductEntity extends BaseEntity {
 
     // 책
     // M:1
-    @JoinColumn({ name: 'book_id' })
+    @JoinColumn({ name: 'bookId' })
     @ManyToOne(() => BookEntity, {
         cascade: true,
         onDelete: 'CASCADE',
@@ -83,15 +83,21 @@ export class ProductEntity extends BaseEntity {
     @Field(() => BookEntity)
     book: BookEntity;
 
+    @Column({ name: 'bookId', type: 'uuid' })
+    bookId: string;
+
     // 상품 카테고리
     // M:1
-    @JoinColumn({ name: 'product_category_id' })
+    @JoinColumn({ name: 'productCategoryId' })
     @ManyToOne(() => ProductCategorySearchEntity, {
         cascade: true,
         onDelete: 'CASCADE',
     })
     @Field(() => ProductCategorySearchEntity, { nullable: true })
     productCategory: ProductCategorySearchEntity;
+
+    @Column({ name: 'productCategoryId', type: 'uuid' })
+    productCategoryId: string;
 
     // 상품 태그
     // M:N

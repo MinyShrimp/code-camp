@@ -51,9 +51,15 @@ export class PaymentEntity extends BaseEntity {
     @Field(() => UserEntity)
     user: UserEntity;
 
+    @Column({ name: 'userId', type: 'uuid' })
+    userId: string;
+
     // 상품
     @JoinColumn({ name: 'productId' })
     @ManyToOne(() => ProductEntity)
     @Field(() => ProductEntity)
     product: ProductEntity;
+
+    @Column({ name: 'productId', type: 'uuid' })
+    productId: string;
 }

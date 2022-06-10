@@ -55,9 +55,15 @@ export class ReviewEntity extends BaseEntity {
     @Field(() => ProductEntity)
     product: ProductEntity;
 
+    @Column({ name: 'productId', type: 'uuid' })
+    productId: string;
+
     // 유저
     @JoinColumn()
     @ManyToOne(() => UserEntity)
     @Field(() => UserEntity)
     user: UserEntity;
+
+    @Column({ name: 'userId', type: 'uuid' })
+    userId: string;
 }

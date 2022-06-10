@@ -2,11 +2,8 @@ import AdminBro from 'admin-bro';
 import { createConnection } from 'typeorm';
 import { validate } from 'class-validator';
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
 import * as AdminBroExpress from '@admin-bro/express';
 import { Database, Resource } from '@admin-bro/typeorm';
-
-import { HttpExceptionFilter } from './commons/filters/http-exception.filter';
 
 import { AdminModule } from './admin/admin.module';
 
@@ -42,7 +39,7 @@ async function runAdmin() {
         logging: true,
     });
 
-    Resource.validate = validate;
+    // Resource.validate = validate;
     AdminBro.registerAdapter({ Database, Resource });
 
     const adminBro = new AdminBro({
@@ -72,8 +69,8 @@ async function runAdmin() {
     const router = AdminBroExpress.buildRouter(adminBro);
 
     app.use(adminBro.options.rootPath, router);
-    app.useGlobalPipes(new ValidationPipe());
-    app.useGlobalFilters(new HttpExceptionFilter());
+    // app.useGlobalPipes(new ValidationPipe());
+    // app.useGlobalFilters(new HttpExceptionFilter());
 
     await app.listen(3001);
 }
