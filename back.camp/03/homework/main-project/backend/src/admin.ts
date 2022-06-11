@@ -5,23 +5,8 @@ import { NestFactory } from '@nestjs/core';
 import * as AdminBroExpress from '@admin-bro/express';
 import { Database, Resource } from '@admin-bro/typeorm';
 
+import { Resources } from './admin/resource.loader';
 import { AdminModule } from './admin/admin.module';
-
-// Entity //
-import { UserResource } from './admin/resources/user.resource';
-
-import { ReviewResource } from './admin/resources/review.resource';
-import { PaymentResource } from './admin/resources/payment.resource';
-
-import { BookResource } from './admin/resources/book.resource';
-import { AuthorResource } from './admin/resources/author.resource';
-import { PublisherResource } from './admin/resources/publisher.resource';
-import { BookImageResource } from './admin/resources/bookImage.resource';
-
-import { ProductResource } from './admin/resources/product.resource';
-import { ProductTagResource } from './admin/resources/productTag.resource';
-import { ProductCategoryResource } from './admin/resources/productCategory.resource';
-import { ProductCategorySearchResource } from './admin/resources/productCategorySearch.resource';
 
 async function runAdmin() {
     const app = await NestFactory.create(AdminModule);
@@ -43,34 +28,40 @@ async function runAdmin() {
     AdminBro.registerAdapter({ Database, Resource });
 
     const adminBro = new AdminBro({
-        resources: [
-            UserResource,
-
-            ReviewResource,
-            PaymentResource,
-
-            BookResource,
-            AuthorResource,
-            PublisherResource,
-            BookImageResource,
-
-            ProductResource,
-            ProductTagResource,
-            ProductCategoryResource,
-            ProductCategorySearchResource,
-        ],
+        resources: Resources,
         rootPath: '/admin',
         branding: {
             companyName: 'CodeCamp',
         },
     });
 
+    const ADMIN = {
+        email: process.env.ADMIN_EMAIL,
+        pwd: process.env.ADMIN_PWD,
+    };
+
+    const authenticated = {
+        authenticate: async (
+            email: string,
+            pwd: string, //
+        ) => {
+            if (ADMIN.email === email && ADMIN.pwd === pwd) {
+                return ADMIN;
+            } else {
+                return null;
+            }
+        },
+        cookieName: 'adminBro',
+        cookiePassword: ADMIN.pwd,
+    };
+
     // @ts-ignore
-    const router = AdminBroExpress.buildRouter(adminBro);
+    const router = AdminBroExpress.buildAuthenticatedRouter(
+        adminBro,
+        authenticated,
+    );
 
     app.use(adminBro.options.rootPath, router);
-    // app.useGlobalPipes(new ValidationPipe());
-    // app.useGlobalFilters(new HttpExceptionFilter());
 
     await app.listen(3001);
 }

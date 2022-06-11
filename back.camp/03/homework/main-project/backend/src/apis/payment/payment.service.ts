@@ -163,9 +163,9 @@ export class PaymentService {
      * 결제 정보가 존재하는지 검사
      * @param payments
      */
-    async checkValidPayment(
+    checkValidPayment(
         payments: PaymentEntity[], //
-    ): Promise<void> {
+    ): void {
         if (payments.length === 0) {
             throw new ConflictException(
                 MESSAGES.PAYMENT_UNVALID, //
@@ -177,9 +177,9 @@ export class PaymentService {
      * 이미 취소되었는지 검사
      * @param sum
      */
-    async checkAlreadyCancel(
+    checkAlreadyCancel(
         sum: number, //
-    ): Promise<void> {
+    ): void {
         if (sum === 0) {
             throw new UnprocessableEntityException(
                 MESSAGES.PAYMENT_ALREADY_CANCEL, //

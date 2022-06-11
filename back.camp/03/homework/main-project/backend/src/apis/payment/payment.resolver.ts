@@ -91,7 +91,7 @@ export class PaymentResolver {
         const payment = payments[0];
 
         // 결제 정보가 존재하는지 검사
-        await this.paymentService.checkValidPayment(payments);
+        this.paymentService.checkValidPayment(payments);
 
         // 회원 검사
         this.userCheckService.checkPayload(payment.user, currentUser);
@@ -100,7 +100,7 @@ export class PaymentResolver {
         const checksum = await this.paymentService.findSum(cancelPaymentInput);
 
         // 이미 취소되었는지 검사
-        await this.paymentService.checkAlreadyCancel(checksum);
+        this.paymentService.checkAlreadyCancel(checksum);
 
         // IamPort에 응답 받기
         const impCancelData = await this.paymentService.sendCancelData(

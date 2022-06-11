@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { JwtAdminStrategy } from '../../commons/auth/jwt-admin.strategy';
+
 import { ProductCategoryEntity } from './entities/productCategory.entity';
 
 import { ProductCategoryResolver } from './productCategory.resolver';
@@ -20,6 +22,7 @@ import { ProductCategoryService } from './productCategory.service';
     providers: [
         ProductCategoryResolver, //
         ProductCategoryService,
+        JwtAdminStrategy,
     ],
 })
 export class ProductCategoryModule {}
