@@ -129,7 +129,7 @@ export class ProductCategorySearchService {
      * @returns ResultMessage
      */
     async createSarchCategory(): Promise<ResultMessage> {
-        await this.__deleteAllSearchCategory();
+        // await this.__deleteAllSearchCategory();
 
         const tree = await this.productCategoryService.findAllByTree();
         tree.forEach(async (categorys1) => {
@@ -186,6 +186,6 @@ export class ProductCategorySearchService {
      * Search Category 전체 삭제
      */
     private async __deleteAllSearchCategory(): Promise<void> {
-        await this.productCategorySearchRepository.delete({});
+        await this.productCategorySearchRepository.softDelete({});
     }
 }

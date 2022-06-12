@@ -61,11 +61,17 @@ export class AuthService {
     private getPayload(
         user: UserEntity, //
     ): IPayloadSub {
-        return {
+        const payload = {
             sub: user.id,
             name: user.name,
             email: user.email,
         };
+
+        if (user.isAdmin) {
+            payload['isAdmin'] = true;
+        }
+
+        return payload;
     }
 
     /**

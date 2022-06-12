@@ -48,6 +48,9 @@ export class BookImageEntity extends BaseEntity {
     @Field(() => BookEntity)
     book: BookEntity;
 
+    @Column({ name: 'bookId', type: 'uuid' })
+    bookId: string;
+
     // 생성 시간
     @CreateDateColumn()
     createAt: Date;

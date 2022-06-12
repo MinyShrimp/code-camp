@@ -1,5 +1,5 @@
-import { ProductEntity } from '../../apis/product/entities/product.entity';
-import { Resource } from '../interfaces/resource.interface';
+import { ProductEntity } from '../../../apis/product/entities/product.entity';
+import { Resource } from '../../interfaces/resource.interface';
 
 export const ProductResource: Resource = {
     resource: ProductEntity,
@@ -10,16 +10,16 @@ export const ProductResource: Resource = {
             'price',
             'stock_count',
             'selling_count',
-            'book_id',
-            'product_category_id',
+            'bookId',
+            'productCategoryId',
         ],
         editProperties: [
             'url',
             'price',
             'stock_count',
             'selling_count',
-            'book_id',
-            'product_category_id',
+            'bookId',
+            'productCategoryId',
             'deleteAt',
         ],
         showProperties: [
@@ -28,8 +28,8 @@ export const ProductResource: Resource = {
             'price',
             'stock_count',
             'selling_count',
-            'book_id',
-            'product_category_id',
+            'bookId',
+            'productCategoryId',
             'createAt',
             'updateAt',
             'deleteAt',

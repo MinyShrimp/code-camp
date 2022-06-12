@@ -18,15 +18,15 @@
 
         <!-- script -->
         <script>
+            //////////////////////////////////////////////////////////////////
+            // !!!!!!!!!!!! 테스트 할려면 여기에 하시면 됩니다 !!!!!!!!!!!! //
+            const productID = "5a8f8d81-c9be-4e6e-afda-85ff890b3536";
+            const accessToken =
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMGQwZjY5Zi03MDg3LTQ1YmItYTFhMi1lYjlkYzY2NGIxOGUiLCJuYW1lIjoi6rmA7ZqM66-8IiwiZW1haWwiOiJrc2s3NTg0QGdtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1NTA0Mzg0NSwiZXhwIjoxNjU1MDQ3NDQ1fQ.SPqEaCzVBQoLC5Sbi8X_WSPcjaV3LTpf8t592DgIF5U";
+            //////////////////////////////////////////////////////////////////
+
             function requestPay() {
                 const amount = document.getElementById("amount").value;
-
-                //////////////////////////////////////////////////////////////////
-                // !!!!!!!!!!!! 테스트 할려면 여기에 하시면 됩니다 !!!!!!!!!!!! //
-                const productID = "상품_ID";
-                const accessToken = "JWT_AccessToken";
-                //////////////////////////////////////////////////////////////////
-
                 const IMP = window.IMP;
                 IMP.init("imp63093514");
                 IMP.request_pay(
@@ -56,8 +56,9 @@
                                             createPayment(
                                                 createPaymentInput: {
                                                     impUid: "${rsp.imp_uid}"
+                                                    merchantUid: "${rsp.merchant_uid}"
                                                     amount: ${rsp.paid_amount}
-                                                    status: ${rsp.pg_type.toUpperCase()}
+                                                    status: ${rsp.status.toUpperCase()}
                                                     productID: "${productID}"
                                                 }
                                             ) { id }

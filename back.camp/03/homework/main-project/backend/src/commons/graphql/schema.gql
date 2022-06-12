@@ -179,6 +179,7 @@ type ProductCategoryEntity {
 type PaymentEntity {
   id: ID!
   impUid: String!
+  merchantUid: String!
 
   """결제 금액"""
   amount: Int!
@@ -190,14 +191,11 @@ type PaymentEntity {
 }
 
 enum PAYMENT_STATUS {
-  PAYMENT
-  CANCEL
+  PAID
+  CANCELLED
 }
 
 type Query {
-  """회원 전체 조회"""
-  fetchUsers: [UserEntity!]!
-
   """회원 단일 조회, Bearer JWT"""
   fetchLoginUser: UserEntity
 
@@ -263,12 +261,6 @@ type Mutation {
   """회원 정보 수정, Bearer JWT"""
   updateLoginUser(updateInput: UpdateUserInput!): UserEntity!
 
-  """회원 탈퇴 취소, Bearer JWT"""
-  restoreUser(userID: String!): ResultMessage!
-
-  """회원 삭제 ( Real )"""
-  deleteUser(userID: String!): ResultMessage!
-
   """회원 탈퇴 ( Soft ), Bearer JWT"""
   deleteLoginUser: ResultMessage!
 
@@ -290,11 +282,8 @@ type Mutation {
   """결제 정보 생성"""
   createPayment(createPaymentInput: CreatePaymentInput!): PaymentEntity!
 
-  """결제 정보 삭제 취소"""
-  restorePayment(paymentID: String!): ResultMessage!
-
-  """결제 정보 삭제 ( Soft )"""
-  softDeletePayment(paymentID: String!): ResultMessage!
+  """결제 전부 취소"""
+  cancelPayment(cancelPaymentInput: CancelPaymentInput!): PaymentEntity!
 
   """상품 정보 생성"""
   createProduct(createProductInput: CreateProductInput!): ProductEntity!
@@ -441,6 +430,7 @@ input UpdateReviewInput {
 
 input CreatePaymentInput {
   impUid: String!
+  merchantUid: String!
 
   """결제 금액"""
   amount: Int!
@@ -450,6 +440,11 @@ input CreatePaymentInput {
 
   """상품 ID"""
   productID: String!
+}
+
+input CancelPaymentInput {
+  impUid: String!
+  merchantUid: String!
 }
 
 input CreateProductInput {

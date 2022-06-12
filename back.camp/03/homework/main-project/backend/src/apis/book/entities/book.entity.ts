@@ -94,13 +94,16 @@ export class BookEntity extends BaseEntity {
     deleteAt: Date;
 
     // 출판사
-    @JoinColumn()
+    @JoinColumn({ name: 'publisherId' })
     @ManyToOne(() => PublisherEntity, {
         cascade: true,
         onDelete: 'CASCADE',
     })
     @Field(() => PublisherEntity, { nullable: true })
     publisher: PublisherEntity;
+
+    @Column({ name: 'publisherId', type: 'uuid' })
+    publisherId: string;
 
     // 저자
     @JoinColumn()
@@ -110,6 +113,9 @@ export class BookEntity extends BaseEntity {
     })
     @Field(() => AuthorEntity, { nullable: true })
     author: AuthorEntity;
+
+    @Column({ name: 'authorId', type: 'uuid' })
+    authorId: string;
 
     // 책 이미지
     @OneToMany(

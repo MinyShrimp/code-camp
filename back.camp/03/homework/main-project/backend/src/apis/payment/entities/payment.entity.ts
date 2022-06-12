@@ -12,7 +12,6 @@ import {
     BaseEntity,
 } from 'typeorm';
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
-import { IsBoolean, Min } from 'class-validator';
 
 import { ProductEntity } from '../../product/entities/product.entity';
 import { UserEntity } from '../../user/entities/user.entity';
@@ -26,13 +25,18 @@ export class PaymentEntity extends BaseEntity {
     @Field(() => ID)
     id: string;
 
+    // 아임포트 UID
     @Column()
     @Field(() => String)
     impUid: string;
 
+    // 아임포트 상품 UID
+    @Column()
+    @Field(() => String)
+    merchantUid: string;
+
     // 결제 금액
-    @Column({ unsigned: true })
-    @Min(0)
+    @Column()
     @Field(() => Int, { description: '결제 금액' })
     amount: number;
 
@@ -51,9 +55,15 @@ export class PaymentEntity extends BaseEntity {
     @Field(() => UserEntity)
     user: UserEntity;
 
+    @Column({ name: 'userId', type: 'uuid' })
+    userId: string;
+
     // 상품
     @JoinColumn({ name: 'productId' })
     @ManyToOne(() => ProductEntity)
     @Field(() => ProductEntity)
     product: ProductEntity;
+
+    @Column({ name: 'productId', type: 'uuid' })
+    productId: string;
 }

@@ -1,5 +1,7 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
+import { GqlJwtAdminGuard } from '../../commons/auth/gql-auth.guard';
 import { ResultMessage } from '../../commons/message/ResultMessage.dto';
 
 import { CreateProductCategoryInput } from './dto/createProductCategory.input';
@@ -20,6 +22,7 @@ export class ProductCategoryResolver {
      * GET /admin/product/categorys
      * @response 조회된 전체 분류 정보
      */
+    // @UseGuards(GqlJwtAdminGuard)
     @Query(
         () => [ProductCategoryEntity], //
         { description: '모든 분류 정보 조회' },

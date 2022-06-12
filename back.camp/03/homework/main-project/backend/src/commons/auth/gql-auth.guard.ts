@@ -18,3 +18,10 @@ export class GqlJwtRefreshGuard extends AuthGuard('jwtRefreshGuard') {
         return ctx.getContext().req;
     }
 }
+
+export class GqlJwtAdminGuard extends AuthGuard('jwtAdminGuard') {
+    getRequest(context: ExecutionContext) {
+        const ctx = GqlExecutionContext.create(context);
+        return ctx.getContext().req;
+    }
+}

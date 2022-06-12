@@ -1,35 +1,18 @@
-import AdminBro from 'admin-bro';
+import AdminJS from 'adminjs';
 import { createConnection } from 'typeorm';
-import { validate } from 'class-validator';
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
-import * as AdminBroExpress from '@admin-bro/express';
-import { Database, Resource } from '@admin-bro/typeorm';
 
-import { HttpExceptionFilter } from './commons/filters/http-exception.filter';
+import * as AdminJSExpress from '@adminjs/express';
+import { Database } from '@adminjs/typeorm';
+import { Resource } from './admin/interfaces/Resource.base';
 
+import { Resources } from './admin/resource.loader';
 import { AdminModule } from './admin/admin.module';
-
-// Entity //
-import { UserResource } from './admin/resources/user.resource';
-
-import { ReviewResource } from './admin/resources/review.resource';
-import { PaymentResource } from './admin/resources/payment.resource';
-
-import { BookResource } from './admin/resources/book.resource';
-import { AuthorResource } from './admin/resources/author.resource';
-import { PublisherResource } from './admin/resources/publisher.resource';
-import { BookImageResource } from './admin/resources/bookImage.resource';
-
-import { ProductResource } from './admin/resources/product.resource';
-import { ProductTagResource } from './admin/resources/productTag.resource';
-import { ProductCategoryResource } from './admin/resources/productCategory.resource';
-import { ProductCategorySearchResource } from './admin/resources/productCategorySearch.resource';
 
 async function runAdmin() {
     const app = await NestFactory.create(AdminModule);
 
-    await createConnection({
+    const connection = await createConnection({
         type: 'mysql',
         host: 'db',
         port: 3306,
@@ -42,38 +25,46 @@ async function runAdmin() {
         logging: true,
     });
 
-    Resource.validate = validate;
-    AdminBro.registerAdapter({ Database, Resource });
+    // Resource.validate = validate;
+    AdminJS.registerAdapter({ Database, Resource });
 
-    const adminBro = new AdminBro({
-        resources: [
-            UserResource,
-
-            ReviewResource,
-            PaymentResource,
-
-            BookResource,
-            AuthorResource,
-            PublisherResource,
-            BookImageResource,
-
-            ProductResource,
-            ProductTagResource,
-            ProductCategoryResource,
-            ProductCategorySearchResource,
-        ],
+    const adminBro = new AdminJS({
+        resources: Resources,
         rootPath: '/admin',
         branding: {
             companyName: 'CodeCamp',
         },
     });
 
+    // const user = connection.getRepository(UserEntity);
+
+    const admin = {
+        email: process.env.ADMIN_EMAIL,
+        pwd: process.env.ADMIN_PWD,
+    };
+
+    const authenticated = {
+        authenticate: async (
+            email: string,
+            pwd: string, //
+        ) => {
+            if (email === admin.email && pwd === admin.pwd) {
+                return admin;
+            }
+
+            return null;
+        },
+        cookieName: 'adminBro',
+        cookiePassword: admin.pwd,
+    };
+
     // @ts-ignore
-    const router = AdminBroExpress.buildRouter(adminBro);
+    const router = AdminJSExpress.buildAuthenticatedRouter(
+        adminBro,
+        authenticated,
+    );
 
     app.use(adminBro.options.rootPath, router);
-    app.useGlobalPipes(new ValidationPipe());
-    app.useGlobalFilters(new HttpExceptionFilter());
 
     await app.listen(3001);
 }
