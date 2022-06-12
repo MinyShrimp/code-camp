@@ -12,7 +12,6 @@ import {
     BaseEntity,
 } from 'typeorm';
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
-import { IsBoolean, Min } from 'class-validator';
 
 import { ProductEntity } from '../../product/entities/product.entity';
 import { UserEntity } from '../../user/entities/user.entity';

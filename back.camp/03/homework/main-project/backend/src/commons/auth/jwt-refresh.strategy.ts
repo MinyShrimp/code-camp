@@ -30,6 +30,7 @@ export class JwtRefreshStrategy extends PassportStrategy(
             id: payload.sub,
             name: payload.name,
             email: payload.email,
+            isAdmin: payload.isAdmin ?? false,
         };
     }
 }

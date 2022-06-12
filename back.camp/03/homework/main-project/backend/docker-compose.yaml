@@ -6,8 +6,6 @@ services:
         image: mysql:5.7
         container_name: codecamp-mainproject-db
         env_file: .env
-        environment:
-            TZ: Asia/Seoul
         volumes:
             - ./db/conf.d:/etc/mysql/conf.d
         ports:

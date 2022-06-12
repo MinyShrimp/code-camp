@@ -41,6 +41,9 @@ export class UserEntity extends BaseEntity {
     @Field(() => Int, { description: '포인트' })
     point: number;
 
+    @Column({ default: false })
+    isAdmin: boolean;
+
     // 로그인 시간
     @Column({ nullable: true })
     loginAt: Date;

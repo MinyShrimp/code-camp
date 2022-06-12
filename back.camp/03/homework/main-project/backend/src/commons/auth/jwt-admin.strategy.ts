@@ -1,22 +1,32 @@
 import { NotFoundException } from '@nestjs/common';
+import { Strategy, ExtractJwt } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { IPayload, IPayloadSub } from '../interfaces/Payload.interface';
-import { JwtAccessStrategy } from './jwt-access.strategy';
 import { MESSAGES } from '../message/Message.enum';
 
 export class JwtAdminStrategy extends PassportStrategy(
-    JwtAccessStrategy,
+    Strategy,
     'jwtAdminGuard',
 ) {
     constructor() {
-        super();
+        super({
+            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            secretOrKey: process.env.JWT_ACCESS_KEY,
+        });
     }
 
+    /* 검증 성공 시 실행 */
     validate(payload: IPayloadSub): IPayload {
-        if (payload.email !== process.env.ADMIN_EMAIL) {
+        if (!payload.isAdmin) {
             throw new NotFoundException(MESSAGES.UNVLIAD_ACCESS);
         }
 
-        return super.validate(payload);
+        /* req.user */
+        return {
+            id: payload.sub,
+            name: payload.name,
+            email: payload.email,
+            isAdmin: payload.isAdmin ?? false,
+        };
     }
 }

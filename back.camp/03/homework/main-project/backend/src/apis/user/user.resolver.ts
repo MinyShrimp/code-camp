@@ -24,18 +24,6 @@ export class UserResolver {
     // 조회 //
 
     /**
-     * GET /admin/users
-     * @response 회원 전체 목록
-     */
-    @Query(
-        () => [UserEntity], //
-        { description: '회원 전체 조회' },
-    )
-    fetchUsers(): Promise<UserEntity[]> {
-        return this.userService.findAll();
-    }
-
-    /**
      * GET /api/user
      * - Bearer JWT
      * @response 회원 단일 조회
@@ -62,7 +50,7 @@ export class UserResolver {
     /**
      * PATCH /api/user
      * - Bearer JWT
-     * @param updateInput
+     * @param currentUser
      * @response 수정된 회원 정보
      */
     @UseGuards(GqlJwtAccessGuard)
@@ -86,38 +74,8 @@ export class UserResolver {
         return this.userService.updateUser(user, updateInput);
     }
 
-    /**
-     * PUT /admin/user/:id
-     * @param userID
-     * @response ResultMessage
-     */
-    @Mutation(
-        () => ResultMessage, //
-        { description: '회원 탈퇴 취소, Bearer JWT' },
-    )
-    restoreUser(
-        @Args('userID') userID: string, //
-    ): Promise<ResultMessage> {
-        return this.userService.restore(userID);
-    }
-
     ///////////////////////////////////////////////////////////////////
     // 삭제 //
-
-    /**
-     * DELETE /admin/user/:id
-     * @param userID
-     * @response ResultMessage
-     */
-    @Mutation(
-        () => ResultMessage, //
-        { description: '회원 삭제 ( Real )' },
-    )
-    deleteUser(
-        @Args('userID') userID: string, //
-    ): Promise<ResultMessage> {
-        return this.userService.delete(userID);
-    }
 
     /**
      * DELETE /api/user

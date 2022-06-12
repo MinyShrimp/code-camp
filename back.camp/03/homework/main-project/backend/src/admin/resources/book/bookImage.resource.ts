@@ -1,5 +1,5 @@
-import { BookImageEntity } from '../../apis/bookImage/entities/bookImage.entity';
-import { Resource } from '../interfaces/resource.interface';
+import { BookImageEntity } from '../../../apis/bookImage/entities/bookImage.entity';
+import { Resource } from '../../interfaces/resource.interface';
 
 export const BookImageResource: Resource = {
     resource: BookImageEntity,

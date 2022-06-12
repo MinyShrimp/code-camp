@@ -1,5 +1,5 @@
-import { PaymentEntity } from '../../apis/payment/entities/payment.entity';
-import { Resource } from '../interfaces/resource.interface';
+import { PaymentEntity } from '../../../apis/payment/entities/payment.entity';
+import { Resource } from '../../interfaces/resource.interface';
 
 export const PaymentResource: Resource = {
     resource: PaymentEntity,
@@ -17,6 +17,7 @@ export const PaymentResource: Resource = {
         showProperties: [
             'id',
             'impUid',
+            'merchantUid',
             'amount',
             'status',
             'userId',

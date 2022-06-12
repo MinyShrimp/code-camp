@@ -1,5 +1,5 @@
-import { ReviewEntity } from '../../apis/review/entities/review.entity';
-import { Resource } from '../interfaces/resource.interface';
+import { ReviewEntity } from '../../../apis/review/entities/review.entity';
+import { Resource } from '../../interfaces/resource.interface';
 
 export const ReviewResource: Resource = {
     resource: ReviewEntity,

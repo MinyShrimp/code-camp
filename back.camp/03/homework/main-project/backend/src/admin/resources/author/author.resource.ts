@@ -1,5 +1,5 @@
-import { AuthorEntity } from '../../apis/author/entities/author.entity';
-import { Resource } from '../interfaces/resource.interface';
+import { AuthorEntity } from '../../../apis/author/entities/author.entity';
+import { Resource } from '../../interfaces/resource.interface';
 
 export const AuthorResource: Resource = {
     resource: AuthorEntity,

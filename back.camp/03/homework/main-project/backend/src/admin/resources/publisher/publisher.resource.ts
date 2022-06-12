@@ -1,5 +1,5 @@
-import { PublisherEntity } from '../../apis/publisher/entities/publisher.entity';
-import { Resource } from '../interfaces/resource.interface';
+import { PublisherEntity } from '../../../apis/publisher/entities/publisher.entity';
+import { Resource } from '../../interfaces/resource.interface';
 
 export const PublisherResource: Resource = {
     resource: PublisherEntity,

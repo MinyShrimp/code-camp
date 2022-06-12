@@ -1,9 +1,10 @@
 import AdminBro from 'admin-bro';
 import { createConnection } from 'typeorm';
-import { validate } from 'class-validator';
 import { NestFactory } from '@nestjs/core';
+
 import * as AdminBroExpress from '@admin-bro/express';
-import { Database, Resource } from '@admin-bro/typeorm';
+import { Database } from '@admin-bro/typeorm';
+import { Resource } from './admin/interfaces/Resource.base';
 
 import { Resources } from './admin/resource.loader';
 import { AdminModule } from './admin/admin.module';
@@ -11,7 +12,7 @@ import { AdminModule } from './admin/admin.module';
 async function runAdmin() {
     const app = await NestFactory.create(AdminModule);
 
-    await createConnection({
+    const connection = await createConnection({
         type: 'mysql',
         host: 'db',
         port: 3306,
@@ -35,7 +36,9 @@ async function runAdmin() {
         },
     });
 
-    const ADMIN = {
+    // const user = connection.getRepository(UserEntity);
+
+    const admin = {
         email: process.env.ADMIN_EMAIL,
         pwd: process.env.ADMIN_PWD,
     };
@@ -45,14 +48,15 @@ async function runAdmin() {
             email: string,
             pwd: string, //
         ) => {
-            if (ADMIN.email === email && ADMIN.pwd === pwd) {
-                return ADMIN;
-            } else {
-                return null;
+            console.log(admin);
+            if (email === admin.email && pwd === admin.pwd) {
+                return admin;
             }
+
+            return null;
         },
         cookieName: 'adminBro',
-        cookiePassword: ADMIN.pwd,
+        cookiePassword: admin.pwd,
     };
 
     // @ts-ignore

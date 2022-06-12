@@ -186,6 +186,6 @@ export class ProductCategorySearchService {
      * Search Category 전체 삭제
      */
     private async __deleteAllSearchCategory(): Promise<void> {
-        await this.productCategorySearchRepository.delete({});
+        await this.productCategorySearchRepository.softDelete({});
     }
 }

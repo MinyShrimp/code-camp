@@ -17,7 +17,7 @@ import { PaymentController } from './payment.contoller';
         UserModule,
         ProductModule,
     ],
-    controllers: [PaymentController],
+    // controllers: [PaymentController],
     providers: [
         PaymentResolver, //
         PaymentService,

@@ -3,7 +3,13 @@
  */
 
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    BaseEntity,
+    Column,
+    DeleteDateColumn,
+    Entity,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({ name: 'product_category_search' })
 @ObjectType({ description: '검색용 상품 카테고리 Entity' })
@@ -36,4 +42,7 @@ export class ProductCategorySearchEntity extends BaseEntity {
     @Column({ nullable: true })
     @Field(() => String, { description: '분류 4', nullable: true })
     c4?: string;
+
+    @DeleteDateColumn()
+    deleteAt?: Date;
 }

@@ -1,5 +1,5 @@
-import { ProductEntity } from '../../apis/product/entities/product.entity';
-import { Resource } from '../interfaces/resource.interface';
+import { ProductEntity } from '../../../apis/product/entities/product.entity';
+import { Resource } from '../../interfaces/resource.interface';
 
 export const ProductResource: Resource = {
     resource: ProductEntity,

@@ -152,9 +152,10 @@ export class UserService {
     async softDelete(
         userID: string, //
     ): Promise<ResultMessage> {
-        const result = await this.userRepository.softDelete({
-            id: userID,
-        });
+        const result = await this.userRepository.update(
+            { id: userID },
+            { deleteAt: new Date(), isLogin: false, logoutAt: new Date() },
+        );
 
         return new ResultMessage({
             id: userID,
