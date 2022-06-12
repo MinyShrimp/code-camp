@@ -4,10 +4,10 @@ import {
     Filter,
     flat,
     ValidationError,
-} from 'admin-bro';
-import { BaseEntity } from 'typeorm';
-import { convertFilter } from '@admin-bro/typeorm/lib/utils/convertFilter';
-import { Property } from '@admin-bro/typeorm/lib/Property';
+} from 'adminjs';
+import { BaseEntity, In } from 'typeorm';
+import { convertFilter } from '@adminjs/typeorm/lib/utils/filter/filter.converter';
+import { Property } from '@adminjs/typeorm/lib/Property';
 
 type ParamsType = Record<string, any>;
 export class Resource extends BaseResource {
@@ -38,6 +38,11 @@ export class Resource extends BaseResource {
 
     id(): string {
         return this.model.name;
+    }
+
+    idName() {
+        return this.model.getRepository().metadata.primaryColumns[0]
+            .propertyName;
     }
 
     properties(): Array<Property> {
@@ -72,7 +77,12 @@ export class Resource extends BaseResource {
     }
 
     async findOne(id: string | number): Promise<BaseRecord | null> {
-        const instance = await this.model.findOne(id, { withDeleted: true });
+        const reference = {
+            where: {},
+            withDeleted: true,
+        };
+        reference['where'][this.idName()] = id;
+        const instance = await this.model.findOne(reference);
         if (!instance) {
             return null;
         }
@@ -80,9 +90,12 @@ export class Resource extends BaseResource {
     }
 
     async findMany(ids: Array<string | number>): Promise<BaseRecord[]> {
-        const instances = await this.model.findByIds(ids, {
+        const reference = {
+            where: {},
             withDeleted: true,
-        });
+        };
+        reference['where'][this.idName()] = In(ids);
+        const instances = await this.model.find(reference);
         return instances.map((instance) => new BaseRecord(instance, this));
     }
 
@@ -95,7 +108,12 @@ export class Resource extends BaseResource {
     }
 
     async update(pk: string | number, params?: any): Promise<ParamsType> {
-        const instance = await this.model.findOne(pk, { withDeleted: true });
+        const reference = {
+            where: {},
+            withDeleted: true,
+        };
+        reference['where'][this.idName()] = pk;
+        const instance = await this.model.findOne(reference);
         if (instance) {
             const preparedParams = this.prepareParams(params);
             Object.keys(preparedParams).forEach((paramName) => {
@@ -108,8 +126,17 @@ export class Resource extends BaseResource {
     }
 
     async delete(pk: string | number): Promise<any> {
+        const reference = {
+            where: {},
+            withDeleted: true,
+        };
+        reference['where'][this.idName()] = pk;
+
         try {
-            await this.model.delete(pk);
+            const instance = await this.model.findOne(reference);
+            if (instance) {
+                await instance.remove();
+            }
         } catch (error) {
             if (error.name === 'QueryFailedError') {
                 throw new ValidationError(

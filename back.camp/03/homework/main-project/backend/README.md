@@ -5,13 +5,26 @@ yarn add @nestjs/config
 yarn add @nestjs/typeorm typeorm@0.2 mysql2
 yarn add @nestjs/graphql @nestjs/apollo graphql apollo-server-express
 yarn add class-validator class-transformer
-yarn add bcryptjs @types/bcryptjs
-yarn add @nestjs/jwt passport-jwt @nestjs/passport passport @types/passport-jwt
-yarn add passport-google-oauth20 @types/passport-google-oauth20
-yarn add passport-kakao @types/passport-kakao
-yarn add passport-naver @types/passport-naver
-yarn add express-session express-formidable admin-bro @admin-bro/express @admin-bro/typeorm
-yarn add axios @types/axios
+
+yarn add bcryptjs
+yarn add @types/bcryptjs --dev
+
+yarn add @nestjs/jwt passport-jwt @nestjs/passport passport
+yarn add @types/passport-jwt --dev
+
+yarn add passport-google-oauth20 passport-kakao passport-naver
+yarn add @types/passport-naver @types/passport-kakao @types/passport-google-oauth20 --dev
+
+yarn add express-session express-formidable
+# yarn add admin-bro @admin-bro/express @admin-bro/typeorm
+yarn add adminjs @adminjs/typeorm @adminjs/express
+
+yarn add axios
+yarn add @types/axios --dev
+
+# yarn add react react-dom styled-components
+
+yarn add nodemon --dev
 ```
 
 ## 설정

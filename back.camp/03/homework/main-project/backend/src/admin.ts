@@ -1,9 +1,9 @@
-import AdminBro from 'admin-bro';
+import AdminJS from 'adminjs';
 import { createConnection } from 'typeorm';
 import { NestFactory } from '@nestjs/core';
 
-import * as AdminBroExpress from '@admin-bro/express';
-import { Database } from '@admin-bro/typeorm';
+import * as AdminJSExpress from '@adminjs/express';
+import { Database } from '@adminjs/typeorm';
 import { Resource } from './admin/interfaces/Resource.base';
 
 import { Resources } from './admin/resource.loader';
@@ -14,7 +14,7 @@ async function runAdmin() {
 
     const connection = await createConnection({
         type: 'mysql',
-        host: 'db',
+        host: 'localhost',
         port: 3306,
         username: 'root',
         password: process.env.MYSQL_ROOT_PASSWORD,
@@ -26,9 +26,9 @@ async function runAdmin() {
     });
 
     // Resource.validate = validate;
-    AdminBro.registerAdapter({ Database, Resource });
+    AdminJS.registerAdapter({ Database, Resource });
 
-    const adminBro = new AdminBro({
+    const adminBro = new AdminJS({
         resources: Resources,
         rootPath: '/admin',
         branding: {
@@ -48,7 +48,6 @@ async function runAdmin() {
             email: string,
             pwd: string, //
         ) => {
-            console.log(admin);
             if (email === admin.email && pwd === admin.pwd) {
                 return admin;
             }
@@ -60,7 +59,7 @@ async function runAdmin() {
     };
 
     // @ts-ignore
-    const router = AdminBroExpress.buildAuthenticatedRouter(
+    const router = AdminJSExpress.buildAuthenticatedRouter(
         adminBro,
         authenticated,
     );

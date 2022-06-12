@@ -3,12 +3,12 @@ import { useHistory } from 'react-router-dom';
 import * as axios from 'axios';
 
 import {
-    LoginCompo,
+    Container,
     InputGroup,
     Label,
     Submit,
     Input,
-} from '../styles/user.styled';
+} from '../../../styles/base.styled';
 import { TransformGraphQLResponse } from '../../../utils/transform-graphql';
 
 const SignupComponent = (props) => {
@@ -42,7 +42,7 @@ const SignupComponent = (props) => {
     };
 
     return (
-        <LoginCompo>
+        <Container>
             <InputGroup>
                 <Label htmlFor="name">Name</Label>
                 <Input
@@ -95,7 +95,7 @@ const SignupComponent = (props) => {
                 {' '}
                 Sign Up{' '}
             </Submit>
-        </LoginCompo>
+        </Container>
     );
 };
 

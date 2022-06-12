@@ -1,3 +1,4 @@
+import AdminJS from 'adminjs';
 import { PaymentEntity } from '../../../apis/payment/entities/payment.entity';
 import { Resource } from '../../interfaces/resource.interface';
 
@@ -24,5 +25,37 @@ export const PaymentResource: Resource = {
             'productId',
             'createAt',
         ],
+
+        actions: {
+            CreatePayment: {
+                actionType: 'resource',
+                component: AdminJS.bundle(
+                    './components/createPayment.component',
+                ),
+            },
+
+            // cancelPayment: {
+            //     actionType: 'record',
+            //     isVisible: true,
+            //     component: false,
+            //     handler: async (req, res, ctx) => {
+            //         await ctx.resource.update(req.params.recordId, {
+            //             isLogin: false,
+            //             logoutAt: new Date(),
+            //         });
+            //         return {
+            //             record: ctx.record.toJSON(ctx.currentAdmin),
+            //             redirectUrl: ctx.h.resourceActionUrl({
+            //                 resourceId: ctx.resource.id(),
+            //                 actionName: 'list',
+            //             }),
+            //             notice: {
+            //                 message: 'Successfully CancelPayment',
+            //                 type: 'success',
+            //             },
+            //         };
+            //     },
+            // },
+        },
     },
 };

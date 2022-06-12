@@ -1,4 +1,4 @@
-import adminBro, { ActionRequest } from 'admin-bro';
+import AdminJS, { ActionRequest, ActionResponse, ActionContext } from 'adminjs';
 import * as bcrypt from 'bcryptjs';
 import { UserEntity } from '../../../apis/user/entities/user.entity';
 import { Resource } from '../../interfaces/resource.interface';
@@ -31,7 +31,7 @@ export const UserResource: Resource = {
 
         actions: {
             new: {
-                before: async (request: ActionRequest) => {
+                before: async (request: any) => {
                     if (request.payload.pwd) {
                         request.payload = {
                             ...request.payload,
@@ -48,21 +48,19 @@ export const UserResource: Resource = {
             // Resource Action
             signup: {
                 actionType: 'resource',
-                component: adminBro.bundle('./components/signup.component.jsx'),
+                component: AdminJS.bundle('./components/signup.component'),
             },
             login: {
                 actionType: 'resource',
-                component: adminBro.bundle('./components/login.component.jsx'),
+                component: AdminJS.bundle('./components/login.component'),
             },
             logout: {
                 actionType: 'resource',
-                component: adminBro.bundle('./components/logout.component.jsx'),
+                component: AdminJS.bundle('./components/logout.component'),
             },
             softdelete: {
                 actionType: 'resource',
-                component: adminBro.bundle(
-                    './components/softdelete.component.jsx',
-                ),
+                component: AdminJS.bundle('./components/softdelete.component'),
             },
 
             // Record Action
@@ -70,7 +68,11 @@ export const UserResource: Resource = {
                 actionType: 'record',
                 isVisible: true,
                 component: false,
-                handler: async (req, res, ctx) => {
+                handler: async (
+                    req: ActionRequest,
+                    res: ActionResponse,
+                    ctx: ActionContext,
+                ) => {
                     await ctx.resource.update(req.params.recordId, {
                         isLogin: false,
                         logoutAt: new Date(),
@@ -92,7 +94,11 @@ export const UserResource: Resource = {
                 actionType: 'record',
                 isVisible: true,
                 component: false,
-                handler: async (req, res, ctx) => {
+                handler: async (
+                    req: ActionRequest,
+                    res: ActionResponse,
+                    ctx: ActionContext,
+                ) => {
                     await ctx.resource.update(req.params.recordId, {
                         isLogout: false,
                         deleteAt: new Date(),
@@ -115,7 +121,11 @@ export const UserResource: Resource = {
                 actionType: 'record',
                 isVisible: true,
                 component: false,
-                handler: async (req, res, ctx) => {
+                handler: async (
+                    req: ActionRequest,
+                    res: ActionResponse,
+                    ctx: ActionContext,
+                ) => {
                     await ctx.resource.update(req.params.recordId, {
                         deleteAt: null,
                     });

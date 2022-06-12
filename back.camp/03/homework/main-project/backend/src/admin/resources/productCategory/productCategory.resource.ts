@@ -1,4 +1,4 @@
-import adminBro from 'admin-bro';
+import AdminJS from 'adminjs';
 import { ProductCategoryEntity } from '../../../apis/productCategory/entities/productCategory.entity';
 import { Resource } from '../../interfaces/resource.interface';
 
@@ -12,8 +12,8 @@ export const ProductCategoryResource: Resource = {
         actions: {
             createSearchCategory: {
                 actionType: 'resource',
-                component: adminBro.bundle(
-                    './components/createSearchCategory.component.jsx',
+                component: AdminJS.bundle(
+                    './components/createSearchCategory.component',
                 ),
             },
         },
