@@ -9,4 +9,4 @@ RUN yarn install
 COPY . /app
 
 EXPOSE 3001
-CMD ["yarn", "admin:dev"]
+CMD ["yarn", "start:admin"]

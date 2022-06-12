@@ -78,7 +78,9 @@ export class PaymentService {
     async checkOverlapUID(
         impUid: string, //
     ): Promise<void> {
-        const count = await this.paymentRepository.count({ impUid: impUid });
+        const count = await this.paymentRepository.count({
+            where: { impUid: impUid },
+        });
         if (count !== 0) {
             throw new ConflictException(MESSAGES.PAYMENT_OVERLAP_UID);
         }

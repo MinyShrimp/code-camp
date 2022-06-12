@@ -39,7 +39,7 @@ export class ReviewService {
         reviewID: string, //
     ): Promise<ReviewEntity> {
         const review = await this.reviewRepository.findOne({
-            id: reviewID,
+            where: { id: reviewID },
         });
 
         if (!review) {

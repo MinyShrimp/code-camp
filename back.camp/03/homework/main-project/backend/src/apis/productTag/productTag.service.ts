@@ -24,7 +24,9 @@ export class ProductTagService {
     private async __findOneByName(
         name: string, //
     ): Promise<ProductTagEntity> {
-        return await this.productTagRepository.findOne({ name: name });
+        return await this.productTagRepository.findOne({
+            where: { name: name },
+        });
     }
 
     ///////////////////////////////////////////////////////////////////

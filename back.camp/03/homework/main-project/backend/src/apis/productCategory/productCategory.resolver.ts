@@ -22,7 +22,7 @@ export class ProductCategoryResolver {
      * GET /admin/product/categorys
      * @response 조회된 전체 분류 정보
      */
-    @UseGuards(GqlJwtAdminGuard)
+    // @UseGuards(GqlJwtAdminGuard)
     @Query(
         () => [ProductCategoryEntity], //
         { description: '모든 분류 정보 조회' },

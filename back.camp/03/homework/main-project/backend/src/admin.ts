@@ -14,7 +14,7 @@ async function runAdmin() {
 
     const connection = await createConnection({
         type: 'mysql',
-        host: 'localhost',
+        host: 'db',
         port: 3306,
         username: 'root',
         password: process.env.MYSQL_ROOT_PASSWORD,

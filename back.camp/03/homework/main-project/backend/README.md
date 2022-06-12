@@ -154,7 +154,7 @@ bootstrap();
 
 ### Day 25
 
--   [ ] createPayment에 유효하지 않은 imp_uid를 넘겨줄 경우 `UnprocessableEntityException` 에러를 반환한다.
--   [ ] createPayment에 이미 결제 테이블에 추가된 imp_uid를 넘겨줄 경우 `ConflictException` 에러를 반환한다.
--   [ ] `iamport.service.ts` 파일에 로직이 분리되어있다.
--   [ ] 플레이그라운드에서 `cancelPayment` API를 요청해 결제를 취소할 수 있다.
+-   [x] createPayment에 유효하지 않은 imp_uid를 넘겨줄 경우 `UnprocessableEntityException` 에러를 반환한다.
+-   [x] createPayment에 이미 결제 테이블에 추가된 imp_uid를 넘겨줄 경우 `ConflictException` 에러를 반환한다.
+-   [x] `iamport.service.ts` 파일에 로직이 분리되어있다.
+-   [x] 플레이그라운드에서 `cancelPayment` API를 요청해 결제를 취소할 수 있다.

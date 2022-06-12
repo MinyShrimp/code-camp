@@ -1,7 +1,7 @@
-import { ResourceOptions } from "admin-bro";
-import { BaseEntity } from "typeorm";
+import { ResourceOptions } from 'adminjs';
+import { BaseEntity } from 'typeorm';
 
 export interface Resource {
-    resource: typeof BaseEntity,
-    options?: ResourceOptions
+    resource: typeof BaseEntity;
+    options?: ResourceOptions;
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { getManager, Repository } from 'typeorm';
+import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
+import { EntityManager, TreeRepository } from 'typeorm';
 
 import { ResultMessage } from '../../commons/message/ResultMessage.dto';
 import { MESSAGES } from '../../commons/message/Message.enum';
@@ -11,9 +11,11 @@ import { ProductCategoryEntity } from './entities/productCategory.entity';
 @Injectable()
 export class ProductCategoryService {
     constructor(
-        @InjectRepository(ProductCategoryEntity)
-        private readonly productCategoryRepository: Repository<ProductCategoryEntity>,
-    ) {}
+        @InjectEntityManager()
+        private readonly manger: EntityManager,
+    ) // @InjectRepository(ProductCategoryEntity)
+    // private readonly productCategoryRepository: TreeRepository<ProductCategoryEntity>,
+    {}
 
     ///////////////////////////////////////////////////////////////////
     // Utils //
@@ -26,10 +28,8 @@ export class ProductCategoryService {
      * @returns 조회된 전체 분류
      */
     async findAllByTree(): Promise<ProductCategoryEntity[]> {
-        const manager = getManager();
-        return await manager
-            .getTreeRepository(ProductCategoryEntity)
-            .findTrees();
+        const manager = this.manger.getTreeRepository(ProductCategoryEntity);
+        return await manager.findTrees();
     }
 
     /**
@@ -40,13 +40,13 @@ export class ProductCategoryService {
     async findByTree(
         categoryID: string, //
     ): Promise<ProductCategoryEntity> {
-        const parent = await this.productCategoryRepository.findOne({
-            id: categoryID,
+        const manager = this.manger.getTreeRepository(ProductCategoryEntity);
+
+        const parent = await manager.findOne({
+            where: { id: categoryID },
         });
-        const manager = getManager();
-        return await manager
-            .getTreeRepository(ProductCategoryEntity)
-            .findDescendantsTree(parent);
+
+        return await manager.findDescendantsTree(parent);
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -61,19 +61,24 @@ export class ProductCategoryService {
         input: CreateProductCategoryInput, //
     ): Promise<ProductCategoryEntity> {
         try {
+            const manager = this.manger.getTreeRepository(
+                ProductCategoryEntity,
+            );
+
             if (!input.parentID) {
-                return await this.productCategoryRepository.save({
+                return await manager.save({
                     name: input.name,
                 });
             } else {
-                const parent = await this.productCategoryRepository.findOne(
-                    input.parentID,
-                );
-                const child = this.productCategoryRepository.create({
+                const parent = await manager.findOne({
+                    where: { id: input.parentID },
+                });
+
+                const child = manager.create({
                     name: input.name,
                     parent: parent,
                 });
-                return await this.productCategoryRepository.save(child);
+                return await manager.save(child);
             }
         } catch (e) {
             throw e;
@@ -92,7 +97,9 @@ export class ProductCategoryService {
      * @returns ResultMessage
      */
     async deleteTree(categoryID: string): Promise<ResultMessage> {
-        const result = await this.productCategoryRepository.delete({
+        const manager = this.manger.getTreeRepository(ProductCategoryEntity);
+
+        const result = await manager.delete({
             id: categoryID,
         });
         const isSuccess = result.affected ? true : false;
@@ -111,8 +118,10 @@ export class ProductCategoryService {
      * @returns ResultMessage
      */
     async deleteAll(): Promise<ResultMessage> {
-        await this.productCategoryRepository.update({}, { parent: null });
-        const result = await this.productCategoryRepository.delete({});
+        const manager = this.manger.getTreeRepository(ProductCategoryEntity);
+
+        await manager.update({}, { parent: null });
+        const result = await manager.delete({});
         const isSuccess = result.affected ? true : false;
 
         return new ResultMessage({

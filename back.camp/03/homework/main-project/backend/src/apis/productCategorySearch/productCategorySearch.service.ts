@@ -129,7 +129,7 @@ export class ProductCategorySearchService {
      * @returns ResultMessage
      */
     async createSarchCategory(): Promise<ResultMessage> {
-        await this.__deleteAllSearchCategory();
+        // await this.__deleteAllSearchCategory();
 
         const tree = await this.productCategoryService.findAllByTree();
         tree.forEach(async (categorys1) => {
