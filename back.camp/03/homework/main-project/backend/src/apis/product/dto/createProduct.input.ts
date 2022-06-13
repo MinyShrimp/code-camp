@@ -4,7 +4,7 @@ import { ProductEntity } from '../entities/product.entity';
 @InputType()
 export class CreateProductInput extends PickType(
     ProductEntity,
-    ['url', 'stock_count', 'price'],
+    ['url', 'name', 'stock_count', 'price'],
     InputType,
 ) {
     @Field(

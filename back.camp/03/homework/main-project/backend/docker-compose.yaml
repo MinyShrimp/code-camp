@@ -47,38 +47,38 @@ services:
         # 재시작 설정
         restart: always
 
-    # NestJS Admin
-    api-admin:
-        # Dockerfile 설정
-        build:
-            # Dockerfile의 위치
-            context: .
-            dockerfile: Dockerfile.admin
+    # # NestJS Admin
+    # api-admin:
+    #     # Dockerfile 설정
+    #     build:
+    #         # Dockerfile의 위치
+    #         context: .
+    #         dockerfile: Dockerfile.admin
 
-        container_name: codecamp-mainproject-api-admin
+    #     container_name: codecamp-mainproject-api-admin
 
-        # Container Port 연결
-        #   - host:container
-        ports:
-            - 3001:3001
+    #     # Container Port 연결
+    #     #   - host:container
+    #     ports:
+    #         - 3001:3001
 
-        # Volume Mount
-        #   - host:container
-        volumes:
-            - ./src:/app/src
-            - ./test:/app/test
-            - ./dist:/app/dist
+    #     # Volume Mount
+    #     #   - host:container
+    #     volumes:
+    #         - ./src:/app/src
+    #         - ./test:/app/test
+    #         - ./dist:/app/dist
 
-            - ./package.json:/app/package.json
-            - ./yarn.lock:/app/yarn.lock
-            - ./tsconfig.build.json:/app/tsconfig.build.json
-            - ./tsconfig.json:/app/tsconfig.json
-            - ./.env:/app/.env
+    #         - ./package.json:/app/package.json
+    #         - ./yarn.lock:/app/yarn.lock
+    #         - ./tsconfig.build.json:/app/tsconfig.build.json
+    #         - ./tsconfig.json:/app/tsconfig.json
+    #         - ./.env:/app/.env
 
-            - ./node_modules:/app/node_modules
+    #         - ./node_modules:/app/node_modules
 
-        # 환경 변수 설정
-        env_file: .env
+    #     # 환경 변수 설정
+    #     env_file: .env
 
-        # 재시작 설정
-        restart: always
+    #     # 재시작 설정
+    #     restart: always

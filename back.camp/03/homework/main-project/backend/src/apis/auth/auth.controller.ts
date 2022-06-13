@@ -37,7 +37,7 @@ export class AuthController {
         // 1-1. 이미 가입되어 있으면 통과
         // 1-2. 가입이 안되어 있으면 회원가입
         if (!user) {
-            user = await this.authService.Signup({
+            user = await this.userService.createUser({
                 email: userInfo.email,
                 name: userInfo.name,
                 pwd: randomUUID(), // DB에 저장하는 비밀번호를 랜덤한 uuid로 저장한다

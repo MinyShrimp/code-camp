@@ -15,16 +15,8 @@ yarn add @types/passport-jwt --dev
 yarn add passport-google-oauth20 passport-kakao passport-naver
 yarn add @types/passport-naver @types/passport-kakao @types/passport-google-oauth20 --dev
 
-yarn add express-session express-formidable
-# yarn add admin-bro @admin-bro/express @admin-bro/typeorm
-yarn add adminjs @adminjs/typeorm @adminjs/express
-
 yarn add axios
 yarn add @types/axios --dev
-
-# yarn add react react-dom styled-components
-
-yarn add nodemon --dev
 ```
 
 ## 설정
@@ -158,3 +150,8 @@ bootstrap();
 -   [x] createPayment에 이미 결제 테이블에 추가된 imp_uid를 넘겨줄 경우 `ConflictException` 에러를 반환한다.
 -   [x] `iamport.service.ts` 파일에 로직이 분리되어있다.
 -   [x] 플레이그라운드에서 `cancelPayment` API를 요청해 결제를 취소할 수 있다.
+
+### Day 26
+
+-   [x] 결제 API에 트랜잭션이 적용됐다.
+-   [x] 결제 취소 API에 트랜잭션이 적용됐다.

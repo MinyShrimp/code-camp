@@ -10,14 +10,13 @@ import { UpdateUserInput } from './dto/updateUser.input';
 
 import { UserEntity } from './entities/user.entity';
 import { UserService } from './user.service';
-import { UserCheckService } from './userCheck.service';
+import { CreateUserInput } from './dto/createUser.input';
 
 /* 유저 API */
 @Resolver()
 export class UserResolver {
     constructor(
         private readonly userService: UserService, //
-        private readonly userCheckService: UserCheckService,
     ) {}
 
     ///////////////////////////////////////////////////////////////////
@@ -42,10 +41,41 @@ export class UserResolver {
     ///////////////////////////////////////////////////////////////////
     // 생성 //
 
-    /* Auth Resolver로 이관됨 */
+    /**
+     * POST /api/signup
+     * @param input
+     * @response 생성된 회원 정보
+     */
+    @Mutation(
+        () => UserEntity, //
+        { description: '회원가입' },
+    )
+    async createUser(
+        @Args('createUserInput') input: CreateUserInput, //
+    ): Promise<UserEntity> {
+        return this.userService.createUser(input);
+    }
 
     ///////////////////////////////////////////////////////////////////
     // 수정 //
+
+    /**
+     * PATCH /api/user/pwd
+     * @param pwd
+     * @response ResultMessage
+     */
+    @UseGuards(GqlJwtAccessGuard)
+    @Mutation(
+        () => ResultMessage, //
+        { description: '비밀번호 변경, Bearer JWT' },
+    )
+    async updateUserPwd(
+        @CurrentUser() currentUser: IPayload, //
+        @Args('pwd') pwd: string,
+    ): Promise<ResultMessage> {
+        // 비밀번호 변경 + 로그아웃
+        return this.userService.updatePwd(currentUser.id, pwd);
+    }
 
     /**
      * PATCH /api/user
@@ -62,16 +92,7 @@ export class UserResolver {
         @CurrentUser() currentUser: IPayload,
         @Args('updateInput') updateInput: UpdateUserInput,
     ): Promise<UserEntity> {
-        const userID = currentUser.id;
-
-        // 검색
-        const user = await this.userService.findOneByID(userID);
-
-        // 존재 여부 확인
-        await this.userCheckService.checkValidUser(user);
-
-        // 수정
-        return this.userService.updateUser(user, updateInput);
+        return this.userService.updateLoginUser(currentUser.id, updateInput);
     }
 
     ///////////////////////////////////////////////////////////////////

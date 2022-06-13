@@ -9,7 +9,6 @@ import {
     JoinColumn,
     CreateDateColumn,
     PrimaryGeneratedColumn,
-    BaseEntity,
 } from 'typeorm';
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 
@@ -20,7 +19,7 @@ import { PAYMENT_STATUS } from '../enums/payment.enum';
 /* 결제 Entity */
 @Entity({ name: 'payment' })
 @ObjectType({ description: '결제 Entity' })
-export class PaymentEntity extends BaseEntity {
+export class PaymentEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

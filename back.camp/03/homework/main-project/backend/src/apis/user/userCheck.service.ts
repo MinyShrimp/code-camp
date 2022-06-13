@@ -3,22 +3,18 @@ import {
     Injectable,
     UnprocessableEntityException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { IPayload } from 'src/commons/interfaces/Payload.interface';
-import { Repository } from 'typeorm';
+
 import { MESSAGES } from '../../commons/message/Message.enum';
+
 import { UserEntity } from './entities/user.entity';
+import { IPayload } from 'src/commons/interfaces/Payload.interface';
 
 @Injectable()
 export class UserCheckService {
-    constructor(
-        @InjectRepository(UserEntity)
-        private readonly userRepository: Repository<UserEntity>,
-    ) {}
+    constructor() {}
 
     ///////////////////////////////////////////////////////////////////
-    // 값 검사 //
-
+    // 검증 //
     /**
      * 가입된 회원 여부 검사
      * @param user

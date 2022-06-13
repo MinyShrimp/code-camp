@@ -56,7 +56,7 @@ export class ProductResolver {
     fetchProduct(
         @Args('productID') productID: string, //
     ): Promise<ProductEntity> {
-        return this.productService.findOne(productID);
+        return this.productService.findOneByID(productID);
     }
 
     /**

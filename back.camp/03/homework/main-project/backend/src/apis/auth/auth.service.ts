@@ -1,41 +1,32 @@
 import * as bcrypt from 'bcryptjs';
 import { Response } from 'express';
-import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
-import { InjectRepository } from '@nestjs/typeorm';
 import { ConflictException, Injectable } from '@nestjs/common';
 
 import { IPayloadSub } from '../../commons/interfaces/Payload.interface';
-import { DateUtil } from '../../commons/utils/date.util';
 import { ResultMessage } from '../../commons/message/ResultMessage.dto';
 import { MESSAGES } from '../../commons/message/Message.enum';
 
 import { UserEntity } from '../user/entities/user.entity';
+import { UserService } from '../user/user.service';
+import { UserCheckService } from '../user/userCheck.service';
 
 import { LoginInput } from './dto/Login.input';
-import { SignupInput } from './dto/Signup.input';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
     constructor(
         @InjectRepository(UserEntity)
         private readonly userRepository: Repository<UserEntity>,
+        private readonly userCheckService: UserCheckService,
+        private readonly userSerivce: UserService,
         private readonly jwtService: JwtService,
     ) {}
 
     ///////////////////////////////////////////////////////////////////
     // Utils //
-
-    /**
-     * Hash 비밀번호 생성
-     * @param originPwd
-     * @returns Hasing Password
-     */
-    createPassword(
-        originPwd: string, //
-    ): string {
-        return bcrypt.hashSync(originPwd, bcrypt.genSaltSync());
-    }
 
     /**
      * Hash 비밀번호 비교
@@ -128,84 +119,52 @@ export class AuthService {
     }
 
     ///////////////////////////////////////////////////////////////////
-    // 조회 //
-
-    ///////////////////////////////////////////////////////////////////
-    // 생성 //
-
-    /**
-     * 회원가입
-     * @param input
-     * @returns 생성된 유저 정보
-     *
-     * 이메일 중복 검사
-     */
-    async Signup(
-        input: SignupInput, //
-    ): Promise<UserEntity> {
-        // 비밀번호 해싱
-        return await this.userRepository.save({
-            ...input,
-            pwd: this.createPassword(input.pwd),
-        });
-    }
-
-    ///////////////////////////////////////////////////////////////////
     // 수정 //
 
     /**
-     * 비밀번호 변경
+     * JWT 재발급
      * @param userID
-     * @param pwd
-     * @returns ResultMessage
+     * @returns AccessToken
      */
-    async updatePwd(
+    async restoreToken(
         userID: string, //
-        pwd: string,
-    ): Promise<ResultMessage> {
-        // 비밀번호 변경
-        // + 로그아웃
-        const result = await this.userRepository.update(
-            { id: userID },
-            {
-                pwd: this.createPassword(pwd),
-                logoutAt: DateUtil.getKorDateNow(),
-                isLogin: false,
-            },
-        );
-        const isSuccess = result.affected ? true : false;
-
-        // 메세지 반환
-        return new ResultMessage({
-            id: userID,
-            isSuccess,
-            contents: isSuccess
-                ? MESSAGES.USER_UPDATE_PWD_SUCCESSED
-                : MESSAGES.USER_UPDATE_PWD_FAILED,
-        });
+    ) {
+        const user = await this.userSerivce.findOneByID(userID);
+        return this.getAccessToken(user);
     }
+
+    ///////////////////////////////////////////////////////////////////
+    // 인증 //
 
     /**
      * 로그인
-     * @param user
+     * @param context
      * @param input
      * @returns J.W.T
-     *
-     * 이메일, 패스워드 검사
-     * 로그인 여부 검사
-     * 로그인 성공 시, loginAt, isLogin Update
      */
     async Login(
-        user: UserEntity,
+        context: any,
         input: LoginInput, //
     ): Promise<string> {
+        // 검색
+        const user = await this.userSerivce.findOneByEmail(input.email);
+
+        // 존재 여부 검사
+        await this.userCheckService.checkValidUser(user);
+
+        // 로그인 여부 검사
+        await this.userCheckService.checkLogin(user);
+
+        // Set Refresh Token
+        this.setRefreshToken(user, context.res);
+
         // 비밀번호 검사
         this.comparePassword(input.pwd, user.pwd);
 
         // 로그인 성공
         await this.userRepository.save({
             ...user,
-            loginAt: DateUtil.getKorDateNow(),
+            loginAt: new Date(),
             isLogin: true,
         });
 
@@ -220,11 +179,20 @@ export class AuthService {
     async Logout(
         userID: string, //
     ): Promise<ResultMessage> {
+        // 검색
+        const user = await this.userSerivce.findOneByID(userID);
+
+        // 존재 여부 검사
+        await this.userCheckService.checkValidUser(user);
+
+        // 로그아웃 여부 검사
+        await this.userCheckService.checkLogout(user);
+
         // 로그아웃 시도
         const result = await this.userRepository.update(
             { id: userID },
             {
-                logoutAt: DateUtil.getKorDateNow(),
+                logoutAt: new Date(),
                 isLogin: false,
             },
         );
