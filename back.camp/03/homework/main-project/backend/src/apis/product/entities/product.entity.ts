@@ -3,14 +3,12 @@ import {
     Entity,
     JoinColumn,
     JoinTable,
-    OneToOne,
     ManyToOne,
     ManyToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
     DeleteDateColumn,
     CreateDateColumn,
-    BaseEntity,
 } from 'typeorm';
 import { IsUrl, Min } from 'class-validator';
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
@@ -21,10 +19,17 @@ import { ProductCategorySearchEntity } from '../../productCategorySearch/entitie
 
 @Entity({ name: 'product' })
 @ObjectType({ description: '상품 Entity' })
-export class ProductEntity extends BaseEntity {
+export class ProductEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;
+
+    @Column()
+    @Field(
+        () => String, //
+        { description: '상품 이름' },
+    )
+    name: string;
 
     // 상품 주소
     @Column()

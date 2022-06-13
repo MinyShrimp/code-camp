@@ -11,12 +11,11 @@ import {
     UpdateDateColumn,
     DeleteDateColumn,
     PrimaryGeneratedColumn,
-    BaseEntity,
 } from 'typeorm';
 
 @Entity({ name: 'user' })
 @ObjectType({ description: '유저 Entity' })
-export class UserEntity extends BaseEntity {
+export class UserEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

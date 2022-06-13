@@ -132,6 +132,9 @@ type ProductCategorySearchEntity {
 type ProductEntity {
   id: ID!
 
+  """상품 이름"""
+  name: String!
+
   """상품 URL"""
   url: String!
 
@@ -243,20 +246,20 @@ type Query {
 }
 
 type Mutation {
-  """회원가입"""
-  createUser(signupInput: SignupInput!): UserEntity!
-
   """AccessToken 재발급"""
   restoreToken: String!
-
-  """비밀번호 변경, Bearer JWT"""
-  updateUserPwd(pwd: String!): ResultMessage!
 
   """로그인, Get AccessToken"""
   Login(loginInput: LoginInput!): String!
 
   """로그아웃, Bearer JWT"""
   Logout: ResultMessage!
+
+  """회원가입"""
+  createUser(createUserInput: CreateUserInput!): UserEntity!
+
+  """비밀번호 변경, Bearer JWT"""
+  updateUserPwd(pwd: String!): ResultMessage!
 
   """회원 정보 수정, Bearer JWT"""
   updateLoginUser(updateInput: UpdateUserInput!): UserEntity!
@@ -367,10 +370,7 @@ type Mutation {
   deleteCategoryAll: ResultMessage!
 }
 
-input SignupInput {
-  """이름"""
-  name: String!
-
+input LoginInput {
   """이메일"""
   email: String!
 
@@ -378,7 +378,10 @@ input SignupInput {
   pwd: String!
 }
 
-input LoginInput {
+input CreateUserInput {
+  """이름"""
+  name: String!
+
   """이메일"""
   email: String!
 
@@ -448,6 +451,9 @@ input CancelPaymentInput {
 }
 
 input CreateProductInput {
+  """상품 이름"""
+  name: String!
+
   """상품 URL"""
   url: String!
 
@@ -468,6 +474,9 @@ input CreateProductInput {
 }
 
 input UpdateProductInput {
+  """상품 이름"""
+  name: String
+
   """상품 URL"""
   url: String
 

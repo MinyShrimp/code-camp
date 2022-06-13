@@ -12,14 +12,11 @@ import { UserCheckService } from './userCheck.service';
             UserEntity, //
         ]),
     ],
-    exports: [
-        UserService,
-        UserCheckService, //
-    ],
+    exports: [UserService, UserCheckService],
     providers: [
-        UserResolver,
+        UserResolver, //
         UserService,
-        UserCheckService, //
+        UserCheckService,
     ],
 })
 export class UserModule {}

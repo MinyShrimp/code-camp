@@ -5,10 +5,10 @@ import { ProductTagModule } from '../productTag/productTag.module';
 import { ProductCategorySearchModule } from '../productCategorySearch/productCategorySearch.module';
 
 import { ProductEntity } from './entities/product.entity';
-
 import { ProductResolver } from './product.resolver';
 import { ProductService } from './product.service';
 import { BookModule } from '../book/book.module';
+import { ProductCheckService } from './productCheck.service';
 
 @Module({
     imports: [
@@ -21,10 +21,14 @@ import { BookModule } from '../book/book.module';
         ProductTagModule,
         ProductCategorySearchModule,
     ],
-    exports: [ProductService],
+    exports: [
+        ProductService, //
+        ProductCheckService,
+    ],
     providers: [
         ProductResolver, //
         ProductService,
+        ProductCheckService,
     ],
 })
 export class ProductModule {}

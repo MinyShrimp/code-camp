@@ -1,6 +1,6 @@
 /* Product Service */
 
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -14,52 +14,18 @@ import { ProductCategorySearchService } from '../productCategorySearch/productCa
 import { ProductEntity } from './entities/product.entity';
 import { CreateProductInput } from './dto/createProduct.input';
 import { UpdateProductInput } from './dto/updateProduct.input';
+import { ProductCheckService } from './productCheck.service';
 
 @Injectable()
 export class ProductService {
     constructor(
         @InjectRepository(ProductEntity)
         private readonly productRepository: Repository<ProductEntity>,
+        private readonly productCheckService: ProductCheckService,
         private readonly bookService: BookService,
         private readonly productTagsService: ProductTagService,
         private readonly productCategoryService: ProductCategorySearchService,
     ) {}
-
-    ///////////////////////////////////////////////////////////////////
-    // Utils //
-
-    /**
-     * 재고 소진 체크
-     * @param product
-     */
-    private async __checkSoldout(
-        product: ProductEntity, //
-    ): Promise<boolean> {
-        if (product.stock_count <= 0) {
-            throw new UnprocessableEntityException(
-                MESSAGES.PRODUCT_SOLD_OUT, //
-            );
-        }
-        return true;
-    }
-
-    /**
-     * 상품 존재 검사
-     * @param product
-     * @returns 존재 여부
-     *
-     *  - 없으면 UnprocessableEntityException
-     */
-    private __checkValidProduct(
-        product: ProductEntity, //
-    ): boolean {
-        if (product === undefined) {
-            throw new UnprocessableEntityException(
-                MESSAGES.PRODUCT_FIND_ONE_FAILED,
-            );
-        }
-        return true;
-    }
 
     ///////////////////////////////////////////////////////////////////
     // 조회 //
@@ -90,15 +56,13 @@ export class ProductService {
      * @param productID
      * @returns 단일 상품
      */
-    async findOne(
+    async findOneByID(
         productID: string, //
     ): Promise<ProductEntity> {
-        const product = await this.productRepository.findOne({
+        return await this.productRepository.findOne({
             where: { id: productID },
             relations: ['book', 'productCategory', 'productTags'],
         });
-        this.__checkValidProduct(product);
-        return product;
     }
 
     /**
@@ -109,13 +73,11 @@ export class ProductService {
     async findOneWithDeleted(
         productID: string, //
     ): Promise<ProductEntity> {
-        const product = await this.productRepository.findOne({
+        return await this.productRepository.findOne({
             where: { id: productID },
             relations: ['book', 'productCategory', 'productTags'],
             withDeleted: true,
         });
-        this.__checkValidProduct(product);
-        return product;
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -164,13 +126,13 @@ export class ProductService {
         updateProductInput: UpdateProductInput,
     ): Promise<ProductEntity> {
         // 상품 검색
-        const product = await this.findOne(productID);
+        const product = await this.findOneByID(productID);
 
         // 존재 여부 검사
-        this.__checkValidProduct(product);
+        this.productCheckService.checkValidProduct(product);
 
         // 재고 소진 검사
-        await this.__checkSoldout(product);
+        this.productCheckService.checkSoldout(product);
 
         // input data 뽑기
         const {
@@ -283,7 +245,7 @@ export class ProductService {
     async softDelete(
         productID: string, //
     ): Promise<ResultMessage> {
-        const product = await this.findOne(productID);
+        const product = await this.findOneByID(productID);
 
         const result = await this.productRepository.softDelete({
             id: product.id,
