@@ -27,13 +27,6 @@ export const PaymentResource: Resource = {
         ],
 
         actions: {
-            CreatePayment: {
-                actionType: 'resource',
-                component: AdminJS.bundle(
-                    './components/createPayment.component',
-                ),
-            },
-
             // cancelPayment: {
             //     actionType: 'record',
             //     isVisible: true,
