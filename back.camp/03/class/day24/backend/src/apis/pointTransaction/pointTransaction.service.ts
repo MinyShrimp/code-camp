@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { ICurrentUser } from "src/commons/auth/gql-user.param";
+import { ICurrentUser } from "src/apis/commons/auth/gql-user.param";
 import { Connection } from "typeorm";
 import UserEntity from "../users/entities/user.entity";
 import { UserRepository } from "../users/users.repository";

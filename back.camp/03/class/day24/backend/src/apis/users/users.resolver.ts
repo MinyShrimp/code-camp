@@ -4,8 +4,8 @@ import SignupInput from "./dto/signup.input";
 
 import UserEntity from "./entities/user.entity";
 import UserService from "./users.service";
-import { GqlJwtAccessAccessGuard } from "src/commons/auth/gql-auth.guard";
-import { CurrentUser } from "src/commons/auth/gql-user.param";
+import { GqlJwtAccessAccessGuard } from "src/apis/commons/auth/gql-auth.guard";
+import { CurrentUser } from "src/apis/commons/auth/gql-user.param";
 
 @Resolver()
 export default class UserResolver {
