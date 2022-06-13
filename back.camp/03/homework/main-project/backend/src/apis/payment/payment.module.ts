@@ -7,7 +7,7 @@ import { ProductEntity } from '../product/entities/product.entity';
 import { ProductModule } from '../product/product.module';
 
 import { PaymentEntity } from './entities/payment.entity';
-import { IMPService } from './IMP.service';
+import { IMPService } from './imp.service';
 import { PaymentResolver } from './payment.resolver';
 import { PaymentService } from './payment.service';
 import { PaymentCheckService } from './paymentCheck.service';

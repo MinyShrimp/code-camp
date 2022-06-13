@@ -14,7 +14,7 @@ import { PaymentEntity } from './entities/payment.entity';
 import { CreatePaymentInput } from './dto/createPayment.input';
 import { CancelPaymentInput } from './dto/cancelPayment.input';
 
-import { IMPService } from './IMP.service';
+import { IMPService } from './imp.service';
 import { PaymentCheckService } from './paymentCheck.service';
 
 @Injectable()
