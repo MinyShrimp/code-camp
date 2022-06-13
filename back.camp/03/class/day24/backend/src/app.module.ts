@@ -17,6 +17,7 @@ import ProductCategoryModule from "./apis/productsCategory/productCategory.modul
 import UserModule from "./apis/users/users.module";
 import AuthModule from "./apis/auth/auth.module";
 import { PointTransactionModule } from "./apis/pointTransaction/pointTransaction.module";
+import { PaymentMoudle } from "./apis/payment/payment.module";
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -64,6 +65,7 @@ import { PointTransactionModule } from "./apis/pointTransaction/pointTransaction
         AuthModule,
 
         PointTransactionModule,
+        PaymentMoudle,
     ],
     controllers: [],
     providers: [],

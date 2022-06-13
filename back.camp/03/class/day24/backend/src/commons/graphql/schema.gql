@@ -66,6 +66,11 @@ enum POINT_TRANSACTION_STATUS_ENUM {
   CANCEL
 }
 
+type Payment {
+  id: String!
+  amount: Int!
+}
+
 type Query {
   fetchBoards: [BoardEntity!]!
   fetchProducts: [ProductEntity!]!
@@ -73,6 +78,7 @@ type Query {
   fetchProductCategoryAll: [ProductCategoryEntity!]!
   fetchUsers: [UserEntity!]!
   fetchUser: String!
+  fetchPayments: [Payment!]!
 }
 
 type Mutation {
@@ -87,6 +93,7 @@ type Mutation {
   Login(loginInput: LoginInput!): String!
   restoreAccessToken: String!
   createPointTransaction(createPointTransactionInput: CreatePointTransactionInput!): PointTransationEntity!
+  createPayment(amount: Float!): Payment!
 }
 
 input CreateBoardInput {

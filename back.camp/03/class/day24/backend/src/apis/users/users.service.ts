@@ -5,12 +5,12 @@ import * as bcrypt from "bcrypt";
 
 import SignupInput from "./dto/signup.input";
 import UserEntity from "./entities/user.entity";
+import { UserRepository } from "./users.repository";
 
 @Injectable()
 export default class UserService {
     constructor(
-        @InjectRepository(UserEntity)
-        private readonly userRepository: Repository<UserEntity>
+        private readonly userRepository: UserRepository //
     ) {}
 
     async findAll(): Promise<UserEntity[]> {
@@ -64,22 +64,5 @@ export default class UserService {
         return await this.userRepository.save({
             ...input,
         });
-    }
-
-    async updateAmount(userID: string, amount: number): Promise<UserEntity> {
-        // 2. 유저의 돈 찾아오기
-        const user = await this.userRepository
-            .createQueryBuilder("user")
-            .select(["user.id", "user.amount"])
-            .where(`user.id = '${userID}'`)
-            .getOne();
-
-        // 3. 유저의 돈 업데이트
-        await this.userRepository.update(
-            { id: user.id }, //
-            { amount: user.amount + amount }
-        );
-
-        return user;
     }
 }
