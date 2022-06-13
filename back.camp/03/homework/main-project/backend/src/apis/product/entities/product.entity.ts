@@ -26,6 +26,13 @@ export class ProductEntity extends BaseEntity {
     @Field(() => ID)
     id: string;
 
+    @Column()
+    @Field(
+        () => String, //
+        { description: '상품 이름' },
+    )
+    name: string;
+
     // 상품 주소
     @Column()
     @IsUrl()

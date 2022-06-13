@@ -112,6 +112,12 @@ export class AuthService {
 
         // 개발 환경
         res.setHeader('Set-Cookie', `refreshToken=${refreshToken}; path=/;`);
+        res.cookie('refreshToken', refreshToken, {
+            maxAge: 10000,
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+        });
 
         // 배포 환경
         // res.setHeader('Access-Control-Allow-Origin', 'https://myfrontsite.com')

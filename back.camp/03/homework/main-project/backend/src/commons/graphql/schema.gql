@@ -132,6 +132,9 @@ type ProductCategorySearchEntity {
 type ProductEntity {
   id: ID!
 
+  """상품 이름"""
+  name: String!
+
   """상품 URL"""
   url: String!
 

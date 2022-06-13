@@ -62,6 +62,12 @@ export const UserResource: Resource = {
                 actionType: 'resource',
                 component: AdminJS.bundle('./components/softdelete.component'),
             },
+            restoreToken: {
+                actionType: 'resource',
+                component: AdminJS.bundle(
+                    './components/restoreToken.component',
+                ),
+            },
 
             // Record Action
             Logout: {

@@ -17,11 +17,11 @@ const LoginComponent = (props) => {
     const history = useHistory();
 
     const sendLogin = async () => {
-        if (email === '' || pwd === '') {
+        if (email.current === '' || pwd.current === '') {
             return false;
         }
 
-        const res = await axios.post('http://localhost:3000/graphql', {
+        const res = await axios.post('http://127.0.0.1:3000/graphql', {
             query: `mutation { Login( loginInput: { email: "${email.current}", pwd: "${pwd.current}" } ) }`,
         });
 
@@ -30,6 +30,7 @@ const LoginComponent = (props) => {
         if (!data) {
             console.error(msg);
         } else {
+            console.log(res.headers['Set-Cookie']);
             const jwt = data.Login;
             window.localStorage.setItem('access_token', jwt);
             history.push('/admin/resources/UserEntity');
@@ -46,7 +47,7 @@ const LoginComponent = (props) => {
                     name="email"
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
-                            sendSignup();
+                            sendLogin();
                         }
                     }}
                     onInput={(v) => {
@@ -62,7 +63,7 @@ const LoginComponent = (props) => {
                     name="pwd"
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
-                            sendSignup();
+                            sendLogin();
                         }
                     }}
                     onInput={(v) => {

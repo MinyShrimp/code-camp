@@ -7,7 +7,11 @@ import Component3 from '../src/admin/resources/user/components/logout.component'
 AdminJS.UserComponents.Component3 = Component3
 import Component4 from '../src/admin/resources/user/components/softdelete.component'
 AdminJS.UserComponents.Component4 = Component4
-import Component5 from '../src/admin/resources/payment/components/createPayment.component'
+import Component5 from '../src/admin/resources/user/components/restoreToken.component'
 AdminJS.UserComponents.Component5 = Component5
-import Component6 from '../src/admin/resources/productCategory/components/createSearchCategory.component'
+import Component6 from '../src/admin/resources/payment/components/createPayment.component'
 AdminJS.UserComponents.Component6 = Component6
+import Component7 from '../src/admin/resources/product/components/payment.component'
+AdminJS.UserComponents.Component7 = Component7
+import Component8 from '../src/admin/resources/productCategory/components/createSearchCategory.component'
+AdminJS.UserComponents.Component8 = Component8

@@ -50,13 +50,17 @@ import { ProductCategorySearchModule } from './apis/productCategorySearch/produc
             context: ({ req, res }) => {
                 return { req, res };
             },
+            cors: {
+                origin: ['http://127.0.0.1:3001', 'http://localhost:3001'],
+                credentials: 'include',
+            },
         }),
 
         ///////////////////////////////////////////////////////////////////////////
         // TypeORM //
         TypeOrmModule.forRoot({
             type: 'mysql',
-            host: 'db',
+            host: 'localhost',
             port: 3306,
             username: process.env.MYSQL_USER,
             password: process.env.MYSQL_PASSWORD,
