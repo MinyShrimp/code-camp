@@ -67,16 +67,16 @@ export class BookResolver {
         @Args('createBookInput') createBookInput: CreateBookInput,
     ): Promise<BookEntity> {
         const {
-            book_imgs, //
-            author_id,
-            publisher_id,
+            bookImgs, //
+            authorId,
+            publisherId,
             ...input
         } = createBookInput;
 
-        const author = await this.authorService.findOne(author_id);
-        const publisher = await this.publisherService.findOne(publisher_id);
+        const author = await this.authorService.findOne(authorId);
+        const publisher = await this.publisherService.findOne(publisherId);
         const book = await this.bookService.create(input, author, publisher);
-        const book_images = await this.bookImageService.create(book, book_imgs);
+        const book_images = await this.bookImageService.create(book, bookImgs);
 
         this.bookService.update(
             { ...input, author, publisher, book_images },
@@ -104,15 +104,15 @@ export class BookResolver {
         @Args('updateBookInput') updateBookInput: UpdateBookInput,
     ): Promise<BookEntity> {
         const {
-            book_imgs,
-            author_id,
-            publisher_id, //
+            bookImgs,
+            authorId,
+            publisherId, //
             ...input
         } = updateBookInput;
 
         const book = await this.bookService.findOne(bookID);
-        const author = await this.authorService.findOne(author_id);
-        const publisher = await this.publisherService.findOne(publisher_id);
+        const author = await this.authorService.findOne(authorId);
+        const publisher = await this.publisherService.findOne(publisherId);
 
         return this.bookService.update({ ...input, author, publisher }, book);
     }

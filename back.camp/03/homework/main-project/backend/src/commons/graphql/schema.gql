@@ -53,15 +53,27 @@ type PublisherEntity {
   description: String!
 }
 
+"""FileUpload Entity"""
+type FileUploadEntity {
+  id: ID!
+
+  """이름"""
+  name: String!
+
+  """URL"""
+  url: String!
+  bookImage: BookImageEntity
+}
+
 """책 이미지 Entity"""
 type BookImageEntity {
   id: ID!
 
-  """책 이미지 URL"""
-  url: String!
-
   """메인 이미지 여부"""
   isMain: Boolean!
+
+  """업로드된 이미지 ID"""
+  uploadImage: FileUploadEntity!
   book: BookEntity!
 }
 
@@ -88,7 +100,7 @@ type BookEntity {
   isbn_13: String!
 
   """출간일"""
-  publish_at: DateTime!
+  publishAt: DateTime!
   publisher: PublisherEntity
   author: AuthorEntity
   book_images: [BookImageEntity!]!
@@ -357,6 +369,12 @@ type Mutation {
   """출판사 정보 삭제 ( Soft )"""
   softDeletePublisher(publisherID: String!): ResultMessage!
 
+  """FileUpload"""
+  uploadFile(files: [Upload!]!): [FileUploadEntity!]!
+
+  """FileUpload 삭제 ( Real )"""
+  deleteFileUpload(fileIDs: [String!]!): [ResultMessage!]!
+
   """Search Category 전체 생성"""
   createCategorySearch: ResultMessage!
 
@@ -516,22 +534,20 @@ input CreateBookInput {
   isbn_13: String!
 
   """출간일"""
-  publish_at: DateTime!
+  publishAt: DateTime!
 
   """출판사 ID"""
-  publisher_id: String!
+  publisherId: String!
 
   """저자 ID"""
-  author_id: String!
-  book_imgs: [CreateBookImageInput!]!
+  authorId: String!
+  bookImgs: [CreateBookImageInput!]!
 }
 
 input CreateBookImageInput {
-  """책 이미지 URL"""
-  url: String!
-
   """메인 이미지 여부"""
   isMain: Boolean!
+  uploadImageID: String!
 }
 
 input UpdateBookInput {
@@ -554,14 +570,14 @@ input UpdateBookInput {
   isbn_13: String
 
   """출간일"""
-  publish_at: DateTime
+  publishAt: DateTime
 
   """출판사 ID"""
-  publisher_id: String
+  publisherId: String
 
   """저자 ID"""
-  author_id: String
-  book_imgs: [CreateBookImageInput!]
+  authorId: String
+  bookImgs: [CreateBookImageInput!]
 }
 
 input CreateAuthorInput {
@@ -595,6 +611,9 @@ input UpdatePublisherInput {
   """설명"""
   description: String
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 input CreateProductCategoryInput {
   """분류 이름"""

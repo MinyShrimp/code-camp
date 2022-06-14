@@ -57,7 +57,7 @@ export class BookService {
                 'book.page',
                 'book.isbn_10',
                 'book.isbn_13',
-                'book.publish_at',
+                'book.publishAt',
                 'publisher.id',
                 'publisher.name',
                 'publisher.description',
@@ -65,12 +65,13 @@ export class BookService {
                 'author.name',
                 'author.description',
                 'book_image.id',
-                'book_image.url',
+                'upload_file.url',
                 'book_image.isMain',
             ])
             .leftJoinAndSelect('book.publisher', 'publisher')
             .leftJoinAndSelect('book.author', 'author')
             .leftJoinAndSelect('book.book_images', 'book_image')
+            .leftJoinAndSelect('book_image.uploadImage', 'upload_file')
             .where(`book.id = '${bookID}'`)
             .getOne();
         if (!book) {

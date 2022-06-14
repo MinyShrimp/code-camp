@@ -1,5 +1,6 @@
 test.camp
 node_modules
+build/
 file/
 config.*
 .env

@@ -1,15 +1,14 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { IsBoolean, IsUrl } from 'class-validator';
+import { IsBoolean } from 'class-validator';
+import { FileUploadEntity } from 'src/apis/fileUpload/entities/fileUpload.entity';
 import {
     Entity,
     Column,
     ManyToOne,
     JoinColumn,
-    CreateDateColumn,
-    UpdateDateColumn,
-    DeleteDateColumn,
     PrimaryGeneratedColumn,
     BaseEntity,
+    OneToOne,
 } from 'typeorm';
 
 import { BookEntity } from '../../book/entities/book.entity';
@@ -21,15 +20,6 @@ export class BookImageEntity extends BaseEntity {
     @Field(() => ID)
     id: string;
 
-    // img url
-    @Column()
-    @IsUrl()
-    @Field(
-        () => String, //
-        { description: '책 이미지 URL' },
-    )
-    url: string;
-
     // 메인 이미지 여부
     @Column()
     @IsBoolean()
@@ -39,6 +29,19 @@ export class BookImageEntity extends BaseEntity {
     )
     isMain: boolean;
 
+    // 업로드된 이미지
+    @JoinColumn({ name: 'uploadImageId' })
+    @OneToOne(
+        () => FileUploadEntity, //
+        (uploadImage) => uploadImage.bookImage,
+        { eager: true },
+    )
+    @Field(
+        () => FileUploadEntity, //
+        { description: '업로드된 이미지 ID' },
+    )
+    uploadImage: FileUploadEntity;
+
     // 책
     @JoinColumn()
     @ManyToOne(
@@ -47,19 +50,4 @@ export class BookImageEntity extends BaseEntity {
     )
     @Field(() => BookEntity)
     book: BookEntity;
-
-    @Column({ name: 'bookId', type: 'uuid' })
-    bookId: string;
-
-    // 생성 시간
-    @CreateDateColumn()
-    createAt: Date;
-
-    // 수정 시간
-    @UpdateDateColumn()
-    updateAt: Date;
-
-    // 삭제 시간
-    @DeleteDateColumn()
-    deleteAt: Date;
 }

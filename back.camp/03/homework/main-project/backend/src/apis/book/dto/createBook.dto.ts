@@ -8,5 +8,5 @@ export class CreateBookDTO extends PickType(BookEntity, [
     'page',
     'isbn_10',
     'isbn_13',
-    'publish_at',
+    'publishAt',
 ]) {}

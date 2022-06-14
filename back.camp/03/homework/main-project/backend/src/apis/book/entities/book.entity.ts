@@ -79,7 +79,7 @@ export class BookEntity extends BaseEntity {
         () => Date, //
         { description: '출간일' },
     )
-    publish_at: Date;
+    publishAt: Date;
 
     // 생성 시간
     @CreateDateColumn()
