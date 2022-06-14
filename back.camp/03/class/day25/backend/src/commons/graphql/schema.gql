@@ -94,6 +94,7 @@ type Mutation {
   restoreAccessToken: String!
   createPointTransaction(createPointTransactionInput: CreatePointTransactionInput!): PointTransationEntity!
   createPayment(amount: Float!): Payment!
+  uploadFile(files: [Upload!]!): [String!]!
 }
 
 input CreateBoardInput {
@@ -144,3 +145,6 @@ input CreatePointTransactionInput {
   impUid: String!
   amount: Int!
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload

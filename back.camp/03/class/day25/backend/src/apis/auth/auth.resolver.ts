@@ -2,8 +2,8 @@ import * as bcrypt from "bcrypt";
 import { UnprocessableEntityException, UseGuards } from "@nestjs/common";
 import { Args, Context, GraphQLExecutionContext, Mutation, Resolver } from "@nestjs/graphql";
 
-import { CurrentUser } from "../commons/auth/gql-user.param";
-import { GqlJwtAccessRefreshGuard } from "../commons/auth/gql-auth.guard";
+import { CurrentUser } from "../../commons/auth/gql-user.param";
+import { GqlJwtAccessRefreshGuard } from "../../commons/auth/gql-auth.guard";
 
 import UserService from "../users/users.service";
 

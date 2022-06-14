@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { JwtAccessStrategy } from "src/apis/commons/auth/jwt-access.strategy";
+import { JwtAccessStrategy } from "src/commons/auth/jwt-access.strategy";
 
 import { UserRepository } from "./users.repository";
 import UserResolver from "./users.resolver";

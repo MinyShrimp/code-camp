@@ -18,6 +18,7 @@ import UserModule from "./apis/users/users.module";
 import AuthModule from "./apis/auth/auth.module";
 import { PointTransactionModule } from "./apis/pointTransaction/pointTransaction.module";
 import { PaymentMoudle } from "./apis/payment/payment.module";
+import { FileModule } from "./apis/fileLoader/file.module";
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -66,6 +67,8 @@ import { PaymentMoudle } from "./apis/payment/payment.module";
 
         PointTransactionModule,
         PaymentMoudle,
+
+        FileModule,
     ],
     controllers: [],
     providers: [],

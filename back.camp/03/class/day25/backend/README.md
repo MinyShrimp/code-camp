@@ -9,6 +9,7 @@ yarn add bcrypt
 yarn add @types/bcrypt -D
 yarn add @nestjs/jwt passport-jwt @nestjs/passport passport @types/passport-jwt
 yarn add passport-google-oauth20 @types/passport-google-oauth20
+yarn add graphql-upload
 ```
 
 ## Setting
