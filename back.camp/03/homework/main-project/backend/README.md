@@ -17,6 +17,9 @@ yarn add @types/passport-naver @types/passport-kakao @types/passport-google-oaut
 
 yarn add axios
 yarn add @types/axios --dev
+
+yarn add @google-cloud/storage@6.1.0 graphql-upload
+yarn add @types/graphql-upload
 ```
 
 ## 설정
@@ -155,3 +158,9 @@ bootstrap();
 
 -   [x] 결제 API에 트랜잭션이 적용됐다.
 -   [x] 결제 취소 API에 트랜잭션이 적용됐다.
+
+### Day 27
+
+-   [x] 포스트맨으로 파일 업로드 API를 요청해 버킷에 파일을 저장할 수 있다.
+-   [x] 이미지 테이블에 데이터를 추가할 수 있다.
+-   [x] 이미지 테이블에 데이터를 삭제할 수 있다.

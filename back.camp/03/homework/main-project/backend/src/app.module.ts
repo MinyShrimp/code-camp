@@ -29,6 +29,8 @@ import { ProductTagModule } from './apis/productTag/productTag.module';
 import { ProductCategoryModule } from './apis/productCategory/productCategory.module';
 import { ProductCategorySearchModule } from './apis/productCategorySearch/productCategorySearch.module';
 
+import { FileUploadModule } from './apis/fileUpload/fileUpload.module';
+
 // Entity //
 
 ///////////////////////////////////////////////////////////////////////////
@@ -67,6 +69,7 @@ import { ProductCategorySearchModule } from './apis/productCategorySearch/produc
             database: process.env.MYSQL_DATABASE,
             entities: [__dirname + '/apis/**/*.entity.*'],
             charset: 'utf8mb4',
+            collaction: 'utf8mb4_general_ci',
             synchronize: true,
             logging: true,
         }),
@@ -88,6 +91,8 @@ import { ProductCategorySearchModule } from './apis/productCategorySearch/produc
         ProductTagModule,
         ProductCategoryModule,
         ProductCategorySearchModule,
+
+        FileUploadModule,
     ],
     controllers: [],
     providers: [],

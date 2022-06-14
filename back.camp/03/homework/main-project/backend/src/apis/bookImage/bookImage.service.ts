@@ -8,12 +8,14 @@ import { BookImageEntity } from './entities/bookImage.entity';
 import { CreateBookImageInput } from './dto/createBookImage.input';
 import { UpdateBookImageInput } from './dto/updateBookImage.input';
 import { BookEntity } from '../book/entities/book.entity';
+import { FileUploadService } from '../fileUpload/fileUpload.service';
 
 @Injectable()
 export class BookImageService {
     constructor(
         @InjectRepository(BookImageEntity)
         private readonly bookImageRepository: Repository<BookImageEntity>,
+        private readonly fileUploadService: FileUploadService,
     ) {}
 
     ///////////////////////////////////////////////////////////////////
@@ -52,10 +54,20 @@ export class BookImageService {
         book: BookEntity,
         imgInputs: CreateBookImageInput[],
     ): Promise<BookImageEntity[]> {
+        const ids = imgInputs.map((v) => v.uploadImageID);
+        const isMains = imgInputs.map((v) => v.isMain);
+
+        const uploadImgs = await Promise.all(
+            ids.map((id) => {
+                return this.fileUploadService.findOne(id);
+            }),
+        );
+
         const images: BookImageEntity[] = await Promise.all(
-            imgInputs.map((img) => {
+            uploadImgs.map((uploadImage, idx) => {
                 return this.bookImageRepository.save({
-                    ...img,
+                    isMain: isMains[idx],
+                    uploadImage,
                     book,
                 });
             }),
@@ -77,7 +89,7 @@ export class BookImageService {
         bookImageID: string, //
         updateBookImageInput: UpdateBookImageInput,
     ): Promise<BookImageEntity> {
-        const { ...input } = updateBookImageInput;
+        const { uploadImageID, ...input } = updateBookImageInput;
 
         const bookImage = await this.findOne(bookImageID);
 

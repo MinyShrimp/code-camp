@@ -12,16 +12,16 @@ export class CreateBookInput extends PickType(
         'page',
         'isbn_10',
         'isbn_13',
-        'publish_at',
+        'publishAt',
     ],
     InputType,
 ) {
     @Field(() => String, { description: '출판사 ID' })
-    publisher_id: string;
+    publisherId: string;
 
     @Field(() => String, { description: '저자 ID' })
-    author_id: string;
+    authorId: string;
 
     @Field(() => [CreateBookImageInput])
-    book_imgs: CreateBookImageInput[];
+    bookImgs: CreateBookImageInput[];
 }
