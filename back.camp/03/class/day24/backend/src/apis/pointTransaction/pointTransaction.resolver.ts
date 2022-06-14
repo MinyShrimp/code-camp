@@ -1,6 +1,6 @@
 import { UseGuards } from "@nestjs/common";
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
-import { CurrentUser, ICurrentUser } from "src/apis/commons/auth/gql-user.param";
+import { CurrentUser, ICurrentUser } from "src/commons/auth/gql-user.param";
 import { CreatePointTransactionInput } from "./dto/createPointTransaction.input";
 import { PointTransationEntity } from "./entities/pointTransaction.entity";
 import { PointTransactionService } from "./pointTransaction.service";
