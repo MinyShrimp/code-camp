@@ -1,0 +1,38 @@
+mutation {
+    createProduct(
+        createProductInput: {
+            name: "마우스"
+            description: "정말 좋은 마우스"
+            price: 1000
+            productSaleslocation: {
+                address: "영등포"
+                addressDetail: "구로세관"
+                lat: 1
+                lng: 1
+                meetingTime: "2022-06-03 17:00:00"
+            }
+            productCategoryId: "f3108982-0669-476d-89a9-b9630b613f7f"
+            productTags: ["#컴퓨터", "#마우스", "#영등포"]
+        }
+    ) {
+        id
+        name
+        description
+        price
+        productSaleslocation {
+            id
+            address
+            addressDetail
+            lat
+            lng
+            meetingTime
+        }
+        productCategory {
+            id
+        }
+        productTags {
+            id
+            name
+        }
+    }
+}
