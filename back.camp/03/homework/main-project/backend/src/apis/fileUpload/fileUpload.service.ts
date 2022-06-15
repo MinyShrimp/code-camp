@@ -36,19 +36,21 @@ export class FileUploadService {
 
     /**
      * 구글 Storage에 업로드 + DB에 저장
+     * @param folderName
      * @param files
      * @returns 구글 Storage URLs
      */
     async upload(
+        folderName: string,
         files: FileUpload[], //
     ): Promise<FileUploadEntity[]> {
         // 변수 초기화
         const writeFiles = await Promise.all(files);
-        const key = './src/apis/fileUpload/key/gcp-key.json';
+        const key = `./src/apis/fileUpload/key/${process.env.FILE_KEY}`;
 
         // 구글 Storage 연결
         const storage = new Storage({
-            projectId: process.env.PROJECT_ID,
+            projectId: process.env.FILE_PROJECT_ID,
             keyFilename: key,
         }).bucket(process.env.FILE_BUCKET);
 
@@ -60,11 +62,13 @@ export class FileUploadService {
                         // 확장자 분리
                         const [_, prefix, suffix, ...__] = file.filename
                             .toLowerCase()
-                            .match(/^(.+).(png|jpe?g|svg|gif|webp)/);
+                            .match(/^(.+).(png|jpe?g|gif|webp)$/);
 
                         // 이름 Hashing
-                        file.filename = `${bcrypt
+                        file.filename = `${folderName}origin/${bcrypt
                             .hashSync(prefix, bcrypt.genSaltSync())
+                            .slice(20, 40)
+                            .toLowerCase()
                             .replace(/(\$|\.|\/)/g, 'v')}.${suffix}`;
 
                         file.createReadStream()
@@ -85,14 +89,43 @@ export class FileUploadService {
         )) as Array<string>;
 
         // DB Table에 추가
-        const db_files = storageUpload
-            .filter((v) => v !== '')
-            .map((v) =>
+        const db_files = [];
+        const tmps = storageUpload.filter((v) => v !== '');
+        tmps.forEach((v) => {
+            const name = v.split('/').slice(-1)[0];
+            const [_, prefix, suffix, ...__] = name
+                .toLowerCase()
+                .match(/^(.+).(png|jpe?g|gif|webp)$/);
+
+            db_files.push(
                 this.fileUploadRepository.create({
+                    path: `${folderName}origin/`,
+                    name: name,
                     url: v,
-                    name: v.split('/')[2],
                 }),
             );
+            db_files.push(
+                this.fileUploadRepository.create({
+                    path: `${folderName}thumb/l/`,
+                    name: `thumb_${prefix}_1280.${suffix}`,
+                    url: `/${process.env.FILE_BUCKET}/${folderName}thumb/l/thumb_${prefix}_1280.${suffix}`,
+                }),
+            );
+            db_files.push(
+                this.fileUploadRepository.create({
+                    path: `${folderName}thumb/m/`,
+                    name: `thumb_${prefix}_640.${suffix}`,
+                    url: `/${process.env.FILE_BUCKET}/${folderName}thumb/m/thumb_${prefix}_640.${suffix}`,
+                }),
+            );
+            db_files.push(
+                this.fileUploadRepository.create({
+                    path: `${folderName}thumb/s/`,
+                    name: `thumb_${prefix}_320.${suffix}`,
+                    url: `/${process.env.FILE_BUCKET}/${folderName}thumb/s/thumb_${prefix}_320.${suffix}`,
+                }),
+            );
+        });
 
         await Promise.all(
             db_files.map((v) => this.fileUploadRepository.save(v)),
@@ -116,7 +149,7 @@ export class FileUploadService {
     async softDelete(
         fileIDs: string[], //
     ): Promise<ResultMessage[]> {
-        const key = './src/apis/fileUpload/key/gcp-key.json';
+        const key = `./src/apis/fileUpload/key/${process.env.FILE_KEY}`;
 
         // DB에 저장되어있는지 확인
         const dbFiles = await Promise.all(
@@ -145,12 +178,9 @@ export class FileUploadService {
 
         // 구글 삭제
         const storageUpload = await Promise.all(
-            dbFiles.map(async (file) => {
-                try {
-                    return await storage.file(file.name).delete();
-                } catch (e) {
-                    return undefined;
-                }
+            dbFiles.map((file) => {
+                console.log(`${file.path}${file.name}`);
+                return storage.file(`${file.path}${file.name}`).delete();
             }),
         );
 

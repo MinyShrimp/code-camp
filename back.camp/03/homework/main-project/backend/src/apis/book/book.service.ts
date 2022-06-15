@@ -147,60 +147,6 @@ export class BookService {
     // 삭제 //
 
     /**
-     * 모든 책 정보 삭제 ( 삭제 O )
-     * @returns ResultMessage
-     */
-    async deleteAll(): Promise<ResultMessage> {
-        const result = await this.bookRepository.delete({});
-        const isSuccess = result.affected ? true : false;
-
-        return new ResultMessage({
-            isSuccess,
-            contents: isSuccess
-                ? MESSAGES.BOOK_DELETE_ALL_SUCCESSED
-                : MESSAGES.BOOK_DELETE_ALL_FAILED,
-        });
-    }
-
-    /**
-     * 모든 책 정보 삭제 ( 삭제 X )
-     * @returns ResultMessage
-     */
-    async softDeleteAll(): Promise<ResultMessage> {
-        const result = await this.bookRepository.softDelete({});
-        const isSuccess = result.affected ? true : false;
-
-        return new ResultMessage({
-            isSuccess,
-            contents: isSuccess
-                ? MESSAGES.BOOK_SOFT_DELETE_ALL_SUCCESSED
-                : MESSAGES.BOOK_SOFT_DELETE_ALL_FAILED,
-        });
-    }
-
-    /**
-     * 단일 책 정보 삭제 ( 삭제 O )
-     * @param bookID
-     * @returns ResultMessage
-     */
-    async delete(
-        bookID: string, //
-    ): Promise<ResultMessage> {
-        const result = await this.bookRepository.delete({
-            id: bookID,
-        });
-        const isSuccess = result.affected ? true : false;
-
-        return new ResultMessage({
-            id: bookID,
-            isSuccess,
-            contents: isSuccess
-                ? MESSAGES.BOOK_DELETE_SUCCESSED
-                : MESSAGES.BOOK_DELETE_FAILED,
-        });
-    }
-
-    /**
      * 단일 책 정보 삭제 ( 삭제 X )
      * @param bookID
      * @returns ResultMessage

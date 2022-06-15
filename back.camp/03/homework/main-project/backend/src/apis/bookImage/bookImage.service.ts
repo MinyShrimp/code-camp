@@ -9,6 +9,7 @@ import { CreateBookImageInput } from './dto/createBookImage.input';
 import { UpdateBookImageInput } from './dto/updateBookImage.input';
 import { BookEntity } from '../book/entities/book.entity';
 import { FileUploadService } from '../fileUpload/fileUpload.service';
+import { CreateBookImageDto } from './dto/createBookImage.dto';
 
 @Injectable()
 export class BookImageService {
@@ -23,6 +24,14 @@ export class BookImageService {
 
     ///////////////////////////////////////////////////////////////////
     // 조회 //
+
+    async findAll(
+        book: BookEntity, //
+    ): Promise<BookImageEntity[]> {
+        return await this.bookImageRepository.find({
+            where: { book: book },
+        });
+    }
 
     /**
      * 책 이미지 조회
@@ -52,7 +61,7 @@ export class BookImageService {
      */
     async create(
         book: BookEntity,
-        imgInputs: CreateBookImageInput[],
+        imgInputs: CreateBookImageDto[],
     ): Promise<BookImageEntity[]> {
         const ids = imgInputs.map((v) => v.uploadImageID);
         const isMains = imgInputs.map((v) => v.isMain);
@@ -62,6 +71,8 @@ export class BookImageService {
                 return this.fileUploadService.findOne(id);
             }),
         );
+
+        // TODO
 
         const images: BookImageEntity[] = await Promise.all(
             uploadImgs.map((uploadImage, idx) => {
@@ -79,32 +90,44 @@ export class BookImageService {
     ///////////////////////////////////////////////////////////////////
     // 수정 //
 
-    /**
-     * 책 이미지 정보 수정
-     * @param bookImageID
-     * @param updateBookImageInput
-     * @returns 수정된 이미지 정보
-     */
-    async update(
-        bookImageID: string, //
-        updateBookImageInput: UpdateBookImageInput,
-    ): Promise<BookImageEntity> {
-        const { uploadImageID, ...input } = updateBookImageInput;
+    // /**
+    //  * 책 이미지 정보 수정
+    //  * @param bookImageID
+    //  * @param updateBookImageInput
+    //  * @returns 수정된 이미지 정보
+    //  */
+    // async update(
+    //     bookImageID: string, //
+    //     updateBookImageInput: UpdateBookImageInput,
+    // ): Promise<BookImageEntity> {
+    //     const { uploadImageID, ...input } = updateBookImageInput;
 
-        const bookImage = await this.findOne(bookImageID);
+    //     const bookImage = await this.findOne(bookImageID);
 
-        return await this.bookImageRepository.save({
-            ...bookImage,
-            ...input,
+    //     return await this.bookImageRepository.save({
+    //         ...bookImage,
+    //         ...input,
+    //     });
+    // }
+
+    async restore(
+        book: BookEntity, //
+    ): Promise<boolean> {
+        const result = await this.bookImageRepository.restore({
+            book,
         });
+        return result.affected ? true : false;
     }
 
     ///////////////////////////////////////////////////////////////////
     // 삭제 //
 
-    async deleteAll(): Promise<Boolean> {
-        const result = await this.bookImageRepository.delete({});
-        const isSuccess = result.affected ? true : false;
-        return isSuccess;
+    async softDelete(
+        book: BookEntity, //
+    ): Promise<boolean> {
+        const result = await this.bookImageRepository.softDelete({
+            book,
+        });
+        return result.affected ? true : false;
     }
 }

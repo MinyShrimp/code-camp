@@ -1,10 +1,14 @@
+import { ConflictException } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { FileUpload, GraphQLUpload } from 'graphql-upload';
 
 import { ResultMessage } from '../../commons/message/ResultMessage.dto';
+import { CreateBookImageDto } from '../bookImage/dto/createBookImage.dto';
 
 import { AuthorService } from '../author/author.service';
 import { PublisherService } from '../publisher/publisher.service';
 import { BookImageService } from '../bookImage/bookImage.service';
+import { FileUploadService } from '../fileUpload/fileUpload.service';
 
 import { BookEntity } from './entities/book.entity';
 import { CreateBookInput } from './dto/createBook.input';
@@ -19,6 +23,7 @@ export class BookResolver {
         private readonly authorService: AuthorService,
         private readonly publisherService: PublisherService,
         private readonly bookImageService: BookImageService,
+        private readonly fileUploadService: FileUploadService,
     ) {}
 
     ///////////////////////////////////////////////////////////////////
@@ -65,18 +70,27 @@ export class BookResolver {
     )
     async createBook(
         @Args('createBookInput') createBookInput: CreateBookInput,
+        @Args({ name: 'files', type: () => [GraphQLUpload] })
+        files: FileUpload[],
     ): Promise<BookEntity> {
-        const {
-            bookImgs, //
-            authorId,
-            publisherId,
-            ...input
-        } = createBookInput;
+        const { authorId, publisherId, ...input } = createBookInput;
 
         const author = await this.authorService.findOne(authorId);
         const publisher = await this.publisherService.findOne(publisherId);
         const book = await this.bookService.create(input, author, publisher);
-        const book_images = await this.bookImageService.create(book, bookImgs);
+
+        const upload_images = await this.fileUploadService.upload(
+            'book/',
+            files,
+        );
+        const imageDtos: CreateBookImageDto[] = [];
+        upload_images.forEach((v, i) => {
+            imageDtos.push({
+                uploadImageID: v.id,
+                isMain: i === 0,
+            });
+        });
+        const book_images = await this.bookImageService.create(book, imageDtos);
 
         this.bookService.update(
             { ...input, author, publisher, book_images },
@@ -102,19 +116,58 @@ export class BookResolver {
     async updateBook(
         @Args('bookID') bookID: string,
         @Args('updateBookInput') updateBookInput: UpdateBookInput,
+        @Args({ name: 'files', type: () => [GraphQLUpload] })
+        files: FileUpload[],
     ): Promise<BookEntity> {
-        const {
-            bookImgs,
-            authorId,
-            publisherId, //
-            ...input
-        } = updateBookInput;
+        const { authorId, publisherId, isChange, ...input } = updateBookInput;
 
         const book = await this.bookService.findOne(bookID);
-        const author = await this.authorService.findOne(authorId);
-        const publisher = await this.publisherService.findOne(publisherId);
 
-        return this.bookService.update({ ...input, author, publisher }, book);
+        const author =
+            authorId === undefined
+                ? book.author
+                : await this.authorService.findOne(authorId);
+
+        const publisher =
+            publisherId === undefined
+                ? book.publisher
+                : await this.publisherService.findOne(publisherId);
+
+        if (isChange) {
+            const images = await this.bookImageService.findAll(book);
+            const img_ids = images.map((v) => v.uploadImage.id);
+            await this.fileUploadService.softDelete(img_ids);
+
+            // 원래 연결되어있던 이미지를 연결해제
+            await this.bookImageService.softDelete(book);
+
+            // 다시 생성
+            const upload_images = await this.fileUploadService.upload(
+                'book/',
+                files,
+            );
+            const imageDtos: CreateBookImageDto[] = [];
+            upload_images.forEach((v, i) => {
+                imageDtos.push({
+                    uploadImageID: v.id,
+                    isMain: i === 0,
+                });
+            });
+            const book_images = await this.bookImageService.create(
+                book,
+                imageDtos,
+            );
+
+            return await this.bookService.update(
+                { ...input, author, publisher, book_images },
+                book,
+            );
+        } else {
+            return await this.bookService.update(
+                { ...input, author, publisher },
+                book,
+            );
+        }
     }
 
     /**
@@ -126,41 +179,16 @@ export class BookResolver {
         () => ResultMessage, //
         { description: '책 정보 삭제 취소' },
     )
-    restoreBook(
+    async restoreBook(
         @Args('bookID') bookID: string, //
     ): Promise<ResultMessage> {
+        // const book = await this.bookService.findOne(bookID);
+        // await this.bookImageService.restore(book);
         return this.bookService.restore(bookID);
     }
 
     ///////////////////////////////////////////////////////////////////
     // 삭제 //
-
-    /**
-     * DELETE /admin/books/
-     * @response ResultMessage
-     */
-    @Mutation(
-        () => ResultMessage, //
-        { description: '모든 책 삭제 ( Real )' },
-    )
-    async deleteBookAll(): Promise<ResultMessage> {
-        await this.bookImageService.deleteAll();
-        return await this.bookService.deleteAll();
-    }
-
-    /**
-     * DELETE /admin/book/:id
-     * @response ResultMessage
-     */
-    @Mutation(
-        () => ResultMessage, //
-        { description: '단일 책 삭제 ( Real )' },
-    )
-    async deleteBook(
-        @Args('bookID') bookID: string, //
-    ): Promise<ResultMessage> {
-        return await this.bookService.delete(bookID);
-    }
 
     /**
      * DELETE /api/book/:id
@@ -174,6 +202,25 @@ export class BookResolver {
     async softDeleteBook(
         @Args('bookID') bookID: string, //
     ): Promise<ResultMessage> {
+        // const book = await this.bookService.findOne(bookID);
+        // await this.bookImageService.softDelete(book);
+        return await this.bookService.softDelete(bookID);
+    }
+
+    @Mutation(
+        () => ResultMessage, //
+        { description: '단일 책 삭제 ( Real )' },
+    )
+    async deleteImage(
+        @Args('bookID') bookID: string, //
+    ): Promise<ResultMessage> {
+        const book = await this.bookService.findOne(bookID);
+        const imgs = book.book_images;
+        const uploads = imgs.map((v) => v.uploadImage);
+        console.log(uploads.map((v) => v.id));
+        await this.fileUploadService.softDelete(uploads.map((v) => v.id));
+        await this.bookImageService.softDelete(book);
+
         return await this.bookService.softDelete(bookID);
     }
 }

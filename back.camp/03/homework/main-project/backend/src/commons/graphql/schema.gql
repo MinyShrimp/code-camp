@@ -60,6 +60,9 @@ type FileUploadEntity {
   """이름"""
   name: String!
 
+  """폴더"""
+  path: String!
+
   """URL"""
   url: String!
   bookImage: BookImageEntity
@@ -322,22 +325,19 @@ type Mutation {
   softDeleteProduct(productID: String!): ResultMessage!
 
   """책 정보 생성"""
-  createBook(createBookInput: CreateBookInput!): BookEntity!
+  createBook(createBookInput: CreateBookInput!, files: [Upload!]!): BookEntity!
 
   """책 정보 수정"""
-  updateBook(bookID: String!, updateBookInput: UpdateBookInput!): BookEntity!
+  updateBook(bookID: String!, updateBookInput: UpdateBookInput!, files: [Upload!]!): BookEntity!
 
   """책 정보 삭제 취소"""
   restoreBook(bookID: String!): ResultMessage!
 
-  """모든 책 삭제 ( Real )"""
-  deleteBookAll: ResultMessage!
-
-  """단일 책 삭제 ( Real )"""
-  deleteBook(bookID: String!): ResultMessage!
-
   """단일 책 삭제 ( Soft )"""
   softDeleteBook(bookID: String!): ResultMessage!
+
+  """단일 책 삭제 ( Real )"""
+  deleteImage(bookID: String!): ResultMessage!
 
   """저자 정보 생성"""
   createAuthor(createAuthorInput: CreateAuthorInput!): AuthorEntity!
@@ -541,14 +541,10 @@ input CreateBookInput {
 
   """저자 ID"""
   authorId: String!
-  bookImgs: [CreateBookImageInput!]!
 }
 
-input CreateBookImageInput {
-  """메인 이미지 여부"""
-  isMain: Boolean!
-  uploadImageID: String!
-}
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 input UpdateBookInput {
   """제목"""
@@ -577,7 +573,7 @@ input UpdateBookInput {
 
   """저자 ID"""
   authorId: String
-  bookImgs: [CreateBookImageInput!]
+  isChange: Boolean = false
 }
 
 input CreateAuthorInput {
@@ -611,9 +607,6 @@ input UpdatePublisherInput {
   """설명"""
   description: String
 }
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
 
 input CreateProductCategoryInput {
   """분류 이름"""
