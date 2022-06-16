@@ -46,7 +46,7 @@ export class FileUploadService {
     ): Promise<FileUploadEntity[]> {
         // 변수 초기화
         const writeFiles = await Promise.all(files);
-        const key = `./src/apis/fileUpload/key/${process.env.FILE_KEY}`;
+        const key = `./key/${process.env.FILE_KEY}`;
 
         // 구글 Storage 연결
         const storage = new Storage({
@@ -149,7 +149,7 @@ export class FileUploadService {
     async softDelete(
         fileIDs: string[], //
     ): Promise<ResultMessage[]> {
-        const key = `./src/apis/fileUpload/key/${process.env.FILE_KEY}`;
+        const key = `./key/${process.env.FILE_KEY}`;
 
         // DB에 저장되어있는지 확인
         const dbFiles = await Promise.all(

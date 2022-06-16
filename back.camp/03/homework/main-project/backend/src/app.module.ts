@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////
 // NestJS //
-import { Module } from '@nestjs/common';
+import { Module, CacheModule } from '@nestjs/common';
 
 // GraphQL //
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
@@ -8,6 +8,10 @@ import { GraphQLModule } from '@nestjs/graphql';
 
 // TypeORM //
 import { TypeOrmModule } from '@nestjs/typeorm';
+
+// Redis //
+import type { RedisClientOptions } from 'redis';
+import * as redisStore from 'cache-manager-redis-store';
 
 // Config //
 import { ConfigModule } from '@nestjs/config';
@@ -62,7 +66,8 @@ import { FileUploadModule } from './apis/fileUpload/fileUpload.module';
         // TypeORM //
         TypeOrmModule.forRoot({
             type: 'mysql',
-            host: 'db',
+            // host: `${process.env.DEBUG_MYSQL_HOST}`,
+            host: `${process.env.MYSQL_HOST}`,
             port: 3306,
             username: process.env.MYSQL_USER,
             password: process.env.MYSQL_PASSWORD,
@@ -72,6 +77,15 @@ import { FileUploadModule } from './apis/fileUpload/fileUpload.module';
             collaction: 'utf8mb4_general_ci',
             synchronize: true,
             logging: true,
+        }),
+
+        ///////////////////////////////////////////////////////////////////////////
+        // Redis //
+        CacheModule.register<RedisClientOptions>({
+            store: redisStore,
+            // url: `redis://${process.env.DEBUG_REDIS_HOST}:6379`,
+            url: `redis://${process.env.REDIS_HOST}:6379`,
+            isGlobal: true,
         }),
 
         ///////////////////////////////////////////////////////////////////////////
