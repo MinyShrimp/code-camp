@@ -14,7 +14,7 @@ export class FileService {
         // const file = files[0];
         // console.log(file.filename);
 
-        const key = path.join(__dirname, "../../../src", "commons", "file", process.env.FILE_KEY);
+        const key = `./key/${process.env.FILE_KEY}`;
 
         const storage = new Storage({
             projectId: process.env.PROJECT_ID,

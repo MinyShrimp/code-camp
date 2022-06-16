@@ -7,6 +7,7 @@ import ProductSalesLocationEntity from "../productsSaleslocation/entities/produc
 
 import ProductResolver from "./product.resolver";
 import ProductService from "./Product.service";
+import { ProductSubscriber } from "./entities/product.subscriber";
 
 @Module({
     imports: [
@@ -20,6 +21,7 @@ import ProductService from "./Product.service";
     providers: [
         ProductResolver, //
         ProductService,
+        ProductSubscriber,
     ],
 })
 export default class ProductModule {}

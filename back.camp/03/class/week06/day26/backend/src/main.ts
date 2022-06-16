@@ -11,6 +11,6 @@ async function bootstrap() {
     app.useGlobalFilters(new HttpExceptionFilter());
     app.use(graphqlUploadExpress());
     ///////////////////////////////////////////////////////////////////////////
-    await app.listen(3000);
+    await app.listen(8080);
 }
 bootstrap();
