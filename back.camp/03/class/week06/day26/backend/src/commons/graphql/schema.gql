@@ -73,6 +73,7 @@ type Payment {
 
 type Query {
   fetchBoards: [BoardEntity!]!
+  fetchBoard(boardID: String!): BoardEntity!
   fetchProducts: [ProductEntity!]!
   fetchProduct(productID: String!): ProductEntity!
   fetchProductCategoryAll: [ProductCategoryEntity!]!
@@ -82,7 +83,7 @@ type Query {
 }
 
 type Mutation {
-  createBoard(createBoardInput: CreateBoardInput!): String!
+  createBoard(createBoardInput: CreateBoardInput!): BoardEntity!
   createProduct(createProductInput: CreateProductInput!): ProductEntity!
   updateProduct(productID: String!, updateProductInput: UpdateProductInput!): ProductEntity!
   deleteProductAll: String!

@@ -1,39 +1,29 @@
 import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 import CreateBoardInput from "./dto/createBoard.input";
+import BoardEntity from "./entities/board.entity";
 
 @Injectable()
 export default class BoardsService {
-    nowId = 3;
-    result = [
-        {
-            id: 1,
-            writer: "철수",
-            title: "제목입니다~~",
-            contents: "내용이에요@@@",
-        },
-        {
-            id: 2,
-            writer: "영희",
-            title: "영희 제목입니다~~",
-            contents: "영희 내용이에요@@@",
-        },
-        {
-            id: 3,
-            writer: "훈이",
-            title: "훈이 제목입니다~~",
-            contents: "훈이 내용이에요@@@",
-        },
-    ];
+    constructor(
+        @InjectRepository(BoardEntity)
+        private readonly boardRepository: Repository<BoardEntity>
+    ) {}
 
-    findAll() {
-        return this.result;
+    async findAll() {
+        return await this.boardRepository.find({});
     }
 
-    create(createBoardInput: CreateBoardInput) {
-        this.result.push({
-            id: ++this.nowId,
+    async findOne(boardID: string) {
+        return await this.boardRepository.findOne({
+            where: { id: boardID },
+        });
+    }
+
+    async create(createBoardInput: CreateBoardInput) {
+        return await this.boardRepository.save({
             ...createBoardInput,
         });
-        return "게시물 등록에 성공하였습니다!!";
     }
 }

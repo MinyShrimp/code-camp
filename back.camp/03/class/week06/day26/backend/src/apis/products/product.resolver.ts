@@ -1,4 +1,6 @@
+import { CACHE_MANAGER, Inject } from "@nestjs/common";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { Cache } from "cache-manager";
 
 import ProductEntity from "./entities/product.entity";
 
@@ -10,7 +12,9 @@ import ProductService from "./Product.service";
 @Resolver()
 export default class ProductResolver {
     constructor(
-        private readonly productService: ProductService //
+        private readonly productService: ProductService, //
+        @Inject(CACHE_MANAGER)
+        private readonly cacheManager: Cache
     ) {}
 
     // GET 모든 상품
@@ -21,10 +25,17 @@ export default class ProductResolver {
 
     // GET 단일 상품
     @Query(() => ProductEntity)
-    fetchProduct(
+    async fetchProduct(
         @Args("productID") productID: string //
     ): Promise<ProductEntity> {
-        return this.productService.findOne(productID);
+        const productCache = await this.cacheManager.get(`product:${productID}`);
+        if (productCache) {
+            return productCache as ProductEntity;
+        }
+
+        const product = await this.productService.findOne(productID);
+        await this.cacheManager.set(`product:${productID}`, product, { ttl: 0 });
+        return product;
     }
 
     // POST 상품 생성
