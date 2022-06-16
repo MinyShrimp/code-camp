@@ -18,8 +18,12 @@ yarn add @types/passport-naver @types/passport-kakao @types/passport-google-oaut
 yarn add axios
 yarn add @types/axios --dev
 
-yarn add @google-cloud/storage@6.1.0 graphql-upload
-yarn add @types/graphql-upload
+yarn add @google-cloud/storage@6.1.0 @google-cloud/bigquery
+yarn add graphql-upload
+yarn add @types/graphql-upload --dev
+
+yarn add cache-manager cache-manager-redis-store redis
+yarn add @types/cache-manager @types/cache-manager-redis-store --dev
 ```
 
 ## 설정
