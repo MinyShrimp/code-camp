@@ -37,10 +37,10 @@ export class JwtAccessStrategy extends PassportStrategy(
 
         const refresh_jwt = decode(refresh_token) as IPayloadSub;
         const access_cache = await this.cacheManager.get(
-            `blacklist:${payload.sub}:access_token`,
+            `blacklist:access_token:${access_token}`,
         );
 
-        if (access_cache === access_token) {
+        if (access_cache) {
             throw new UnauthorizedException();
         }
 
