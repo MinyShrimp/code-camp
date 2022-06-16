@@ -78,16 +78,16 @@ export function IndexBodySide() {
                             title="Entities"
                             items={
                                 <>
-                                    <Nav.Link as={Link} to="#">
+                                    <Nav.Link as={Link} to="/entity/author">
                                         Author
                                     </Nav.Link>
-                                    <Nav.Link as={Link} to="#">
+                                    <Nav.Link as={Link} to="/entity/user">
                                         User
                                     </Nav.Link>
-                                    <Nav.Link as={Link} to="#">
+                                    <Nav.Link as={Link} to="/entity/review">
                                         Review
                                     </Nav.Link>
-                                    <Nav.Link as={Link} to="#">
+                                    <Nav.Link as={Link} to="/entity/payment">
                                         Payment
                                     </Nav.Link>
                                 </>

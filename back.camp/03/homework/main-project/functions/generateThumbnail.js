@@ -4,7 +4,8 @@ const { Storage } = require('@google-cloud/storage');
 (async (file, context) => {
     console.log(context.eventType);
 
-    const paths = file.name.split('/');
+    const name = file.name;
+    const paths = name.split('/');
     const filename = paths.slice(-1)[0];
     const path = paths.slice(0, -2).join('/') + '/';
 
@@ -33,7 +34,7 @@ const { Storage } = require('@google-cloud/storage');
                 console.log(_full_path);
 
                 storage
-                    .file(file.name)
+                    .file(name)
                     .createReadStream()
                     .pipe(
                         sharp()

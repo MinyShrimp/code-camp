@@ -1,9 +1,7 @@
-import { ConflictException } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
 
 import { ResultMessage } from '../../commons/message/ResultMessage.dto';
-import { CreateBookImageDto } from '../bookImage/dto/createBookImage.dto';
 
 import { AuthorService } from '../author/author.service';
 import { PublisherService } from '../publisher/publisher.service';
@@ -83,12 +81,11 @@ export class BookResolver {
             'book/',
             files,
         );
-        const imageDtos: CreateBookImageDto[] = [];
-        upload_images.forEach((v, i) => {
-            imageDtos.push({
+        const imageDtos = upload_images.map((v, i) => {
+            return {
                 uploadImageID: v.id,
                 isMain: i === 0,
-            });
+            };
         });
         const book_images = await this.bookImageService.create(book, imageDtos);
 
@@ -146,12 +143,11 @@ export class BookResolver {
                 'book/',
                 files,
             );
-            const imageDtos: CreateBookImageDto[] = [];
-            upload_images.forEach((v, i) => {
-                imageDtos.push({
+            const imageDtos = upload_images.map((v, i) => {
+                return {
                     uploadImageID: v.id,
                     isMain: i === 0,
-                });
+                };
             });
             const book_images = await this.bookImageService.create(
                 book,
@@ -217,7 +213,7 @@ export class BookResolver {
         const book = await this.bookService.findOne(bookID);
         const imgs = book.book_images;
         const uploads = imgs.map((v) => v.uploadImage);
-        console.log(uploads.map((v) => v.id));
+
         await this.fileUploadService.softDelete(uploads.map((v) => v.id));
         await this.bookImageService.softDelete(book);
 

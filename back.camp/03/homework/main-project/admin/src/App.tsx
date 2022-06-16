@@ -20,7 +20,7 @@ function App() {
                     'admin',
                     hashSync(admin.pwd, genSaltSync()),
                 );
-                navigate('/', { replace: true });
+                navigate(window.location.pathname, { replace: true });
                 return () => {};
             }
         }
