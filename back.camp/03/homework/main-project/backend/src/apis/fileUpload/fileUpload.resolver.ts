@@ -37,7 +37,7 @@ export class FileUploadResolver {
         })
         files: FileUpload[], //
     ): Promise<FileUploadEntity[]> {
-        return this.fileUploadService.upload(files);
+        return this.fileUploadService.upload('test/origin/', files);
     }
 
     ///////////////////////////////////////////////////////////////////

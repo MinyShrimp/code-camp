@@ -22,6 +22,10 @@ export class FileUploadEntity {
     name: string;
 
     @Column()
+    @Field(() => String, { description: '폴더' })
+    path: string;
+
+    @Column()
     @Field(() => String, { description: 'URL' })
     url: string;
 

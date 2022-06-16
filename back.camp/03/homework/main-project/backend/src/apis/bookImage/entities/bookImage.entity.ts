@@ -9,6 +9,7 @@ import {
     PrimaryGeneratedColumn,
     BaseEntity,
     OneToOne,
+    DeleteDateColumn,
 } from 'typeorm';
 
 import { BookEntity } from '../../book/entities/book.entity';
@@ -50,4 +51,7 @@ export class BookImageEntity extends BaseEntity {
     )
     @Field(() => BookEntity)
     book: BookEntity;
+
+    @DeleteDateColumn()
+    deleteAt: Date;
 }

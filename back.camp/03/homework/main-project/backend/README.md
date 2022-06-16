@@ -18,8 +18,12 @@ yarn add @types/passport-naver @types/passport-kakao @types/passport-google-oaut
 yarn add axios
 yarn add @types/axios --dev
 
-yarn add @google-cloud/storage@6.1.0 graphql-upload
-yarn add @types/graphql-upload
+yarn add @google-cloud/storage@6.1.0 @google-cloud/bigquery
+yarn add graphql-upload
+yarn add @types/graphql-upload --dev
+
+yarn add cache-manager cache-manager-redis-store redis
+yarn add @types/cache-manager @types/cache-manager-redis-store --dev
 ```
 
 ## 설정
@@ -164,3 +168,10 @@ bootstrap();
 -   [x] 포스트맨으로 파일 업로드 API를 요청해 버킷에 파일을 저장할 수 있다.
 -   [x] 이미지 테이블에 데이터를 추가할 수 있다.
 -   [x] 이미지 테이블에 데이터를 삭제할 수 있다.
+
+### Day 29
+
+-   [x] docker로 서버를 띄웠을 때, 오류 없이 실행이 된다.
+-   [x] 플레이그라운드로 로그아웃 API를 요청하면, Access token과 Refresh token을 레디스 컨테이너에서 확인 할 수 있다.
+-   [x] 플레이그라운드에서 로그아웃 한 토큰으로 `fetchUser` API를 요청하면 Unauthorized 에러 메시지를 반환할 수 있다.
+-   [x] 플레이그라운드에서 로그아웃 한 토큰으로 `restoreAccessToken` API를 요청하여 Unauthorized 에러 메시지를 반환할 수 있다.

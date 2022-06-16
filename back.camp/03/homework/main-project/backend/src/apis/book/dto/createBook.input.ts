@@ -21,7 +21,4 @@ export class CreateBookInput extends PickType(
 
     @Field(() => String, { description: '저자 ID' })
     authorId: string;
-
-    @Field(() => [CreateBookImageInput])
-    bookImgs: CreateBookImageInput[];
 }

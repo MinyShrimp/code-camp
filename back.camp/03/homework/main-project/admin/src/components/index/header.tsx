@@ -7,7 +7,7 @@ export function IndexHeader() {
     return (
         <Nav
             className="sb-topnav navbar navbar-expand navbar-dark bg-dark"
-            style={{ height: '8vh' }}
+            style={{ height: '58px' }}
         >
             <NavbarBrand className="ps-3" as={Link} to="/">
                 MainProject Admin Page

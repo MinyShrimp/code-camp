@@ -2,7 +2,8 @@ version: '3.7'
 
 services:
     # MySQL
-    db:
+    db-mysql:
+        platform: linux/x86_64
         image: mysql:5.7
         container_name: codecamp-mainproject-db
         env_file: ./backend/.env
@@ -10,6 +11,14 @@ services:
             - ./db/conf.d:/etc/mysql/conf.d
         ports:
             - 3306:3306
+        restart: always
+
+    # Redis
+    db-redis:
+        image: redis:latest
+        container_name: codecamp-mainproject-redis
+        ports:
+            - 6379:6379
         restart: always
 
     # NestJS

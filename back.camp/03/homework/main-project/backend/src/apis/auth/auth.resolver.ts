@@ -1,5 +1,6 @@
-import { UseGuards } from '@nestjs/common';
+import { UseGuards, CACHE_MANAGER, Inject } from '@nestjs/common';
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
+import { Cache } from 'cache-manager';
 
 import { IPayload } from '../../commons/interfaces/Payload.interface';
 import { CurrentUser } from '../../commons/auth/gql-user.param';
@@ -17,6 +18,8 @@ import { AuthService } from './auth.service';
 @Resolver()
 export class AuthResolver {
     constructor(
+        @Inject(CACHE_MANAGER)
+        private readonly cacheManage: Cache,
         private readonly authService: AuthService, //
     ) {}
 
@@ -32,11 +35,23 @@ export class AuthResolver {
      * @response JWT Access Token
      */
     @UseGuards(GqlJwtRefreshGuard)
-    @Mutation(() => String, { description: 'AccessToken 재발급' })
+    @Mutation(
+        () => String, //
+        { description: 'AccessToken 재발급' },
+    )
     async restoreToken(
         @CurrentUser() currentUser: IPayload, //
-    ) {
-        return this.authService.restoreToken(currentUser.id);
+    ): Promise<string> {
+        const token = await this.authService.restoreToken(currentUser.id);
+
+        // Redis 저장
+        await this.cacheManage.set(
+            `blacklist:${currentUser.id}:access_token`,
+            currentUser.access_token,
+            { ttl: 3600 },
+        );
+
+        return token;
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -73,7 +88,21 @@ export class AuthResolver {
         @CurrentUser() currentUser: IPayload, //
     ): Promise<ResultMessage> {
         // 로그아웃
-        return this.authService.Logout(currentUser.id);
+        const result = this.authService.Logout(currentUser.id);
+
+        // Redis 저장
+        await this.cacheManage.set(
+            `blacklist:${currentUser.id}:access_token`,
+            currentUser.access_token,
+            { ttl: currentUser.access_exp },
+        );
+        await this.cacheManage.set(
+            `blacklist:${currentUser.id}:refresh_token`,
+            currentUser.refresh_token,
+            { ttl: currentUser.refresh_exp },
+        );
+
+        return result;
     }
 
     ///////////////////////////////////////////////////////////////////

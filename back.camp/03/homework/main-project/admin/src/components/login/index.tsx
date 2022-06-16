@@ -22,6 +22,7 @@ export function LoginPage() {
         ) {
             window.localStorage.setItem(
                 'admin',
+                // '',
                 hashSync(admin.pwd, genSaltSync()),
             );
             navigate('/', { replace: true });

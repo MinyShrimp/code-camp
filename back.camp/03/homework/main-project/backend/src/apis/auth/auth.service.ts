@@ -1,7 +1,13 @@
 import * as bcrypt from 'bcryptjs';
 import { Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+    ConflictException,
+    Injectable,
+    CACHE_MANAGER,
+    Inject,
+} from '@nestjs/common';
+import { Cache } from 'cache-manager';
 
 import { IPayloadSub } from '../../commons/interfaces/Payload.interface';
 import { ResultMessage } from '../../commons/message/ResultMessage.dto';
@@ -20,6 +26,7 @@ export class AuthService {
     constructor(
         @InjectRepository(UserEntity)
         private readonly userRepository: Repository<UserEntity>,
+
         private readonly userCheckService: UserCheckService,
         private readonly userSerivce: UserService,
         private readonly jwtService: JwtService,
@@ -92,7 +99,7 @@ export class AuthService {
     setRefreshToken(
         user: UserEntity, //
         res: Response,
-    ): void {
+    ): string {
         const payload = this.getPayload(user);
 
         const refreshToken = this.jwtService.sign(payload, {
@@ -103,12 +110,8 @@ export class AuthService {
 
         // 개발 환경
         res.setHeader('Set-Cookie', `refreshToken=${refreshToken}; path=/;`);
-        res.cookie('refreshToken', refreshToken, {
-            maxAge: 10000,
-            httpOnly: true,
-            secure: true,
-            sameSite: 'none',
-        });
+
+        return refreshToken;
 
         // 배포 환경
         // res.setHeader('Access-Control-Allow-Origin', 'https://myfrontsite.com')
@@ -149,14 +152,22 @@ export class AuthService {
         // 검색
         const user = await this.userSerivce.findOneByEmail(input.email);
 
+        // // 로그인 여부 검사 ( Redis )
+        // const redis_user = await this.cacheManage.get(`auth:${user.id}`);
+        // if (redis_user) {
+        //     throw new ConflictException(
+        //         MESSAGES.USER_ALREADY_LOGIN, //
+        //     );
+        // }
+
         // 존재 여부 검사
         await this.userCheckService.checkValidUser(user);
 
-        // 로그인 여부 검사
+        // 로그인 여부 검사 ( MySQL )
         await this.userCheckService.checkLogin(user);
 
         // Set Refresh Token
-        this.setRefreshToken(user, context.res);
+        const refresh_token = this.setRefreshToken(user, context.res);
 
         // 비밀번호 검사
         this.comparePassword(input.pwd, user.pwd);
@@ -168,7 +179,22 @@ export class AuthService {
             isLogin: true,
         });
 
-        return this.getAccessToken(user);
+        // jwt 생성
+        const access_token = this.getAccessToken(user);
+
+        // // Redis에 저장
+        // await this.cacheManage.set(
+        //     `auth:${user.id}:access_token`,
+        //     access_token,
+        //     { ttl: 3600 }, // 1시간
+        // );
+        // await this.cacheManage.set(
+        //     `auth:${user.id}:refresh_token`,
+        //     refresh_token,
+        //     { ttl: 3600 * 24 * 14 }, // 2주
+        // );
+
+        return access_token;
     }
 
     /**
