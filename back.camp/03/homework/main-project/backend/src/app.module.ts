@@ -57,7 +57,7 @@ import { FileUploadModule } from './apis/fileUpload/fileUpload.module';
                 return { req, res };
             },
             cors: {
-                origin: ['http://127.0.0.1:3001', 'http://localhost:3001'],
+                origin: ['http://127.0.0.1:8081', 'http://localhost:8081'],
                 credentials: 'include',
             },
         }),

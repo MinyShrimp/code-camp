@@ -24,27 +24,26 @@ export const columns: Array<TableColumn<IUserColumn>> = [
     },
     {
         name: 'LoginAt',
-        selector: (row: IUserColumn) => row.loginAt,
+        selector: (row: IUserColumn) => row.loginAt.toString(),
         sortable: true,
     },
     {
-        name: 'Logoutat',
-        selector: (row: IUserColumn) => row.logoutAt,
+        name: 'LogoutAt',
+        selector: (row: IUserColumn) => row.logoutAt.toString(),
         sortable: true,
     },
     {
         name: 'isLogin',
         selector: (row: IUserColumn) => row.isLogin,
-        sortable: true,
     },
     {
         name: 'CreateAt',
-        selector: (row: IUserColumn) => row.createAt,
+        selector: (row: IUserColumn) => row.createAt.toString(),
         sortable: true,
     },
     {
         name: 'UpdateAt',
-        selector: (row: IUserColumn) => row.updateAt,
+        selector: (row: IUserColumn) => row.updateAt.toString(),
         sortable: true,
     },
 ];

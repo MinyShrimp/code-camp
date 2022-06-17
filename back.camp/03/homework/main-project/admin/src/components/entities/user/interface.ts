@@ -4,9 +4,9 @@ export interface IUserColumn extends IColumn {
     name: string;
     email: string;
     point: number;
-    loginAt: string;
-    logoutAt: string;
+    loginAt: Date;
+    logoutAt: Date;
     isLogin: boolean;
-    createAt: string;
-    updateAt: string;
+    createAt: Date;
+    updateAt: Date;
 }

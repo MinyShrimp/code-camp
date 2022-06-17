@@ -9,7 +9,7 @@ export function IndexHeader() {
             className="sb-topnav navbar navbar-expand navbar-dark bg-dark"
             style={{ height: '58px' }}
         >
-            <NavbarBrand className="ps-3" as={Link} to="/">
+            <NavbarBrand className="ps-3" as={Link} to="/admin">
                 MainProject Admin Page
             </NavbarBrand>
             <NavLink
@@ -17,7 +17,7 @@ export function IndexHeader() {
                 style={{ color: 'var(--bs-gray-100)' }}
                 onClick={() => {
                     window.localStorage.removeItem('admin');
-                    navigate('/login');
+                    navigate('/admin/login');
                 }}
             >
                 {' '}

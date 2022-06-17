@@ -26,7 +26,7 @@ export function LoginPage() {
                 'admin',
                 hashSync(admin.pwd, genSaltSync()),
             );
-            navigate('/', { replace: true });
+            navigate('/admin', { replace: true });
         } else {
             setIsAlert(true);
             setTimeout(() => {

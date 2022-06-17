@@ -20,18 +20,22 @@ function App() {
                     'admin',
                     hashSync(admin.pwd, genSaltSync()),
                 );
-                navigate(window.location.pathname, { replace: true });
+                const pathname =
+                    window.location.pathname === '/admin/login'
+                        ? '/admin'
+                        : window.location.pathname;
+                navigate(pathname, { replace: true });
                 return () => {};
             }
         }
-        navigate('/login', { replace: true });
+        navigate('/admin/login', { replace: true });
     }, [navigate]);
 
     return (
         <div className="App">
             <Routes>
-                <Route path="/login" element={<LoginPage />}></Route>
-                <Route path="*" element={<Index />}></Route>
+                <Route path="/admin/login" element={<LoginPage />}></Route>
+                <Route path="/admin/*" element={<Index />}></Route>
             </Routes>
         </div>
     );

@@ -49,7 +49,7 @@ export function IndexBodySide() {
                             title="Core"
                             items={
                                 <>
-                                    <Nav.Link as={Link} to="/">
+                                    <Nav.Link as={Link} to="/admin">
                                         Dashboard
                                     </Nav.Link>
                                 </>
@@ -82,43 +82,64 @@ export function IndexBodySide() {
                             title="Entities"
                             items={
                                 <>
-                                    <Nav.Link as={Link} to="/entity/user">
+                                    <Nav.Link as={Link} to="/admin/entity/user">
                                         User
                                     </Nav.Link>
-                                    <Nav.Link as={Link} to="/entity/author">
+                                    <Nav.Link
+                                        as={Link}
+                                        to="/admin/entity/author"
+                                    >
                                         Author
                                     </Nav.Link>
-                                    <Nav.Link as={Link} to="/entity/publisher">
+                                    <Nav.Link
+                                        as={Link}
+                                        to="/admin/entity/publisher"
+                                    >
                                         Publisher
                                     </Nav.Link>
-                                    <Nav.Link as={Link} to="/entity/book">
+                                    <Nav.Link as={Link} to="/admin/entity/book">
                                         Book
                                     </Nav.Link>
-                                    <Nav.Link as={Link} to="/entity/book/image">
+                                    <Nav.Link
+                                        as={Link}
+                                        to="/admin/entity/book/image"
+                                    >
                                         Book Image
                                     </Nav.Link>
-                                    <Nav.Link as={Link} to="/entity/product">
+                                    <Nav.Link
+                                        as={Link}
+                                        to="/admin/entity/product"
+                                    >
                                         Product
                                     </Nav.Link>
                                     <Nav.Link
                                         as={Link}
-                                        to="/entity/product/category"
+                                        to="/admin/entity/product/category"
                                     >
                                         Product Category
                                     </Nav.Link>
                                     <Nav.Link
                                         as={Link}
-                                        to="/entity/product/tag"
+                                        to="/admin/entity/product/tag"
                                     >
                                         Product Tag
                                     </Nav.Link>
-                                    <Nav.Link as={Link} to="/entity/review">
+                                    <Nav.Link
+                                        as={Link}
+                                        to="/admin/entity/review"
+                                    >
                                         Review
                                     </Nav.Link>
-                                    <Nav.Link as={Link} to="/entity/payment">
+                                    <Nav.Link
+                                        as={Link}
+                                        to="/admin/entity/payment"
+                                    >
                                         Payment
                                     </Nav.Link>
-                                    <Nav.Link as={Link} to="/entity/upload">
+                                    <Nav.Link
+                                        as={Link}
+                                        to="/admin/entity/upload"
+                                    >
                                         Upload File
                                     </Nav.Link>
                                 </>
@@ -136,13 +157,13 @@ export function IndexBodySide() {
                             title="Pages"
                             items={
                                 <>
-                                    <Nav.Link as={Link} to="/401">
+                                    <Nav.Link as={Link} to="/admin/401">
                                         401 Page
                                     </Nav.Link>
-                                    <Nav.Link as={Link} to="/404">
+                                    <Nav.Link as={Link} to="/admin/404">
                                         404 Page
                                     </Nav.Link>
-                                    <Nav.Link as={Link} to="/500">
+                                    <Nav.Link as={Link} to="/admin/500">
                                         500 Page
                                     </Nav.Link>
                                 </>

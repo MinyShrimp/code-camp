@@ -1,10 +1,11 @@
+import { AxiosResponse } from 'axios';
 import React, { useEffect, useState } from 'react';
 import { TableColumn } from 'react-data-table-component';
 import { EntityTable } from './entity_table';
 import { IColumn } from './interface';
 
 export function EntityBaseIndex(props: {
-    reload: Function;
+    reload: any;
     setReload: Function;
     columns: Array<TableColumn<any>>;
     datas: Array<IColumn>;
@@ -13,8 +14,14 @@ export function EntityBaseIndex(props: {
 
     const _reload = async () => {
         setPending(true);
-        await props.reload();
-        setPending(false);
+        props
+            .reload()
+            .then((res: AxiosResponse) => {
+                setPending(false);
+            })
+            .catch((error: any) => {
+                setPending(false);
+            });
     };
 
     useEffect(() => {

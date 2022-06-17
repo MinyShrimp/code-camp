@@ -8,7 +8,7 @@ import { EntityIndexHeader } from './header';
 
 export function EntityIndex() {
     const pathName = window.location.pathname;
-    const name = pathName.split('/').slice(2).join(' ');
+    const name = pathName.split('/').slice(-1).join(' ');
     const entityName = name[0].toUpperCase() + name.slice(1).toLowerCase();
 
     const [entityReloadFunction, setEntityReloadFunction] = useState(
@@ -34,7 +34,7 @@ export function EntityIndex() {
                         }
                     />
                     <Route
-                        path="/user"
+                        path="/user/*"
                         element={
                             <UserIndex setReload={setEntityReloadFunction} />
                         }
