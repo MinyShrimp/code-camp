@@ -1,18 +1,23 @@
 import React from 'react';
-import DataTable from 'react-data-table-component';
+import DataTable, { TableColumn } from 'react-data-table-component';
 import { KeyboardArrowDown } from '@material-ui/icons';
+import { IColumn } from './interface';
 
-export function EntityTable({ columns, datas, pending }) {
+export function EntityTable(props: {
+    columns: Array<TableColumn<any>>;
+    datas: Array<IColumn>;
+    pending: boolean;
+}) {
     return (
         <DataTable
-            columns={columns}
-            data={datas}
+            columns={props.columns}
+            data={props.datas}
             pagination
             responsive
             fixedHeader
             fixedHeaderScrollHeight="calc(100vh - 250px)"
             sortIcon={<KeyboardArrowDown />}
-            progressPending={pending}
+            progressPending={props.pending}
             paginationPerPage={30}
             customStyles={{
                 headCells: {

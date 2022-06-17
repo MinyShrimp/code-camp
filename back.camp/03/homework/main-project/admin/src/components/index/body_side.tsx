@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Collapse, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-function NavCollapse(props: any) {
+function NavCollapse(props: {
+    id: string;
+    title: string;
+    items: ReactElement;
+}) {
     const [open, setOpen] = useState(false);
 
     return (
@@ -78,11 +82,35 @@ export function IndexBodySide() {
                             title="Entities"
                             items={
                                 <>
+                                    <Nav.Link as={Link} to="/entity/user">
+                                        User
+                                    </Nav.Link>
                                     <Nav.Link as={Link} to="/entity/author">
                                         Author
                                     </Nav.Link>
-                                    <Nav.Link as={Link} to="/entity/user">
-                                        User
+                                    <Nav.Link as={Link} to="/entity/publisher">
+                                        Publisher
+                                    </Nav.Link>
+                                    <Nav.Link as={Link} to="/entity/book">
+                                        Book
+                                    </Nav.Link>
+                                    <Nav.Link as={Link} to="/entity/book/image">
+                                        Book Image
+                                    </Nav.Link>
+                                    <Nav.Link as={Link} to="/entity/product">
+                                        Product
+                                    </Nav.Link>
+                                    <Nav.Link
+                                        as={Link}
+                                        to="/entity/product/category"
+                                    >
+                                        Product Category
+                                    </Nav.Link>
+                                    <Nav.Link
+                                        as={Link}
+                                        to="/entity/product/tag"
+                                    >
+                                        Product Tag
                                     </Nav.Link>
                                     <Nav.Link as={Link} to="/entity/review">
                                         Review
@@ -90,8 +118,17 @@ export function IndexBodySide() {
                                     <Nav.Link as={Link} to="/entity/payment">
                                         Payment
                                     </Nav.Link>
+                                    <Nav.Link as={Link} to="/entity/upload">
+                                        Upload File
+                                    </Nav.Link>
                                 </>
                             }
+                        ></NavCollapse>
+
+                        <NavCollapse
+                            id="page-collapse"
+                            title="Redis"
+                            items={<></>}
                         ></NavCollapse>
 
                         <NavCollapse

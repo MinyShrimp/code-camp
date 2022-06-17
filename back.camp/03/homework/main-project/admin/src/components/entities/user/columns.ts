@@ -1,50 +1,50 @@
 import { TableColumn } from 'react-data-table-component';
 import { IUserColumn } from './interface';
 
-export const columns: TableColumn<IUserColumn>[] = [
+export const columns: Array<TableColumn<IUserColumn>> = [
     {
         name: 'ID',
-        selector: (row) => row.id,
+        selector: (row: IUserColumn) => row.id,
         sortable: true,
     },
     {
         name: 'Name',
-        selector: (row) => row.name,
+        selector: (row: IUserColumn) => row.name,
         sortable: true,
     },
     {
         name: 'Email',
-        selector: (row) => row.email,
+        selector: (row: IUserColumn) => row.email,
         sortable: true,
     },
     {
         name: 'Point',
-        selector: (row) => row.point,
+        selector: (row: IUserColumn) => row.point,
         sortable: true,
     },
     {
         name: 'LoginAt',
-        selector: (row) => row.loginAt,
+        selector: (row: IUserColumn) => row.loginAt,
         sortable: true,
     },
     {
         name: 'Logoutat',
-        selector: (row) => row.logoutAt,
+        selector: (row: IUserColumn) => row.logoutAt,
         sortable: true,
     },
     {
         name: 'isLogin',
-        selector: (row) => row.isLogin,
+        selector: (row: IUserColumn) => row.isLogin,
         sortable: true,
     },
     {
         name: 'CreateAt',
-        selector: (row) => row.createAt,
+        selector: (row: IUserColumn) => row.createAt,
         sortable: true,
     },
     {
         name: 'UpdateAt',
-        selector: (row) => row.updateAt,
+        selector: (row: IUserColumn) => row.updateAt,
         sortable: true,
     },
 ];

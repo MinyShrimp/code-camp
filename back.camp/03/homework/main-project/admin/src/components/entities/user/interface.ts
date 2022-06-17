@@ -1,5 +1,6 @@
-export interface IUserColumn {
-    id: string;
+import { IColumn } from '../interface';
+
+export interface IUserColumn extends IColumn {
     name: string;
     email: string;
     point: number;

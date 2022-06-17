@@ -1,7 +1,7 @@
 import { TableColumn } from 'react-data-table-component';
 import { IAuthorColumn } from './interface';
 
-export const columns: TableColumn<IAuthorColumn>[] = [
+export const columns: Array<TableColumn<IAuthorColumn>> = [
     {
         name: 'ID',
         selector: (row) => row.id,

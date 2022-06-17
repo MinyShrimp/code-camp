@@ -4,19 +4,18 @@ import { Route, Routes } from 'react-router-dom';
 import { UserIndex } from './user';
 import { AuthorIndex } from './author';
 
-import { EntityIndexHeader } from './index_header';
+import { EntityIndexHeader } from './header';
 
 export function EntityIndex() {
     const pathName = window.location.pathname;
-    const name = pathName.split('/')[2];
+    const name = pathName.split('/').slice(2).join(' ');
     const entityName = name[0].toUpperCase() + name.slice(1).toLowerCase();
 
     const [entityReloadFunction, setEntityReloadFunction] = useState(
-        () => () => {},
+        () => async () => {},
     );
 
     useEffect(() => {
-        setEntityReloadFunction(() => () => {});
         return () => {};
     }, [setEntityReloadFunction]);
 
