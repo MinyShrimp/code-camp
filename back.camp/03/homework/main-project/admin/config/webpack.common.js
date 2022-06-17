@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const webpack = require('webpack');
 // const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
@@ -13,6 +14,10 @@ module.exports = {
                 use: 'babel-loader',
                 exclude: /node_modules/,
             },
+            {
+                test: /\.(png|jpg|svg)$/,
+                use: ['file-loader'],
+            },
         ],
     },
     plugins: [
@@ -22,11 +27,18 @@ module.exports = {
         new webpack.ProvidePlugin({
             React: 'react',
         }),
+        new Dotenv({
+            path: `.env`,
+        }),
     ],
     resolve: {
         alias: {
             '@': path.resolve(__dirname, '..src/'),
         },
         extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
+        fallback: {
+            crypto: require.resolve('crypto-browserify'),
+            stream: require.resolve('stream-browserify'),
+        },
     },
 };
