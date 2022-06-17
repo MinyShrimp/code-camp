@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { Alert, Button, Card, Container, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { Page_Container } from '../styles/styled';
 import { genSaltSync, hashSync } from 'bcryptjs';
+import { Page_Container } from '../styles/styled';
 
 export function LoginPage() {
     const id = useRef('');
@@ -11,9 +11,11 @@ export function LoginPage() {
     const navigate = useNavigate();
 
     const admin = {
-        id: process.env.REACT_APP_ADMIN_ID,
-        pwd: process.env.REACT_APP_ADMIN_PWD,
+        id: process.env.ADMIN_ID,
+        pwd: process.env.ADMIN_PWD,
     };
+
+    console.log(admin);
 
     const Login = () => {
         if (
@@ -22,7 +24,6 @@ export function LoginPage() {
         ) {
             window.localStorage.setItem(
                 'admin',
-                // '',
                 hashSync(admin.pwd, genSaltSync()),
             );
             navigate('/', { replace: true });

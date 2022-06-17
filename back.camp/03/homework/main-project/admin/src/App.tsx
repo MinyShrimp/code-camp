@@ -9,13 +9,13 @@ function App() {
 
     useEffect(() => {
         const admin = {
-            id: process.env.REACT_APP_ADMIN_ID,
-            pwd: process.env.REACT_APP_ADMIN_PWD,
+            id: process.env.ADMIN_ID as string,
+            pwd: process.env.ADMIN_PWD as string,
         };
 
         const _pwd = window.localStorage.getItem('admin');
         if (_pwd) {
-            if (compareSync(process.env.REACT_APP_ADMIN_PWD, _pwd)) {
+            if (compareSync(admin.pwd, _pwd)) {
                 window.localStorage.setItem(
                     'admin',
                     hashSync(admin.pwd, genSaltSync()),

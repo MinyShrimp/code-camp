@@ -39,4 +39,4 @@ lerna-debug.log*
 envs
 file
 key/
-admin.backup
+*.backup
