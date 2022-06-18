@@ -19,7 +19,9 @@ export function EntityIndexHeader(props: {
                     <p className="mb-0" style={{ color: 'var(--bs-blue)' }}>
                         Entity
                     </p>
-                    <h1 className="mb-0">{props.entityName}</h1>
+                    <h1 className="mb-0" id="entity_name">
+                        {props.entityName}
+                    </h1>
                 </div>
                 <IconButton
                     className="mb-0"

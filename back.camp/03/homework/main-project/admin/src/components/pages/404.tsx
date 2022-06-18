@@ -11,7 +11,7 @@ export function Page404() {
             <p className="lead">
                 This requested URL was not found on this server.
             </p>
-            <Link to="/">Return to Dashboard</Link>
+            <Link to="/admin">Return to Dashboard</Link>
         </Container>
     );
 }

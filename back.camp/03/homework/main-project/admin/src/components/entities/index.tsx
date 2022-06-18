@@ -5,19 +5,16 @@ import { UserIndex } from './user';
 import { AuthorIndex } from './author';
 
 import { EntityIndexHeader } from './header';
+import { getLastPath, getFirstUpperCase } from '../../functions/functions';
 
-export function EntityIndex() {
+export function EntityMain() {
     const pathName = window.location.pathname;
-    const name = pathName.split('/').slice(-1).join(' ');
-    const entityName = name[0].toUpperCase() + name.slice(1).toLowerCase();
+    const name = getLastPath(pathName);
+    const entityName = getFirstUpperCase(name);
 
     const [entityReloadFunction, setEntityReloadFunction] = useState(
         () => async () => {},
     );
-
-    useEffect(() => {
-        return () => {};
-    }, [setEntityReloadFunction]);
 
     return (
         <main>
@@ -28,7 +25,7 @@ export function EntityIndex() {
                 />
                 <Routes>
                     <Route
-                        path="/author"
+                        path="/author/*"
                         element={
                             <AuthorIndex setReload={setEntityReloadFunction} />
                         }

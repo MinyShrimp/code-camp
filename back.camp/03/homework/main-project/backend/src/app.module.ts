@@ -66,8 +66,8 @@ import { FileUploadModule } from './apis/fileUpload/fileUpload.module';
         // TypeORM //
         TypeOrmModule.forRoot({
             type: 'mysql',
-            // host: `${process.env.DEBUG_MYSQL_HOST}`,
-            host: `${process.env.MYSQL_HOST}`,
+            host: `${process.env.DEBUG_MYSQL_HOST}`,
+            // host: `${process.env.MYSQL_HOST}`,
             port: 3306,
             username: process.env.MYSQL_USER,
             password: process.env.MYSQL_PASSWORD,
@@ -83,8 +83,8 @@ import { FileUploadModule } from './apis/fileUpload/fileUpload.module';
         // Redis //
         CacheModule.register<RedisClientOptions>({
             store: redisStore,
-            // url: `redis://${process.env.DEBUG_REDIS_HOST}:6379`,
-            url: `redis://${process.env.REDIS_HOST}:6379`,
+            url: `redis://${process.env.DEBUG_REDIS_HOST}:6379`,
+            // url: `redis://${process.env.REDIS_HOST}:6379`,
             isGlobal: true,
         }),
 

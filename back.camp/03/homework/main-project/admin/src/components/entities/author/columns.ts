@@ -1,25 +1,24 @@
-import { TableColumn } from 'react-data-table-component';
-import { IAuthorColumn } from './interface';
+import { createColumns } from '../../../functions/createColumns';
+import { DummyAuthorColumn } from './interface';
 
-export const columns: Array<TableColumn<IAuthorColumn>> = [
-    {
-        name: 'ID',
-        selector: (row) => row.id,
-        sortable: true,
-    },
-    {
-        name: 'Name',
-        selector: (row) => row.name,
-        sortable: true,
-    },
-    {
-        name: 'Description',
-        selector: (row) => row.description,
-        sortable: true,
-    },
-    {
-        name: 'CreateAt',
-        selector: (row) => row.createAt,
-        sortable: true,
-    },
-];
+export const AuthorColumnConfig = {
+    listColumns: ['id', 'name', 'description', 'createAt', 'updateAt'],
+    showColumns: [
+        'id',
+        'name',
+        'description',
+        'createAt',
+        'updateAt',
+        'deleteAt',
+    ],
+};
+
+export const ListAuthorColumns = createColumns(
+    DummyAuthorColumn,
+    AuthorColumnConfig.listColumns,
+);
+
+export const ShowAuthorColumns = createColumns(
+    DummyAuthorColumn,
+    AuthorColumnConfig.showColumns,
+);

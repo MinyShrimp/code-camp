@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AuthorEntity } from './entities/author.entity';
 import { AuthorResolver } from './author.resolver';
+import { AuthorController } from './author.controller';
 import { AuthorService } from './author.service';
 
 @Module({
@@ -12,6 +13,7 @@ import { AuthorService } from './author.service';
         ]),
     ],
     exports: [AuthorService],
+    controllers: [AuthorController],
     providers: [
         AuthorResolver, //
         AuthorService,

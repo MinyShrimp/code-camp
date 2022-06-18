@@ -1,30 +1,15 @@
-import React, { useState } from 'react';
-
-import { EntityBaseIndex } from '../entity_base_index';
-
-import { columns } from './columns';
-import { IAuthorColumn } from './interface';
+import React from 'react';
+import { EntityIndex } from '../entity_index';
+import { ListAuthorColumns, ShowAuthorColumns } from './columns';
 
 export function AuthorIndex(props: { setReload: Function }) {
-    const [datas, setDatas] = useState<IAuthorColumn[]>([]);
-
     return (
-        <EntityBaseIndex
-            reload={async () => {
-                setDatas(
-                    Array.from({ length: 100 }, (_, i) => {
-                        return {
-                            id: `${i + 1}`,
-                            name: 'Author' + i,
-                            description: 'Desc' + i,
-                            createAt: new Date().toUTCString(),
-                        };
-                    }),
-                );
-            }}
+        <EntityIndex
             setReload={props.setReload}
-            columns={columns}
-            datas={datas}
+            ListUrl="/admin/authors"
+            ListColumns={ListAuthorColumns}
+            ShowUrl="/admin/author"
+            ShowColumns={ShowAuthorColumns}
         />
     );
 }

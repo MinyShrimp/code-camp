@@ -1,25 +1,28 @@
-import { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import React, { useEffect, useState } from 'react';
 import { TableColumn } from 'react-data-table-component';
 import { EntityTable } from './entity_table';
 import { IColumn } from './interface';
 
-export function EntityBaseIndex(props: {
-    reload: any;
+export function EntityListIndex(props: {
     setReload: Function;
+    url: string;
     columns: Array<TableColumn<any>>;
-    datas: Array<IColumn>;
 }) {
+    const [datas, setDatas] = useState<IColumn[]>([]);
     const [pending, setPending] = useState<boolean>(true);
 
     const _reload = async () => {
         setPending(true);
-        props
-            .reload()
+        setDatas([]);
+        axios
+            .get(`${process.env.BE_URL}${props.url}`)
             .then((res: AxiosResponse) => {
+                setDatas(res.data);
                 setPending(false);
             })
-            .catch((error: any) => {
+            .catch((error) => {
+                console.log(error);
                 setPending(false);
             });
     };
@@ -35,10 +38,6 @@ export function EntityBaseIndex(props: {
     }, [props.setReload]);
 
     return (
-        <EntityTable
-            columns={props.columns}
-            datas={props.datas}
-            pending={pending}
-        />
+        <EntityTable columns={props.columns} datas={datas} pending={pending} />
     );
 }

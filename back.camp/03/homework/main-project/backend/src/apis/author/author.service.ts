@@ -26,7 +26,7 @@ export class AuthorService {
      * 전체 조회
      * @returns 조회된 저자 목록
      */
-    private async __findAll(): Promise<AuthorEntity[]> {
+    async findAll(): Promise<AuthorEntity[]> {
         return await this.authorRepository.find({});
     }
 

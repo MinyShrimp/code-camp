@@ -42,3 +42,5 @@ coverage
 !.vscode/extensions.json
 
 key/
+*.conf
+*.jar

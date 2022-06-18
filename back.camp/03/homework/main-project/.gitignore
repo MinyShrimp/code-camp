@@ -40,3 +40,5 @@ envs
 file
 key/
 *.backup
+*.conf
+*.jar
