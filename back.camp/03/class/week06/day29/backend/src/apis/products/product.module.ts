@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { ElasticsearchModule } from "@nestjs/elasticsearch";
 
 import ProductEntity from "./entities/product.entity";
 import ProductTagEntity from "../productsTags/entities/productTag.entity";
@@ -17,6 +18,9 @@ import { ProductSubscriber } from "./entities/product.subscriber";
             ProductTagEntity,
             ProductSalesLocationEntity, //
         ]),
+        ElasticsearchModule.register({
+            node: "http://localhost:9200",
+        }),
     ],
     providers: [
         ProductResolver, //

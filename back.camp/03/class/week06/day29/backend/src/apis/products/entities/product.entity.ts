@@ -12,6 +12,7 @@ import {
     ManyToOne,
     OneToOne,
     PrimaryGeneratedColumn,
+    UpdateDateColumn,
 } from "typeorm";
 import { Field, ID, Int, ObjectType } from "@nestjs/graphql";
 
@@ -47,6 +48,10 @@ export default class ProductEntity {
     @Field(() => Boolean)
     @Column({ default: false })
     isSoldout: boolean;
+
+    // 업데이트 시간
+    @UpdateDateColumn()
+    updateAt: Date;
 
     // 삭제 시간
     // @Field(() => Date, { nullable: true })

@@ -12,6 +12,8 @@ yarn add passport-google-oauth20 @types/passport-google-oauth20
 yarn add graphql-upload
 
 yarn add @google-cloud/bigquery
+
+yarn add @nestjs/elasticsearch @elastic/elasticsearch
 ```
 
 ## Setting

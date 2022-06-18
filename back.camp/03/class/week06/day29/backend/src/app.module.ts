@@ -11,6 +11,8 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import type { RedisClientOptions } from "redis";
 import * as redisStore from "cache-manager-redis-store";
 
+// Elastic //
+
 // Config //
 import { ConfigModule } from "@nestjs/config";
 

@@ -43,8 +43,8 @@ export default class ProductService {
         return await this.productRepository.findOne({
             where: {
                 id: productID,
-                relations: ["productSaleslocation", "productCategory", "productTags"],
             },
+            relations: ["productSaleslocation", "productCategory", "productTags"],
         });
     }
 

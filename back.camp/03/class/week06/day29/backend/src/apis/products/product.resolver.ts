@@ -1,6 +1,5 @@
-import { CACHE_MANAGER, Inject } from "@nestjs/common";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { Cache } from "cache-manager";
+import { ElasticsearchService } from "@nestjs/elasticsearch";
 
 import ProductEntity from "./entities/product.entity";
 
@@ -13,8 +12,7 @@ import ProductService from "./Product.service";
 export default class ProductResolver {
     constructor(
         private readonly productService: ProductService, //
-        @Inject(CACHE_MANAGER)
-        private readonly cacheManager: Cache
+        private readonly elasticSearchService: ElasticsearchService
     ) {}
 
     // GET 모든 상품
@@ -28,22 +26,39 @@ export default class ProductResolver {
     async fetchProduct(
         @Args("productID") productID: string //
     ): Promise<ProductEntity> {
-        const productCache = await this.cacheManager.get(`product:${productID}`);
-        if (productCache) {
-            return productCache as ProductEntity;
-        }
-
         const product = await this.productService.findOne(productID);
-        await this.cacheManager.set(`product:${productID}`, product, { ttl: 0 });
+
+        const ela = await this.elasticSearchService.search({
+            index: "product",
+            query: {
+                match: {
+                    name: "상품",
+                },
+            },
+        });
+
+        console.log(JSON.stringify(ela, null, " "));
+
         return product;
     }
 
     // POST 상품 생성
     @Mutation(() => ProductEntity)
-    createProduct(
+    async createProduct(
         @Args("createProductInput") createProductInput: CreateProductInput
     ): Promise<ProductEntity> {
-        return this.productService.create(createProductInput);
+        const product = await this.productService.create(createProductInput);
+
+        // 엘라스틱 서치에 등록하기
+        this.elasticSearchService.create({
+            id: product.id,
+            index: "product",
+            document: {
+                ...product,
+            },
+        });
+
+        return product;
     }
 
     // PATCH 상품 수정
