@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { UserIndex } from './user';
 import { AuthorIndex } from './author';
 
 import { EntityIndexHeader } from './header';
-import { getLastPath, getFirstUpperCase } from '../../functions/functions';
 
 export function EntityMain() {
-    const pathName = window.location.pathname;
-    const name = getLastPath(pathName);
-    const entityName = getFirstUpperCase(name);
-
+    const [entityName, setEntityName] = useState<string>('');
     const [entityReloadFunction, setEntityReloadFunction] = useState(
         () => async () => {},
     );
@@ -27,13 +23,19 @@ export function EntityMain() {
                     <Route
                         path="/author/*"
                         element={
-                            <AuthorIndex setReload={setEntityReloadFunction} />
+                            <AuthorIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
                         }
                     />
                     <Route
                         path="/user/*"
                         element={
-                            <UserIndex setReload={setEntityReloadFunction} />
+                            <UserIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
                         }
                     />
                 </Routes>
