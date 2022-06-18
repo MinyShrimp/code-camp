@@ -10,11 +10,8 @@ export interface IAuthorColumn extends IColumn {
 }
 
 const now = new Date();
+// prettier-ignore
 export const DummyAuthorColumn: IAuthorColumn = {
-    id: '',
-    name: '',
-    description: '',
-    createAt: now,
-    updateAt: now,
-    deleteAt: now,
+    id: '', name: '', description: '',
+    createAt: now, updateAt: now, deleteAt: now,
 };

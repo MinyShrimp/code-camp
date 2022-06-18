@@ -15,17 +15,9 @@ export interface IUserColumn extends IColumn {
 }
 
 const now = new Date();
+// prettier-ignore
 export const DummyUserColumn: IUserColumn = {
-    id: '',
-    name: '',
-    email: '',
-    pwd: '',
-    point: 0,
-    isAdmin: true,
-    loginAt: now,
-    logoutAt: now,
-    isLogin: true,
-    createAt: now,
-    updateAt: now,
-    deleteAt: now,
+    id: '', name: '', email: '', pwd: '', point: 0, isAdmin: true,
+    loginAt: now, logoutAt: now, isLogin: true,
+    createAt: now, updateAt: now, deleteAt: now,
 };

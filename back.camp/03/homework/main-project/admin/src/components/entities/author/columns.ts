@@ -1,15 +1,15 @@
 import { createColumns } from '../../../functions/createColumns';
 import { DummyAuthorColumn } from './interface';
 
+// prettier-ignore
 export const AuthorColumnConfig = {
-    listColumns: ['id', 'name', 'description', 'createAt', 'updateAt'],
+    listColumns: [
+        'id', 'name', 'description', 
+        'createAt', 'updateAt'
+    ],
     showColumns: [
-        'id',
-        'name',
-        'description',
-        'createAt',
-        'updateAt',
-        'deleteAt',
+        'id', 'name', 'description',
+        'createAt', 'updateAt', 'deleteAt',
     ],
 };
 
