@@ -14,6 +14,7 @@ export function EntityListIndex(props: {
 
     const _reload = async () => {
         setPending(true);
+
         setDatas([]);
         axios
             .get(`${process.env.BE_URL}${props.url}`)

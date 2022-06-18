@@ -1,6 +1,7 @@
 import React from 'react';
 import { IconButton } from '@material-ui/core';
-import { Replay } from '@material-ui/icons';
+import { Add, Delete, Replay } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
 
 export function EntityIndexHeader(props: {
     entityName: string;
@@ -23,16 +24,35 @@ export function EntityIndexHeader(props: {
                         {props.entityName}
                     </h1>
                 </div>
-                <IconButton
-                    className="mb-0"
-                    size="small"
-                    color="primary"
-                    onClick={async () => {
-                        await props.reload();
-                    }}
-                >
-                    <Replay />
-                </IconButton>
+                <div>
+                    <Link to={`${window.location.pathname}/edit`}>
+                        <IconButton
+                            className="mb-0"
+                            size="small"
+                            style={{ color: 'var(--bs-success)' }}
+                        >
+                            <Add />
+                        </IconButton>
+                    </Link>
+                    <IconButton
+                        className="mb-0"
+                        size="small"
+                        style={{ color: 'var(--bs-red)' }}
+                        onClick={async () => {}}
+                    >
+                        <Delete />
+                    </IconButton>
+                    <IconButton
+                        className="mb-0"
+                        size="small"
+                        color="primary"
+                        onClick={async () => {
+                            await props.reload();
+                        }}
+                    >
+                        <Replay />
+                    </IconButton>
+                </div>
             </div>
             <hr></hr>
         </>

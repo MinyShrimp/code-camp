@@ -25,6 +25,8 @@ export function EntityIndex(props: {
                 }
             />
 
+            <Route path="/edit" element={<></>} />
+
             <Route
                 path="*"
                 element={

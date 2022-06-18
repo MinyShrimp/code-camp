@@ -19,13 +19,13 @@ export function createColumns(
         const type = getType(column[key]);
         if (type === 'Date') {
             tmp['selector'] = (row: any) => {
-                return row[key] === null
-                    ? ''
-                    : getDateFormatting(getDate(row[key]));
+                return row[key] !== null
+                    ? getDateFormatting(getDate(row[key]))
+                    : '';
             };
         } else if (type === 'Boolean') {
             tmp['cell'] = (row: any) => {
-                return row.isLogin ? (
+                return row[key] ? (
                     <CheckCircleOutlined htmlColor="green" />
                 ) : (
                     <CancelOutlined htmlColor="red" />
