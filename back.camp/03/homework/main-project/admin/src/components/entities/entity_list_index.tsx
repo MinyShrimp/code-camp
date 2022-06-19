@@ -1,13 +1,13 @@
 import axios, { AxiosResponse } from 'axios';
 import React, { useEffect, useState } from 'react';
-import { TableColumn } from 'react-data-table-component';
 import { EntityTable } from './entity_table';
 import { IColumn } from './interface';
+import { IEntityConfig } from './types';
 
 export function EntityListIndex(props: {
-    setReload: Function;
     url: string;
-    columns: Array<TableColumn<any>>;
+    setReload: Function;
+    columns: Array<IEntityConfig>;
 }) {
     const [datas, setDatas] = useState<IColumn[]>([]);
     const [pending, setPending] = useState<boolean>(true);

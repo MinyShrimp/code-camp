@@ -1,22 +1,33 @@
-import React, { useEffect } from 'react';
-import { EntityIndex } from '../entity_index';
-import { ListProductTagColumns, ShowProductTagColumns } from './columns';
+import React from 'react';
+import { EntityFactory } from '../entity_factory';
+import { DummyProductTagColumn, IProductTagColumn } from './interface';
 
-export function ProductTagIndex(props: {
-    setReload: Function;
-    setEntityName: Function;
-}) {
-    useEffect(() => {
-        props.setEntityName('Product Tag');
-    }, []);
-
-    return (
-        <EntityIndex
-            setReload={props.setReload}
-            ListUrl="/admin/product-tags"
-            ListColumns={ListProductTagColumns}
-            ShowUrl="/admin/product-tag"
-            ShowColumns={ShowProductTagColumns}
-        />
-    );
-}
+// prettier-ignore
+export const ProductTagIndex = EntityFactory.getEntity<IProductTagColumn>({
+    name: 'Product Tag',
+    dummyData: DummyProductTagColumn,
+    list: {
+        column: [
+            'id', 'name', 'createAt'
+        ],
+        url: '/admin/product-tags'
+    },
+    show: {
+        column: [
+            'id', 'name', 'createAt'
+        ],
+        url: '/admin/product-tag'
+    }
+    ,
+    edit: {
+        column: [ 'name' ],
+        url: '/admin/product-tag',
+        default: { name: '' }
+    }
+    ,
+    update: {
+        column: [ 'name' ],
+        url: '/admin/product-tag',
+        default: { name: '' }
+    }
+});

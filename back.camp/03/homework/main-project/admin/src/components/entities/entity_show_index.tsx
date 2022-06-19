@@ -1,12 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
 import React, { useEffect, useState } from 'react';
-import { TableColumn } from 'react-data-table-component';
 import { getLastPath } from '../../functions/functions';
+import { IEntityConfig } from './types';
 
 export function EntityShowIndex(props: {
     url: string;
     setReload: Function;
-    columns: Array<TableColumn<any>>;
+    columns: Array<IEntityConfig>;
 }) {
     const pathName = window.location.pathname;
     const entityID = getLastPath(pathName);

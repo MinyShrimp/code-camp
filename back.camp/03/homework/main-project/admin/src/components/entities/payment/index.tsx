@@ -1,24 +1,51 @@
+import React from 'react';
+import { EntityFactory } from '../entity_factory';
+import { DummyPaymentColumn, IPaymentColumn } from './interface';
 
-import React, { useEffect } from 'react';
-import { EntityIndex } from '../entity_index';
-import { ListPaymentColumns, ShowPaymentColumns } from './columns';
-
-export function PaymentIndex(props: {
-    setReload: Function;
-    setEntityName: Function;
-}) {
-    useEffect(() => {
-        props.setEntityName('Payment');
-    }, []);
-
-    return (
-        <EntityIndex
-            setReload={props.setReload}
-            ListUrl="/admin/payments"
-            ListColumns={ListPaymentColumns}
-            ShowUrl="/admin/payment"
-            ShowColumns={ShowPaymentColumns}
-        />
-    );
-}
-
+// prettier-ignore
+export const PaymentIndex = EntityFactory.getEntity<IPaymentColumn>({
+    name: 'Payment',
+    dummyData: DummyPaymentColumn,
+    list: {
+        column: [
+            'id', 'impUid', 'merchantUid',
+            'amount', 'status', 
+            'userId', 'productId',
+            'createAt',
+        ],
+        url: '/admin/payments'
+    },
+    show: {
+        column: [
+            'id', 'impUid', 'merchantUid',
+            'amount', 'status', 
+            'userId', 'productId',
+            'createAt',
+        ],
+        url: '/admin/payment'
+    },
+    edit: {
+        column: [
+            'impUid', 'merchantUid',
+            'amount', 'status',
+            'userId', 'productId',
+        ],
+        url: '/admin/payment',
+        default: {
+            impUid: '', merchantUid: '', status: '',
+            amount: 0, userId: '', productId: ''
+        }
+    },
+    update: {
+        column: [
+            'impUid', 'merchantUid',
+            'amount', 'status',
+            'userId', 'productId',
+        ],
+        url: '/admin/payment',
+        default: {
+            impUid: '', merchantUid: '', status: '',
+            amount: 0, userId: '', productId: ''
+        }
+    }
+});

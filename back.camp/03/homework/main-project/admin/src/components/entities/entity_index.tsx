@@ -1,16 +1,20 @@
 import React from 'react';
-import { TableColumn } from 'react-data-table-component';
 import { Route, Routes } from 'react-router-dom';
+import { EntityEditIndex } from './entity_edit_index';
 
 import { EntityListIndex } from './entity_list_index';
 import { EntityShowIndex } from './entity_show_index';
+import { IEntityConfig } from './types';
 
 export function EntityIndex(props: {
     setReload: Function;
     ListUrl: string;
-    ListColumns: TableColumn<any>[];
     ShowUrl: string;
-    ShowColumns: TableColumn<any>[];
+    EditUrl: string;
+    ListColumns: IEntityConfig[];
+    ShowColumns: IEntityConfig[];
+    EditColumns: IEntityConfig[];
+    EditInput: any;
 }) {
     return (
         <Routes>
@@ -25,7 +29,17 @@ export function EntityIndex(props: {
                 }
             />
 
-            <Route path="/edit" element={<></>} />
+            <Route
+                path="/edit"
+                element={
+                    <EntityEditIndex
+                        url={props.EditUrl}
+                        columns={props.EditColumns}
+                        setReload={props.setReload}
+                        inputs={props.EditInput}
+                    />
+                }
+            />
 
             <Route
                 path="*"

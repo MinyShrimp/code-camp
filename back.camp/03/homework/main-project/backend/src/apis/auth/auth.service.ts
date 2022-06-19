@@ -152,14 +152,6 @@ export class AuthService {
         // 검색
         const user = await this.userSerivce.findOneByEmail(input.email);
 
-        // // 로그인 여부 검사 ( Redis )
-        // const redis_user = await this.cacheManage.get(`auth:${user.id}`);
-        // if (redis_user) {
-        //     throw new ConflictException(
-        //         MESSAGES.USER_ALREADY_LOGIN, //
-        //     );
-        // }
-
         // 존재 여부 검사
         await this.userCheckService.checkValidUser(user);
 
@@ -175,24 +167,12 @@ export class AuthService {
         // 로그인 성공
         await this.userRepository.save({
             ...user,
-            loginAt: new Date(),
+            loginAt: new Date().toUTCString(),
             isLogin: true,
         });
 
         // jwt 생성
         const access_token = this.getAccessToken(user);
-
-        // // Redis에 저장
-        // await this.cacheManage.set(
-        //     `auth:${user.id}:access_token`,
-        //     access_token,
-        //     { ttl: 3600 }, // 1시간
-        // );
-        // await this.cacheManage.set(
-        //     `auth:${user.id}:refresh_token`,
-        //     refresh_token,
-        //     { ttl: 3600 * 24 * 14 }, // 2주
-        // );
 
         return access_token;
     }
@@ -218,7 +198,7 @@ export class AuthService {
         const result = await this.userRepository.update(
             { id: userID },
             {
-                logoutAt: new Date(),
+                logoutAt: new Date().toUTCString(),
                 isLogin: false,
             },
         );

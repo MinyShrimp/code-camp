@@ -1,22 +1,49 @@
-import React, { useEffect } from 'react';
-import { EntityIndex } from '../entity_index';
-import { ListReviewColumns, ShowReviewColumns } from './columns';
+import React from 'react';
+import { EntityFactory } from '../entity_factory';
+import { IReviewColumn, DummyReviewColumn } from './interface';
 
-export function ReviewIndex(props: {
-    setReload: Function;
-    setEntityName: Function;
-}) {
-    useEffect(() => {
-        props.setEntityName('Review');
-    }, []);
-
-    return (
-        <EntityIndex
-            setReload={props.setReload}
-            ListUrl="/admin/reviews"
-            ListColumns={ListReviewColumns}
-            ShowUrl="/admin/review"
-            ShowColumns={ShowReviewColumns}
-        />
-    );
-}
+// prettier-ignore
+export const ReviewIndex = EntityFactory.getEntity<IReviewColumn>({
+    name: 'Review',
+    dummyData: DummyReviewColumn,
+    list: {
+        column: [
+            'id', 'contents', 'star', 'like',
+            'createAt', 'updateAt', 'deleteAt',
+            'productId', 'userId',
+        ],
+        url: '/admin/reviews'
+    },
+    show: {
+        column: [
+            'id', 'contents', 'star', 'like',
+            'createAt', 'updateAt', 'deleteAt',
+            'productId', 'userId',
+        ],
+        url: '/admin/review'
+    }
+    ,
+    edit: {
+        column: [
+            'contents', 'star', 'like',
+            'productId', 'userId',
+        ],
+        url: '/admin/review',
+        default: {
+            contents: '', productId: '', userId: '',
+            star: 0, like: false
+        }
+    }
+    ,
+    update: {
+        column: [
+            'contents', 'star', 'like',
+            'productId', 'userId',
+        ],
+        url: '/admin/review',
+        default: {
+            contents: '', productId: '', userId: '',
+            star: 0, like: false
+        }
+    }
+});

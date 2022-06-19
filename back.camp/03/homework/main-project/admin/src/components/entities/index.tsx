@@ -13,11 +13,11 @@ import { PublisherIndex } from './publisher';
 import { BookImageIndex } from './bookImage';
 
 import { ProductIndex } from './product';
-import { ProductCategorySearchIndex } from './productCategorySearch';
-import { ProductCategoryIndex } from './productCategory';
-
-import { FileIndex } from './File';
 import { ProductTagIndex } from './productTag';
+import { ProductCategoryIndex } from './productCategory';
+import { ProductCategorySearchIndex } from './productCategorySearch';
+
+import { FileIndex } from './file';
 
 export function EntityMain() {
     const [entityName, setEntityName] = useState<string>('');

@@ -1,25 +1,41 @@
-import React, { useEffect } from 'react';
-import { EntityIndex } from '../entity_index';
+import React from 'react';
+import { EntityFactory } from '../entity_factory';
 import {
-    ListProductCategoryColumns,
-    ShowProductCategoryColumns,
-} from './columns';
+    DummyProductCategoryColumn,
+    IProductCategoryColumn,
+} from './interface';
 
-export function ProductCategoryIndex(props: {
-    setReload: Function;
-    setEntityName: Function;
-}) {
-    useEffect(() => {
-        props.setEntityName('Product Category');
-    }, []);
-
-    return (
-        <EntityIndex
-            setReload={props.setReload}
-            ListUrl="/admin/product-categorys"
-            ListColumns={ListProductCategoryColumns}
-            ShowUrl="/admin/product-category"
-            ShowColumns={ShowProductCategoryColumns}
-        />
-    );
-}
+// prettier-ignore
+export const ProductCategoryIndex =
+    EntityFactory.getEntity<IProductCategoryColumn>({
+        name: 'Product Category',
+        dummyData: DummyProductCategoryColumn,
+        list: {
+            column: [
+                'id', 'name', 'parentId'
+            ],
+            url: '/admin/product-categorys'
+        },
+        show: {
+            column: [
+                'id', 'name', 'parentId'
+            ],
+            url: '/admin/product-category'
+        }
+        ,
+        edit: {
+            column: [ 'name', 'parentId' ],
+            url: '/admin/product-category',
+            default: {
+                name: '', parentId: ''
+            }
+        }
+        ,
+        update: {
+            column: [ 'name', 'parentId' ],
+            url: '/admin/product-category',
+            default: {
+                name: '', parentId: ''
+            }
+        }
+    });

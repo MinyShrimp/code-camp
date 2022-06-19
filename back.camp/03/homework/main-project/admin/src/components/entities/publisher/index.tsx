@@ -1,24 +1,41 @@
+import React from 'react';
+import { EntityFactory } from '../entity_factory';
+import { DummyPublisherColumn, IPublisherColumn } from './interface';
 
-import React, { useEffect } from 'react';
-import { EntityIndex } from '../entity_index';
-import { ListPublisherColumns, ShowPublisherColumns } from './columns';
-
-export function PublisherIndex(props: {
-    setReload: Function;
-    setEntityName: Function;
-}) {
-    useEffect(() => {
-        props.setEntityName('Publisher');
-    }, []);
-
-    return (
-        <EntityIndex
-            setReload={props.setReload}
-            ListUrl="/admin/publishers"
-            ListColumns={ListPublisherColumns}
-            ShowUrl="/admin/publisher"
-            ShowColumns={ShowPublisherColumns}
-        />
-    );
-}
-
+// prettier-ignore
+export const PublisherIndex = EntityFactory.getEntity<IPublisherColumn>({
+    name: 'Publisher',
+    dummyData: DummyPublisherColumn,
+    list: {
+        column: [
+            'id', 'name', 'description', 
+            'createAt', 'updateAt'
+        ],
+        url: '/admin/publishers',
+    },
+    show: {
+        column: [
+            'id', 'name', 'description',
+            'createAt', 'updateAt', 'deleteAt',
+        ],
+        url: '/admin/publisher'
+    },
+    edit: {
+        column: [
+            'name', 'description',
+        ],
+        url: '/admin/publisher',
+        default: {
+            name: '', description: ''
+        }
+    },
+    update: {
+        column: [
+            'name', 'description',
+        ],
+        url: '/admin/publisher',
+        default: {
+            name: '', description: ''
+        }
+    }
+});

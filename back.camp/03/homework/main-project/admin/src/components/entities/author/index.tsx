@@ -1,22 +1,41 @@
-import React, { useEffect } from 'react';
-import { EntityIndex } from '../entity_index';
-import { ListAuthorColumns, ShowAuthorColumns } from './columns';
+import React from 'react';
+import { EntityFactory } from '../entity_factory';
+import { DummyAuthorColumn, IAuthorColumn } from './interface';
 
-export function AuthorIndex(props: {
-    setReload: Function;
-    setEntityName: Function;
-}) {
-    useEffect(() => {
-        props.setEntityName('Author');
-    }, []);
-
-    return (
-        <EntityIndex
-            setReload={props.setReload}
-            ListUrl="/admin/authors"
-            ListColumns={ListAuthorColumns}
-            ShowUrl="/admin/author"
-            ShowColumns={ShowAuthorColumns}
-        />
-    );
-}
+// prettier-ignore
+export const AuthorIndex = EntityFactory.getEntity<IAuthorColumn>({
+    name: 'Author',
+    dummyData: DummyAuthorColumn,
+    list: {
+        column: [
+            'id', 'name', 'description', 
+            'createAt', 'updateAt'
+        ],
+        url: '/admin/authors',
+    },
+    show: {
+        column: [
+            'id', 'name', 'description',
+            'createAt', 'updateAt', 'deleteAt',
+        ],
+        url: '/admin/author'
+    },
+    edit: {
+        column: [
+            'name', 'description',
+        ],
+        url: '/admin/author',
+        default: {
+            name: '', description: ''
+        }
+    },
+    update: {
+        column: [
+            'name', 'description',
+        ],
+        url: '/admin/author',
+        default: {
+            name: '', description: ''
+        }
+    }
+});

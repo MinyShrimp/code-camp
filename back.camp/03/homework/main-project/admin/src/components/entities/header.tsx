@@ -20,9 +20,20 @@ export function EntityIndexHeader(props: {
                     <p className="mb-0" style={{ color: 'var(--bs-blue)' }}>
                         Entity
                     </p>
-                    <h1 className="mb-0" id="entity_name">
+                    <Link
+                        style={{
+                            textDecoration: 'none',
+                            color: 'var(--bs-gray-dark)',
+                        }}
+                        className="mb-0 h1"
+                        id="entity_name"
+                        to={`/admin/entity/${props.entityName
+                            .split(' ')
+                            .join('/')
+                            .toLowerCase()}`}
+                    >
                         {props.entityName}
-                    </h1>
+                    </Link>
                 </div>
                 <div>
                     <Link

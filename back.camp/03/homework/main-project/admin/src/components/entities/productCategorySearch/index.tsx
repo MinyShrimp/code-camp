@@ -1,25 +1,47 @@
-import React, { useEffect } from 'react';
-import { EntityIndex } from '../entity_index';
+import React from 'react';
+import { EntityFactory } from '../entity_factory';
 import {
-    ListProductCategorySearchColumns,
-    ShowProductCategorySearchColumns,
-} from './columns';
+    DummyProductCategorySearchColumn,
+    IProductCategorySearchColumn,
+} from './interface';
 
-export function ProductCategorySearchIndex(props: {
-    setReload: Function;
-    setEntityName: Function;
-}) {
-    useEffect(() => {
-        props.setEntityName('Product Category Search');
-    }, []);
-
-    return (
-        <EntityIndex
-            setReload={props.setReload}
-            ListUrl="/admin/product-category-searchs"
-            ListColumns={ListProductCategorySearchColumns}
-            ShowUrl="/admin/product-category-search"
-            ShowColumns={ShowProductCategorySearchColumns}
-        />
-    );
-}
+// prettier-ignore
+export const ProductCategorySearchIndex =
+    EntityFactory.getEntity<IProductCategorySearchColumn>({
+        name: 'Product Category Search',
+        dummyData: DummyProductCategorySearchColumn,
+        list: {
+            column: [
+                'id', 'name', 
+                'c1', 'c2', 'c3', 'c4',
+                'deleteAt',
+            ],
+            url: '/admin/product-category-searchs'
+        },
+        show: {
+            column: [
+                'id', 'name', 
+                'c1', 'c2', 'c3', 'c4',
+                'deleteAt',
+            ],
+            url: '/admin/product-category-search'
+        },
+        edit: {
+            column: [
+                'name', 'c1', 'c2', 'c3', 'c4',
+            ],
+            url: '/admin/product-category-search',
+            default: {
+                name: '', c1: '', c2: '', c3: '', c4: ''
+            }
+        },
+        update: {
+            column: [
+                'name', 'c1', 'c2', 'c3', 'c4',
+            ],
+            url: '/admin/product-category-search',
+            default: {
+                name: '', c1: '', c2: '', c3: '', c4: ''
+            }
+        }
+    });

@@ -1,4 +1,6 @@
-const now = new Date();
+import { getDefaultDate } from '../../../functions/functions';
+
+const now = getDefaultDate();
 // prettier-ignore
 export const DummyReviewColumn = {
     id: '', contents: '', star: 0.0, like: true, 

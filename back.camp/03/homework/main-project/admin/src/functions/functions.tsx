@@ -13,3 +13,8 @@ export function getType(target: any): string {
 export function padding(str: string | number, size: number = 2) {
     return String(str).padStart(size, '0');
 }
+
+export const getDefaultDate = (() => {
+    const date = new Date('1997-01-01 00:00:00');
+    return () => date;
+})();

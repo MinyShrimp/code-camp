@@ -1,8 +1,10 @@
-const now = new Date();
+import { getDefaultDate } from '../../../functions/functions';
+
+const now = getDefaultDate();
 // prettier-ignore
 export const DummyUserColumn = {
-    id: '', name: '', email: '', pwd: '', point: 0, isAdmin: true,
-    loginAt: now, logoutAt: now, isLogin: true,
+    id: '', name: '', email: '', pwd: '', point: 0, isAdmin: false,
+    loginAt: now, logoutAt: now, isLogin: false,
     createAt: now, updateAt: now, deleteAt: now,
 };
 export type IUserColumn = typeof DummyUserColumn;
