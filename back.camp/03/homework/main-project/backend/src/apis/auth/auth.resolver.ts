@@ -46,9 +46,9 @@ export class AuthResolver {
 
         // Redis 저장
         await this.cacheManage.set(
-            `blacklist:${currentUser.id}:access_token`,
-            currentUser.access_token,
-            { ttl: 3600 },
+            `blacklist:access_token:${currentUser.access_token}`,
+            currentUser.id,
+            { ttl: currentUser.access_exp },
         );
 
         return token;
@@ -92,13 +92,13 @@ export class AuthResolver {
 
         // Redis 저장
         await this.cacheManage.set(
-            `blacklist:${currentUser.id}:access_token`,
-            currentUser.access_token,
+            `blacklist:access_token:${currentUser.access_token}`,
+            currentUser.id,
             { ttl: currentUser.access_exp },
         );
         await this.cacheManage.set(
-            `blacklist:${currentUser.id}:refresh_token`,
-            currentUser.refresh_token,
+            `blacklist:refresh_token:${currentUser.refresh_token}`,
+            currentUser.id,
             { ttl: currentUser.refresh_exp },
         );
 

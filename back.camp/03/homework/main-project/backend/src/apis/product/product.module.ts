@@ -9,6 +9,7 @@ import { ProductResolver } from './product.resolver';
 import { ProductService } from './product.service';
 import { BookModule } from '../book/book.module';
 import { ProductCheckService } from './productCheck.service';
+import { ProductAdminController } from './product.admin.contoller';
 
 @Module({
     imports: [
@@ -24,6 +25,9 @@ import { ProductCheckService } from './productCheck.service';
     exports: [
         ProductService, //
         ProductCheckService,
+    ],
+    controllers: [
+        ProductAdminController, //
     ],
     providers: [
         ProductResolver, //

@@ -5,7 +5,7 @@ import { Page401 } from '../pages/401';
 import { Page404 } from '../pages/404';
 import { Page500 } from '../pages/500';
 
-import { EntityIndex } from '../entities';
+import { EntityMain } from '../entities';
 import { DashboardPage } from '../dashboard/index';
 
 import { IndexBodySide } from './body_side';
@@ -25,7 +25,7 @@ export function IndexBody() {
             >
                 <Routes>
                     <Route path="/" element={<DashboardPage />} />
-                    <Route path="/entity/*" element={<EntityIndex />} />
+                    <Route path="/entity/*" element={<EntityMain />} />
                     <Route path="/401" element={<Page401 />} />
                     <Route path="/404" element={<Page404 />} />
                     <Route path="/500" element={<Page500 />} />

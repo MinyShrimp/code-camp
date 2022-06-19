@@ -9,7 +9,7 @@ export function Page401() {
             <h1 className="display-1">401</h1>
             <p className="lead">Unauthorized</p>
             <p>Access to this resource is denied.</p>
-            <Link to="/">Return to Dashboard</Link>
+            <Link to="/admin">Return to Dashboard</Link>
         </Container>
     );
 }

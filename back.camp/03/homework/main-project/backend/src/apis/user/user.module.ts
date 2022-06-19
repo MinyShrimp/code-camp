@@ -5,6 +5,7 @@ import { UserEntity } from './entities/user.entity';
 import { UserResolver } from './user.resolver';
 import { UserService } from './user.service';
 import { UserCheckService } from './userCheck.service';
+import { UserAdminController } from './user.admin.controller';
 
 @Module({
     imports: [
@@ -12,7 +13,13 @@ import { UserCheckService } from './userCheck.service';
             UserEntity, //
         ]),
     ],
-    exports: [UserService, UserCheckService],
+    exports: [
+        UserService, //
+        UserCheckService,
+    ],
+    controllers: [
+        UserAdminController, //
+    ],
     providers: [
         UserResolver, //
         UserService,

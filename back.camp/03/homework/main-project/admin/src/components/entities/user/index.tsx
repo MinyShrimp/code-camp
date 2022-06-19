@@ -1,41 +1,46 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { EntityFactory } from '../entity_factory';
+import { IUserColumn, DummyUserColumn } from './interface';
 
-import { EntityTable } from '../entity_table';
-
-import { columns } from './columns';
-import { IUserColumn } from './interface';
-
-export function UserIndex({ setReload }) {
-    const [pending, setPending] = useState(true);
-    const datas: IUserColumn[] = [];
-
-    const reload = () => {
-        setPending(true);
-        const timeout = setTimeout(() => {
-            setPending(false);
-            clearTimeout(timeout);
-        }, 1000);
-    };
-
-    useEffect(() => {
-        setReload(() => reload);
-        reload();
-        return () => {};
-    }, [setReload]);
-
-    for (let i = 0; i < 100; i++) {
-        datas.push({
-            id: `${i + 1}`,
-            name: 'User' + i,
-            email: 'Email' + i,
-            point: i,
-            loginAt: new Date().toUTCString(),
-            logoutAt: new Date().toUTCString(),
-            isLogin: true,
-            createAt: new Date().toUTCString(),
-            updateAt: new Date().toUTCString(),
-        });
+// prettier-ignore
+export const UserIndex = EntityFactory.getEntity<IUserColumn>({
+    name: "User",
+    dummyData: DummyUserColumn,
+    list: {
+        column: [
+            'id', 'name', 'email', 'point',
+            'loginAt', 'logoutAt', 'isLogin',
+            'createAt', 'updateAt', 'deleteAt'
+        ],
+        url: "/admin/users"
+    },
+    show: {
+        column: [
+            'id', 'name', 'email', 
+            'pwd', 'point', 'isAdmin', 
+            'loginAt', 'logoutAt', 'isLogin',
+            'createAt', 'updateAt', 'deleteAt',
+        ],
+        url: "/admin/user"
+    },
+    edit: {
+        column: [
+            'name', 'email', 'pwd'
+        ],
+        url: "/admin/user",
+        default: {
+            name: "", email: "", pwd: ""
+        }
+    },
+    update: {
+        column: [
+            'name', 'email', 'pwd', 'point', 
+            'isLogin', 'isAdmin'
+        ],
+        url: "/admin/user",
+        default: {
+            name: "", email: "", pwd: "", point: 0, 
+            isLogin: false, isAdmin: false
+        }
     }
-
-    return <EntityTable columns={columns} datas={datas} pending={pending} />;
-}
+});

@@ -190,4 +190,16 @@ export class PaymentService {
             )[0].sumAmount,
         );
     }
+
+    async findAll(): Promise<PaymentEntity[]> {
+        return await this.paymentRepository.find({});
+    }
+
+    async findOne(
+        paymentID: string, //
+    ): Promise<PaymentEntity> {
+        return await this.paymentRepository.findOne({
+            where: { id: paymentID },
+        });
+    }
 }

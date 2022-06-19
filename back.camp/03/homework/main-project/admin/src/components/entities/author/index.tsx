@@ -1,36 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { EntityFactory } from '../entity_factory';
+import { DummyAuthorColumn, IAuthorColumn } from './interface';
 
-import { EntityTable } from '../entity_table';
-
-import { columns } from './columns';
-import { IAuthorColumn } from './interface';
-
-export function AuthorIndex({ setReload }) {
-    const [pending, setPending] = useState(true);
-    const datas: IAuthorColumn[] = [];
-
-    const reload = () => {
-        setPending(true);
-        const timeout = setTimeout(() => {
-            setPending(false);
-            clearTimeout(timeout);
-        }, 1000);
-    };
-
-    useEffect(() => {
-        setReload(() => reload);
-        reload();
-        return () => {};
-    }, [setReload]);
-
-    for (let i = 0; i < 100; i++) {
-        datas.push({
-            id: `${i + 1}`,
-            name: 'Author' + i,
-            description: 'Desc' + i,
-            createAt: new Date().toUTCString(),
-        });
+// prettier-ignore
+export const AuthorIndex = EntityFactory.getEntity<IAuthorColumn>({
+    name: 'Author',
+    dummyData: DummyAuthorColumn,
+    list: {
+        column: [
+            'id', 'name', 'description', 
+            'createAt', 'updateAt'
+        ],
+        url: '/admin/authors',
+    },
+    show: {
+        column: [
+            'id', 'name', 'description',
+            'createAt', 'updateAt', 'deleteAt',
+        ],
+        url: '/admin/author'
+    },
+    edit: {
+        column: [
+            'name', 'description',
+        ],
+        url: '/admin/author',
+        default: {
+            name: '', description: ''
+        }
+    },
+    update: {
+        column: [
+            'name', 'description',
+        ],
+        url: '/admin/author',
+        default: {
+            name: '', description: ''
+        }
     }
-
-    return <EntityTable columns={columns} datas={datas} pending={pending} />;
-}
+});

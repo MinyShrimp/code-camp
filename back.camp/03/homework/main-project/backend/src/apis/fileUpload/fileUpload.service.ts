@@ -23,6 +23,10 @@ export class FileUploadService {
     ///////////////////////////////////////////////////////////////////
     // 조회 //
 
+    async findAll(): Promise<FileUploadEntity[]> {
+        return await this.fileUploadRepository.find({});
+    }
+
     async findOne(
         fileID: string, //
     ): Promise<FileUploadEntity> {

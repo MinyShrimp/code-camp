@@ -25,7 +25,11 @@ export class BookImageService {
     ///////////////////////////////////////////////////////////////////
     // 조회 //
 
-    async findAll(
+    async findAll(): Promise<BookImageEntity[]> {
+        return await this.bookImageRepository.find({});
+    }
+
+    async findAllByBook(
         book: BookEntity, //
     ): Promise<BookImageEntity[]> {
         return await this.bookImageRepository.find({

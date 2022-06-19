@@ -16,6 +16,18 @@ export class ProductTagService {
     ///////////////////////////////////////////////////////////////////
     // 조회 //
 
+    async findAll(): Promise<ProductTagEntity[]> {
+        return await this.productTagRepository.find({});
+    }
+
+    async findOne(
+        tagID: string, //
+    ): Promise<ProductTagEntity> {
+        return await this.productTagRepository.findOne({
+            where: { id: tagID },
+        });
+    }
+
     /**
      * 이름 기반 단일 조회
      * @param name

@@ -1,24 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
+import { EntityIndexHeader } from './header';
+
 import { UserIndex } from './user';
+import { ReviewIndex } from './review';
+import { PaymentIndex } from './payment';
+
+import { BookIndex } from './book';
 import { AuthorIndex } from './author';
+import { PublisherIndex } from './publisher';
+import { BookImageIndex } from './bookImage';
 
-import { EntityIndexHeader } from './index_header';
+import { ProductIndex } from './product';
+import { ProductTagIndex } from './productTag';
+import { ProductCategoryIndex } from './productCategory';
+import { ProductCategorySearchIndex } from './productCategorySearch';
 
-export function EntityIndex() {
-    const pathName = window.location.pathname;
-    const name = pathName.split('/')[2];
-    const entityName = name[0].toUpperCase() + name.slice(1).toLowerCase();
+import { FileIndex } from './file';
 
+export function EntityMain() {
+    const [entityName, setEntityName] = useState<string>('');
     const [entityReloadFunction, setEntityReloadFunction] = useState(
-        () => () => {},
+        () => async () => {},
     );
-
-    useEffect(() => {
-        setEntityReloadFunction(() => () => {});
-        return () => {};
-    }, [setEntityReloadFunction]);
 
     return (
         <main>
@@ -29,15 +34,111 @@ export function EntityIndex() {
                 />
                 <Routes>
                     <Route
-                        path="/author"
+                        path="/author/*"
                         element={
-                            <AuthorIndex setReload={setEntityReloadFunction} />
+                            <AuthorIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
                         }
                     />
                     <Route
-                        path="/user"
+                        path="/user/*"
                         element={
-                            <UserIndex setReload={setEntityReloadFunction} />
+                            <UserIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/book/image/*"
+                        element={
+                            <BookImageIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/book/*"
+                        element={
+                            <BookIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/product/category/search/*"
+                        element={
+                            <ProductCategorySearchIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/product/category/*"
+                        element={
+                            <ProductCategoryIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/product/tag/*"
+                        element={
+                            <ProductTagIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/product/*"
+                        element={
+                            <ProductIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/publisher/*"
+                        element={
+                            <PublisherIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/review/*"
+                        element={
+                            <ReviewIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/payment/*"
+                        element={
+                            <PaymentIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/file/*"
+                        element={
+                            <FileIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
                         }
                     />
                 </Routes>

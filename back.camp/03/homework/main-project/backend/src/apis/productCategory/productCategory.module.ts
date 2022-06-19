@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtAdminStrategy } from '../../commons/auth/jwt-admin.strategy';
 
 import { ProductCategoryEntity } from './entities/productCategory.entity';
+import { ProductCategoryAdminController } from './productCategory.admin.controller';
 
 import { ProductCategoryResolver } from './productCategory.resolver';
 import { ProductCategoryService } from './productCategory.service';
@@ -18,6 +19,9 @@ import { ProductCategoryService } from './productCategory.service';
     exports: [
         // To. Product Category Search
         ProductCategoryService, //
+    ],
+    controllers: [
+        ProductCategoryAdminController, //
     ],
     providers: [
         ProductCategoryResolver, //
