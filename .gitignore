@@ -1,16 +1,16 @@
-test.camp/
-node_modules/
-key/
-homework/
+test.camp
+node_modules
+key
 *.conf
 *.jar
 *.backup
 *.env
 *.zip
 config.js
+backup
 
 # compiled output
-dist/
+dist
 
 # Logs
 logs
