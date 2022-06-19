@@ -1,17 +1,7 @@
-import { IColumn } from '../interface';
-
-export interface IAuthorColumn extends IColumn {
-    id: string;
-    name: string;
-    description: string;
-    createAt: Date;
-    updateAt: Date;
-    deleteAt: Date;
-}
-
 const now = new Date();
 // prettier-ignore
-export const DummyAuthorColumn: IAuthorColumn = {
+export const DummyAuthorColumn = {
     id: '', name: '', description: '',
     createAt: now, updateAt: now, deleteAt: now,
 };
+export type IAuthorColumn = typeof DummyAuthorColumn;

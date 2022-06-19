@@ -11,6 +11,7 @@ import { IMPService } from './imp.service';
 import { PaymentResolver } from './payment.resolver';
 import { PaymentService } from './payment.service';
 import { PaymentCheckService } from './paymentCheck.service';
+import { PaymentAdminController } from './payment.admin.controller';
 
 @Module({
     imports: [
@@ -21,6 +22,9 @@ import { PaymentCheckService } from './paymentCheck.service';
         ]),
         UserModule,
         ProductModule,
+    ],
+    controllers: [
+        PaymentAdminController, //
     ],
     providers: [
         IMPService, //

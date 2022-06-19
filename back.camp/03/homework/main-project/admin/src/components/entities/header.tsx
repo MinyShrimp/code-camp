@@ -26,7 +26,10 @@ export function EntityIndexHeader(props: {
                 </div>
                 <div>
                     <Link
-                        to={`/admin/entity/${props.entityName.toLowerCase()}/edit`}
+                        to={`/admin/entity/${props.entityName
+                            .split(' ')
+                            .join('/')
+                            .toLowerCase()}/edit`}
                     >
                         <IconButton
                             className="mb-0"

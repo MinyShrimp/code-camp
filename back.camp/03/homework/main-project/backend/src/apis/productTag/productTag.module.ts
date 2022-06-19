@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { ProductTagEntity } from './entities/productTag.entity';
+import { ProductTagAdminController } from './productTag.admin.controller';
 import { ProductTagService } from './productTag.service';
 
 @Module({
@@ -12,6 +13,9 @@ import { ProductTagService } from './productTag.service';
     ],
     exports: [
         ProductTagService, //
+    ],
+    controllers: [
+        ProductTagAdminController, //
     ],
     providers: [
         ProductTagService, //

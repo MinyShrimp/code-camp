@@ -131,7 +131,7 @@ export class BookResolver {
                 : await this.publisherService.findOne(publisherId);
 
         if (isChange) {
-            const images = await this.bookImageService.findAll(book);
+            const images = await this.bookImageService.findAllByBook(book);
             const img_ids = images.map((v) => v.uploadImage.id);
             await this.fileUploadService.softDelete(img_ids);
 

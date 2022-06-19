@@ -1,10 +1,23 @@
 import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { UserIndex } from './user';
-import { AuthorIndex } from './author';
-
 import { EntityIndexHeader } from './header';
+
+import { UserIndex } from './user';
+import { ReviewIndex } from './review';
+import { PaymentIndex } from './payment';
+
+import { BookIndex } from './book';
+import { AuthorIndex } from './author';
+import { PublisherIndex } from './publisher';
+import { BookImageIndex } from './bookImage';
+
+import { ProductIndex } from './product';
+import { ProductCategorySearchIndex } from './productCategorySearch';
+import { ProductCategoryIndex } from './productCategory';
+
+import { FileIndex } from './File';
+import { ProductTagIndex } from './productTag';
 
 export function EntityMain() {
     const [entityName, setEntityName] = useState<string>('');
@@ -33,6 +46,96 @@ export function EntityMain() {
                         path="/user/*"
                         element={
                             <UserIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/book/image/*"
+                        element={
+                            <BookImageIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/book/*"
+                        element={
+                            <BookIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/product/category/search/*"
+                        element={
+                            <ProductCategorySearchIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/product/category/*"
+                        element={
+                            <ProductCategoryIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/product/tag/*"
+                        element={
+                            <ProductTagIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/product/*"
+                        element={
+                            <ProductIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/publisher/*"
+                        element={
+                            <PublisherIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/review/*"
+                        element={
+                            <ReviewIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/payment/*"
+                        element={
+                            <PaymentIndex
+                                setReload={setEntityReloadFunction}
+                                setEntityName={setEntityName}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/file/*"
+                        element={
+                            <FileIndex
                                 setReload={setEntityReloadFunction}
                                 setEntityName={setEntityName}
                             />

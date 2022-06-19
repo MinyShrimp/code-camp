@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { EntityIndex } from '../entity_index';
 import { ListUserColumns, ShowUserColumns } from './columns';
 
@@ -6,7 +6,9 @@ export function UserIndex(props: {
     setReload: Function;
     setEntityName: Function;
 }) {
-    props.setEntityName('User');
+    useEffect(() => {
+        props.setEntityName('User');
+    }, []);
 
     return (
         <EntityIndex

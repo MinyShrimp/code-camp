@@ -22,6 +22,10 @@ export class PublisherService {
     ///////////////////////////////////////////////////////////////////
     // 조회 //
 
+    async findAll(): Promise<PublisherEntity[]> {
+        return await this.publisherRepository.find({});
+    }
+
     /**
      * 출판사 단일 정보 조회
      * @param publisherID

@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductCategoryModule } from '../productCategory/productCategory.module';
 
 import { ProductCategorySearchEntity } from './entities/productCategorySearch.entity';
+import { ProductCategorySearchAdminController } from './productCategorySearch.admin.controller';
 import { ProductCategorySearchResolver } from './productCategorySearch.resolver';
 import { ProductCategorySearchService } from './productCategorySearch.service';
 
@@ -17,6 +18,9 @@ import { ProductCategorySearchService } from './productCategorySearch.service';
     ],
     exports: [
         ProductCategorySearchService, //
+    ],
+    controllers: [
+        ProductCategorySearchAdminController, //
     ],
     providers: [
         ProductCategorySearchResolver, //

@@ -1,13 +1,16 @@
-test.camp
-node_modules
-build/
-file/
-config.*
-.env
+test.camp/
+node_modules/
+key/
+homework/
+*.conf
+*.jar
+*.backup
+*.env
 *.zip
+config.js
 
 # compiled output
-dist
+dist/
 
 # Logs
 logs
@@ -22,11 +25,11 @@ lerna-debug.log*
 .DS_Store
 
 # Tests
-coverage
-.nyc_output
+/coverage
+/.nyc_output
 
 # IDEs and editors
-.idea
+/.idea
 .project
 .classpath
 .c9/
@@ -40,7 +43,3 @@ coverage
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-
-key/
-*.conf
-*.jar

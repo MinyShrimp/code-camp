@@ -120,6 +120,12 @@ export function IndexBodySide() {
                                     </Nav.Link>
                                     <Nav.Link
                                         as={Link}
+                                        to="/admin/entity/product/category/search"
+                                    >
+                                        Product Category Search
+                                    </Nav.Link>
+                                    <Nav.Link
+                                        as={Link}
                                         to="/admin/entity/product/tag"
                                     >
                                         Product Tag
@@ -136,11 +142,8 @@ export function IndexBodySide() {
                                     >
                                         Payment
                                     </Nav.Link>
-                                    <Nav.Link
-                                        as={Link}
-                                        to="/admin/entity/upload"
-                                    >
-                                        Upload File
+                                    <Nav.Link as={Link} to="/admin/entity/file">
+                                        File
                                     </Nav.Link>
                                 </>
                             }

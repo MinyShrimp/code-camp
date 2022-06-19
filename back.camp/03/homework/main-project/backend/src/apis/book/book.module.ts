@@ -9,6 +9,7 @@ import { FileUploadModule } from '../fileUpload/fileUpload.module';
 import { BookEntity } from './entities/book.entity';
 import { BookResolver } from './book.resolver';
 import { BookService } from './book.service';
+import { BookAdminController } from './book.admin.controller';
 
 @Module({
     imports: [
@@ -21,6 +22,7 @@ import { BookService } from './book.service';
         FileUploadModule,
     ],
     exports: [BookService],
+    controllers: [BookAdminController],
     providers: [
         BookResolver, //
         BookService,
