@@ -223,17 +223,11 @@ type Query {
   """리뷰 단일 조회"""
   fetchReview(reviewID: String!): ReviewEntity!
 
-  """모든 상품 조회"""
-  fetchProducts: [ProductEntity!]!
-
-  """삭제된 데이터를 포함한 모든 상품 조회"""
-  fetchProductsWithDeleted: [ProductEntity!]!
+  """상품 검색"""
+  fetchProducts(search: String!): [ProductEntity!]!
 
   """단일 상품 조회"""
   fetchProduct(productID: String!): ProductEntity
-
-  """삭제된 데이터를 포함한 단일 상품 조회"""
-  fetchProductWithDeleted(productID: String!): ProductEntity
 
   """모든 책 조회"""
   fetchBooks: [BookEntity!]!
@@ -312,14 +306,8 @@ type Mutation {
   """상품 정보 삭제 취소"""
   restoreProduct(productID: String!): ResultMessage!
 
-  """모든 상품 삭제 ( Real )"""
-  deleteProductAll: ResultMessage!
-
   """모든 상품 삭제 ( Soft )"""
   softDeleteProductAll: ResultMessage!
-
-  """단일 상품 삭제 ( Real )"""
-  deleteProduct(productID: String!): ResultMessage!
 
   """단일 상품 삭제 ( Soft )"""
   softDeleteProduct(productID: String!): ResultMessage!

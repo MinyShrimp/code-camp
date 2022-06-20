@@ -1,6 +1,17 @@
 import React, { useEffect, useRef } from 'react';
-import { IconButton, Input, Switch } from '@material-ui/core';
-import { CancelOutlined, CheckCircleOutlined, Menu } from '@material-ui/icons';
+import {
+    IconButton,
+    Input,
+    Switch,
+    TextareaAutosize,
+    TextField,
+} from '@material-ui/core';
+import {
+    CancelOutlined,
+    CheckCircleOutlined,
+    Menu,
+    TextFieldsOutlined,
+} from '@material-ui/icons';
 
 import { getType } from '../../functions/functions';
 import { getDate, getDateFormatting } from '../../functions/times';
@@ -20,7 +31,7 @@ export class EntityFactory {
                 cell: undefined,
                 edit_cell: (row: any, data: any) => {
                     return (
-                        <Input
+                        <TextField
                             key={idx}
                             id={key as string}
                             style={{ width: '100%' }}
@@ -39,7 +50,7 @@ export class EntityFactory {
             if (tmp.name === 'pwd') {
                 tmp.type = 'password';
                 tmp.edit_cell = (row: any, data: any) => (
-                    <Input
+                    <TextField
                         key={idx}
                         id={tmp.name as string}
                         style={{ width: '100%' }}
@@ -48,6 +59,23 @@ export class EntityFactory {
                         onInput={(event) => {
                             // @ts-ignore
                             row['pwd'] = event.target.value;
+                        }}
+                    />
+                );
+            } else if (tmp.name === 'description') {
+                tmp.edit_cell = (row: any, data: any) => (
+                    <TextareaAutosize
+                        key={idx}
+                        id={tmp.name as string}
+                        style={{
+                            width: '100%',
+                            height: '300px',
+                            background: 'rgba(0,0,0,0)',
+                        }}
+                        defaultValue={data}
+                        onInput={(event) => {
+                            // @ts-ignore
+                            row['description'] = event.target.value;
                         }}
                     />
                 );
@@ -85,23 +113,23 @@ export class EntityFactory {
 
     private static createListColumn<T>(dummy: T, config: Array<keyof T>) {
         return [
-            {
-                name: '',
-                data: '',
-                type: 'String',
-                sortable: false,
-                selector: () => '',
-                edit_cell: () => <></>,
-                cell: () => {
-                    return (
-                        <IconButton size="small" className="m-0">
-                            {' '}
-                            <Menu />{' '}
-                        </IconButton>
-                    );
-                },
-                width: '50px',
-            },
+            // {
+            //     name: '',
+            //     data: '',
+            //     type: 'String',
+            //     sortable: false,
+            //     selector: () => '',
+            //     edit_cell: () => <></>,
+            //     cell: () => {
+            //         return (
+            //             <IconButton size="small" className="m-0">
+            //                 {' '}
+            //                 <Menu />{' '}
+            //             </IconButton>
+            //         );
+            //     },
+            //     width: '50px',
+            // },
             ...this.createColumn<T>(dummy, config),
         ];
     }

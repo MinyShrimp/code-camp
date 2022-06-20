@@ -8,6 +8,7 @@ key
 *.zip
 config.js
 backup
+product-updateat.txt
 
 # compiled output
 dist

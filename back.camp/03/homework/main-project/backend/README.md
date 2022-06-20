@@ -177,3 +177,120 @@ bootstrap();
 -   [x] 플레이그라운드로 로그아웃 API를 요청하면, Access token과 Refresh token을 레디스 컨테이너에서 확인 할 수 있다.
 -   [x] 플레이그라운드에서 로그아웃 한 토큰으로 `fetchUser` API를 요청하면 Unauthorized 에러 메시지를 반환할 수 있다.
 -   [x] 플레이그라운드에서 로그아웃 한 토큰으로 `restoreAccessToken` API를 요청하여 Unauthorized 에러 메시지를 반환할 수 있다.
+
+```typescript
+/* product.module.ts */
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { ProductEntity } from './entities/product.entity';
+import { ProductRepository } from './product.repository';
+import { ProductResolver } from './product.resolver';
+import { ProductService } from './product.service';
+import { ProductCheckService } from './productCheck.service';
+
+@Module({
+    imports: [
+        TypeOrmModule.forFeature([
+            ProductEntity, //
+        ]),
+    ],
+    providers: [
+        ProductResolver, //
+        ProductService,
+        ProductCheckService,
+        ProductRepository,
+    ],
+})
+export class ProductModule {}
+```
+
+```typescript
+/* product.entity.ts */
+import { Column, Entity, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
+
+@Entity({ name: 'product' })
+@ObjectType({ description: '상품 Entity' })
+export class ProductEntity extends BaseEntity {
+    @PrimaryGeneratedColumn('uuid')
+    @Field(() => ID)
+    id: string;
+
+    @Column()
+    @Field(
+        () => String, //
+        { description: '상품 이름' },
+    )
+    name: string;
+}
+```
+
+```ts
+/* product.repository.ts */
+import { EntityRepository, Repository } from 'typeorm';
+import { ProductEntity } from './entities/product.entity';
+
+@EntityRepository(ProductEntity)
+export class ProductRepository extends Repository<ProductEntity> {
+    findAll = async (): Promise<ProductEntity[]> => {
+        return await this.find({
+            relations: ['book', 'productCategory', 'productTags'],
+        });
+    };
+}
+```
+
+```ts
+/* product.service.ts */
+import { Injectable } from '@nestjs/common';
+import { ProductEntity } from './entities/product.entity';
+import { ProductRepository } from './product.repository';
+
+@Injectable()
+export class ProductService {
+    constructor(
+        private readonly productRepository: ProductRepository, //
+    ) {}
+
+    ///////////////////////////////////////////////////////////////////
+    // 조회 //
+
+    /**
+     * 전체 상품 조회
+     * @returns 모든 상품 목록
+     */
+    async findAll(): Promise<ProductEntity[]> {
+        return await this.productRepository.findAll();
+    }
+}
+```
+
+```ts
+/* product.resolver.ts */
+import { Query, Resolver } from '@nestjs/graphql';
+import { ProductEntity } from './entities/product.entity';
+import { ProductService } from './product.service';
+
+@Resolver()
+export class ProductResolver {
+    constructor(
+        private readonly productService: ProductService, //
+    ) {}
+
+    ///////////////////////////////////////////////////////////////////
+    // 조회 //
+
+    /**
+     * GET /api/products
+     * @response 모든 상품 목록
+     */
+    @Query(
+        () => [ProductEntity], //
+        { description: '모든 상품 조회' },
+    )
+    fetchProducts(): Promise<ProductEntity[]> {
+        return this.productService.findAll();
+    }
+}
+```

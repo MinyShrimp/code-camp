@@ -9,6 +9,7 @@ import {
     UpdateDateColumn,
     DeleteDateColumn,
     CreateDateColumn,
+    BaseEntity,
 } from 'typeorm';
 import { IsUrl, Min } from 'class-validator';
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
@@ -19,7 +20,7 @@ import { ProductCategorySearchEntity } from '../../productCategorySearch/entitie
 
 @Entity({ name: 'product' })
 @ObjectType({ description: '상품 Entity' })
-export class ProductEntity {
+export class ProductEntity extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;

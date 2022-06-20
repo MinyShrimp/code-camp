@@ -34,6 +34,7 @@ import { ProductCategoryModule } from './apis/productCategory/productCategory.mo
 import { ProductCategorySearchModule } from './apis/productCategorySearch/productCategorySearch.module';
 
 import { FileUploadModule } from './apis/fileUpload/fileUpload.module';
+import { ProductRepository } from './apis/product/product.repository';
 
 // Entity //
 
@@ -66,13 +67,16 @@ import { FileUploadModule } from './apis/fileUpload/fileUpload.module';
         // TypeORM //
         TypeOrmModule.forRoot({
             type: 'mysql',
-            host: `${process.env.DEBUG_MYSQL_HOST}`,
-            // host: `${process.env.MYSQL_HOST}`,
+            // host: `${process.env.DEBUG_MYSQL_HOST}`,
+            host: `${process.env.MYSQL_HOST}`,
             port: 3306,
             username: process.env.MYSQL_USER,
             password: process.env.MYSQL_PASSWORD,
             database: process.env.MYSQL_DATABASE,
-            entities: [__dirname + '/apis/**/*.entity.*'],
+            entities: [
+                __dirname + '/apis/**/*.entity.*', //
+            ],
+
             charset: 'utf8mb4',
             collaction: 'utf8mb4_general_ci',
             synchronize: true,
@@ -83,8 +87,8 @@ import { FileUploadModule } from './apis/fileUpload/fileUpload.module';
         // Redis //
         CacheModule.register<RedisClientOptions>({
             store: redisStore,
-            url: `redis://${process.env.DEBUG_REDIS_HOST}:6379`,
-            // url: `redis://${process.env.REDIS_HOST}:6379`,
+            // url: `redis://${process.env.DEBUG_REDIS_HOST}:6379`,
+            url: `redis://${process.env.REDIS_HOST}:6379`,
             isGlobal: true,
         }),
 
