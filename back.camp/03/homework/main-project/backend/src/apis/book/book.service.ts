@@ -43,37 +43,10 @@ export class BookService {
     async findOne(
         bookID: string, //
     ): Promise<BookEntity> {
-        // const book = await this.bookRepository.findOne({
-        //     where: { id: bookID },
-        //     relations: ['publisher', 'author', 'book_images'],
-        // });
-        const book = await this.bookRepository
-            .createQueryBuilder('book')
-            .select([
-                'book.id',
-                'book.title',
-                'book.subtitle',
-                'book.description',
-                'book.page',
-                'book.isbn_10',
-                'book.isbn_13',
-                'book.publishAt',
-                'publisher.id',
-                'publisher.name',
-                'publisher.description',
-                'author.id',
-                'author.name',
-                'author.description',
-                'book_image.id',
-                'upload_file.url',
-                'book_image.isMain',
-            ])
-            .leftJoinAndSelect('book.publisher', 'publisher')
-            .leftJoinAndSelect('book.author', 'author')
-            .leftJoinAndSelect('book.book_images', 'book_image')
-            .leftJoinAndSelect('book_image.uploadImage', 'upload_file')
-            .where(`book.id = '${bookID}'`)
-            .getOne();
+        const book = await this.bookRepository.findOne({
+            where: { id: bookID },
+            relations: ['publisher', 'author', 'book_images'],
+        });
         if (!book) {
             throw new ConflictException(MESSAGES.BOOK_FIND_ONE_FAILED);
         }

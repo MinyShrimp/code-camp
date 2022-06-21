@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { FileUploadEntity } from './entities/fileUpload.entity';
+import { FileEntity } from './entities/file.entity';
 import { FileUploadService } from './fileUpload.service';
 
 @Controller('admin')
@@ -9,14 +9,14 @@ export class FileAdminController {
     ) {}
 
     @Get('/files')
-    findAll(): Promise<FileUploadEntity[]> {
+    findAll(): Promise<FileEntity[]> {
         return this.fileUploadService.findAll();
     }
 
     @Get('/file/:id')
     findOne(
         @Param('id') fileID: string, //
-    ): Promise<FileUploadEntity> {
+    ): Promise<FileEntity> {
         return this.fileUploadService.findOne(fileID);
     }
 }

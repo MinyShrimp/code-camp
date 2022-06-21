@@ -9,13 +9,13 @@ import { MESSAGES } from '../../commons/message/Message.enum';
 
 import { BookService } from '../book/book.service';
 import { ProductTagService } from '../productTag/productTag.service';
-import { ProductCategorySearchService } from '../productCategorySearch/productCategorySearch.service';
 
 import { ProductEntity } from './entities/product.entity';
 import { CreateProductInput } from './dto/createProduct.input';
 import { UpdateProductInput } from './dto/updateProduct.input';
 import { ProductCheckService } from './productCheck.service';
-import { ProductRepository } from './product.repository';
+import { ProductRepository } from './entities/product.repository';
+import { ProductCategoryService } from '../productCategory/productCategory.service';
 
 @Injectable()
 export class ProductService {
@@ -24,7 +24,8 @@ export class ProductService {
         private readonly productCheckService: ProductCheckService,
         private readonly bookService: BookService,
         private readonly productTagsService: ProductTagService,
-        private readonly productCategoryService: ProductCategorySearchService,
+        // private readonly productCategoryService: ProductCategorySearchService,
+        private readonly productCategoryService: ProductCategoryService,
     ) {}
 
     ///////////////////////////////////////////////////////////////////
@@ -46,14 +47,6 @@ export class ProductService {
         ids: string[], //
     ): Promise<ProductEntity[]> {
         return await this.productRepository.findAllByIds(ids);
-    }
-
-    /**
-     * 삭제된 데이터를 포함한 모든 상품 조회
-     * @returns 삭제된 데이터를 포함한 모든 상품 목록
-     */
-    async findAllWithDeleted(): Promise<ProductEntity[]> {
-        return await this.productRepository.findAllWithDeleted();
     }
 
     /**
@@ -103,7 +96,10 @@ export class ProductService {
         } = createProductInput;
 
         const book = await this.bookService.findOne(book_id);
-        const category = await this.productCategoryService.findOneByID(
+        // const category = await this.productCategoryService.findOneByID(
+        //     category_id,
+        // );
+        const category = await this.productCategoryService.findByTree(
             category_id,
         );
         const tagEntities = await this.productTagsService.create(product_tags);
@@ -150,7 +146,7 @@ export class ProductService {
         // 입력받지 않았다면, 기존의 카테고리 복사
         const category =
             category_id !== undefined
-                ? await this.productCategoryService.findOneByID(category_id)
+                ? await this.productCategoryService.findByTree(category_id)
                 : product.productCategory;
 
         // 저장 후 변경된 데이터 반환

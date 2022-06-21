@@ -12,7 +12,7 @@ import {
 /* FileUpload Entity */
 @Entity({ name: 'upload_file' })
 @ObjectType({ description: 'FileUpload Entity' })
-export class FileUploadEntity {
+export class FileEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;
@@ -31,7 +31,7 @@ export class FileUploadEntity {
 
     @OneToOne(
         () => BookImageEntity, //
-        (bookImage) => bookImage.uploadImage,
+        (bookImage) => bookImage.file,
         { nullable: true },
     )
     @Field(() => BookImageEntity, { nullable: true })

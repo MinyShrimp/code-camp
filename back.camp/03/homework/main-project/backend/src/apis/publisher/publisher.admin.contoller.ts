@@ -1,11 +1,11 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { PublisherEntity } from './entities/publisher.entity';
-import { PublisherService } from './publisher.service';
+import { PublisherAdminService } from './publisher.admin.service';
 
 @Controller('admin')
 export class PublisherAdminContoller {
     constructor(
-        private readonly publisherService: PublisherService, //
+        private readonly publisherService: PublisherAdminService, //
     ) {}
 
     @Get('/publishers')

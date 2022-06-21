@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ProductEntity } from './entities/product.entity';
+import { ProductEntity } from './product.entity';
 
 // @EntityRepository(ProductEntity)
 // export class ProductRepository extends Repository<ProductEntity> {
@@ -48,25 +48,29 @@ export class ProductRepository {
     async findAllByIds(
         ids: string[], //
     ): Promise<ProductEntity[]> {
-        return (
-            await Promise.all<ProductEntity>(
-                ids.map((id) => {
-                    return new Promise((resolve, reject) => {
-                        this.productRepository
-                            .findOne({
-                                where: { id: id },
-                                relations: [
-                                    'book',
-                                    'productCategory',
-                                    'productTags',
-                                ],
-                            })
-                            .then((res) => resolve(res))
-                            .catch((error) => reject(error));
-                    });
-                }),
-            )
-        ).filter((v) => v !== undefined);
+        return await this.productRepository.findByIds(ids, {
+            relations: ['book', 'productCategory', 'productTags'],
+        });
+
+        // return (
+        //     await Promise.all<ProductEntity>(
+        //         ids.map((id) => {
+        //             return new Promise((resolve, reject) => {
+        //                 this.productRepository
+        //                     .findOne({
+        //                         where: { id: id },
+        //                         relations: [
+        //                             'book',
+        //                             'productCategory',
+        //                             'productTags',
+        //                         ],
+        //                     })
+        //                     .then((res) => resolve(res))
+        //                     .catch((error) => reject(error));
+        //             });
+        //         }),
+        //     )
+        // ).filter((v) => v !== undefined);
     }
 
     /**

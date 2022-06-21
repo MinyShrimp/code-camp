@@ -1,11 +1,11 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { BookImageService } from './bookImage.service';
+import { BookImageAdminService } from './bookImage.admin.service';
 import { BookImageEntity } from './entities/bookImage.entity';
 
 @Controller('admin')
 export class BookImageAdminContoller {
     constructor(
-        private readonly bookImageService: BookImageService, //
+        private readonly bookImageService: BookImageAdminService, //
     ) {}
 
     @Get('/book-images')

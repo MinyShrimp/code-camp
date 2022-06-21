@@ -1,5 +1,7 @@
 import React from 'react';
 import { EntityFactory } from '../entity_factory';
+import { DummyProductColumn } from '../product/interface';
+import { DummyUserColumn } from '../user/interface';
 import { IReviewColumn, DummyReviewColumn } from './interface';
 
 // prettier-ignore
@@ -10,7 +12,7 @@ export const ReviewIndex = EntityFactory.getEntity<IReviewColumn>({
         column: [
             'id', 'contents', 'star', 'like',
             'createAt', 'updateAt', 'deleteAt',
-            'productId', 'userId',
+            'product', 'user',
         ],
         url: '/admin/reviews'
     },
@@ -18,7 +20,7 @@ export const ReviewIndex = EntityFactory.getEntity<IReviewColumn>({
         column: [
             'id', 'contents', 'star', 'like',
             'createAt', 'updateAt', 'deleteAt',
-            'productId', 'userId',
+            'product', 'user',
         ],
         url: '/admin/review'
     }
@@ -26,24 +28,24 @@ export const ReviewIndex = EntityFactory.getEntity<IReviewColumn>({
     edit: {
         column: [
             'contents', 'star', 'like',
-            'productId', 'userId',
+            'product', 'user',
         ],
         url: '/admin/review',
         default: {
-            contents: '', productId: '', userId: '',
-            star: 0, like: false
+            contents: '', star: 0, like: false,
+            product: DummyProductColumn, user: DummyUserColumn,
         }
     }
     ,
     update: {
         column: [
             'contents', 'star', 'like',
-            'productId', 'userId',
+            'product', 'user',
         ],
         url: '/admin/review',
         default: {
-            contents: '', productId: '', userId: '',
-            star: 0, like: false
+            contents: '', star: 0, like: false,
+            product: DummyProductColumn, user: DummyUserColumn,
         }
     }
 });

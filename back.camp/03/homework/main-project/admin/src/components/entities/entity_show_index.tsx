@@ -47,6 +47,7 @@ export function EntityShowIndex(props: {
                 width: '100%',
                 height: 'calc(100vh - 210px)',
                 padding: '3rem',
+                overflowY: 'scroll',
             }}
         >
             {!pending && data !== undefined ? (

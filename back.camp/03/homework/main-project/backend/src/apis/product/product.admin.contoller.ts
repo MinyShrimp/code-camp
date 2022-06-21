@@ -1,12 +1,14 @@
 import { Controller, Get, Param, Post, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ProductEntity } from './entities/product.entity';
+import { ProductAdminService } from './product.admin.service';
 import { ProductService } from './product.service';
 
 @Controller('admin')
 export class ProductAdminController {
     constructor(
-        private readonly productService: ProductService, //
+        private readonly productService: ProductService,
+        private readonly productAdminService: ProductAdminService, //
     ) {}
 
     /**
@@ -15,7 +17,7 @@ export class ProductAdminController {
      */
     @Get('/products')
     findAll(): Promise<ProductEntity[]> {
-        return this.productService.findAllWithDeleted();
+        return this.productAdminService.findAll();
     }
 
     /**
@@ -27,7 +29,7 @@ export class ProductAdminController {
     findOne(
         @Param('id') productID: string, //
     ): Promise<ProductEntity> {
-        return this.productService.findOneWithDeleted(productID);
+        return this.productAdminService.findOne(productID);
     }
 
     /**
@@ -39,8 +41,10 @@ export class ProductAdminController {
     async createProduct(
         @Req() req: Request, //
     ): Promise<ProductEntity> {
-        const product = this.productService.create(req.body);
-        return product;
+        console.log(req.body);
+        return this.productAdminService.findOne('');
+        // const product = this.productService.create(req.body);
+        // return product;
     }
 
     /**

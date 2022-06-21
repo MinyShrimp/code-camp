@@ -3,7 +3,7 @@ import { FileUpload, GraphQLUpload } from 'graphql-upload';
 
 import { ResultMessage } from '../../commons/message/ResultMessage.dto';
 
-import { FileUploadEntity } from './entities/fileUpload.entity';
+import { FileEntity } from './entities/file.entity';
 import { FileUploadService } from './fileUpload.service';
 
 /* FileUpload API */
@@ -27,7 +27,7 @@ export class FileUploadResolver {
      * @returns 업로드 URLs
      */
     @Mutation(
-        () => [FileUploadEntity], //
+        () => [FileEntity], //
         { description: `${FileUploadResolver.NAME}` },
     )
     uploadFile(
@@ -36,7 +36,7 @@ export class FileUploadResolver {
             type: () => [GraphQLUpload],
         })
         files: FileUpload[], //
-    ): Promise<FileUploadEntity[]> {
+    ): Promise<FileEntity[]> {
         return this.fileUploadService.upload('test/origin/', files);
     }
 

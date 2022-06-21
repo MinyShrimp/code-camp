@@ -120,12 +120,6 @@ export function IndexBodySide() {
                                     </Nav.Link>
                                     <Nav.Link
                                         as={Link}
-                                        to="/admin/entity/product/category/search"
-                                    >
-                                        Product Category Search
-                                    </Nav.Link>
-                                    <Nav.Link
-                                        as={Link}
                                         to="/admin/entity/product/tag"
                                     >
                                         Product Tag

@@ -31,10 +31,8 @@ import { BookImageModule } from './apis/bookImage/bookImage.module';
 import { ProductModule } from './apis/product/product.module';
 import { ProductTagModule } from './apis/productTag/productTag.module';
 import { ProductCategoryModule } from './apis/productCategory/productCategory.module';
-import { ProductCategorySearchModule } from './apis/productCategorySearch/productCategorySearch.module';
 
 import { FileUploadModule } from './apis/fileUpload/fileUpload.module';
-import { ProductRepository } from './apis/product/product.repository';
 
 // Entity //
 
@@ -67,8 +65,8 @@ import { ProductRepository } from './apis/product/product.repository';
         // TypeORM //
         TypeOrmModule.forRoot({
             type: 'mysql',
-            // host: `${process.env.DEBUG_MYSQL_HOST}`,
-            host: `${process.env.MYSQL_HOST}`,
+            host: `${process.env.DEBUG_MYSQL_HOST}`,
+            // host: `${process.env.MYSQL_HOST}`,
             port: 3306,
             username: process.env.MYSQL_USER,
             password: process.env.MYSQL_PASSWORD,
@@ -87,8 +85,8 @@ import { ProductRepository } from './apis/product/product.repository';
         // Redis //
         CacheModule.register<RedisClientOptions>({
             store: redisStore,
-            // url: `redis://${process.env.DEBUG_REDIS_HOST}:6379`,
-            url: `redis://${process.env.REDIS_HOST}:6379`,
+            url: `redis://${process.env.DEBUG_REDIS_HOST}:6379`,
+            // url: `redis://${process.env.REDIS_HOST}:6379`,
             isGlobal: true,
         }),
 
@@ -108,7 +106,6 @@ import { ProductRepository } from './apis/product/product.repository';
         ProductModule,
         ProductTagModule,
         ProductCategoryModule,
-        ProductCategorySearchModule,
 
         FileUploadModule,
     ],

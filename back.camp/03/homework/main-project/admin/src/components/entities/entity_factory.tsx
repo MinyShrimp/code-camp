@@ -1,26 +1,20 @@
 import React, { useEffect, useRef } from 'react';
-import {
-    IconButton,
-    Input,
-    Switch,
-    TextareaAutosize,
-    TextField,
-} from '@material-ui/core';
-import {
-    CancelOutlined,
-    CheckCircleOutlined,
-    Menu,
-    TextFieldsOutlined,
-} from '@material-ui/icons';
+import { Switch, TextareaAutosize, TextField } from '@material-ui/core';
+import { CancelOutlined, CheckCircleOutlined } from '@material-ui/icons';
 
 import { getType } from '../../functions/functions';
 import { getDate, getDateFormatting } from '../../functions/times';
 
 import { IEntityConfig } from './types';
 import { EntityIndex } from './entity_index';
+import { Link } from 'react-router-dom';
 
 export class EntityFactory {
-    private static createColumn<T>(dummy: T, config: Array<keyof T>) {
+    private static createColumn<T>(
+        dummy: T,
+        config: Array<keyof T>,
+        option?: Partial<{ [key in keyof T]: string }>,
+    ) {
         return config.map((key, idx) => {
             const tmp: IEntityConfig = {
                 name: key as string,
@@ -105,13 +99,74 @@ export class EntityFactory {
                         }}
                     />
                 );
+            } else if (tmp.type === 'Object') {
+                tmp.cell = (row: any) => {
+                    return (
+                        <>
+                            {row[key] !== null && row[key] !== undefined ? (
+                                option === undefined ? (
+                                    <Link
+                                        to={`/admin/entity/${key as string}/${
+                                            row[key]['id']
+                                        }`}
+                                    >
+                                        {row[key]['id']}
+                                    </Link>
+                                ) : (
+                                    <Link
+                                        to={`/admin/entity/${
+                                            key === 'productCategory' ||
+                                            key === 'parent'
+                                                ? 'product/category'
+                                                : (key as string)
+                                        }/${row[key]['id']}`}
+                                        reloadDocument
+                                    >
+                                        {row[key][option[key]]}
+                                    </Link>
+                                )
+                            ) : (
+                                ''
+                            )}
+                        </>
+                    );
+                };
+            } else if (tmp.type === 'Array') {
+                tmp.cell = (row: any) => {
+                    return (
+                        <>
+                            {row[key].map((v: any, idx: number) => {
+                                return (
+                                    <li>
+                                        <Link
+                                            to={`/admin/entity/${
+                                                {
+                                                    book_images: 'book/image',
+                                                    productTags: 'product/tag',
+                                                    products: 'product',
+                                                }[key as string]
+                                            }/${v.id}`}
+                                            key={idx}
+                                        >
+                                            {v.name ?? v.id}
+                                        </Link>
+                                    </li>
+                                );
+                            })}
+                        </>
+                    );
+                };
             }
 
             return tmp;
         });
     }
 
-    private static createListColumn<T>(dummy: T, config: Array<keyof T>) {
+    private static createListColumn<T>(
+        dummy: T,
+        config: Array<keyof T>,
+        option?: Partial<{ [key in keyof T]: string }>,
+    ) {
         return [
             // {
             //     name: '',
@@ -130,7 +185,7 @@ export class EntityFactory {
             //     },
             //     width: '50px',
             // },
-            ...this.createColumn<T>(dummy, config),
+            ...this.createColumn<T>(dummy, config, option),
         ];
     }
 
@@ -140,10 +195,12 @@ export class EntityFactory {
         list: {
             url: string;
             column: Array<keyof T>;
+            option?: Partial<{ [key in keyof T]: string }>;
         };
         show: {
             url: string;
             column: Array<keyof T>;
+            option?: Partial<{ [key in keyof T]: string }>;
         };
         edit: {
             url: string;
@@ -160,10 +217,12 @@ export class EntityFactory {
             listColumn: this.createListColumn<T>(
                 columnConfig.dummyData,
                 columnConfig.list.column,
+                columnConfig.list.option,
             ),
             showColumn: this.createColumn<T>(
                 columnConfig.dummyData,
                 columnConfig.show.column,
+                columnConfig.show.option,
             ),
             editColumn: this.createColumn<T>(
                 columnConfig.dummyData,

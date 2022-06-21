@@ -37,7 +37,7 @@ export class ProductResolver {
     async fetchProducts(
         @Args('search') search: string, //
     ): Promise<ProductEntity[]> {
-        // redis 검사
+        // Redis 검사
         const redis = await this.cacheManager.get(`product:search:${search}`);
         if (redis) {
             return redis as ProductEntity[];
@@ -58,6 +58,7 @@ export class ProductResolver {
         const ids = ela.hits.hits.map((v) => v._source['id']);
         const result = await this.productService.findAllByIds(ids);
 
+        // Redis 저장
         if (result.length !== 0) {
             await this.cacheManager.set(`product:search:${search}`, result, {
                 ttl: 60,

@@ -12,6 +12,7 @@ import {
     TreeParent,
     PrimaryGeneratedColumn,
     BaseEntity,
+    CreateDateColumn,
 } from 'typeorm';
 
 @Tree('closure-table')
@@ -42,6 +43,9 @@ export class ProductCategoryEntity extends BaseEntity {
     @TreeParent({ onDelete: 'CASCADE' })
     parent: ProductCategoryEntity;
 
-    @Column({ name: 'parentId', type: 'uuid', nullable: true })
-    parentId: string;
+    @CreateDateColumn()
+    createAt: Date;
+
+    // @Column({ name: 'parentId', type: 'uuid', nullable: true })
+    // parentId: string;
 }

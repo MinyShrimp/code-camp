@@ -40,40 +40,40 @@ services:
             - ./elk/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
             - ./elk/logstash/mysql-connector-java.jar:/usr/share/logstash/mysql-connector-java.jar
 
-    # NestJS
-    api:
-        # Dockerfile 설정
-        build:
-            # Dockerfile의 위치
-            context: ./backend
+    # # NestJS
+    # api:
+    #     # Dockerfile 설정
+    #     build:
+    #         # Dockerfile의 위치
+    #         context: ./backend
 
-        container_name: codecamp-mainproject-api
+    #     container_name: codecamp-mainproject-api
 
-        # Container Port 연결
-        #   - host:container
-        ports:
-            - 3000:3000
+    #     # Container Port 연결
+    #     #   - host:container
+    #     ports:
+    #         - 3000:3000
 
-        # Volume Mount
-        #   - host:container
-        volumes:
-            - ./backend/src:/app/src
-            - ./backend/test:/app/test
-            - ./backend/dist:/app/dist
+    #     # Volume Mount
+    #     #   - host:container
+    #     volumes:
+    #         - ./backend/src:/app/src
+    #         - ./backend/test:/app/test
+    #         - ./backend/dist:/app/dist
 
-            - ./backend/package.json:/app/package.json
-            - ./backend/yarn.lock:/app/yarn.lock
-            - ./backend/tsconfig.build.json:/app/tsconfig.build.json
-            - ./backend/tsconfig.json:/app/tsconfig.json
-            - ./backend/.env:/app/.env
+    #         - ./backend/package.json:/app/package.json
+    #         - ./backend/yarn.lock:/app/yarn.lock
+    #         - ./backend/tsconfig.build.json:/app/tsconfig.build.json
+    #         - ./backend/tsconfig.json:/app/tsconfig.json
+    #         - ./backend/.env:/app/.env
 
-            - ./backend/node_modules:/app/node_modules
+    #         - ./backend/node_modules:/app/node_modules
 
-        # 환경 변수 설정
-        env_file: ./backend/.env
+    #     # 환경 변수 설정
+    #     env_file: ./backend/.env
 
-        # 재시작 설정
-        restart: always
+    #     # 재시작 설정
+    #     restart: always
 
     # # Admin
     # api-admin:
