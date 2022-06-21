@@ -21,6 +21,24 @@ export default class ProductResolver {
         return this.productService.findAll();
     }
 
+    @Query(() => [ProductEntity])
+    async searchProducts(
+        @Args({ name: "search", nullable: true }) search: string //
+    ): Promise<ProductEntity[]> {
+        const ela = await this.elasticSearchService.search({
+            index: "class",
+            query: {
+                match: {
+                    description: search,
+                },
+            },
+        });
+
+        console.log(ela.hits.hits);
+
+        return this.productService.findAll();
+    }
+
     // GET 단일 상품
     @Query(() => ProductEntity)
     async fetchProduct(
@@ -29,7 +47,7 @@ export default class ProductResolver {
         const product = await this.productService.findOne(productID);
 
         const ela = await this.elasticSearchService.search({
-            index: "product",
+            index: "class",
             query: {
                 match: {
                     name: "상품",

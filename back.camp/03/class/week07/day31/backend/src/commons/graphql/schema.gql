@@ -75,6 +75,7 @@ type Query {
   fetchBoards: [BoardEntity!]!
   fetchBoard(boardID: String!): BoardEntity!
   fetchProducts: [ProductEntity!]!
+  searchProducts(search: String): [ProductEntity!]!
   fetchProduct(productID: String!): ProductEntity!
   fetchProductCategoryAll: [ProductCategoryEntity!]!
   fetchUsers: [UserEntity!]!
