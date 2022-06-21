@@ -54,7 +54,7 @@ type PublisherEntity {
 }
 
 """FileUpload Entity"""
-type FileUploadEntity {
+type FileEntity {
   id: ID!
 
   """이름"""
@@ -76,7 +76,7 @@ type BookImageEntity {
   isMain: Boolean!
 
   """업로드된 이미지 ID"""
-  uploadImage: FileUploadEntity!
+  file: FileEntity!
   book: BookEntity!
 }
 
@@ -123,24 +123,15 @@ type ProductTagEntity {
   products: [ProductEntity!]!
 }
 
-"""검색용 상품 카테고리 Entity"""
-type ProductCategorySearchEntity {
+"""상품 분류 Entity"""
+type ProductCategoryEntity {
   id: ID!
 
-  """이름"""
+  """분류 이름"""
   name: String!
 
-  """분류 1"""
-  c1: String!
-
-  """분류 2"""
-  c2: String
-
-  """분류 3"""
-  c3: String
-
-  """분류 4"""
-  c4: String
+  """하위 분류"""
+  children: [ProductCategoryEntity!]
 }
 
 """상품 Entity"""
@@ -162,7 +153,7 @@ type ProductEntity {
   """가격"""
   price: Int!
   book: BookEntity!
-  productCategory: ProductCategorySearchEntity
+  productCategory: ProductCategoryEntity
   productTags: [ProductTagEntity!]!
 }
 
@@ -180,17 +171,6 @@ type ReviewEntity {
   like: Boolean!
   product: ProductEntity!
   user: UserEntity!
-}
-
-"""상품 분류 Entity"""
-type ProductCategoryEntity {
-  id: ID!
-
-  """분류 이름"""
-  name: String!
-
-  """하위 분류"""
-  children: [ProductCategoryEntity!]
 }
 
 """결제 Entity"""
@@ -223,17 +203,11 @@ type Query {
   """리뷰 단일 조회"""
   fetchReview(reviewID: String!): ReviewEntity!
 
-  """모든 상품 조회"""
-  fetchProducts: [ProductEntity!]!
-
-  """삭제된 데이터를 포함한 모든 상품 조회"""
-  fetchProductsWithDeleted: [ProductEntity!]!
+  """상품 검색"""
+  fetchProducts(search: String!): [ProductEntity!]!
 
   """단일 상품 조회"""
   fetchProduct(productID: String!): ProductEntity
-
-  """삭제된 데이터를 포함한 단일 상품 조회"""
-  fetchProductWithDeleted(productID: String!): ProductEntity
 
   """모든 책 조회"""
   fetchBooks: [BookEntity!]!
@@ -246,12 +220,6 @@ type Query {
 
   """출판사 정보 조회"""
   fetchPublisher(publisherID: String!): PublisherEntity!
-
-  """Search Category 전체 조회"""
-  fetchCategorys: [ProductCategorySearchEntity!]!
-
-  """Search Category 단일 조회"""
-  fetchCategory(categoryID: String!): ProductCategorySearchEntity
 
   """모든 분류 정보 조회"""
   fetchCategorysByTree: [ProductCategoryEntity!]!
@@ -312,14 +280,8 @@ type Mutation {
   """상품 정보 삭제 취소"""
   restoreProduct(productID: String!): ResultMessage!
 
-  """모든 상품 삭제 ( Real )"""
-  deleteProductAll: ResultMessage!
-
   """모든 상품 삭제 ( Soft )"""
   softDeleteProductAll: ResultMessage!
-
-  """단일 상품 삭제 ( Real )"""
-  deleteProduct(productID: String!): ResultMessage!
 
   """단일 상품 삭제 ( Soft )"""
   softDeleteProduct(productID: String!): ResultMessage!
@@ -370,13 +332,10 @@ type Mutation {
   softDeletePublisher(publisherID: String!): ResultMessage!
 
   """FileUpload"""
-  uploadFile(files: [Upload!]!): [FileUploadEntity!]!
+  uploadFile(files: [Upload!]!): [FileEntity!]!
 
   """FileUpload 삭제 ( Real )"""
   deleteFileUpload(fileIDs: [String!]!): [ResultMessage!]!
-
-  """Search Category 전체 생성"""
-  createCategorySearch: ResultMessage!
 
   """분류 생성"""
   createCategory(createProductCategoryInput: CreateProductCategoryInput!): ProductCategoryEntity!

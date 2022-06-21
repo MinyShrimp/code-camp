@@ -31,7 +31,6 @@ import { BookImageModule } from './apis/bookImage/bookImage.module';
 import { ProductModule } from './apis/product/product.module';
 import { ProductTagModule } from './apis/productTag/productTag.module';
 import { ProductCategoryModule } from './apis/productCategory/productCategory.module';
-import { ProductCategorySearchModule } from './apis/productCategorySearch/productCategorySearch.module';
 
 import { FileUploadModule } from './apis/fileUpload/fileUpload.module';
 
@@ -72,7 +71,10 @@ import { FileUploadModule } from './apis/fileUpload/fileUpload.module';
             username: process.env.MYSQL_USER,
             password: process.env.MYSQL_PASSWORD,
             database: process.env.MYSQL_DATABASE,
-            entities: [__dirname + '/apis/**/*.entity.*'],
+            entities: [
+                __dirname + '/apis/**/*.entity.*', //
+            ],
+
             charset: 'utf8mb4',
             collaction: 'utf8mb4_general_ci',
             synchronize: true,
@@ -104,7 +106,6 @@ import { FileUploadModule } from './apis/fileUpload/fileUpload.module';
         ProductModule,
         ProductTagModule,
         ProductCategoryModule,
-        ProductCategorySearchModule,
 
         FileUploadModule,
     ],

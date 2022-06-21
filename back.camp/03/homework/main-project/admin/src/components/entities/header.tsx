@@ -53,10 +53,18 @@ export function EntityIndexHeader(props: {
                     <IconButton
                         className="mb-0"
                         size="small"
-                        style={{ color: 'var(--bs-red)' }}
+                        style={{ color: 'var(--bs-yellow)' }}
                         onClick={async () => {}}
                     >
                         <FilterList />
+                    </IconButton>
+                    <IconButton
+                        className="mb-0"
+                        size="small"
+                        style={{ color: 'var(--bs-red)' }}
+                        onClick={async () => {}}
+                    >
+                        <Delete />
                     </IconButton>
                     <IconButton
                         className="mb-0"

@@ -1,6 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { IsBoolean } from 'class-validator';
-import { FileUploadEntity } from 'src/apis/fileUpload/entities/fileUpload.entity';
 import {
     Entity,
     Column,
@@ -13,6 +12,7 @@ import {
 } from 'typeorm';
 
 import { BookEntity } from '../../book/entities/book.entity';
+import { FileEntity } from 'src/apis/fileUpload/entities/file.entity';
 
 @Entity({ name: 'book_img' })
 @ObjectType({ description: '책 이미지 Entity' })
@@ -31,20 +31,20 @@ export class BookImageEntity extends BaseEntity {
     isMain: boolean;
 
     // 업로드된 이미지
-    @JoinColumn({ name: 'uploadImageId' })
+    @JoinColumn({ name: 'fileId' })
     @OneToOne(
-        () => FileUploadEntity, //
-        (uploadImage) => uploadImage.bookImage,
+        () => FileEntity, //
+        (file) => file.bookImage,
         { eager: true },
     )
     @Field(
-        () => FileUploadEntity, //
+        () => FileEntity, //
         { description: '업로드된 이미지 ID' },
     )
-    uploadImage: FileUploadEntity;
+    file: FileEntity;
 
     // 책
-    @JoinColumn()
+    @JoinColumn({ name: 'bookId' })
     @ManyToOne(
         () => BookEntity, //
         (book) => book.book_images,

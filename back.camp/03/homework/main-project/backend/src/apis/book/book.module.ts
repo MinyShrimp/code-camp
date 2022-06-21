@@ -10,6 +10,8 @@ import { BookEntity } from './entities/book.entity';
 import { BookResolver } from './book.resolver';
 import { BookService } from './book.service';
 import { BookAdminController } from './book.admin.controller';
+import { BookAdminRepository } from './entities/book.admin.repository';
+import { BookAdminService } from './book.admin.service';
 
 @Module({
     imports: [
@@ -26,6 +28,9 @@ import { BookAdminController } from './book.admin.controller';
     providers: [
         BookResolver, //
         BookService,
+
+        BookAdminRepository,
+        BookAdminService,
     ],
 })
 export class BookModule {}

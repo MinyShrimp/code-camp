@@ -1,21 +1,19 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { AuthorService } from './author.service';
+import { AuthorAdminService } from './author.admin.service';
 
 @Controller('admin')
 export class AuthorAdminController {
-    constructor(
-        private readonly authorService: AuthorService, //
-    ) {}
+    constructor(private readonly authorAdminService: AuthorAdminService) {}
 
     @Get('/authors')
     getAuthors() {
-        return this.authorService.findAll();
+        return this.authorAdminService.findAll();
     }
 
     @Get('/author/:id')
     getUser(
         @Param('id') userID: string, //
     ) {
-        return this.authorService.findOne(userID);
+        return this.authorAdminService.findOne(userID);
     }
 }

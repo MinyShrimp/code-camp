@@ -1,4 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
+import { BookAdminService } from './book.admin.service';
 import { BookService } from './book.service';
 import { BookEntity } from './entities/book.entity';
 
@@ -6,17 +7,18 @@ import { BookEntity } from './entities/book.entity';
 export class BookAdminController {
     constructor(
         private readonly bookService: BookService, //
+        private readonly bookAdminService: BookAdminService,
     ) {}
 
     @Get('/books')
     findAll(): Promise<BookEntity[]> {
-        return this.bookService.findAll();
+        return this.bookAdminService.findAll();
     }
 
     @Get('/book/:id')
     findOne(
         @Param('id') bookID: string, //
     ): Promise<BookEntity> {
-        return this.bookService.findOne(bookID);
+        return this.bookAdminService.findOne(bookID);
     }
 }

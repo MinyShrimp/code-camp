@@ -1,6 +1,6 @@
 /* Product Service */
 
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -9,22 +9,23 @@ import { MESSAGES } from '../../commons/message/Message.enum';
 
 import { BookService } from '../book/book.service';
 import { ProductTagService } from '../productTag/productTag.service';
-import { ProductCategorySearchService } from '../productCategorySearch/productCategorySearch.service';
 
 import { ProductEntity } from './entities/product.entity';
 import { CreateProductInput } from './dto/createProduct.input';
 import { UpdateProductInput } from './dto/updateProduct.input';
 import { ProductCheckService } from './productCheck.service';
+import { ProductRepository } from './entities/product.repository';
+import { ProductCategoryService } from '../productCategory/productCategory.service';
 
 @Injectable()
 export class ProductService {
     constructor(
-        @InjectRepository(ProductEntity)
-        private readonly productRepository: Repository<ProductEntity>,
+        private readonly productRepository: ProductRepository,
         private readonly productCheckService: ProductCheckService,
         private readonly bookService: BookService,
         private readonly productTagsService: ProductTagService,
-        private readonly productCategoryService: ProductCategorySearchService,
+        // private readonly productCategoryService: ProductCategorySearchService,
+        private readonly productCategoryService: ProductCategoryService,
     ) {}
 
     ///////////////////////////////////////////////////////////////////
@@ -35,20 +36,17 @@ export class ProductService {
      * @returns 모든 상품 목록
      */
     async findAll(): Promise<ProductEntity[]> {
-        return await this.productRepository.find({
-            relations: ['book', 'productCategory', 'productTags'],
-        });
+        return await this.productRepository.findAll();
     }
 
     /**
-     * 삭제된 데이터를 포함한 모든 상품 조회
-     * @returns 삭제된 데이터를 포함한 모든 상품 목록
+     * 묶음 상품 조회
+     * @returns 모든 상품 목록
      */
-    async findAllWithDeleted(): Promise<ProductEntity[]> {
-        return await this.productRepository.find({
-            relations: ['book', 'productCategory', 'productTags'],
-            withDeleted: true,
-        });
+    async findAllByIds(
+        ids: string[], //
+    ): Promise<ProductEntity[]> {
+        return await this.productRepository.findAllByIds(ids);
     }
 
     /**
@@ -59,10 +57,9 @@ export class ProductService {
     async findOneByID(
         productID: string, //
     ): Promise<ProductEntity> {
-        return await this.productRepository.findOne({
-            where: { id: productID },
-            relations: ['book', 'productCategory', 'productTags'],
-        });
+        const result = await this.productRepository.findOneByID(productID);
+        this.productCheckService.checkValidProduct(result);
+        return result;
     }
 
     /**
@@ -73,11 +70,11 @@ export class ProductService {
     async findOneWithDeleted(
         productID: string, //
     ): Promise<ProductEntity> {
-        return await this.productRepository.findOne({
-            where: { id: productID },
-            relations: ['book', 'productCategory', 'productTags'],
-            withDeleted: true,
-        });
+        const result = await this.productRepository.findOneWithDeleted(
+            productID,
+        );
+        this.productCheckService.checkValidProduct(result);
+        return result;
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -99,7 +96,10 @@ export class ProductService {
         } = createProductInput;
 
         const book = await this.bookService.findOne(book_id);
-        const category = await this.productCategoryService.findOneByID(
+        // const category = await this.productCategoryService.findOneByID(
+        //     category_id,
+        // );
+        const category = await this.productCategoryService.findByTree(
             category_id,
         );
         const tagEntities = await this.productTagsService.create(product_tags);
@@ -146,7 +146,7 @@ export class ProductService {
         // 입력받지 않았다면, 기존의 카테고리 복사
         const category =
             category_id !== undefined
-                ? await this.productCategoryService.findOneByID(category_id)
+                ? await this.productCategoryService.findByTree(category_id)
                 : product.productCategory;
 
         // 저장 후 변경된 데이터 반환
@@ -168,14 +168,12 @@ export class ProductService {
     ): Promise<ResultMessage> {
         const product = await this.findOneWithDeleted(productID);
 
-        const result = await this.productRepository.restore({
-            id: product.id,
-        });
+        const result = await this.productRepository.retoreByID(product.id);
 
         return new ResultMessage({
             id: productID,
-            isSuccess: result.affected ? true : false,
-            contents: result.affected
+            isSuccess: result,
+            contents: result
                 ? MESSAGES.PRODUCT_RESTORE_SUCCESSED
                 : MESSAGES.PRODUCT_RESTORE_FAILED,
         });
@@ -189,11 +187,11 @@ export class ProductService {
      * @returns ResultMessage
      */
     async deleteAll(): Promise<ResultMessage> {
-        const result = await this.productRepository.delete({});
+        const result = await this.productRepository.deleteAll();
 
         return new ResultMessage({
-            isSuccess: result.affected ? true : false,
-            contents: result.affected
+            isSuccess: result,
+            contents: result
                 ? MESSAGES.PRODUCT_DELETE_ALL_SUCCESSED
                 : MESSAGES.PRODUCT_DELETE_ALL_FAILED,
         });
@@ -204,11 +202,11 @@ export class ProductService {
      * @returns ResultMessage
      */
     async softDeleteAll(): Promise<ResultMessage> {
-        const result = await this.productRepository.softDelete({});
+        const result = await this.productRepository.softDeleteAll();
 
         return new ResultMessage({
-            isSuccess: result.affected ? true : false,
-            contents: result.affected
+            isSuccess: result,
+            contents: result
                 ? MESSAGES.PRODUCT_SOFT_DELETE_ALL_SUCCESSED
                 : MESSAGES.PRODUCT_SOFT_DELETE_ALL_FAILED,
         });
@@ -224,14 +222,12 @@ export class ProductService {
     ): Promise<ResultMessage> {
         const product = await this.findOneWithDeleted(productID);
 
-        const result = await this.productRepository.delete({
-            id: product.id,
-        });
+        const result = await this.productRepository.delete(product.id);
 
         return new ResultMessage({
             id: productID,
-            isSuccess: result.affected ? true : false,
-            contents: result.affected
+            isSuccess: result,
+            contents: result
                 ? MESSAGES.PRODUCT_DELETE_SUCCESSED
                 : MESSAGES.PRODUCT_DELETE_FAILED,
         });
@@ -247,14 +243,12 @@ export class ProductService {
     ): Promise<ResultMessage> {
         const product = await this.findOneByID(productID);
 
-        const result = await this.productRepository.softDelete({
-            id: product.id,
-        });
+        const result = await this.productRepository.softDelete(product.id);
 
         return new ResultMessage({
             id: productID,
-            isSuccess: result.affected ? true : false,
-            contents: result.affected
+            isSuccess: result,
+            contents: result
                 ? MESSAGES.PRODUCT_SOFT_DELETE_SUCCESSED
                 : MESSAGES.PRODUCT_SOFT_DELETE_FAILED,
         });

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { FileUploadEntity } from './entities/fileUpload.entity';
+import { FileEntity } from './entities/file.entity';
 import { FileAdminController } from './file.admin.controller';
 import { FileUploadResolver } from './fileUpload.resolver';
 import { FileUploadService } from './fileUpload.service';
@@ -9,7 +9,7 @@ import { FileUploadService } from './fileUpload.service';
 @Module({
     imports: [
         TypeOrmModule.forFeature([
-            FileUploadEntity, //
+            FileEntity, //
         ]),
     ],
     exports: [FileUploadService],

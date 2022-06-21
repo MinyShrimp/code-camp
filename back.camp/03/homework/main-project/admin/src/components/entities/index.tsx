@@ -15,7 +15,6 @@ import { BookImageIndex } from './bookImage';
 import { ProductIndex } from './product';
 import { ProductTagIndex } from './productTag';
 import { ProductCategoryIndex } from './productCategory';
-import { ProductCategorySearchIndex } from './productCategorySearch';
 
 import { FileIndex } from './file';
 
@@ -64,15 +63,6 @@ export function EntityMain() {
                         path="/book/*"
                         element={
                             <BookIndex
-                                setReload={setEntityReloadFunction}
-                                setEntityName={setEntityName}
-                            />
-                        }
-                    />
-                    <Route
-                        path="/product/category/search/*"
-                        element={
-                            <ProductCategorySearchIndex
                                 setReload={setEntityReloadFunction}
                                 setEntityName={setEntityName}
                             />

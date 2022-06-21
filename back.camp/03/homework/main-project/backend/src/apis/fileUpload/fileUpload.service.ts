@@ -8,13 +8,13 @@ import { FileUpload } from 'graphql-upload';
 
 import { ResultMessage } from '../../commons/message/ResultMessage.dto';
 
-import { FileUploadEntity } from './entities/fileUpload.entity';
+import { FileEntity } from './entities/file.entity';
 
 @Injectable()
 export class FileUploadService {
     constructor(
-        @InjectRepository(FileUploadEntity)
-        private readonly fileUploadRepository: Repository<FileUploadEntity>,
+        @InjectRepository(FileEntity)
+        private readonly fileUploadRepository: Repository<FileEntity>,
     ) {}
 
     ///////////////////////////////////////////////////////////////////
@@ -23,13 +23,13 @@ export class FileUploadService {
     ///////////////////////////////////////////////////////////////////
     // 조회 //
 
-    async findAll(): Promise<FileUploadEntity[]> {
+    async findAll(): Promise<FileEntity[]> {
         return await this.fileUploadRepository.find({});
     }
 
     async findOne(
         fileID: string, //
-    ): Promise<FileUploadEntity> {
+    ): Promise<FileEntity> {
         return await this.fileUploadRepository.findOne({
             where: { id: fileID },
         });
@@ -47,7 +47,7 @@ export class FileUploadService {
     async upload(
         folderName: string,
         files: FileUpload[], //
-    ): Promise<FileUploadEntity[]> {
+    ): Promise<FileEntity[]> {
         // 변수 초기화
         const writeFiles = await Promise.all(files);
         const key = `./key/${process.env.FILE_KEY}`;

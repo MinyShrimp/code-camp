@@ -23,9 +23,9 @@ export class UserAdminController {
     @Post('/user')
     async createUser(
         @Req() req: Request, //
-        @Res() res: Response,
     ) {
         const user = await this.userService.createUser(req.body);
-        res.send(user);
+        // res.send(user);
+        return user;
     }
 }

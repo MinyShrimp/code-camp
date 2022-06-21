@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { JwtAdminStrategy } from '../../commons/auth/jwt-admin.strategy';
+import { ProductCategoryAdminRepository } from './entities/productCategory.admin.repository';
 
 import { ProductCategoryEntity } from './entities/productCategory.entity';
 import { ProductCategoryAdminController } from './productCategory.admin.controller';
+import { ProductCategoryAdminService } from './productCategory.admin.service';
 
 import { ProductCategoryResolver } from './productCategory.resolver';
 import { ProductCategoryService } from './productCategory.service';
@@ -27,6 +29,9 @@ import { ProductCategoryService } from './productCategory.service';
         ProductCategoryResolver, //
         ProductCategoryService,
         JwtAdminStrategy,
+
+        ProductCategoryAdminRepository,
+        ProductCategoryAdminService,
     ],
 })
 export class ProductCategoryModule {}

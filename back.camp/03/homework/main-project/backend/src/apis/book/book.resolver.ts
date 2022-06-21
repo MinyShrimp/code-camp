@@ -132,7 +132,7 @@ export class BookResolver {
 
         if (isChange) {
             const images = await this.bookImageService.findAllByBook(book);
-            const img_ids = images.map((v) => v.uploadImage.id);
+            const img_ids = images.map((v) => v.file.id);
             await this.fileUploadService.softDelete(img_ids);
 
             // 원래 연결되어있던 이미지를 연결해제
@@ -212,7 +212,7 @@ export class BookResolver {
     ): Promise<ResultMessage> {
         const book = await this.bookService.findOne(bookID);
         const imgs = book.book_images;
-        const uploads = imgs.map((v) => v.uploadImage);
+        const uploads = imgs.map((v) => v.file);
 
         await this.fileUploadService.softDelete(uploads.map((v) => v.id));
         await this.bookImageService.softDelete(book);

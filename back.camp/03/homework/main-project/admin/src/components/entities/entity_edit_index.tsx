@@ -1,6 +1,6 @@
-import { Button, Input, Switch } from '@material-ui/core';
-import axios, { AxiosResponse } from 'axios';
-import React, { ReactNode, useEffect, useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Button } from '@material-ui/core';
 import { IEntityConfig } from './types';
 
 export function EntityEditIndex(props: {
@@ -12,7 +12,7 @@ export function EntityEditIndex(props: {
     const [pending, setPending] = useState<boolean>(false);
 
     const submit = async () => {
-        console.log(props.inputs.current);
+        setPending(true);
         axios
             .post(`${process.env.BE_URL}${props.url}`, {
                 ...props.inputs.current,
@@ -35,7 +35,7 @@ export function EntityEditIndex(props: {
     return (
         <div
             style={{
-                background: 'var(--bs-gray-300)',
+                background: 'var(--bs-gray-100)',
                 width: '100%',
                 height: 'calc(100vh - 210px)',
                 padding: '3rem',
@@ -44,7 +44,7 @@ export function EntityEditIndex(props: {
             {props.columns.map((column, idx) => {
                 return (
                     <div className="mb-4" key={idx}>
-                        <label htmlFor={column.name as string}>
+                        <label htmlFor={column.name as string} className="mb-1">
                             {' '}
                             {column.name}{' '}
                         </label>

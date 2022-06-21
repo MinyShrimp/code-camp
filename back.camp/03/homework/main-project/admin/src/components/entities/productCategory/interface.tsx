@@ -1,6 +1,7 @@
-const now = new Date();
+import { getDefaultDate } from '../../../functions/functions';
+
 // prettier-ignore
 export const DummyProductCategoryColumn = {
-    id: '', name: '', parentId: ''
+    id: '', name: '', createAt: getDefaultDate(), parent: { id: '', name: '' }
 };
 export type IProductCategoryColumn = typeof DummyProductCategoryColumn;

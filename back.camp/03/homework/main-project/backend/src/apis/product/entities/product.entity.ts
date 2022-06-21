@@ -9,17 +9,18 @@ import {
     UpdateDateColumn,
     DeleteDateColumn,
     CreateDateColumn,
+    BaseEntity,
 } from 'typeorm';
 import { IsUrl, Min } from 'class-validator';
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 
 import { BookEntity } from '../../book/entities/book.entity';
 import { ProductTagEntity } from '../../productTag/entities/productTag.entity';
-import { ProductCategorySearchEntity } from '../../productCategorySearch/entities/productCategorySearch.entity';
+import { ProductCategoryEntity } from 'src/apis/productCategory/entities/productCategory.entity';
 
 @Entity({ name: 'product' })
 @ObjectType({ description: '상품 Entity' })
-export class ProductEntity {
+export class ProductEntity extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     @Field(() => ID)
     id: string;
@@ -94,12 +95,12 @@ export class ProductEntity {
     // 상품 카테고리
     // M:1
     @JoinColumn({ name: 'productCategoryId' })
-    @ManyToOne(() => ProductCategorySearchEntity, {
+    @ManyToOne(() => ProductCategoryEntity, {
         cascade: true,
         onDelete: 'CASCADE',
     })
-    @Field(() => ProductCategorySearchEntity, { nullable: true })
-    productCategory: ProductCategorySearchEntity;
+    @Field(() => ProductCategoryEntity, { nullable: true })
+    productCategory: ProductCategoryEntity;
 
     @Column({ name: 'productCategoryId', type: 'uuid' })
     productCategoryId: string;

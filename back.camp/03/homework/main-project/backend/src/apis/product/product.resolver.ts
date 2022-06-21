@@ -1,4 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { ElasticsearchService } from '@nestjs/elasticsearch';
+import { CACHE_MANAGER, Inject } from '@nestjs/common';
+import { Cache } from 'cache-manager';
 
 import { ResultMessage } from '../../commons/message/ResultMessage.dto';
 
@@ -14,7 +17,10 @@ import { ProductService } from './product.service';
 @Resolver()
 export class ProductResolver {
     constructor(
+        @Inject(CACHE_MANAGER)
+        private readonly cacheManager: Cache,
         private readonly productService: ProductService, //
+        private readonly elasticSearchService: ElasticsearchService,
     ) {}
 
     ///////////////////////////////////////////////////////////////////
@@ -22,26 +28,44 @@ export class ProductResolver {
 
     /**
      * GET /api/products
-     * @response 모든 상품 목록
+     * @response 상품 검색
      */
     @Query(
         () => [ProductEntity], //
-        { description: '모든 상품 조회' },
+        { description: '상품 검색' },
     )
-    fetchProducts(): Promise<ProductEntity[]> {
-        return this.productService.findAll();
-    }
+    async fetchProducts(
+        @Args('search') search: string, //
+    ): Promise<ProductEntity[]> {
+        // Redis 검사
+        const redis = await this.cacheManager.get(`product:search:${search}`);
+        if (redis) {
+            return redis as ProductEntity[];
+        }
 
-    /**
-     * GET /admin/products
-     * @response 삭제된 데이터를 포함한 모든 상품 목록
-     */
-    @Query(
-        () => [ProductEntity], //
-        { description: '삭제된 데이터를 포함한 모든 상품 조회' },
-    )
-    fetchProductsWithDeleted(): Promise<ProductEntity[]> {
-        return this.productService.findAllWithDeleted();
+        // 엘라스틱에서 검색
+        const ela = await this.elasticSearchService.search({
+            index: 'product',
+            query: {
+                match_phrase: {
+                    name: search,
+                },
+            },
+            fields: ['id', 'name'],
+        });
+
+        // MySQL에서 가져오기
+        const ids = ela.hits.hits.map((v) => v._source['id']);
+        const result = await this.productService.findAllByIds(ids);
+
+        // Redis 저장
+        if (result.length !== 0) {
+            await this.cacheManager.set(`product:search:${search}`, result, {
+                ttl: 60,
+            });
+        }
+
+        return result;
     }
 
     /**
@@ -53,28 +77,18 @@ export class ProductResolver {
         () => ProductEntity, //
         { description: '단일 상품 조회', nullable: true },
     )
-    fetchProduct(
+    async fetchProduct(
         @Args('productID') productID: string, //
     ): Promise<ProductEntity> {
-        return this.productService.findOneByID(productID);
-    }
+        const redis = await this.cacheManager.get(`product:${productID}`);
+        if (redis) {
+            return redis as ProductEntity;
+        }
 
-    /**
-     * GET /admin/product/:id
-     * @param productID
-     * @response 삭제된 데이터를 포함한 단일 상품
-     */
-    @Query(
-        () => ProductEntity, //
-        {
-            description: '삭제된 데이터를 포함한 단일 상품 조회',
-            nullable: true,
-        },
-    )
-    fetchProductWithDeleted(
-        @Args('productID') productID: string, //
-    ): Promise<ProductEntity> {
-        return this.productService.findOneWithDeleted(productID);
+        const product = await this.productService.findOneByID(productID);
+        this.cacheManager.set(`product:${productID}`, product, { ttl: 0 });
+
+        return product;
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -134,19 +148,7 @@ export class ProductResolver {
     // 삭제 //
 
     /**
-     * DELETE /admin/products
-     * @response ResultMessage
-     */
-    @Mutation(
-        () => ResultMessage, //
-        { description: '모든 상품 삭제 ( Real )' },
-    )
-    async deleteProductAll(): Promise<ResultMessage> {
-        return await this.productService.deleteAll();
-    }
-
-    /**
-     * DELETE /admin/products/soft
+     * DELETE /api/products/soft
      * @response ResultMessage
      */
     @Mutation(
@@ -155,21 +157,6 @@ export class ProductResolver {
     )
     async softDeleteProductAll(): Promise<ResultMessage> {
         return await this.productService.softDeleteAll();
-    }
-
-    /**
-     * DELETE /admin/product/:id
-     * @param productID
-     * @response ResultMessage
-     */
-    @Mutation(
-        () => ResultMessage, //
-        { description: '단일 상품 삭제 ( Real )' },
-    )
-    async deleteProduct(
-        @Args('productID') productID: string, //
-    ): Promise<ResultMessage> {
-        return await this.productService.delete(productID);
     }
 
     /**

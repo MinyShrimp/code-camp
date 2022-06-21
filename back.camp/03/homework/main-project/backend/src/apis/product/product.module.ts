@@ -1,15 +1,19 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ElasticsearchModule } from '@nestjs/elasticsearch';
 
+import { BookModule } from '../book/book.module';
 import { ProductTagModule } from '../productTag/productTag.module';
-import { ProductCategorySearchModule } from '../productCategorySearch/productCategorySearch.module';
+import { ProductCategoryModule } from '../productCategory/productCategory.module';
 
 import { ProductEntity } from './entities/product.entity';
+import { ProductRepository } from './entities/product.repository';
 import { ProductResolver } from './product.resolver';
 import { ProductService } from './product.service';
-import { BookModule } from '../book/book.module';
 import { ProductCheckService } from './productCheck.service';
 import { ProductAdminController } from './product.admin.contoller';
+import { ProductAdminRepository } from './entities/product.admin.repository';
+import { ProductAdminService } from './product.admin.service';
 
 @Module({
     imports: [
@@ -17,10 +21,15 @@ import { ProductAdminController } from './product.admin.contoller';
         TypeOrmModule.forFeature([
             ProductEntity, //
         ]),
+        ElasticsearchModule.register({
+            // node: `http://elasticsearch:9200`,
+            node: `http://localhost:9200`,
+        }),
         // ProductPriceService를 사용해주기 위해 import
         BookModule,
         ProductTagModule,
-        ProductCategorySearchModule,
+        ProductCategoryModule,
+        // ProductCategorySearchModule,
     ],
     exports: [
         ProductService, //
@@ -31,8 +40,12 @@ import { ProductAdminController } from './product.admin.contoller';
     ],
     providers: [
         ProductResolver, //
+        ProductRepository,
         ProductService,
         ProductCheckService,
+
+        ProductAdminRepository,
+        ProductAdminService,
     ],
 })
 export class ProductModule {}

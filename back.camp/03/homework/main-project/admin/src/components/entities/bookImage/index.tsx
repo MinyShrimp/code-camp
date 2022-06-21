@@ -1,5 +1,7 @@
 import React from 'react';
+import { DummyBookColumn } from '../book/interface';
 import { EntityFactory } from '../entity_factory';
+import { DummyFileColumn } from '../file/interface';
 import { DummyBookImageColumn, IBookImageColumn } from './interface';
 
 // prettier-ignore
@@ -7,25 +9,33 @@ export const BookImageIndex = EntityFactory.getEntity<IBookImageColumn>({
     name: 'Book Image',
     dummyData: DummyBookImageColumn,
     list: {
-        column: ['id', 'isMain', 'bookId', 'uploadImageId'],
+        column: ['id', 'isMain', 'book', 'file'],
+        option: {
+            'book': 'title',
+            'file': 'url'
+        },
         url: '/admin/book-images',
     },
     show: {
-        column: ['id', 'isMain', 'bookId', 'uploadImageId', 'deleteAt'],
+        column: ['id', 'isMain', 'book', 'file', 'deleteAt'],
+        option: {
+            'book': 'title',
+            'file': 'url'
+        },
         url: '/admin/book-image',
     },
     edit: {
-        column: ['isMain', 'bookId', 'uploadImageId'],
+        column: ['isMain', 'book', 'file'],
         url: '/admin/book-image',
         default: {
-            isMain: false, bookId: '', uploadImageId: '',
+            isMain: false, book: DummyBookColumn, file: DummyFileColumn,
         },
     },
     update: {
-        column: ['isMain', 'bookId', 'uploadImageId'],
+        column: ['isMain', 'book', 'file'],
         url: '/admin/book-image',
         default: {
-            isMain: false, bookId: '', uploadImageId: '',
+            isMain: false, book: DummyBookColumn, file: DummyFileColumn,
         },
     },
 });

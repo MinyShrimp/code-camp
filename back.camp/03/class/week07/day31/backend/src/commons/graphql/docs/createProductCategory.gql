@@ -1,0 +1,8 @@
+mutation {
+    createProductCategory(
+        name: "전자제품" #
+    ) {
+        id
+        name
+    }
+}
