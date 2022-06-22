@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 export function EntityEditIndex(props: {
     setReload: Function;
-    url: string;
+    url: { [key in string]: string };
     columns: Array<IEntityConfig>;
     inputs: any;
 }) {
@@ -23,7 +23,11 @@ export function EntityEditIndex(props: {
             .then((res) => {
                 console.log(res);
                 setPending(false);
-                navi(`/admin/entity/${props.url.split('/').slice(-1)}`);
+                navi(
+                    `/admin/entity/${props.url['default']
+                        .split('/')
+                        .slice(-1)}`,
+                );
             })
             .catch((error) => {
                 console.log(error);

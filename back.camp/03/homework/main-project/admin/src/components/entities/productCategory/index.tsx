@@ -30,14 +30,20 @@ export const ProductCategoryIndex =
         },
         edit: {
             column: [ 'name', 'parentID' ],
-            url: '/admin/product-category',
+            url: { 
+                default: '/admin/product-category', 
+                'parentID': '/admin/product-category/names' 
+            },
             default: {
                 name: '', parentID: ''
             }
         },
         update: {
             column: [ 'name', 'parentID' ],
-            url: '/admin/product-category',
+            url: { 
+                default: '/admin/product-category',
+                'parentID': '/admin/product-category/names' 
+            },
             default: {
                 name: '', parentID: ''
             }

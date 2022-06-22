@@ -23,29 +23,31 @@ export const ReviewIndex = EntityFactory.getEntity<IReviewColumn>({
             'product', 'user',
         ],
         url: '/admin/review'
-    }
-    ,
+    },
     edit: {
         column: [
-            'contents', 'star', 'like',
-            'product', 'user',
+            'contents', 'productID', 'userID',
         ],
-        url: '/admin/review',
+        url: { 
+            'default': '/admin/review',
+            'productID': '/admin/product/names',
+            'userID': '/admin/user/names',
+        },
         default: {
-            contents: '', star: 0, like: false,
-            product: DummyProductColumn, user: DummyUserColumn,
+            contents: '', productID: '', userID: '',
         }
-    }
-    ,
+    },
     update: {
         column: [
-            'contents', 'star', 'like',
-            'product', 'user',
+            'contents', 'productID', 'userID',
         ],
-        url: '/admin/review',
+        url: { 
+            'default': '/admin/review',
+            'productID': '/admin/product/names',
+            'userID': '/admin/user/names',
+        },
         default: {
-            contents: '', star: 0, like: false,
-            product: DummyProductColumn, user: DummyUserColumn,
+            contents: '', productID: '', userID: '',
         }
     }
 });

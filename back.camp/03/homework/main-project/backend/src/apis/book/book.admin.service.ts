@@ -12,6 +12,10 @@ export class BookAdminService {
         return this.bookRepository.findAll();
     }
 
+    findAllName(): Promise<BookEntity[]> {
+        return this.bookRepository.findAllName();
+    }
+
     findOne(
         bookID: string, //
     ): Promise<BookEntity> {

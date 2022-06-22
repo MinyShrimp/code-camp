@@ -32,6 +32,24 @@ export class UserAdminRepository {
             .getMany();
     }
 
+    async findAllName(): Promise<UserEntity[]> {
+        const result = await this.userRepository
+            .createQueryBuilder('user')
+            .select([
+                'user.id',
+                'CONCAT(user.name, " | ", user.email) as user_name',
+            ])
+            .orderBy('user.createAt')
+            .getRawMany();
+
+        return result.map((value) =>
+            this.userRepository.create({
+                id: value.user_id,
+                name: value.user_name,
+            }),
+        );
+    }
+
     async findOne(
         userID: string, //
     ): Promise<UserEntity> {

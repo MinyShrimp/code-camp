@@ -24,7 +24,7 @@ export const AuthorIndex = EntityFactory.getEntity<IAuthorColumn>({
         column: [
             'name', 'description',
         ],
-        url: '/admin/author',
+        url: { 'default': '/admin/author' },
         default: {
             name: '', description: ''
         }
@@ -33,7 +33,7 @@ export const AuthorIndex = EntityFactory.getEntity<IAuthorColumn>({
         column: [
             'name', 'description',
         ],
-        url: '/admin/author',
+        url: { 'default': '/admin/author' },
         default: {
             name: '', description: ''
         }

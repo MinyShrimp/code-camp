@@ -15,6 +15,11 @@ export class BookAdminController {
         return this.bookAdminService.findAll();
     }
 
+    @Get('/book/names')
+    findAllName(): Promise<BookEntity[]> {
+        return this.bookAdminService.findAllName();
+    }
+
     @Get('/book/:id')
     findOne(
         @Param('id') bookID: string, //

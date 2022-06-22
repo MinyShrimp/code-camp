@@ -10,7 +10,7 @@ export function EntityIndex(props: {
     setReload: Function;
     list?: { column: IEntityConfig[]; url: string };
     show?: { column: IEntityConfig[]; url: string };
-    edit?: { column: IEntityConfig[]; url: string };
+    edit?: { column: IEntityConfig[]; url: { [key in string]: string } };
     EditInput?: any;
 }) {
     return (

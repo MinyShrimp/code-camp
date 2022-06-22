@@ -16,10 +16,13 @@ import axios from 'axios';
 export class EntityFactory {
     private static createColumn<T>(
         dummy: T,
-        config: Array<keyof T>,
-        option?: Partial<{ [key in keyof T]: string }>,
+        config: {
+            url: string | { [key in string]: string };
+            column: Array<keyof T>;
+            option?: Partial<{ [key in keyof T]: string }>;
+        },
     ) {
-        return config.map((key, idx) => {
+        return config.column.map((key, idx) => {
             const tmp: IEntityConfig = {
                 name: key as string,
                 data: dummy[key],
@@ -42,7 +45,7 @@ export class EntityFactory {
                         />
                     );
                 },
-                minWidth: `calc((100% - 50px) / ${config.length})`,
+                minWidth: `calc((100% - 50px) / ${config.column.length})`,
             };
 
             if (tmp.name === 'pwd') {
@@ -88,12 +91,19 @@ export class EntityFactory {
                     useEffect(() => {
                         axios
                             .get(
-                                `${process.env.BE_URL}/admin/product-category/names`,
+                                `${process.env.BE_URL}${
+                                    (config.url as { [K in string]: string })[
+                                        key as string
+                                    ]
+                                }`,
                             )
                             .then((res) => {
                                 setItems(
                                     res.data.map((v: any) => {
-                                        return { id: v.id, value: v.name };
+                                        return {
+                                            id: v.id,
+                                            value: v.name ?? v.title,
+                                        };
                                     }),
                                 );
                             })
@@ -108,7 +118,6 @@ export class EntityFactory {
                             label=""
                             items={items}
                             onSelect={(item) => {
-                                console.log(item);
                                 props.row[tmp.name] = item.id;
                             }}
                         />
@@ -147,7 +156,7 @@ export class EntityFactory {
                     return (
                         <>
                             {row[key] !== null && row[key] !== undefined ? (
-                                option === undefined ? (
+                                config.option === undefined ? (
                                     <Link
                                         to={`/admin/entity/${key as string}/${
                                             row[key]['id']
@@ -165,7 +174,7 @@ export class EntityFactory {
                                         }/${row[key]['id']}`}
                                         reloadDocument
                                     >
-                                        {row[key][option[key]]}
+                                        {row[key][config.option[key]]}
                                     </Link>
                                 )
                             ) : (
@@ -207,8 +216,11 @@ export class EntityFactory {
 
     private static createListColumn<T>(
         dummy: T,
-        config: Array<keyof T>,
-        option?: Partial<{ [key in keyof T]: string }>,
+        config: {
+            url: string | { [key in keyof T]: string };
+            column: Array<keyof T>;
+            option?: Partial<{ [key in keyof T]: string }>;
+        },
     ) {
         return [
             // {
@@ -228,7 +240,7 @@ export class EntityFactory {
             //     },
             //     width: '50px',
             // },
-            ...this.createColumn<T>(dummy, config, option),
+            ...this.createColumn<T>(dummy, config),
         ];
     }
 
@@ -246,12 +258,12 @@ export class EntityFactory {
             option?: Partial<{ [key in keyof T]: string }>;
         };
         edit?: {
-            url: string;
+            url: { [key in string]: string };
             default: Partial<T>;
             column: Array<keyof T>;
         };
         update?: {
-            url: string;
+            url: { [key in string]: string };
             default: Partial<T>;
             column: Array<keyof T>;
         };
@@ -262,8 +274,7 @@ export class EntityFactory {
                     ? {
                           column: this.createListColumn<T>(
                               columnConfig.dummyData,
-                              columnConfig.list.column,
-                              columnConfig.list.option,
+                              columnConfig.list,
                           ),
                           url: columnConfig.list.url,
                       }
@@ -273,8 +284,7 @@ export class EntityFactory {
                     ? {
                           column: this.createColumn<T>(
                               columnConfig.dummyData,
-                              columnConfig.show.column,
-                              columnConfig.show.option,
+                              columnConfig.show,
                           ),
                           url: columnConfig.show.url,
                       }
@@ -284,7 +294,7 @@ export class EntityFactory {
                     ? {
                           column: this.createColumn<T>(
                               columnConfig.dummyData,
-                              columnConfig.edit.column,
+                              columnConfig.edit,
                           ),
                           url: columnConfig.edit.url,
                       }
@@ -294,7 +304,7 @@ export class EntityFactory {
                     ? {
                           column: this.createColumn<T>(
                               columnConfig.dummyData,
-                              columnConfig.update.column,
+                              columnConfig.update,
                           ),
                           url: columnConfig.update.url,
                       }

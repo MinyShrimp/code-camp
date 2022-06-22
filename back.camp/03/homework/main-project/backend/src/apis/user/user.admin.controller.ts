@@ -16,6 +16,11 @@ export class UserAdminController {
         return this.userAdminRepository.findAll();
     }
 
+    @Get('/user/names')
+    findAllName(): Promise<UserEntity[]> {
+        return this.userAdminRepository.findAllName();
+    }
+
     @Get('/user/:id')
     getUser(
         @Param('id') userID: string, //
