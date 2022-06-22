@@ -8,5 +8,5 @@ RUN yarn install
 
 COPY . /app
 
-EXPOSE 3000
+EXPOSE 3002
 CMD ["yarn", "start:dev"]
