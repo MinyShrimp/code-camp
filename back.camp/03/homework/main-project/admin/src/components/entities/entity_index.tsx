@@ -8,49 +8,52 @@ import { IEntityConfig } from './types';
 
 export function EntityIndex(props: {
     setReload: Function;
-    ListUrl: string;
-    ShowUrl: string;
-    EditUrl: string;
-    ListColumns: IEntityConfig[];
-    ShowColumns: IEntityConfig[];
-    EditColumns: IEntityConfig[];
-    EditInput: any;
+    list?: { column: IEntityConfig[]; url: string };
+    show?: { column: IEntityConfig[]; url: string };
+    edit?: { column: IEntityConfig[]; url: { [key in string]: string } };
+    EditInput?: any;
 }) {
     return (
         <Routes>
-            <Route
-                path="/"
-                element={
-                    <EntityListIndex
-                        url={props.ListUrl}
-                        columns={props.ListColumns}
-                        setReload={props.setReload}
-                    />
-                }
-            />
+            {props.list ? (
+                <Route
+                    path="/"
+                    element={
+                        <EntityListIndex
+                            url={props.list.url}
+                            columns={props.list.column}
+                            setReload={props.setReload}
+                        />
+                    }
+                />
+            ) : null}
 
-            <Route
-                path="/edit"
-                element={
-                    <EntityEditIndex
-                        url={props.EditUrl}
-                        columns={props.EditColumns}
-                        setReload={props.setReload}
-                        inputs={props.EditInput}
-                    />
-                }
-            />
+            {props.edit ? (
+                <Route
+                    path="/edit"
+                    element={
+                        <EntityEditIndex
+                            url={props.edit.url}
+                            columns={props.edit.column}
+                            setReload={props.setReload}
+                            inputs={props.EditInput}
+                        />
+                    }
+                />
+            ) : null}
 
-            <Route
-                path="*"
-                element={
-                    <EntityShowIndex
-                        url={props.ShowUrl}
-                        columns={props.ShowColumns}
-                        setReload={props.setReload}
-                    />
-                }
-            />
+            {props.show ? (
+                <Route
+                    path="*"
+                    element={
+                        <EntityShowIndex
+                            url={props.show.url}
+                            columns={props.show.column}
+                            setReload={props.setReload}
+                        />
+                    }
+                />
+            ) : null}
         </Routes>
     );
 }

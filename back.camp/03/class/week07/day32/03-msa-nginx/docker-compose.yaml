@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+    gateway:
+        image: nginx:latest
+        container_name: codecamp-class-gateway
+        volumes:
+            - ./api-gateway/default.conf:/etc/nginx/conf.d/default.conf
+        ports:
+            - 8000:80
+
+    auth-service:
+        build:
+            context: ./services/auth
+            dockerfile: Dockerfile
+        container_name: codecamp-class-auth
+        volumes:
+            - ./services/auth:/app
+
+    stock-service:
+        build:
+            context: ./services/stock
+            dockerfile: Dockerfile
+        container_name: codecamp-class-stock
+        volumes:
+            - ./services/stock:/app

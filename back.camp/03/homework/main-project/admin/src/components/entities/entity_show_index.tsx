@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import React, { useEffect, useState } from 'react';
 import { getLastPath } from '../../functions/functions';
 import { IEntityConfig } from './types';
+import bcrypt from 'bcryptjs';
 
 export function EntityShowIndex(props: {
     url: string;
@@ -53,7 +54,7 @@ export function EntityShowIndex(props: {
             {!pending && data !== undefined ? (
                 props.columns.map((column, idx) => {
                     return (
-                        <div className="mb-4" key={idx}>
+                        <div className="mb-4" key={bcrypt.genSaltSync(1)}>
                             <div>{column.name}</div>
                             <div>
                                 {

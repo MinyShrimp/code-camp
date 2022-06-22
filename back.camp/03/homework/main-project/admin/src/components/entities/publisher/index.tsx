@@ -24,7 +24,7 @@ export const PublisherIndex = EntityFactory.getEntity<IPublisherColumn>({
         column: [
             'name', 'description',
         ],
-        url: '/admin/publisher',
+        url: { 'default': '/admin/publisher' },
         default: {
             name: '', description: ''
         }
@@ -33,7 +33,7 @@ export const PublisherIndex = EntityFactory.getEntity<IPublisherColumn>({
         column: [
             'name', 'description',
         ],
-        url: '/admin/publisher',
+        url: { 'default': '/admin/publisher' },
         default: {
             name: '', description: ''
         }

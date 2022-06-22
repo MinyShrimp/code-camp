@@ -11,6 +11,10 @@ export class AuthorAdminService {
         return this.authorAdminRepository.findAll();
     }
 
+    async findAllNames() {
+        return this.authorAdminRepository.findAllNames();
+    }
+
     async findOne(
         authorID: string, //
     ) {

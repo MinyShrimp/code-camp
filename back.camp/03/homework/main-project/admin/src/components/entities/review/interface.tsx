@@ -7,6 +7,7 @@ const now = getDefaultDate();
 export const DummyReviewColumn = {
     id: '', contents: '', star: 0.0, like: true, 
     createAt: now, updateAt: now, deleteAt: now,
-    product: DummyProductColumn, user: DummyUserColumn
+    product: DummyProductColumn, user: DummyUserColumn,
+    productID: '', userID: ''
 };
 export type IReviewColumn = typeof DummyReviewColumn;

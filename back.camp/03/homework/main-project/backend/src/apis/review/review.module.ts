@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ReviewAdminRepository } from './entities/review.admin.repository';
 
 import { ReviewEntity } from './entities/review.entity';
 import { ReviewAdminController } from './review.admin.controller';
@@ -18,6 +19,7 @@ import { ReviewService } from './review.service';
     providers: [
         ReviewResolver, //
         ReviewService,
+        ReviewAdminRepository,
     ],
 })
 export class ReviewModule {}

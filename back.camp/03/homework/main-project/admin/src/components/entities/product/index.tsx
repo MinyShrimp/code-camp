@@ -1,7 +1,5 @@
 import React from 'react';
-import { DummyBookColumn } from '../book/interface';
 import { EntityFactory } from '../entity_factory';
-import { DummyProductCategoryColumn } from '../productCategory/interface';
 import { DummyProductColumn, IProductColumn } from './interface';
 
 // prettier-ignore
@@ -33,29 +31,35 @@ export const ProductIndex = EntityFactory.getEntity<IProductColumn>({
             productCategory: "name"
         },
         url: '/admin/product'
-    }
-    ,
+    },
     edit: {
         column: [
-            'name', 'url', 'stock_count', 
-            'price', 'book', 'productCategory',
+            'name', 'url', 'stock_count', 'price', 
+            'bookID', 'productCategoryID', 'productTagsInput',
         ],
-        url: '/admin/product',
+        url: {
+            'default': '/admin/product',
+            'bookID': '/admin/book/names',
+            'productCategoryID': '/admin/product-category/names'
+        },
         default: {
             name: '', url: '', stock_count: 0,
-            price: 0, book: DummyBookColumn, productCategory: DummyProductCategoryColumn
+            price: 0, bookID: '', productCategoryID: '', productTagsInput: ''
         }
-    }
-    ,
+    },
     update: {
         column: [
-            'name', 'url', 'stock_count', 'selling_count',
-            'price', 'book', 'productCategory',
+            'name', 'url', 'stock_count', 'selling_count', 'price', 
+            'bookID', 'productCategoryID', 'productTagsInput',
         ],
-        url: '/admin/product',
+        url: {
+            'default': '/admin/product',
+            'bookID': '/admin/book/names',
+            'productCategoryID': '/admin/product-category/names'
+        },
         default: {
             name: '', url: '', stock_count: 0, selling_count: 0,
-            price: 0, book: DummyBookColumn, productCategory: DummyProductCategoryColumn
+            price: 0, bookID: '', productCategoryID: '', productTagsInput: ''
         }
     }
 });

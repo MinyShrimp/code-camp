@@ -17,17 +17,5 @@ export const ProductTagIndex = EntityFactory.getEntity<IProductTagColumn>({
             'id', 'name', 'createAt'
         ],
         url: '/admin/product-tag'
-    }
-    ,
-    edit: {
-        column: [ 'name' ],
-        url: '/admin/product-tag',
-        default: { name: '' }
-    }
-    ,
-    update: {
-        column: [ 'name' ],
-        url: '/admin/product-tag',
-        default: { name: '' }
-    }
+    },
 });

@@ -7,7 +7,11 @@ const now = new Date();
 export const DummyProductColumn = {
     id: '', name: '', url: '', stock_count: 0, selling_count: 0,
     price: 0, createAt: now, updateAt: now, deleteAt: now,
-    book: DummyBookColumn, productCategory: DummyProductCategoryColumn,
-    productTags: [DummyProductTagColumn]
+    book: DummyBookColumn, 
+    bookID: '', 
+    productCategory: DummyProductCategoryColumn,
+    productCategoryID: '',
+    productTags: [DummyProductTagColumn],
+    productTagsInput: ''
 };
 export type IProductColumn = typeof DummyProductColumn;

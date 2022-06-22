@@ -74,4 +74,17 @@ export class BookAdminRepository {
             .orderBy('book_image.isMain', 'DESC')
             .getOne();
     }
+
+    /**
+     * 모든 책의 이름 조회
+     * @returns 모든 책
+     */
+    async findAllName(): Promise<BookEntity[]> {
+        return await this.bookRepository
+            .createQueryBuilder('book')
+            .select(['book.id', 'book.title'])
+            .withDeleted()
+            .orderBy('book.createAt')
+            .getMany();
+    }
 }

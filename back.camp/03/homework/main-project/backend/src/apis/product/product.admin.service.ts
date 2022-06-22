@@ -11,6 +11,10 @@ export class ProductAdminService {
         return await this.productAdminRepository.findAll();
     }
 
+    async findAllName() {
+        return await this.productAdminRepository.findAllName();
+    }
+
     async findOne(
         productID: string, //
     ) {

@@ -27,7 +27,7 @@ export const UserIndex = EntityFactory.getEntity<IUserColumn>({
         column: [
             'name', 'email', 'pwd'
         ],
-        url: "/admin/user",
+        url: { 'default': '/admin/user' },
         default: {
             name: "", email: "", pwd: ""
         }
@@ -37,7 +37,7 @@ export const UserIndex = EntityFactory.getEntity<IUserColumn>({
             'name', 'email', 'pwd', 'point', 
             'isLogin', 'isAdmin'
         ],
-        url: "/admin/user",
+        url: { 'default': '/admin/user' },
         default: {
             name: "", email: "", pwd: "", point: 0, 
             isLogin: false, isAdmin: false

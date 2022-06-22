@@ -4319,6 +4319,11 @@ react-data-table-component@^7.5.2:
   dependencies:
     deepmerge "^4.2.2"
 
+react-datalist-input@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/react-datalist-input/-/react-datalist-input-3.0.6.tgz#793313ef83484cdf726e3520b309643762f29c55"
+  integrity sha512-HcodHj4JeXZGL2yJEi/ZtMxQe7ALPjTrd3BvL96U2u3oll9wFisn3Ev5CsCKvglOtvkWKaMqapaQJ9qZBSjcsw==
+
 react-dom@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"

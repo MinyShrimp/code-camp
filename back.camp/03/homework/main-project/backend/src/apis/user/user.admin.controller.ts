@@ -1,23 +1,31 @@
 import { Controller, Get, Param, Post, Query, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { UserAdminRepository } from './entities/user.admin.repository';
+import { UserEntity } from './entities/user.entity';
 import { UserService } from './user.service';
 
 @Controller('admin')
 export class UserAdminController {
     constructor(
         private readonly userService: UserService, //
+        private readonly userAdminRepository: UserAdminRepository,
     ) {}
 
     @Get('/users')
-    getUsers() {
-        return this.userService.findAllWithDeleted();
+    getUsers(): Promise<UserEntity[]> {
+        return this.userAdminRepository.findAll();
+    }
+
+    @Get('/user/names')
+    findAllName(): Promise<UserEntity[]> {
+        return this.userAdminRepository.findAllName();
     }
 
     @Get('/user/:id')
     getUser(
         @Param('id') userID: string, //
-    ) {
-        return this.userService.findOneByID(userID);
+    ): Promise<UserEntity> {
+        return this.userAdminRepository.findOne(userID);
     }
 
     @Post('/user')

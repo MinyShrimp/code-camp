@@ -17,4 +17,8 @@ export class ProductCategoryAdminService {
     ): Promise<ProductCategoryEntity> {
         return await this.productCategoryRepository.findOne(categoryID);
     }
+
+    async findAllName(): Promise<ProductCategoryEntity[]> {
+        return await this.productCategoryRepository.findAllName();
+    }
 }

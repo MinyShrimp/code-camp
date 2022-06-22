@@ -13,6 +13,11 @@ export class PublisherAdminContoller {
         return this.publisherService.findAll();
     }
 
+    @Get('/publisher/names')
+    findAllNames(): Promise<PublisherEntity[]> {
+        return this.publisherService.findAllNames();
+    }
+
     @Get('/publisher/:id')
     findOne(
         @Param('id') publisherID: string, //

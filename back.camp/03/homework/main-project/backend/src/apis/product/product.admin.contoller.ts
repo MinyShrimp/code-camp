@@ -21,6 +21,15 @@ export class ProductAdminController {
     }
 
     /**
+     * GET /admin/product/names
+     * @response 삭제된 데이터를 포함한 단일 상품
+     */
+    @Get('/product/names')
+    findAllName(): Promise<ProductEntity[]> {
+        return this.productAdminService.findAllName();
+    }
+
+    /**
      * GET /admin/product/:id
      * @param productID
      * @response 삭제된 데이터를 포함한 단일 상품

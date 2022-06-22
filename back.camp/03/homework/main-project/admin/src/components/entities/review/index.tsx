@@ -11,41 +11,51 @@ export const ReviewIndex = EntityFactory.getEntity<IReviewColumn>({
     list: {
         column: [
             'id', 'contents', 'star', 'like',
+            'user', 'product', 
             'createAt', 'updateAt', 'deleteAt',
-            'product', 'user',
         ],
+        option: {
+            user: "email",
+            product: "name",
+        },
         url: '/admin/reviews'
     },
     show: {
         column: [
             'id', 'contents', 'star', 'like',
+            'user', 'product', 
             'createAt', 'updateAt', 'deleteAt',
-            'product', 'user',
         ],
+        option: {
+            user: "email",
+            product: "name",
+        },
         url: '/admin/review'
-    }
-    ,
+    },
     edit: {
         column: [
-            'contents', 'star', 'like',
-            'product', 'user',
+            'contents', 'star', 'productID', 'userID',
         ],
-        url: '/admin/review',
+        url: { 
+            'default': '/admin/review',
+            'productID': '/admin/product/names',
+            'userID': '/admin/user/names',
+        },
         default: {
-            contents: '', star: 0, like: false,
-            product: DummyProductColumn, user: DummyUserColumn,
+            contents: '', star: 0.0, productID: '', userID: '',
         }
-    }
-    ,
+    },
     update: {
         column: [
-            'contents', 'star', 'like',
-            'product', 'user',
+            'contents', 'star', 'productID', 'userID',
         ],
-        url: '/admin/review',
+        url: { 
+            'default': '/admin/review',
+            'productID': '/admin/product/names',
+            'userID': '/admin/user/names',
+        },
         default: {
-            contents: '', star: 0, like: false,
-            product: DummyProductColumn, user: DummyUserColumn,
+            contents: '', star: 0.0, productID: '', userID: '',
         }
     }
 });

@@ -37,6 +37,14 @@ export class ProductAdminRepository {
             .getMany();
     }
 
+    async findAllName(): Promise<ProductEntity[]> {
+        return await this.productRepository
+            .createQueryBuilder('product')
+            .select(['product.id', 'product.name'])
+            .orderBy('product.createAt')
+            .getMany();
+    }
+
     async findOne(
         productID: string, //
     ): Promise<ProductEntity> {
