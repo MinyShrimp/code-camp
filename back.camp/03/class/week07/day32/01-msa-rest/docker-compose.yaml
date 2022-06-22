@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+    gateway:
+        build:
+            context: ./api-gateway
+            dockerfile: Dockerfile
+        container_name: codecamp-class-gateway
+        volumes:
+            - ./api-gateway:/app
+        ports:
+            - 3001:3001
+
+    auth-service:
+        build:
+            context: ./services/auth
+            dockerfile: Dockerfile
+        container_name: codecamp-class-auth
+        volumes:
+            - ./services/auth:/app
+
+    resource-service:
+        build:
+            context: ./services/resource
+            dockerfile: Dockerfile
+        container_name: codecamp-class-resource
+        volumes:
+            - ./services/resource:/app
