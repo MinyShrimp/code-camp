@@ -11,6 +11,10 @@ export class PublisherAdminService {
         return this.publisherAdminRepository.findAll();
     }
 
+    async findAllNames() {
+        return this.publisherAdminRepository.findAllNames();
+    }
+
     async findOne(
         publisherID: string, //
     ) {

@@ -28,12 +28,12 @@ export class ReviewEntity extends BaseEntity {
     contents: string;
 
     // 평점
-    @Column({ type: 'decimal', precision: 1, scale: 1 })
+    @Column({ type: 'decimal', precision: 2, scale: 1 })
     @Field(() => Float, { description: '평점' })
-    star: number;
+    star: string;
 
     // 좋아요
-    @Column()
+    @Column({ default: false })
     @Field(() => Boolean, { description: '좋아요' })
     like: boolean;
 
@@ -56,7 +56,7 @@ export class ReviewEntity extends BaseEntity {
     product: ProductEntity;
 
     @Column({ name: 'productId', type: 'uuid' })
-    productId: string;
+    productID: string;
 
     // 유저
     @JoinColumn()
@@ -65,5 +65,5 @@ export class ReviewEntity extends BaseEntity {
     user: UserEntity;
 
     @Column({ name: 'userId', type: 'uuid' })
-    userId: string;
+    userID: string;
 }

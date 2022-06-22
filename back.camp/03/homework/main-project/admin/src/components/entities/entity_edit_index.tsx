@@ -17,7 +17,7 @@ export function EntityEditIndex(props: {
         setPending(true);
         console.log(props.inputs.current);
         axios
-            .post(`${process.env.BE_URL}${props.url}`, {
+            .post(`${process.env.BE_URL}${props.url['default']}`, {
                 ...props.inputs.current,
             })
             .then((res) => {
@@ -47,6 +47,7 @@ export function EntityEditIndex(props: {
                 width: '100%',
                 height: 'calc(100vh - 210px)',
                 padding: '3rem',
+                overflowY: 'scroll',
             }}
         >
             {props.columns.map((column, idx) => {

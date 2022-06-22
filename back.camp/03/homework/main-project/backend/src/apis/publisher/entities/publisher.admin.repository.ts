@@ -27,6 +27,15 @@ export class PublisherAdminRepository {
             .getMany();
     }
 
+    async findAllNames(): Promise<PublisherEntity[]> {
+        return await this.publisherRepository
+            .createQueryBuilder('pub')
+            .select(['pub.id', 'pub.name'])
+            .withDeleted()
+            .orderBy('pub.createAt')
+            .getMany();
+    }
+
     async findOne(
         publisherID: string, //
     ): Promise<PublisherEntity> {

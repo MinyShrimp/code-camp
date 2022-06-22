@@ -11,22 +11,30 @@ export const ReviewIndex = EntityFactory.getEntity<IReviewColumn>({
     list: {
         column: [
             'id', 'contents', 'star', 'like',
+            'user', 'product', 
             'createAt', 'updateAt', 'deleteAt',
-            'product', 'user',
         ],
+        option: {
+            user: "email",
+            product: "name",
+        },
         url: '/admin/reviews'
     },
     show: {
         column: [
             'id', 'contents', 'star', 'like',
+            'user', 'product', 
             'createAt', 'updateAt', 'deleteAt',
-            'product', 'user',
         ],
+        option: {
+            user: "email",
+            product: "name",
+        },
         url: '/admin/review'
     },
     edit: {
         column: [
-            'contents', 'productID', 'userID',
+            'contents', 'star', 'productID', 'userID',
         ],
         url: { 
             'default': '/admin/review',
@@ -34,12 +42,12 @@ export const ReviewIndex = EntityFactory.getEntity<IReviewColumn>({
             'userID': '/admin/user/names',
         },
         default: {
-            contents: '', productID: '', userID: '',
+            contents: '', star: 0.0, productID: '', userID: '',
         }
     },
     update: {
         column: [
-            'contents', 'productID', 'userID',
+            'contents', 'star', 'productID', 'userID',
         ],
         url: { 
             'default': '/admin/review',
@@ -47,7 +55,7 @@ export const ReviewIndex = EntityFactory.getEntity<IReviewColumn>({
             'userID': '/admin/user/names',
         },
         default: {
-            contents: '', productID: '', userID: '',
+            contents: '', star: 0.0, productID: '', userID: '',
         }
     }
 });

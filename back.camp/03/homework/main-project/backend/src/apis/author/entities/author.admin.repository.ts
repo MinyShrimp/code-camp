@@ -27,6 +27,15 @@ export class AuthorAdminRepository {
             .getMany();
     }
 
+    async findAllNames(): Promise<AuthorEntity[]> {
+        return await this.authorRepository
+            .createQueryBuilder('author')
+            .select(['author.id', 'author.name'])
+            .withDeleted()
+            .orderBy('author.createAt')
+            .getMany();
+    }
+
     async findOne(
         authorID: string, //
     ): Promise<AuthorEntity> {

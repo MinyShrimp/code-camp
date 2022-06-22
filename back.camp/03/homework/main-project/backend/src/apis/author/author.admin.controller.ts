@@ -10,8 +10,13 @@ export class AuthorAdminController {
         return this.authorAdminService.findAll();
     }
 
+    @Get('/author/names')
+    getAuthorNames() {
+        return this.authorAdminService.findAllNames();
+    }
+
     @Get('/author/:id')
-    getUser(
+    getAuthor(
         @Param('id') userID: string, //
     ) {
         return this.authorAdminService.findOne(userID);

@@ -63,6 +63,7 @@ export class ReviewService {
         createReviewInput: CreateReviewInput, //
     ): Promise<ReviewEntity> {
         const { ...input } = createReviewInput;
+        console.log(input);
 
         return await this.reviewRepository.save({
             ...input,
