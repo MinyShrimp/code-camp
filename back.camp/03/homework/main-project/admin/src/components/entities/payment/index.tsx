@@ -24,28 +24,4 @@ export const PaymentIndex = EntityFactory.getEntity<IPaymentColumn>({
         ],
         url: '/admin/payment'
     },
-    edit: {
-        column: [
-            'impUid', 'merchantUid',
-            'amount', 'status',
-            'userId', 'productId',
-        ],
-        url: '/admin/payment',
-        default: {
-            impUid: '', merchantUid: '', status: '',
-            amount: 0, userId: '', productId: ''
-        }
-    },
-    update: {
-        column: [
-            'impUid', 'merchantUid',
-            'amount', 'status',
-            'userId', 'productId',
-        ],
-        url: '/admin/payment',
-        default: {
-            impUid: '', merchantUid: '', status: '',
-            amount: 0, userId: '', productId: ''
-        }
-    }
 });

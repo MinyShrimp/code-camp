@@ -12,7 +12,7 @@ export const ProductCategoryIndex =
         dummyData: DummyProductCategoryColumn,
         list: {
             column: [
-                'id', 'name', 'createAt', 'parent'
+                'id', 'name', 'parent', 'createAt'
             ],
             option: {
                 parent: 'name'
@@ -21,27 +21,25 @@ export const ProductCategoryIndex =
         },
         show: {
             column: [
-                'id', 'name', 'createAt', 'parent'
+                'id', 'name', 'parent', 'createAt'
             ],
             option: {
                 parent: 'name'
             },
             url: '/admin/product-category'
-        }
-        ,
+        },
         edit: {
-            column: [ 'name', 'parent' ],
+            column: [ 'name', 'parentID' ],
             url: '/admin/product-category',
             default: {
-                name: '', parent: { id: "parent", name: "" }
+                name: '', parentID: ''
             }
-        }
-        ,
+        },
         update: {
-            column: [ 'name', 'parent' ],
+            column: [ 'name', 'parentID' ],
             url: '/admin/product-category',
             default: {
-                name: '', parent: { id: "parent", name: "" }
+                name: '', parentID: ''
             }
         }
     });

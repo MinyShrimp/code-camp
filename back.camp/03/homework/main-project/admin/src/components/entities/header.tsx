@@ -1,12 +1,17 @@
 import React from 'react';
 import { IconButton } from '@material-ui/core';
 import { Add, Delete, FilterList, Replay } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function EntityIndexHeader(props: {
     entityName: string;
     reload: Function;
+    isList: boolean;
+    isShow: boolean;
+    isEdit: boolean;
 }) {
+    const navi = useNavigate();
+
     return (
         <>
             <div
@@ -36,20 +41,26 @@ export function EntityIndexHeader(props: {
                     </Link>
                 </div>
                 <div>
-                    <Link
-                        to={`/admin/entity/${props.entityName
-                            .split(' ')
-                            .join('/')
-                            .toLowerCase()}/edit`}
+                    <IconButton
+                        className="mb-0"
+                        size="small"
+                        style={{
+                            color: `var(${
+                                props.isEdit ? '--bs-success' : '--bs-gray'
+                            })`,
+                        }}
+                        onClick={() => {
+                            navi(
+                                `/admin/entity/${props.entityName
+                                    .split(' ')
+                                    .join('/')
+                                    .toLowerCase()}/edit`,
+                            );
+                        }}
+                        disabled={!props.isEdit}
                     >
-                        <IconButton
-                            className="mb-0"
-                            size="small"
-                            style={{ color: 'var(--bs-success)' }}
-                        >
-                            <Add />
-                        </IconButton>
-                    </Link>
+                        <Add />
+                    </IconButton>
                     <IconButton
                         className="mb-0"
                         size="small"

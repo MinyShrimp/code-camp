@@ -10,7 +10,7 @@ yarn add -D @types/bcryptjs
 yarn add bootstrap react-bootstrap styled-components
 yarn add -D @types/styled-components
 
-yarn add axios react-data-table-component
+yarn add axios react-data-table-component react-datalist-input
 yarn add -D @types/axios
 
 yarn add @material-ui/core @material-ui/icons

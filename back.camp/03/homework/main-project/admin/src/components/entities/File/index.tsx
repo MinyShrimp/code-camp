@@ -14,18 +14,4 @@ export const FileIndex = EntityFactory.getEntity<IFileColumn>({
         column: ['id', 'name', 'path', 'url', 'createAt', 'deleteAt'],
         url: '/admin/file',
     },
-    edit: {
-        column: ['name', 'path', 'url'],
-        url: '/admin/file',
-        default: {
-            name: '', path: '', url: '',
-        },
-    },
-    update: {
-        column: ['name', 'path', 'url'],
-        url: '/admin/file',
-        default: {
-            name: '', path: '', url: '',
-        },
-    },
 });

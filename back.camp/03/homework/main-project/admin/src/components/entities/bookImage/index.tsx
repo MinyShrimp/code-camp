@@ -24,18 +24,4 @@ export const BookImageIndex = EntityFactory.getEntity<IBookImageColumn>({
         },
         url: '/admin/book-image',
     },
-    edit: {
-        column: ['isMain', 'book', 'file'],
-        url: '/admin/book-image',
-        default: {
-            isMain: false, book: DummyBookColumn, file: DummyFileColumn,
-        },
-    },
-    update: {
-        column: ['isMain', 'book', 'file'],
-        url: '/admin/book-image',
-        default: {
-            isMain: false, book: DummyBookColumn, file: DummyFileColumn,
-        },
-    },
 });
