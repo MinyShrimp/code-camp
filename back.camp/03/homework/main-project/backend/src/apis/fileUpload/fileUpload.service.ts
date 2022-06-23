@@ -1,4 +1,4 @@
-import * as bcrypt from 'bcryptjs';
+import { v4 } from 'uuid';
 import { Repository } from 'typeorm';
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -69,11 +69,7 @@ export class FileUploadService {
                             .match(/^(.+).(png|jpe?g|gif|webp)$/);
 
                         // 이름 Hashing
-                        file.filename = `${folderName}origin/${bcrypt
-                            .hashSync(prefix, bcrypt.genSaltSync())
-                            .slice(20, 40)
-                            .toLowerCase()
-                            .replace(/(\$|\.|\/)/g, 'v')}.${suffix}`;
+                        file.filename = `${folderName}origin/${v4()}.${suffix}`;
 
                         file.createReadStream()
                             .pipe(

@@ -21,9 +21,9 @@ export class UserCheckService {
      * @returns 회원 정보
      * 존재하지 않으면 ConflictException
      */
-    async checkValidUser(
+    checkValidUser(
         user: UserEntity, //
-    ): Promise<UserEntity> {
+    ): UserEntity {
         if (user === undefined) {
             throw new ConflictException(
                 MESSAGES.USER_FIND_ONE_FAILED, //
@@ -38,9 +38,9 @@ export class UserCheckService {
      * @returns 회원 정보
      * 존재하면 ConflictException
      */
-    async checkOverlapEmail(
+    checkOverlapEmail(
         user: UserEntity, //
-    ): Promise<UserEntity> {
+    ): UserEntity {
         if (user !== undefined) {
             throw new ConflictException(
                 MESSAGES.USER_OVERLAP_EMAIL, //
@@ -54,9 +54,9 @@ export class UserCheckService {
      * @param user
      * @returns 회원 정보
      */
-    async checkLogin(
+    checkLogin(
         user: UserEntity, //
-    ): Promise<UserEntity> {
+    ): UserEntity {
         if (user.isLogin) {
             throw new ConflictException(
                 MESSAGES.USER_ALREADY_LOGIN, //
@@ -70,9 +70,9 @@ export class UserCheckService {
      * @param user
      * @returns 회원 정보
      */
-    async checkLogout(
+    checkLogout(
         user: UserEntity, //
-    ): Promise<UserEntity> {
+    ): UserEntity {
         if (!user.isLogin) {
             throw new ConflictException(
                 MESSAGES.USER_ALREADY_LOGOUT, //

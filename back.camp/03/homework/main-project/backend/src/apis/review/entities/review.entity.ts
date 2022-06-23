@@ -55,15 +55,18 @@ export class ReviewEntity extends BaseEntity {
     @Field(() => ProductEntity)
     product: ProductEntity;
 
-    @Column({ name: 'productId', type: 'uuid' })
+    @Column({ name: 'productId', type: 'uuid', nullable: true })
     productID: string;
 
     // 유저
     @JoinColumn()
-    @ManyToOne(() => UserEntity)
+    @ManyToOne(() => UserEntity, {
+        cascade: true,
+        onDelete: 'SET NULL',
+    })
     @Field(() => UserEntity)
     user: UserEntity;
 
-    @Column({ name: 'userId', type: 'uuid' })
+    @Column({ name: 'userId', type: 'uuid', nullable: true })
     userID: string;
 }

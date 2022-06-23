@@ -10,7 +10,7 @@ export const DummyProductColumn = {
     book: DummyBookColumn, 
     bookID: '', 
     productCategory: DummyProductCategoryColumn,
-    productCategoryID: '',
+    categoryID: '',
     productTags: [DummyProductTagColumn],
     productTagsInput: ''
 };

@@ -61,4 +61,14 @@ export class UserAdminRepository {
             .orderBy('user.createAt')
             .getOne();
     }
+
+    async bulkDelete(
+        IDs: Array<string>, //
+    ) {
+        return await Promise.all(
+            IDs.map((id) => {
+                return this.userRepository.delete({ id: id });
+            }),
+        );
+    }
 }

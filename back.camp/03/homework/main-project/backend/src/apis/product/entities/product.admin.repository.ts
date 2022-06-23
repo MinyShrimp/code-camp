@@ -64,4 +64,14 @@ export class ProductAdminRepository {
             .orderBy('product.createAt')
             .getOne();
     }
+
+    async bulkDelete(
+        IDs: Array<string>, //
+    ) {
+        return await Promise.all(
+            IDs.map((id) => {
+                return this.productRepository.delete({ id: id });
+            }),
+        );
+    }
 }

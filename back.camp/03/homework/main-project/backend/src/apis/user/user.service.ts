@@ -125,7 +125,7 @@ export class UserService {
         const user = await this.findOneByEmail(input.email);
 
         // 이메일 중복 체크
-        await this.userCheckService.checkOverlapEmail(user);
+        this.userCheckService.checkOverlapEmail(user);
 
         // 비밀번호 해싱
         return await this.userRepository.save({

@@ -16,6 +16,7 @@ import { UpdateProductInput } from './dto/updateProduct.input';
 import { ProductCheckService } from './productCheck.service';
 import { ProductRepository } from './entities/product.repository';
 import { ProductCategoryService } from '../productCategory/productCategory.service';
+import { ProductCategoryAdminRepository } from '../productCategory/entities/productCategory.admin.repository';
 
 @Injectable()
 export class ProductService {
@@ -24,8 +25,8 @@ export class ProductService {
         private readonly productCheckService: ProductCheckService,
         private readonly bookService: BookService,
         private readonly productTagsService: ProductTagService,
-        // private readonly productCategoryService: ProductCategorySearchService,
         private readonly productCategoryService: ProductCategoryService,
+        private readonly productCategoryRepository: ProductCategoryAdminRepository,
     ) {}
 
     ///////////////////////////////////////////////////////////////////
@@ -89,20 +90,20 @@ export class ProductService {
         createProductInput: CreateProductInput,
     ): Promise<ProductEntity> {
         const {
-            book_id, //
-            category_id,
-            product_tags,
+            bookID, //
+            categoryID,
+            productTags,
             ...product
         } = createProductInput;
 
-        const book = await this.bookService.findOne(book_id);
+        const book = await this.bookService.findOne(bookID);
         // const category = await this.productCategoryService.findOneByID(
         //     category_id,
         // );
-        const category = await this.productCategoryService.findByTree(
-            category_id,
+        const category = await this.productCategoryRepository.findOne(
+            categoryID,
         );
-        const tagEntities = await this.productTagsService.create(product_tags);
+        const tagEntities = await this.productTagsService.create(productTags);
 
         return await this.productRepository.save({
             ...product,
@@ -136,17 +137,17 @@ export class ProductService {
 
         // input data 뽑기
         const {
-            book_id, //
-            category_id,
-            product_tags,
+            bookID, //
+            categoryID,
+            productTags,
             ...input
         } = updateProductInput;
 
         // 새로운 카테고리 찾기
         // 입력받지 않았다면, 기존의 카테고리 복사
         const category =
-            category_id !== undefined
-                ? await this.productCategoryService.findByTree(category_id)
+            categoryID !== undefined
+                ? await this.productCategoryRepository.findOne(categoryID)
                 : product.productCategory;
 
         // 저장 후 변경된 데이터 반환

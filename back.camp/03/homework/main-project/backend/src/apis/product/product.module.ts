@@ -13,7 +13,6 @@ import { ProductService } from './product.service';
 import { ProductCheckService } from './productCheck.service';
 import { ProductAdminController } from './product.admin.contoller';
 import { ProductAdminRepository } from './entities/product.admin.repository';
-import { ProductAdminService } from './product.admin.service';
 
 @Module({
     imports: [
@@ -29,7 +28,6 @@ import { ProductAdminService } from './product.admin.service';
         BookModule,
         ProductTagModule,
         ProductCategoryModule,
-        // ProductCategorySearchModule,
     ],
     exports: [
         ProductService, //
@@ -45,7 +43,6 @@ import { ProductAdminService } from './product.admin.service';
         ProductCheckService,
 
         ProductAdminRepository,
-        ProductAdminService,
     ],
 })
 export class ProductModule {}

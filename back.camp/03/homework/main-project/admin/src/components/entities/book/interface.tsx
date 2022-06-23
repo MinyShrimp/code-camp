@@ -1,4 +1,5 @@
 import { DummyAuthorColumn } from '../author/interface';
+import { DummyFile } from '../file/interface';
 import { DummyPublisherColumn } from '../publisher/interface';
 
 const now = new Date();
@@ -9,6 +10,6 @@ export const DummyBookColumn = {
     createAt: now, updateAt: now, deleteAt: now,
     publisher: DummyPublisherColumn, publisherID: '',
     author: DummyAuthorColumn, authorID: '',
-    book_images: []
+    files: [DummyFile], book_images: []
 };
 export type IBookColumn = typeof DummyBookColumn;

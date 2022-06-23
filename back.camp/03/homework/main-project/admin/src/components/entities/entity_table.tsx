@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import DataTable from 'react-data-table-component';
 import { KeyboardArrowDown } from '@material-ui/icons';
 import { IColumn } from './interface';
@@ -9,6 +9,7 @@ export function EntityTable(props: {
     columns: Array<IEntityConfig>;
     datas: Array<IColumn>;
     pending: boolean;
+    setDeleteRows: Dispatch<SetStateAction<string[]>>;
 }) {
     const navigate = useNavigate();
 
@@ -38,6 +39,9 @@ export function EntityTable(props: {
                 },
             }}
             selectableRows
+            onSelectedRowsChange={({ selectedRows }) => {
+                props.setDeleteRows(selectedRows.map((v) => v.id));
+            }}
         />
     );
 }

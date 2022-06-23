@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Query, Req, Res } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post, Req } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UserAdminRepository } from './entities/user.admin.repository';
 import { UserEntity } from './entities/user.entity';
@@ -35,5 +35,13 @@ export class UserAdminController {
         const user = await this.userService.createUser(req.body);
         // res.send(user);
         return user;
+    }
+
+    @Delete('/users')
+    async bulkDeleteUsers(
+        @Req() req: Request, //
+    ) {
+        await this.userAdminRepository.bulkDelete(req.body);
+        return 'delete ok';
     }
 }

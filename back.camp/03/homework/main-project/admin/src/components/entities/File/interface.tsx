@@ -1,7 +1,15 @@
-const now = new Date();
+import { getDefaultDate } from '../../../functions/functions';
+
+export const DummyFile = {
+    file: '',
+    fileName: '',
+};
+export type IFile = typeof DummyFile;
+
 // prettier-ignore
 export const DummyFileColumn = {
     id: '', name: '', path: '', url: '',
-    createAt: now, deleteAt: now
+    createAt: getDefaultDate(), deleteAt: getDefaultDate(),
+    files: [DummyFile]
 };
 export type IFileColumn = typeof DummyFileColumn;

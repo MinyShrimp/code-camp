@@ -1,5 +1,7 @@
+import { v4 } from 'uuid';
+import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
-import { Switch, TextareaAutosize, TextField } from '@material-ui/core';
+import { Input, Switch, TextareaAutosize, TextField } from '@material-ui/core';
 import { CancelOutlined, CheckCircleOutlined } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import DataListInput from 'react-datalist-input';
@@ -11,7 +13,6 @@ import { getDate, getDateFormatting } from '../../functions/times';
 import { IEntityConfig } from './types';
 import { EntityIndex } from './entity_index';
 import { EntityIndexHeader } from './header';
-import axios from 'axios';
 
 export class EntityFactory {
     private static createColumn<T>(
@@ -33,7 +34,7 @@ export class EntityFactory {
                 edit_cell: (props: { row: any; data: any }) => {
                     return (
                         <TextField
-                            key={idx}
+                            key={v4()}
                             id={key as string}
                             style={{ width: '100%' }}
                             type={getType(dummy[key])}
@@ -53,7 +54,7 @@ export class EntityFactory {
                 tmp.edit_cell = (props: { row: any; data: any }) => {
                     return (
                         <TextField
-                            key={idx}
+                            key={v4()}
                             id={tmp.name as string}
                             style={{ width: '100%' }}
                             type="password"
@@ -69,7 +70,7 @@ export class EntityFactory {
                 tmp.edit_cell = (props: { row: any; data: any }) => {
                     return (
                         <TextareaAutosize
-                            key={idx}
+                            key={v4()}
                             id={tmp.name as string}
                             style={{
                                 width: '100%',
@@ -114,6 +115,7 @@ export class EntityFactory {
 
                     return (
                         <DataListInput
+                            key={v4()}
                             className="mt-2"
                             label=""
                             items={items}
@@ -121,6 +123,41 @@ export class EntityFactory {
                                 props.row[tmp.name] = item.id;
                             }}
                         />
+                    );
+                };
+            } else if (tmp.name.includes('file')) {
+                tmp.edit_cell = (props: { row: any; data: any }) => {
+                    return (
+                        <>
+                            <div>
+                                <input
+                                    key={v4()}
+                                    className="mt-2"
+                                    type="file"
+                                    multiple
+                                    required
+                                    accept="image/*"
+                                    onChange={(event) => {
+                                        const files = event.target.files;
+                                        props.row[tmp.name] = files ?? [];
+                                        console.log(props.row[tmp.name]);
+                                    }}
+                                />
+                            </div>
+                        </>
+                    );
+                };
+            } else if (tmp.name === 'url') {
+                tmp.cell = (row: any) => {
+                    return (
+                        <>
+                            <a
+                                href={`https://storage.googleapis.com${row[key]}`}
+                                target="_blank"
+                            >
+                                {row[key]}
+                            </a>
+                        </>
                     );
                 };
             }
@@ -134,15 +171,15 @@ export class EntityFactory {
             } else if (tmp.type === 'Boolean') {
                 tmp.cell = (row: any) => {
                     return row[key] ? (
-                        <CheckCircleOutlined key={idx} htmlColor="green" />
+                        <CheckCircleOutlined htmlColor="green" />
                     ) : (
-                        <CancelOutlined key={idx} htmlColor="red" />
+                        <CancelOutlined htmlColor="red" />
                     );
                 };
                 tmp.edit_cell = (props: { row: any; data: any }) => {
                     return (
                         <Switch
-                            key={idx}
+                            key={v4()}
                             id={tmp.name as string}
                             defaultChecked={props.data}
                             onChange={(event) => {
@@ -189,7 +226,7 @@ export class EntityFactory {
                         <>
                             {row[key].map((v: any, idx: number) => {
                                 return (
-                                    <li>
+                                    <li key={v4()}>
                                         <Link
                                             to={`/admin/entity/${
                                                 {
@@ -198,7 +235,7 @@ export class EntityFactory {
                                                     products: 'product',
                                                 }[key as string]
                                             }/${v.id}`}
-                                            key={idx}
+                                            key={v4()}
                                         >
                                             {v.name ?? v.id}
                                         </Link>
@@ -212,36 +249,6 @@ export class EntityFactory {
 
             return tmp;
         });
-    }
-
-    private static createListColumn<T>(
-        dummy: T,
-        config: {
-            url: string | { [key in keyof T]: string };
-            column: Array<keyof T>;
-            option?: Partial<{ [key in keyof T]: string }>;
-        },
-    ) {
-        return [
-            // {
-            //     name: '',
-            //     data: '',
-            //     type: 'String',
-            //     sortable: false,
-            //     selector: () => '',
-            //     edit_cell: () => <></>,
-            //     cell: () => {
-            //         return (
-            //             <IconButton size="small" className="m-0">
-            //                 {' '}
-            //                 <Menu />{' '}
-            //             </IconButton>
-            //         );
-            //     },
-            //     width: '50px',
-            // },
-            ...this.createColumn<T>(dummy, config),
-        ];
     }
 
     static getEntity<T>(columnConfig: {
@@ -272,7 +279,7 @@ export class EntityFactory {
             list:
                 columnConfig.list !== undefined
                     ? {
-                          column: this.createListColumn<T>(
+                          column: this.createColumn<T>(
                               columnConfig.dummyData,
                               columnConfig.list,
                           ),
@@ -314,6 +321,8 @@ export class EntityFactory {
         return () => {
             const [entityName, setEntityName] = useState<string>('');
             const [reload, setReload] = useState(() => async () => {});
+            const [deleted, setDeleted] = useState(() => async () => {});
+            const [deleteRows, setDeleteRows] = useState<Array<string>>([]);
 
             const editInput =
                 columnConfig.edit !== undefined
@@ -330,12 +339,17 @@ export class EntityFactory {
                     <EntityIndexHeader
                         entityName={entityName}
                         reload={reload}
+                        deleted={deleted}
+                        deleteRows={deleteRows}
                         isList={config.list !== undefined}
                         isShow={config.show !== undefined}
                         isEdit={config.edit !== undefined}
                     />
                     <EntityIndex
                         setReload={setReload}
+                        setDeleted={setDeleted}
+                        deleteRows={deleteRows}
+                        setDeleteRows={setDeleteRows}
                         list={config.list}
                         show={config.show}
                         edit={config.edit}

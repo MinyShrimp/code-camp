@@ -1,19 +1,25 @@
+import { v4 } from 'uuid';
 import axios, { AxiosResponse } from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getLastPath } from '../../functions/functions';
 import { IEntityConfig } from './types';
-import bcrypt from 'bcryptjs';
 
 export function EntityShowIndex(props: {
     url: string;
-    setReload: Function;
     columns: Array<IEntityConfig>;
+    setReload: Dispatch<SetStateAction<() => Promise<void>>>;
+    setDeleted: Dispatch<SetStateAction<() => Promise<void>>>;
+    deleteRows: Array<string>;
+    setDeleteRows: Dispatch<SetStateAction<string[]>>;
 }) {
     const pathName = window.location.pathname;
     const entityID = getLastPath(pathName);
 
     const [data, setData] = useState<any>(undefined);
     const [pending, setPending] = useState<boolean>(true);
+
+    const navi = useNavigate();
 
     const _reload = async () => {
         setPending(true);
@@ -31,15 +37,34 @@ export function EntityShowIndex(props: {
             });
     };
 
+    const _delete = async () => {
+        axios
+            .delete(`${process.env.BE_URL}${props.url}s`, {
+                data: props.deleteRows,
+            })
+            .then((res: AxiosResponse) => {
+                navi(`/admin/entity/${props.url.split('/').slice(-1)[0]}`);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
     useEffect(() => {
         props.setReload(() => _reload);
+        props.setDeleteRows([entityID]);
 
         (async () => {
             await _reload();
         })();
 
         return () => {};
-    }, [props.setReload]);
+    }, []);
+
+    useEffect(() => {
+        props.setDeleted(() => _delete);
+        return () => {};
+    }, [props.deleteRows]);
 
     return (
         <div
@@ -54,7 +79,7 @@ export function EntityShowIndex(props: {
             {!pending && data !== undefined ? (
                 props.columns.map((column, idx) => {
                     return (
-                        <div className="mb-4" key={bcrypt.genSaltSync(1)}>
+                        <div className="mb-4" key={v4()}>
                             <div>{column.name}</div>
                             <div>
                                 {
