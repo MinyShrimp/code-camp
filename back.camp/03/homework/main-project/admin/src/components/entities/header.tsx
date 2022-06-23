@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { IconButton } from '@material-ui/core';
 import { Add, Delete, FilterList, Replay } from '@material-ui/icons';
 import { Link, useNavigate } from 'react-router-dom';
 
 export function EntityIndexHeader(props: {
     entityName: string;
-    reload: Function;
+    reload: () => Promise<void>;
+    deleted: () => Promise<void>;
+    deleteRows: Array<string>;
     isList: boolean;
     isShow: boolean;
     isEdit: boolean;
@@ -64,7 +66,9 @@ export function EntityIndexHeader(props: {
                     <IconButton
                         className="mb-0"
                         size="small"
-                        style={{ color: 'var(--bs-yellow)' }}
+                        style={{
+                            color: `var(--bs-yellow)`,
+                        }}
                         onClick={async () => {}}
                     >
                         <FilterList />
@@ -72,8 +76,17 @@ export function EntityIndexHeader(props: {
                     <IconButton
                         className="mb-0"
                         size="small"
-                        style={{ color: 'var(--bs-red)' }}
-                        onClick={async () => {}}
+                        style={{
+                            color: `var(${
+                                props.deleteRows.length === 0
+                                    ? '--bs-gray'
+                                    : '--bs-red'
+                            })`,
+                        }}
+                        onClick={async () => {
+                            await props.deleted();
+                        }}
+                        disabled={props.deleteRows.length === 0}
                     >
                         <Delete />
                     </IconButton>

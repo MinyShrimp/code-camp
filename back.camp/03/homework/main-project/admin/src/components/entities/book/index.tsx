@@ -39,7 +39,7 @@ export const BookIndex = EntityFactory.getEntity<IBookColumn>({
         column: [
             'title', 'subtitle', 'description',
             'page', 'isbn_10', 'isbn_13', 'publishAt',
-            'publisherID', 'authorID',
+            'publisherID', 'authorID', 'files'
         ],
         url: { 
             'default': '/admin/book',
@@ -49,7 +49,7 @@ export const BookIndex = EntityFactory.getEntity<IBookColumn>({
         default: {
             title: '', subtitle: '', description: '',
             page: 0, isbn_10: '', isbn_13: '', publishAt: getDefaultDate(),
-            publisherID: '', authorID: ''
+            publisherID: '', authorID: '', files: []
         },
     },
     update: {

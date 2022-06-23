@@ -51,26 +51,6 @@ export class ProductRepository {
         return await this.productRepository.findByIds(ids, {
             relations: ['book', 'productCategory', 'productTags'],
         });
-
-        // return (
-        //     await Promise.all<ProductEntity>(
-        //         ids.map((id) => {
-        //             return new Promise((resolve, reject) => {
-        //                 this.productRepository
-        //                     .findOne({
-        //                         where: { id: id },
-        //                         relations: [
-        //                             'book',
-        //                             'productCategory',
-        //                             'productTags',
-        //                         ],
-        //                     })
-        //                     .then((res) => resolve(res))
-        //                     .catch((error) => reject(error));
-        //             });
-        //         }),
-        //     )
-        // ).filter((v) => v !== undefined);
     }
 
     /**

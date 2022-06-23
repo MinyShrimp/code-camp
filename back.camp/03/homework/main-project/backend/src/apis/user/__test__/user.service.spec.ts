@@ -10,6 +10,7 @@ import { MockUserRepository } from './user.repository.mock';
 describe('UserService', () => {
     let userService: UserService;
     let userCheckService: UserCheckService;
+    let userRepository: MockUserRepository;
 
     beforeEach(async () => {
         const userModule = await Test.createTestingModule({
@@ -24,12 +25,21 @@ describe('UserService', () => {
             ],
         }).compile();
 
+        userRepository = userModule.get<MockUserRepository>(
+            getRepositoryToken(UserEntity),
+        );
         userService = userModule.get<UserService>(UserService);
         userCheckService = userModule.get<UserCheckService>(UserCheckService);
     });
 
     describe('create', () => {
         it('Overlap Email', async () => {
+            const userRepositorySpyFindOne = jest.spyOn(
+                userRepository,
+                'findOne',
+            );
+            const userRepositorySpySave = jest.spyOn(userRepository, 'save');
+
             await userService.createUser({
                 name: '김수한무',
                 email: 'ksk7584@gmail.com',
@@ -45,9 +55,18 @@ describe('UserService', () => {
             } catch (error) {
                 expect(error).toBeInstanceOf(ConflictException);
             }
+
+            expect(userRepositorySpyFindOne).toBeCalledTimes(2);
+            expect(userRepositorySpySave).toBeCalledTimes(1);
         });
 
         it('Signup', async () => {
+            const userRepositorySpyFindOne = jest.spyOn(
+                userRepository,
+                'findOne',
+            );
+            const userRepositorySpySave = jest.spyOn(userRepository, 'save');
+
             const result = await userService.createUser({
                 name: '김수한무',
                 email: 'ksk7774@gmail.com',
@@ -58,6 +77,9 @@ describe('UserService', () => {
                 name: '김수한무',
                 email: 'ksk7774@gmail.com',
             });
+
+            expect(userRepositorySpyFindOne).toBeCalledTimes(1);
+            expect(userRepositorySpySave).toBeCalledTimes(1);
         });
     });
 

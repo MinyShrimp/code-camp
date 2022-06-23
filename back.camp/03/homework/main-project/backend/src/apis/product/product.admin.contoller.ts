@@ -1,14 +1,14 @@
-import { Controller, Get, Param, Post, Req, Res } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Controller, Delete, Get, Param, Post, Req, Res } from '@nestjs/common';
+import { Request } from 'express';
+import { ProductAdminRepository } from './entities/product.admin.repository';
 import { ProductEntity } from './entities/product.entity';
-import { ProductAdminService } from './product.admin.service';
 import { ProductService } from './product.service';
 
 @Controller('admin')
 export class ProductAdminController {
     constructor(
         private readonly productService: ProductService,
-        private readonly productAdminService: ProductAdminService, //
+        private readonly productAdminRepository: ProductAdminRepository,
     ) {}
 
     /**
@@ -17,7 +17,7 @@ export class ProductAdminController {
      */
     @Get('/products')
     findAll(): Promise<ProductEntity[]> {
-        return this.productAdminService.findAll();
+        return this.productAdminRepository.findAll();
     }
 
     /**
@@ -26,7 +26,7 @@ export class ProductAdminController {
      */
     @Get('/product/names')
     findAllName(): Promise<ProductEntity[]> {
-        return this.productAdminService.findAllName();
+        return this.productAdminRepository.findAllName();
     }
 
     /**
@@ -38,7 +38,7 @@ export class ProductAdminController {
     findOne(
         @Param('id') productID: string, //
     ): Promise<ProductEntity> {
-        return this.productAdminService.findOne(productID);
+        return this.productAdminRepository.findOne(productID);
     }
 
     /**
@@ -50,16 +50,25 @@ export class ProductAdminController {
     async createProduct(
         @Req() req: Request, //
     ): Promise<ProductEntity> {
+        req.body['productTags'] = req.body['productTagsInput']
+            .split('#')
+            .filter((v: string) => v !== '')
+            .map((v: string) => v.trim());
         console.log(req.body);
-        return this.productAdminService.findOne('');
-        // const product = this.productService.create(req.body);
-        // return product;
+        return await this.productService.create(req.body);
     }
 
     /**
      * DELETE /admin/products
      * @response ResultMessage
      */
+    @Delete('/products')
+    async bulkDelete(
+        @Req() req: Request, //
+    ) {
+        await this.productAdminRepository.bulkDelete(req.body);
+        return 'delete ok';
+    }
 
     /**
      * DELETE /admin/product/:id

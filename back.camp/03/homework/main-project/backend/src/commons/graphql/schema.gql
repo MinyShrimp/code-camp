@@ -441,13 +441,13 @@ input CreateProductInput {
   price: Int!
 
   """책 ID"""
-  book_id: String!
+  bookID: String!
 
   """카테고리 ID"""
-  category_id: String!
+  categoryID: String!
 
   """태그 목록 ( #몽환적인 )"""
-  product_tags: [String!]!
+  productTags: [String!]!
 }
 
 input UpdateProductInput {
@@ -464,13 +464,13 @@ input UpdateProductInput {
   price: Int
 
   """책 ID"""
-  book_id: String
+  bookID: String
 
   """카테고리 ID"""
-  category_id: String
+  categoryID: String
 
   """태그 목록 ( #몽환적인 )"""
-  product_tags: [String!]
+  productTags: [String!]
 }
 
 input CreateBookInput {

@@ -47,7 +47,6 @@ export class ProductCategoryAdminRepository {
     }
 
     async findAllName(): Promise<ProductCategoryEntity[]> {
-        console.log('a');
         return await this.productCategoryRepository
             .createQueryBuilder('category')
             .select(['category.id', 'category.name'])

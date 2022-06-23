@@ -35,31 +35,31 @@ export const ProductIndex = EntityFactory.getEntity<IProductColumn>({
     edit: {
         column: [
             'name', 'url', 'stock_count', 'price', 
-            'bookID', 'productCategoryID', 'productTagsInput',
+            'bookID', 'categoryID', 'productTagsInput',
         ],
         url: {
             'default': '/admin/product',
             'bookID': '/admin/book/names',
-            'productCategoryID': '/admin/product-category/names'
+            'categoryID': '/admin/product-category/names'
         },
         default: {
             name: '', url: '', stock_count: 0,
-            price: 0, bookID: '', productCategoryID: '', productTagsInput: ''
+            price: 0, bookID: '', categoryID: '', productTagsInput: ''
         }
     },
     update: {
         column: [
             'name', 'url', 'stock_count', 'selling_count', 'price', 
-            'bookID', 'productCategoryID', 'productTagsInput',
+            'bookID', 'categoryID', 'productTagsInput',
         ],
         url: {
             'default': '/admin/product',
             'bookID': '/admin/book/names',
-            'productCategoryID': '/admin/product-category/names'
+            'categoryID': '/admin/product-category/names'
         },
         default: {
             name: '', url: '', stock_count: 0, selling_count: 0,
-            price: 0, bookID: '', productCategoryID: '', productTagsInput: ''
+            price: 0, bookID: '', categoryID: '', productTagsInput: ''
         }
     }
 });

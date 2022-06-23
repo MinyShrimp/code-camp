@@ -1,6 +1,6 @@
 import React from 'react';
 import { EntityFactory } from '../entity_factory';
-import { DummyFileColumn, IFileColumn } from './interface';
+import { DummyFile, DummyFileColumn, IFileColumn } from './interface';
 
 // prettier-ignore
 export const FileIndex = EntityFactory.getEntity<IFileColumn>({
@@ -14,4 +14,13 @@ export const FileIndex = EntityFactory.getEntity<IFileColumn>({
         column: ['id', 'name', 'path', 'url', 'createAt', 'deleteAt'],
         url: '/admin/file',
     },
+    edit: {
+        column: ["files"],
+        url: {
+            default: "/admin/file"
+        },
+        default: {
+            files: [DummyFile]
+        }
+    }
 });

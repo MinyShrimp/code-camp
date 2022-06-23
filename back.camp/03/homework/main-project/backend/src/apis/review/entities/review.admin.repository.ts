@@ -47,4 +47,14 @@ export class ReviewAdminRepository {
             .leftJoin('review.product', 'product')
             .getOne();
     }
+
+    async bulkDelete(
+        IDs: Array<string>, //
+    ) {
+        return await Promise.all(
+            IDs.map((id) => {
+                return this.reviewRepository.delete({ id: id });
+            }),
+        );
+    }
 }
