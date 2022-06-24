@@ -153,10 +153,10 @@ export class AuthService {
         const user = await this.userSerivce.findOneByEmail(input.email);
 
         // 존재 여부 검사
-        await this.userCheckService.checkValidUser(user);
+        this.userCheckService.checkValidUser(user);
 
         // 로그인 여부 검사 ( MySQL )
-        await this.userCheckService.checkLogin(user);
+        this.userCheckService.checkLogin(user);
 
         // Set Refresh Token
         const refresh_token = this.setRefreshToken(user, context.res);
@@ -183,16 +183,17 @@ export class AuthService {
      * @returns ResultMessage
      */
     async Logout(
+        context: any,
         userID: string, //
     ): Promise<ResultMessage> {
         // 검색
         const user = await this.userSerivce.findOneByID(userID);
 
         // 존재 여부 검사
-        await this.userCheckService.checkValidUser(user);
+        this.userCheckService.checkValidUser(user);
 
         // 로그아웃 여부 검사
-        await this.userCheckService.checkLogout(user);
+        this.userCheckService.checkLogout(user);
 
         // 로그아웃 시도
         const result = await this.userRepository.update(
@@ -203,6 +204,8 @@ export class AuthService {
             },
         );
         const isSuccess = result.affected ? true : false;
+
+        context.res.setHeader('Set-Cookie', `refreshToken=; path=/;`);
 
         // 메세지 반환
         return new ResultMessage({

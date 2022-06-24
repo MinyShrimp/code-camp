@@ -50,19 +50,25 @@ export class PaymentEntity {
 
     // 회원
     @JoinColumn({ name: 'userId' })
-    @ManyToOne(() => UserEntity)
+    @ManyToOne(() => UserEntity, {
+        cascade: true,
+        onDelete: 'SET NULL',
+    })
     @Field(() => UserEntity)
     user: UserEntity;
 
-    @Column({ name: 'userId', type: 'uuid' })
+    @Column({ name: 'userId', type: 'uuid', nullable: true })
     userId: string;
 
     // 상품
     @JoinColumn({ name: 'productId' })
-    @ManyToOne(() => ProductEntity)
+    @ManyToOne(() => ProductEntity, {
+        cascade: true,
+        onDelete: 'SET NULL',
+    })
     @Field(() => ProductEntity)
     product: ProductEntity;
 
-    @Column({ name: 'productId', type: 'uuid' })
+    @Column({ name: 'productId', type: 'uuid', nullable: true })
     productId: string;
 }

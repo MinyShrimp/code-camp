@@ -11,7 +11,6 @@ import { BookResolver } from './book.resolver';
 import { BookService } from './book.service';
 import { BookAdminController } from './book.admin.controller';
 import { BookAdminRepository } from './entities/book.admin.repository';
-import { BookAdminService } from './book.admin.service';
 
 @Module({
     imports: [
@@ -30,7 +29,6 @@ import { BookAdminService } from './book.admin.service';
         BookService,
 
         BookAdminRepository,
-        BookAdminService,
     ],
 })
 export class BookModule {}

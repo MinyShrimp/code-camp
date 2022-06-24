@@ -12,6 +12,7 @@ import { PaymentResolver } from './payment.resolver';
 import { PaymentService } from './payment.service';
 import { PaymentCheckService } from './paymentCheck.service';
 import { PaymentAdminController } from './payment.admin.controller';
+import { PaymentAdminRepository } from './entities/payment.admin.repository';
 
 @Module({
     imports: [
@@ -31,6 +32,8 @@ import { PaymentAdminController } from './payment.admin.controller';
         PaymentResolver,
         PaymentService,
         PaymentCheckService,
+
+        PaymentAdminRepository,
     ],
 })
 export class PaymentModule {}

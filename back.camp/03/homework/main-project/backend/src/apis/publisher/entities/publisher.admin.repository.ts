@@ -46,4 +46,14 @@ export class PublisherAdminRepository {
             .withDeleted()
             .getOne();
     }
+
+    async bulkDelete(
+        IDs: Array<string>, //
+    ) {
+        return await Promise.all(
+            IDs.map((id) => {
+                return this.publisherRepository.delete({ id: id });
+            }),
+        );
+    }
 }

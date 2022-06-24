@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { getManager, Repository } from 'typeorm';
+import { DeleteResult, getManager, Repository } from 'typeorm';
 import { BookEntity } from './book.entity';
 
 @Injectable()
@@ -86,5 +86,20 @@ export class BookAdminRepository {
             .withDeleted()
             .orderBy('book.createAt')
             .getMany();
+    }
+
+    /**
+     * 삭제
+     * @param IDs
+     * @returns
+     */
+    async bulkDelete(
+        IDs: Array<string>, //
+    ): Promise<DeleteResult[]> {
+        return await Promise.all(
+            IDs.map((id) => {
+                return this.bookRepository.delete({ id: id });
+            }),
+        );
     }
 }

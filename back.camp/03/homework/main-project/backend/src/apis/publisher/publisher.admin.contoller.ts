@@ -1,27 +1,45 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { CreatePublisherInput } from './dto/createPublisher.input';
+import { PublisherAdminRepository } from './entities/publisher.admin.repository';
 import { PublisherEntity } from './entities/publisher.entity';
-import { PublisherAdminService } from './publisher.admin.service';
+import { PublisherService } from './publisher.service';
 
 @Controller('admin')
 export class PublisherAdminContoller {
     constructor(
-        private readonly publisherService: PublisherAdminService, //
+        private readonly publisherService: PublisherService,
+        private readonly publisherRepository: PublisherAdminRepository,
     ) {}
 
     @Get('/publishers')
     findAll(): Promise<PublisherEntity[]> {
-        return this.publisherService.findAll();
+        return this.publisherRepository.findAll();
     }
 
     @Get('/publisher/names')
     findAllNames(): Promise<PublisherEntity[]> {
-        return this.publisherService.findAllNames();
+        return this.publisherRepository.findAllNames();
     }
 
     @Get('/publisher/:id')
     findOne(
         @Param('id') publisherID: string, //
     ) {
-        return this.publisherService.findOne(publisherID);
+        return this.publisherRepository.findOne(publisherID);
+    }
+
+    @Post('/publisher')
+    create(
+        @Body() input: CreatePublisherInput, //
+    ) {
+        return this.publisherService.create(input);
+    }
+
+    @Delete('/publishers')
+    async bulkDelete(
+        @Body() IDs: Array<string>, //
+    ) {
+        await this.publisherRepository.bulkDelete(IDs);
+        return 'delete ok';
     }
 }

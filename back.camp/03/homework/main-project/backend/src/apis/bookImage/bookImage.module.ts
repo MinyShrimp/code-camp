@@ -7,7 +7,6 @@ import { BookImageEntity } from './entities/bookImage.entity';
 import { BookImageService } from './bookImage.service';
 import { BookImageAdminContoller } from './bookImage.admin.controller';
 import { BookImageAdminRepository } from './entities/bookImage.admin.repository';
-import { BookImageAdminService } from './bookImage.admin.service';
 
 @Module({
     imports: [
@@ -20,8 +19,7 @@ import { BookImageAdminService } from './bookImage.admin.service';
     ],
     providers: [
         BookImageService,
-        BookImageAdminService,
-        BookImageAdminRepository,
+        BookImageAdminRepository, //
     ],
 })
 export class BookImageModule {}

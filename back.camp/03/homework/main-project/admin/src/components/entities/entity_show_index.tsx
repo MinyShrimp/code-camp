@@ -28,6 +28,9 @@ export function EntityShowIndex(props: {
         axios
             .get(`${process.env.BE_URL}${props.url}/${entityID}`)
             .then((res: AxiosResponse) => {
+                if (res.data === '') {
+                    navi(`/admin/entity/${props.url.split('/').slice(-1)[0]}`);
+                }
                 setData(res.data);
                 setPending(false);
             })

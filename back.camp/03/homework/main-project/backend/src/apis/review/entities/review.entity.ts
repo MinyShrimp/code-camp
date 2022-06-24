@@ -51,7 +51,10 @@ export class ReviewEntity extends BaseEntity {
 
     // 상품
     @JoinColumn()
-    @ManyToOne(() => ProductEntity)
+    @ManyToOne(() => ProductEntity, {
+        cascade: true,
+        onDelete: 'SET NULL',
+    })
     @Field(() => ProductEntity)
     product: ProductEntity;
 

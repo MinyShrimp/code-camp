@@ -104,8 +104,8 @@ type BookEntity {
 
   """출간일"""
   publishAt: DateTime!
-  publisher: PublisherEntity
-  author: AuthorEntity
+  publisher: PublisherEntity!
+  author: AuthorEntity!
   book_images: [BookImageEntity!]!
 }
 

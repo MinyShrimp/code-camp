@@ -1,24 +1,34 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { AuthorAdminService } from './author.admin.service';
+import { Body, Controller, Delete, Get, Param } from '@nestjs/common';
+import { AuthorAdminRepository } from './entities/author.admin.repository';
 
 @Controller('admin')
 export class AuthorAdminController {
-    constructor(private readonly authorAdminService: AuthorAdminService) {}
+    constructor(
+        private readonly authorRepository: AuthorAdminRepository, //
+    ) {}
 
     @Get('/authors')
     getAuthors() {
-        return this.authorAdminService.findAll();
+        return this.authorRepository.findAll();
     }
 
     @Get('/author/names')
     getAuthorNames() {
-        return this.authorAdminService.findAllNames();
+        return this.authorRepository.findAllNames();
     }
 
     @Get('/author/:id')
     getAuthor(
         @Param('id') userID: string, //
     ) {
-        return this.authorAdminService.findOne(userID);
+        return this.authorRepository.findOne(userID);
+    }
+
+    @Delete('/authors')
+    async bulkDelete(
+        @Body() IDs: Array<string>, //
+    ) {
+        await this.authorRepository.bulkDelete(IDs);
+        return 'delete ok';
     }
 }

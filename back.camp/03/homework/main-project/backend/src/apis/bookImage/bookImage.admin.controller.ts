@@ -1,22 +1,27 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { BookImageAdminService } from './bookImage.admin.service';
+import { Body, Controller, Delete, Get, Param } from '@nestjs/common';
+import { BookImageAdminRepository } from './entities/bookImage.admin.repository';
 import { BookImageEntity } from './entities/bookImage.entity';
 
 @Controller('admin')
 export class BookImageAdminContoller {
     constructor(
-        private readonly bookImageService: BookImageAdminService, //
+        private readonly bookImageRepository: BookImageAdminRepository,
     ) {}
 
     @Get('/book-images')
     findAll(): Promise<BookImageEntity[]> {
-        return this.bookImageService.findAll();
+        return this.bookImageRepository.findAll();
     }
 
     @Get('/book-image/:id')
     findOne(
         @Param('id') bookImageID: string, //
-    ) {
-        return this.bookImageService.findOne(bookImageID);
+    ): Promise<BookImageEntity> {
+        return this.bookImageRepository.findOne(bookImageID);
+    }
+
+    @Delete('/book-images')
+    bulkDelete(@Body() IDs: Array<string>) {
+        return 'Not Allow';
     }
 }

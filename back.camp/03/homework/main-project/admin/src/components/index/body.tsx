@@ -9,6 +9,7 @@ import { EntityMain } from '../entities';
 import { DashboardPage } from '../dashboard/index';
 
 import { IndexBodySide } from './body_side';
+import { LogicMain } from '../logics';
 
 export function IndexBody() {
     return (
@@ -25,6 +26,7 @@ export function IndexBody() {
             >
                 <Routes>
                     <Route path="/" element={<DashboardPage />} />
+                    <Route path="/logic/*" element={<LogicMain />} />
                     <Route path="/entity/*" element={<EntityMain />} />
                     <Route path="/401" element={<Page401 />} />
                     <Route path="/404" element={<Page404 />} />

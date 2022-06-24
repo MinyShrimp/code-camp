@@ -48,6 +48,7 @@ export class BookImageEntity extends BaseEntity {
     @ManyToOne(
         () => BookEntity, //
         (book) => book.book_images,
+        { cascade: true, onDelete: 'CASCADE' },
     )
     @Field(() => BookEntity)
     book: BookEntity;
