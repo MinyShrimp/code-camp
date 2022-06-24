@@ -58,19 +58,34 @@ export function IndexBodySide() {
 
                         <NavCollapse
                             id="graphql-collapes"
-                            title="Graphql"
+                            title="Logics"
                             items={
                                 <>
-                                    <Nav.Link as={Link} to="#">
-                                        Authentication
-                                    </Nav.Link>
-                                    <Nav.Link as={Link} to="#">
-                                        Login
-                                    </Nav.Link>
-                                    <Nav.Link as={Link} to="#">
+                                    <Nav.Link
+                                        as={Link}
+                                        to="/admin/logic/register"
+                                    >
                                         Register
                                     </Nav.Link>
-                                    <Nav.Link as={Link} to="#">
+                                    <Nav.Link as={Link} to="/admin/logic/login">
+                                        Login
+                                    </Nav.Link>
+                                    <Nav.Link
+                                        as={Link}
+                                        to="/admin/logic/logout"
+                                    >
+                                        Logout
+                                    </Nav.Link>
+                                    <Nav.Link
+                                        as={Link}
+                                        to="/admin/logic/forgot/email"
+                                    >
+                                        Forgot Email
+                                    </Nav.Link>
+                                    <Nav.Link
+                                        as={Link}
+                                        to="/admin/logic/forgot/password"
+                                    >
                                         Forgot Password
                                     </Nav.Link>
                                 </>

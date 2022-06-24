@@ -85,10 +85,11 @@ export class AuthResolver {
         { description: '로그아웃, Bearer JWT' },
     )
     async Logout(
+        @Context() context: any,
         @CurrentUser() currentUser: IPayload, //
     ): Promise<ResultMessage> {
         // 로그아웃
-        const result = this.authService.Logout(currentUser.id);
+        const result = this.authService.Logout(context, currentUser.id);
 
         // Redis 저장
         await this.cacheManage.set(
