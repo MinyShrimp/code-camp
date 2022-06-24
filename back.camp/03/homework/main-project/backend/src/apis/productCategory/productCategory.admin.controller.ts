@@ -1,5 +1,14 @@
-import { Controller, Delete, Get, Param, Post, Req } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Req,
+} from '@nestjs/common';
 import { Request } from 'express';
+import { CreateProductCategoryInput } from './dto/createProductCategory.input';
 import { ProductCategoryAdminRepository } from './entities/productCategory.admin.repository';
 import { ProductCategoryEntity } from './entities/productCategory.entity';
 import { ProductCategoryService } from './productCategory.service';
@@ -30,8 +39,16 @@ export class ProductCategoryAdminController {
 
     @Post('/product-category')
     createCategory(
-        @Req() req: Request, //
+        @Body() input: CreateProductCategoryInput, //
     ) {
-        return this.productCategoryService.createTree(req.body);
+        return this.productCategoryService.createTree(input);
+    }
+
+    @Delete('/product-categorys')
+    async bulkDelete(
+        @Body() IDs: Array<string>, //
+    ) {
+        await this.productCategoryAdminRepository.bulkDelete(IDs);
+        return 'delete ok';
     }
 }

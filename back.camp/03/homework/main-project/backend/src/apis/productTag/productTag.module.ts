@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ProductTagAdminRepository } from './entities/productTag.admin.repository';
 
 import { ProductTagEntity } from './entities/productTag.entity';
 import { ProductTagAdminController } from './productTag.admin.controller';
@@ -19,6 +20,7 @@ import { ProductTagService } from './productTag.service';
     ],
     providers: [
         ProductTagService, //
+        ProductTagAdminRepository,
     ],
 })
 export class ProductTagModule {}

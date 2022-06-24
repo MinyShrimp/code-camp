@@ -1,5 +1,4 @@
-import { Controller, Delete, Get, Param, Post, Req } from '@nestjs/common';
-import { Request } from 'express';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CreateReviewInput } from './dto/createReview.input';
 import { ReviewAdminRepository } from './entities/review.admin.repository';
 import { ReviewEntity } from './entities/review.entity';
@@ -26,16 +25,16 @@ export class ReviewAdminController {
 
     @Post('/review')
     create(
-        @Req() req: Request, //
+        @Body() input: CreateReviewInput, //
     ): Promise<ReviewEntity> {
-        return this.reviewService.create(req.body);
+        return this.reviewService.create(input);
     }
 
     @Delete('/reviews')
     async bulkDelete(
-        @Req() req: Request, //
+        @Body() IDs: Array<string>, //
     ) {
-        await this.reviewAdminRepository.bulkDelete(req.body);
+        await this.reviewAdminRepository.bulkDelete(IDs);
         return 'delete ok';
     }
 }

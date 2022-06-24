@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
-import { EntityManager, Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { ProductCategoryEntity } from './productCategory.entity';
 
 @Injectable()
@@ -8,20 +8,20 @@ export class ProductCategoryAdminRepository {
     constructor(
         @InjectRepository(ProductCategoryEntity)
         private readonly productCategoryRepository: Repository<ProductCategoryEntity>,
-        @InjectEntityManager()
-        private readonly manager: EntityManager,
     ) {}
+
+    private readonly _selector = [
+        'category.id',
+        'category.name',
+        'category.createAt',
+        'parent.id',
+        'parent.name',
+    ];
 
     async findAll(): Promise<ProductCategoryEntity[]> {
         return await this.productCategoryRepository
             .createQueryBuilder('category')
-            .select([
-                'category.id',
-                'category.name',
-                'category.createAt',
-                'parent.id',
-                'parent.name',
-            ])
+            .select(this._selector)
             .withDeleted()
             .leftJoin('category.parent', 'parent')
             .orderBy('category.createAt')
@@ -33,13 +33,7 @@ export class ProductCategoryAdminRepository {
     ): Promise<ProductCategoryEntity> {
         return await this.productCategoryRepository
             .createQueryBuilder('category')
-            .select([
-                'category.id',
-                'category.name',
-                'category.createAt',
-                'parent.id',
-                'parent.name',
-            ])
+            .select(this._selector)
             .withDeleted()
             .leftJoin('category.parent', 'parent')
             .where('category.id=:id', { id: categoryID })
@@ -51,5 +45,15 @@ export class ProductCategoryAdminRepository {
             .createQueryBuilder('category')
             .select(['category.id', 'category.name'])
             .getMany();
+    }
+
+    async bulkDelete(
+        IDs: Array<string>, //
+    ): Promise<DeleteResult[]> {
+        return await Promise.all(
+            IDs.map((id) => {
+                return this.productCategoryRepository.delete({ id: id });
+            }),
+        );
     }
 }

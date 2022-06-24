@@ -32,7 +32,7 @@ export class FileEntity {
     @OneToOne(
         () => BookImageEntity, //
         (bookImage) => bookImage.file,
-        { nullable: true },
+        { cascade: true, onDelete: 'CASCADE' },
     )
     @Field(() => BookImageEntity, { nullable: true })
     bookImage?: BookImageEntity;

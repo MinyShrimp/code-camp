@@ -4,7 +4,6 @@ import { PublisherAdminRepository } from './entities/publisher.admin.repository'
 
 import { PublisherEntity } from './entities/publisher.entity';
 import { PublisherAdminContoller } from './publisher.admin.contoller';
-import { PublisherAdminService } from './publisher.admin.service';
 import { PublisherResolver } from './publisher.resolver';
 import { PublisherService } from './publisher.service';
 
@@ -21,7 +20,6 @@ import { PublisherService } from './publisher.service';
         PublisherService,
 
         PublisherAdminRepository,
-        PublisherAdminService,
     ],
 })
 export class PublisherModule {}

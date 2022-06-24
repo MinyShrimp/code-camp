@@ -95,7 +95,7 @@ export function EntityEditIndex(props: {
     }, [props.setReload]);
 
     return (
-        <form
+        <div
             style={{
                 background: 'var(--bs-gray-100)',
                 width: '100%',
@@ -130,6 +130,6 @@ export function EntityEditIndex(props: {
             >
                 Submit
             </Button>
-        </form>
+        </div>
     );
 }

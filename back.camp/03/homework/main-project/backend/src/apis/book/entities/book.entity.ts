@@ -97,34 +97,30 @@ export class BookEntity extends BaseEntity {
     @JoinColumn({ name: 'publisherId' })
     @ManyToOne(() => PublisherEntity, {
         cascade: true,
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
     })
-    @Field(() => PublisherEntity, { nullable: true })
+    @Field(() => PublisherEntity)
     publisher: PublisherEntity;
 
-    @Column({ name: 'publisherId', type: 'uuid' })
+    @Column({ name: 'publisherId', type: 'uuid', nullable: true })
     publisherId: string;
 
     // 저자
     @JoinColumn()
     @ManyToOne(() => AuthorEntity, {
         cascade: true,
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
     })
-    @Field(() => AuthorEntity, { nullable: true })
+    @Field(() => AuthorEntity)
     author: AuthorEntity;
 
-    @Column({ name: 'authorId', type: 'uuid' })
+    @Column({ name: 'authorId', type: 'uuid', nullable: true })
     authorId: string;
 
     // 책 이미지
     @OneToMany(
         () => BookImageEntity, //
         (book_img) => book_img.book,
-        {
-            cascade: true,
-            onDelete: 'CASCADE',
-        },
     )
     @Field(() => [BookImageEntity])
     book_images: BookImageEntity[];

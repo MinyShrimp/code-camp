@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { AuthorEntity } from './author.entity';
 
 @Injectable()
@@ -45,5 +45,15 @@ export class AuthorAdminRepository {
             .where('author.id=:id', { id: authorID })
             .withDeleted()
             .getOne();
+    }
+
+    async bulkDelete(
+        IDs: Array<string>, //
+    ): Promise<DeleteResult[]> {
+        return await Promise.all(
+            IDs.map((id) => {
+                return this.authorRepository.delete({ id: id });
+            }),
+        );
     }
 }

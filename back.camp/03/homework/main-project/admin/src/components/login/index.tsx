@@ -15,8 +15,6 @@ export function LoginPage() {
         pwd: process.env.ADMIN_PWD,
     };
 
-    console.log(admin);
-
     const Login = () => {
         if (
             admin.id === id.current && //
